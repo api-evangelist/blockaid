@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/blockaid-openapi-original.yml
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: APIKey
+  type: apiKey
+  in: header
+  parameter: X-API-Key
+  sources:
+  - openapi/blockaid-openapi-original.yml
+- name: ClientID
+  type: apiKey
+  in: header
+  parameter: X-CLIENT-ID
+  sources:
+  - openapi/blockaid-openapi-original.yml
+- name: JWT
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is
+    your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication)
+    for how to retrieve it.
+  sources:
+  - openapi/blockaid-openapi-original.yml
