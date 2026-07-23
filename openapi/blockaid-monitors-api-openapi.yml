@@ -1,0 +1,3410 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Monitors API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Monitors
+paths:
+  /v0/platform/monitors/:
+    post:
+      summary: Create Monitor
+      deprecated: false
+      description: Create a monitor that tracks configured rules and triggers actions when incidents match.
+      tags:
+      - Monitors
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewMonitorCreation'
+            examples:
+              Create Monitor Example:
+                summary: Create monitor
+                value:
+                  name: High-Risk Activity Monitor
+                  tags:
+                  - security
+                  actions: []
+                  monitors:
+                  - type: approval_to_multicall_contract
+                    target:
+                    - type: asset_id
+                      identifier: asset_123
+                    severity: high
+                    is_silent: false
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorObject'
+              example:
+                id: mon_123
+                name: High-Risk Activity Monitor
+                is_enabled: true
+                created_by: api
+                updated_by: api
+                updated_at: '2026-02-11T12:00:00Z'
+                created_at: '2026-02-11T12:00:00Z'
+                monitors:
+                - type: approval_to_multicall_contract
+                  target:
+                  - type: asset_id
+                    identifier: asset_123
+                  severity: high
+                  is_silent: false
+                tags:
+                - security
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/monitors/{id}:
+    get:
+      summary: Get Monitor
+      deprecated: false
+      description: Fetch a single monitor by ID.
+      tags:
+      - Monitors
+      parameters:
+      - name: id
+        in: path
+        description: The monitor's ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorObject'
+              example:
+                id: mon_123
+                name: High-Risk Activity Monitor
+                is_enabled: true
+                created_by: api
+                updated_by: api
+                updated_at: '2026-02-11T12:00:00Z'
+                created_at: '2026-02-11T12:00:00Z'
+                monitors:
+                - type: approval_to_multicall_contract
+                  target:
+                  - type: asset_id
+                    identifier: asset_123
+                  severity: high
+                  is_silent: false
+                tags:
+                - security
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    patch:
+      summary: Update Monitor
+      deprecated: false
+      description: Change a monitor's name, rules, tags, or actions.
+      tags:
+      - Monitors
+      parameters:
+      - name: id
+        in: path
+        description: The monitor's ID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Updated display name for the monitor.
+                is_enabled:
+                  type: boolean
+                  description: Whether the monitor is enabled.
+                tags:
+                  type: array
+                  description: Updated list of tags assigned to the monitor.
+                  items:
+                    type: string
+                actions:
+                  type: array
+                  description: Updated actions that run when monitor rules are triggered.
+                  items:
+                    anyOf:
+                    - $ref: '#/components/schemas/EmailAction'
+                    - $ref: '#/components/schemas/SlackAction'
+                    - $ref: '#/components/schemas/TelegramAction'
+                    - $ref: '#/components/schemas/WebhookAction'
+                    - $ref: '#/components/schemas/PauseContractAction'
+                    - $ref: '#/components/schemas/SequencerAction'
+                    - $ref: '#/components/schemas/APICallAction'
+                    - $ref: '#/components/schemas/CallContractAction'
+                monitors:
+                  description: The updated rules this monitor runs.
+                  anyOf:
+                  - $ref: '#/components/schemas/MonitorRuleRequest'
+                  - $ref: '#/components/schemas/SystemMonitorRuleRequest'
+            examples:
+              Update Monitor Example:
+                summary: Update monitor
+                value:
+                  name: High-Risk Activity Monitor v2
+                  is_enabled: true
+                  tags:
+                  - security
+                  - critical
+                  actions: []
+                  monitors:
+                  - type: approval_to_multicall_contract
+                    target:
+                    - type: asset_id
+                      identifier: asset_123
+                    severity: critical
+                    is_silent: false
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MonitorObject'
+              example:
+                id: mon_123
+                name: High-Risk Activity Monitor v2
+                is_enabled: true
+                created_by: api
+                updated_by: api
+                updated_at: '2026-02-11T12:30:00Z'
+                created_at: '2026-02-11T12:00:00Z'
+                monitors:
+                - type: approval_to_multicall_contract
+                  target:
+                  - type: asset_id
+                    identifier: asset_123
+                  severity: critical
+                  is_silent: false
+                tags:
+                - security
+                - critical
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    delete:
+      summary: Delete Monitor
+      deprecated: false
+      description: Remove a monitor by ID.
+      tags:
+      - Monitors
+      parameters:
+      - name: id
+        in: path
+        description: The monitor's ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+              example: {}
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/monitors/search:
+    post:
+      summary: Search Monitors
+      deprecated: false
+      description: Search monitors with pagination and sorting controls.
+      tags:
+      - Monitors
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page_size:
+                  type: integer
+                  description: Number of results returned per page.
+                page:
+                  type: integer
+                  description: Page number to return.
+                sort:
+                  type: array
+                  description: Sorting rules applied to the result set.
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                        description: Field to sort by.
+                        enum:
+                        - id
+                        - created_at
+                      operator:
+                        type: string
+                        description: Sort direction.
+                        enum:
+                        - asc
+                        - desc
+                    required:
+                    - field
+                    - operator
+                filter:
+                  type: object
+                  description: Optional filter criteria.
+                  properties:
+                    name:
+                      type: object
+                      description: Filter by monitor name. Exactly one operator must be provided.
+                      properties:
+                        eq:
+                          type: string
+                          description: Exact match.
+                        in:
+                          type: array
+                          items:
+                            type: string
+                          description: Match any value in the list.
+                        contains:
+                          type: string
+                          description: Substring match (case-insensitive).
+                        contains_all:
+                          type: array
+                          items:
+                            type: string
+                          description: Must contain all specified words.
+              required:
+              - page_size
+              - page
+              - sort
+            examples:
+              Search Monitors Example:
+                summary: Search monitors
+                value:
+                  page_size: 20
+                  page: 1
+                  sort:
+                  - field: created_at
+                    operator: desc
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MonitorObject'
+                    description: Monitor objects returned for this page.
+                  total:
+                    type: integer
+                    description: Total number of matching results.
+                  page:
+                    type: integer
+                    description: Current page number in the response.
+                  pages:
+                    type: integer
+                    description: Total number of pages available.
+                  size:
+                    type: integer
+                    description: Number of objects returned in this page.
+                required:
+                - items
+                - total
+                - page
+                - pages
+                - size
+              example:
+                items:
+                - id: mon_123
+                  name: High-Risk Activity Monitor
+                  is_enabled: true
+                  created_by: api
+                  updated_by: api
+                  updated_at: '2026-02-11T12:00:00Z'
+                  created_at: '2026-02-11T12:00:00Z'
+                  monitors:
+                  - type: approval_to_multicall_contract
+                    target:
+                    - type: asset_id
+                      identifier: asset_123
+                    severity: high
+                    is_silent: false
+                  tags:
+                  - security
+                total: 1
+                page: 1
+                pages: 1
+                size: 1
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+components:
+  schemas:
+    SystemMonitorRuleRequest:
+      title: System Monitor Rule Request
+      description: Supported system monitor rule collections accepted by the API.
+      oneOf:
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousInteractionWithOFACAddressMonitor'
+        title: Malicious Interaction With OFACAddress Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MonitoredContractExploitMonitor'
+        title: Monitored Contract Exploit Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ImpersonatorDappDeployedMonitor'
+        title: Impersonator Dapp Deployed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ImpersonatorTokenDeployedMonitor'
+        title: Impersonator Token Deployed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/FrontendAttackMonitor'
+        title: Frontend Attack Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ExploitContractDeployedWithReferenceToMonitoredAssetMonitor'
+        title: Exploit Contract Deployed With Reference To Monitored Asset Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousFundsExposureMonitor'
+        title: Malicious Funds Exposure Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/UserGotDrainedMonitor'
+        title: User Got Drained Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousTransactionWasBlockedMonitor'
+        title: Malicious Transaction Was Blocked Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousTransactionDetectedMonitor'
+        title: Malicious Transaction Detected Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ToctouPackageDeployedMonitor'
+        title: TOCTOU Package Deployed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ActiveMaliciousAirdropCampaignMonitor'
+        title: Active Malicious Airdrop Campaign Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/AddressPoisoningCampaignMonitor'
+        title: Address Poisoning Campaign Rules
+    UserGotDrainedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: user_got_drained
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            drain_amount_usd:
+              type: array
+              items:
+                type: object
+                properties:
+                  operator:
+                    type: string
+                    enum:
+                    - eq
+                    - neq
+                    - gt
+                    - gte
+                    - lt
+                    - lte
+                    description: Comparison operator for drain amount usd.
+                  value:
+                    type: number
+                    description: Comparison value for drain amount usd.
+                required:
+                - operator
+                - value
+              minItems: 1
+              description: Drain Amount USD for this configuration.
+            chain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chain.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chain.
+              required:
+              - operator
+              - value
+              description: Chain for this configuration.
+          required:
+          - drain_amount_usd
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: User Got Drained
+    LabelEntityAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: label_entity
+          description: Action type.
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        entity_from_incident:
+          type: string
+          enum:
+          - target
+          - source
+          title: Entity From Incident
+          description: Specifies which entity from the incident to label - either the target(s) or source(s) of the incident.
+        label:
+          type: string
+          enum:
+          - account_takeover
+          - compromised
+          - custom_malicious
+          - investment_scam
+          - address_poisoning_impersonator_wallet
+          - address_poisoning_operator
+          - exploiter
+          - exploit_contract
+          - malicious_airdrop_operator
+          - wallet_drainer
+          - rugpull_operator
+          - malicious_implementation
+          title: Label
+          description: The malicious label to apply to the entity. Available labels include classifications for various threat types such as drainers, exploiters, scams, and compromised entities.
+      title: Label Entity Action
+      required:
+      - type
+      - entity_from_incident
+      - label
+    WebhookAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: webhook
+          description: Action type.
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        url:
+          type: string
+          title: Consumer URL
+          description: The URL of the endpoint where the platform sends the event payloads.
+        authentication:
+          title: Authentication Method
+          description: The authentication method used for the webhook request.
+          $ref: '#/components/schemas/Authentication'
+        custom_headers:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                title: Header Name
+                description: The name of the custom header.
+              value:
+                type: string
+                title: Value
+                description: The value of the custom header.
+            required:
+            - name
+            - value
+          title: Custom Headers
+          description: Custom headers to be sent in the HTTP POST request along with the event payload.
+        custom_payload_fields:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+                title: Field Key
+                description: The key name for the custom field in the webhook payload.
+              value:
+                type: string
+                title: Field Value
+                description: The value for the custom field.
+            required:
+            - key
+            - value
+          title: Custom Payload Fields
+          description: Custom fields to be included in the webhook payload along with the event data.
+      title: Webhook Action
+      required:
+      - type
+      - url
+    Severity:
+      type: string
+      enum:
+      - info
+      - low
+      - medium
+      - high
+      - critical
+      title: Severity
+    TransferToNonApprovedEntityMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: transfer_to_non_approved_entity
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    MaliciousTransactionDetectedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: malicious_transaction_detected
+          description: Type discriminator for this object.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - severity
+      description: Malicious Transaction Detected
+    SystemMonitorRuleResponse:
+      title: System Monitor Rule Response
+      description: Supported system monitor rule collections returned by the API.
+      oneOf:
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousInteractionWithOFACAddressMonitor'
+        title: Malicious Interaction With OFACAddress Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MonitoredContractExploitMonitor'
+        title: Monitored Contract Exploit Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ImpersonatorDappDeployedMonitor'
+        title: Impersonator Dapp Deployed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ImpersonatorTokenDeployedMonitor'
+        title: Impersonator Token Deployed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/FrontendAttackMonitor'
+        title: Frontend Attack Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ExploitContractDeployedWithReferenceToMonitoredAssetMonitor'
+        title: Exploit Contract Deployed With Reference To Monitored Asset Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousFundsExposureMonitor'
+        title: Malicious Funds Exposure Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/UserGotDrainedMonitor'
+        title: User Got Drained Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousTransactionWasBlockedMonitor'
+        title: Malicious Transaction Was Blocked Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousTransactionDetectedMonitor'
+        title: Malicious Transaction Detected Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ToctouPackageDeployedMonitor'
+        title: TOCTOU Package Deployed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ActiveMaliciousAirdropCampaignMonitor'
+        title: Active Malicious Airdrop Campaign Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/AddressPoisoningCampaignMonitor'
+        title: Address Poisoning Campaign Rules
+    MonitoredContractExploitMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: monitored_contract_was_exploited
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        parameters:
+          type: object
+          properties:
+            confidence:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for confidence.
+                value:
+                  type: number
+                  description: Comparison value for confidence.
+              required:
+              - operator
+              - value
+              description: Confidence for this configuration.
+            funds_lost:
+              type: array
+              items:
+                type: object
+                properties:
+                  operator:
+                    type: string
+                    enum:
+                    - eq
+                    - neq
+                    - gt
+                    - gte
+                    - lt
+                    - lte
+                    description: Comparison operator for funds lost.
+                  value:
+                    type: number
+                    description: Comparison value for funds lost.
+                required:
+                - operator
+                - value
+              minItems: 1
+              description: Funds Lost for this configuration.
+          required:
+          - confidence
+          description: Parameters for this configuration.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      - parameters
+      description: Monitored Contract Was Exploited
+    EmailAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: email
+          description: 'Action type. '
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        to:
+          type: array
+          items:
+            type: string
+          description: Primary email recipients.
+        cc:
+          type: array
+          items:
+            type: string
+          description: CC email recipients.
+        bcc:
+          type: array
+          items:
+            type: string
+          description: BCC email recipients.
+        body:
+          type: string
+          description: Request body payload.
+      title: Email Action
+      required:
+      - type
+      - to
+    NewMonitorCreation:
+      title: New Monitor Creation
+      description: Payload used to create a monitor with rules, tags, and optional actions.
+      type: object
+      properties:
+        name:
+          type: string
+          description: Display name for the new monitor.
+        tags:
+          type: array
+          default: []
+          description: Optional tags used to group and filter the monitor.
+          items:
+            type: string
+        actions:
+          type: array
+          default: []
+          description: Actions to execute when monitor rules are triggered.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/EmailAction'
+            - $ref: '#/components/schemas/SlackAction'
+            - $ref: '#/components/schemas/TelegramAction'
+            - $ref: '#/components/schemas/WebhookAction'
+            - $ref: '#/components/schemas/PauseContractAction'
+            - $ref: '#/components/schemas/SequencerAction'
+            - $ref: '#/components/schemas/APICallAction'
+            - $ref: '#/components/schemas/CallContractAction'
+            - $ref: '#/components/schemas/LabelEntityAction'
+        monitors:
+          allOf:
+          - description: The rules this monitor runs to detect and evaluate activity.
+          - $ref: '#/components/schemas/MonitorRuleRequest'
+      required:
+      - name
+      - monitors
+    CallContractAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: contract_call
+          description: Type discriminator for this object.
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        targets:
+          anyOf:
+          - type: array
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/AssetIDTarget'
+              - $ref: '#/components/schemas/AssetTagTarget'
+          - type: string
+            const: dynamic
+          description: Target asset or entity selection for this rule or action.
+        via_router:
+          type: object
+          description: 'Optional: route calls through these contracts (targets become $address parameter)'
+          properties:
+            contracts:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/AssetIDTarget'
+              description: Contracts used by this routing configuration.
+          required:
+          - contracts
+        function_signature:
+          type: string
+          description: e.g. 'transfer(address,uint256)'
+        function_parameters:
+          type: array
+          items:
+            type: string
+          description: Function arguments to pass.
+        response_wallet:
+          type: object
+          required:
+          - integration_instance_id
+          properties:
+            integration_instance_id:
+              type: string
+              description: Identifier for the integration instance.
+          description: Wallet integration used for action responses.
+      title: Call Contract Action
+      required:
+      - type
+      - function_signature
+      - function_parameters
+      - response_wallet
+      - targets
+    BasicAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          const: basic_auth
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - type
+      - username
+      - password
+    ApprovalToMulticallContractMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: approval_to_multicall_contract
+          description: Type discriminator for this object.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        is_silent:
+          type: boolean
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      - is_silent
+      description: Standard Rule
+    TokenStateChangedToMaliciousMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: token_state_changed_to_malicious
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    Eip7702SetCodeUpgradeMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: eip_7702_set_code_upgrade_monitor
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    MonitoringSupportedChains:
+      type: string
+      enum:
+      - abstract
+      - apechain
+      - arbitrum
+      - avalanche
+      - avalanche-fuji
+      - base
+      - berachain
+      - bitcoin
+      - blast
+      - bsc
+      - degen
+      - ethereum
+      - ethereum-sepolia
+      - gnosis
+      - hedera
+      - hyperevm
+      - hyperliquid
+      - aster
+      - lighter
+      - ink
+      - kaia
+      - katana
+      - kite-ai
+      - linea
+      - monad
+      - optimism
+      - plume
+      - polymarket
+      - polygon
+      - ronin
+      - scroll
+      - sei
+      - solana
+      - soneium
+      - soneium-minato
+      - stellar
+      - sui
+      - unichain
+      - worldchain
+      - zksync
+      - mainnet
+      - kaia
+      - tron
+      - robinhood
+      - arc
+      - xlayer
+      title: MonitoringSupportedChains
+      description: The chain name
+    MaliciousInteractionWithOFACAddressMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: malicious_interaction_with_ofac_address
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            malicious_actor_label:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for malicious actor label.
+                value:
+                  type: array
+                  items:
+                    type: string
+                  description: Comparison value for malicious actor label.
+              required:
+              - operator
+              - value
+              description: Malicious Actor Label for this configuration.
+            interaction_direction:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  description: Comparison operator for interaction direction.
+                value:
+                  type: string
+                  enum:
+                  - any
+                  - inbound
+                  - outbound
+                  description: Comparison value for interaction direction.
+              required:
+              - operator
+              - value
+              description: Interaction Direction for this configuration.
+            chain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chain.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chain.
+              required:
+              - operator
+              - value
+              description: Chain for this configuration.
+            interaction_type:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for interaction type.
+                value:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - funds_transfer
+                    - approval
+                    - function_call
+                  description: Comparison value for interaction type.
+              required:
+              - operator
+              - value
+              description: Interaction Type for this configuration.
+            interaction_usd_value:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - eq
+                  - neq
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for interaction usd value.
+                value:
+                  type: number
+                  description: Comparison value for interaction usd value.
+              required:
+              - operator
+              - value
+              description: Interaction USD Value for this configuration.
+          required:
+          - malicious_actor_label
+          - interaction_direction
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Malicious Interaction with an OFAC Address
+    PigButcheringInteractionMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: pig_butchering_interaction
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    FunctionCallMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: function_call
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            function_name:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  description: Comparison operator for function name.
+                value:
+                  type: string
+                  description: Comparison value for function name.
+              required:
+              - operator
+              - value
+              description: Function Name to match.
+            function_parameter:
+              type: array
+              items:
+                anyOf:
+                - type: object
+                  properties:
+                    parameter:
+                      type: string
+                      description: Parameter for this configuration.
+                    operator:
+                      type: string
+                      enum:
+                      - is
+                      - is_not
+                      - contains
+                      - not_contains
+                      description: Comparison operator for function parameter.
+                    value:
+                      type: string
+                      description: Comparison value for function parameter.
+                  required:
+                  - operator
+                  - value
+                  - parameter
+                - type: object
+                  properties:
+                    parameter:
+                      type: string
+                      description: Parameter for this configuration.
+                    operator:
+                      type: string
+                      enum:
+                      - is
+                      - is_not
+                      - eq
+                      - gte
+                      - lte
+                      - lt
+                      - gt
+                      - neq
+                      - increase_by
+                      - decrease_by
+                      - multiply_by
+                      - divide_by
+                      description: Comparison operator for function parameter.
+                    value:
+                      type: integer
+                      description: Comparison value for function parameter.
+                  required:
+                  - operator
+                  - value
+                  - parameter
+              description: Function Parameter for this configuration.
+            caller_address:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for caller address.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AssetIDTarget'
+                  description: Comparison value for caller address.
+              required:
+              - operator
+              - value
+              description: Caller Address for this configuration.
+          required:
+          - function_name
+          - caller_address
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Standard Rule
+    Timeframe:
+      title: Timeframe
+      type: object
+      properties:
+        value:
+          type: integer
+          description: Numeric value of the timeframe window.
+        unit:
+          type: string
+          description: Unit used for the timeframe value.
+      required:
+      - value
+      - unit
+    MaliciousTransactionWasBlockedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: malicious_transaction_was_blocked
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            tx_amount_usd:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - eq
+                  - neq
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for tx amount usd.
+                value:
+                  type: number
+                  description: Comparison value for tx amount usd.
+              required:
+              - operator
+              - value
+              description: Tx Amount USD for this configuration.
+            chain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chain.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chain.
+              required:
+              - operator
+              - value
+              description: Chain for this configuration.
+            domain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  - contains
+                  - not_contains
+                  description: Comparison operator for domain.
+                value:
+                  type: string
+                  description: Comparison value for domain.
+              required:
+              - operator
+              - value
+              description: Domain for this configuration.
+          required:
+          - tx_amount_usd
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Malicious Transaction was Blocked
+    ActiveMaliciousAirdropCampaignMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: active_malicious_airdrop_campaign
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            victims_amount:
+              type: array
+              items:
+                type: object
+                properties:
+                  operator:
+                    type: string
+                    enum:
+                    - eq
+                    - neq
+                    - gt
+                    - gte
+                    - lt
+                    - lte
+                    description: Comparison operator for victims amount.
+                  value:
+                    type: integer
+                    description: Comparison value for victims amount.
+                required:
+                - operator
+                - value
+              description: Victims Amount for this configuration.
+            operator_address:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for operator address.
+                value:
+                  type: array
+                  items:
+                    type: string
+                  description: Comparison value for operator address.
+              required:
+              - operator
+              - value
+              description: Operator Address for this configuration.
+            token_address:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for token address.
+                value:
+                  type: array
+                  items:
+                    type: string
+                  description: Comparison value for token address.
+              required:
+              - operator
+              - value
+              description: Token Address for this configuration.
+            chain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chain.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chain.
+              required:
+              - operator
+              - value
+              description: Chain for this configuration.
+          required:
+          - victims_amount
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Active Malicious Airdrop Campaign
+    AssetIDTarget:
+      title: Asset ID Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_id
+          description: Type discriminator for this object.
+          enum:
+          - asset_id
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    AuthorizationHeaderAuthentication:
+      type: object
+      properties:
+        type:
+          type: string
+          const: authorization_header
+          description: Type discriminator for this object.
+        value:
+          type: string
+          description: Comparison value.
+      required:
+      - type
+      - value
+    IPInfringementMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: ip_infringement
+          description: Type discriminator for this object.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        parameters:
+          type: object
+          properties:
+            keywords:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  const: in
+                  description: Comparison operator for keywords.
+                value:
+                  type: array
+                  items:
+                    type: string
+                  description: Comparison value for keywords.
+              required:
+              - operator
+              - value
+              description: Keywords for this configuration.
+            search_location:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for search location.
+                value:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - token_names
+                    - token_symbols
+                    - dapp_dns_name
+                  description: Comparison value for search location.
+              required:
+              - operator
+              - value
+              description: Search Location for this configuration.
+            chains:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chains.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chains.
+              required:
+              - operator
+              - value
+              description: Chains for this configuration.
+          required:
+          - keywords
+          - search_location
+          description: Parameters for this configuration.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - severity
+      - parameters
+      description: Standard Rule
+    SlackAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: slack
+          description: 'Action type. '
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        integration_instance_id:
+          type: string
+          description: Identifier for the integration instance.
+        channels:
+          items:
+            type: string
+          type: array
+          title: Channels
+          description: Slack channel names
+        message_format:
+          type: string
+          title: Format
+          description: Customization of the message to send in the Slack notification.
+      title: Slack Action
+      required:
+      - channels
+      - type
+      - integration_instance_id
+    MonitorRuleRequest:
+      title: Monitor Rule Request
+      description: Monitor rule types you can send when creating or updating a monitor.
+      oneOf:
+      - type: array
+        items:
+          $ref: '#/components/schemas/ApprovalToMulticallContractMonitor'
+        title: Approval To Multicall Contract Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/AssetHasDeployedContractMonitor'
+        title: Asset Has Deployed Contract Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/BenignInteractionWithAnAssetMonitor'
+        title: Benign Interaction With An Asset Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ContractOwnerChangeMonitor'
+        title: Contract Owner Change Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ObjectOwnerChangeMonitor'
+        title: Object Owner Change Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/DelegateCallToNonApprovedContractMonitor'
+        title: Delegate Call To Non Approved Contract Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/Eip7702SetCodeUpgradeMonitor'
+        title: EIP 7702 Set Code Upgrade Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/EventEmittedMonitor'
+        title: Event Emitted Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/FunctionCallMonitor'
+        title: Function Call Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousInteractionWithAssetMonitor'
+        title: Malicious Interaction With Asset Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/PigButcheringInteractionMonitor'
+        title: Pig Butchering Interaction Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ProxyUpgradeDetectedMonitor'
+        title: Proxy Upgrade Detected Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/TokenStateChangedToMaliciousMonitor'
+        title: Token State Changed To Malicious Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ToxicityRateThresholdCrossedMonitor'
+        title: Toxicity Rate Threshold Crossed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/TransferToNonApprovedEntityMonitor'
+        title: Transfer To Non Approved Entity Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/CompositeMonitor'
+        title: Composite Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/FormulaMonitor'
+        title: Formula Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/IPInfringementMonitor'
+        title: IPInfringement Rules
+    FormulaMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: formula
+          description: Type discriminator for this object.
+        category:
+          type: string
+          enum:
+          - scam_fraud
+          - security
+          - compliance
+          - finance
+          description: Category for this configuration.
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              symbol:
+                type: string
+                maxLength: 1
+                minLength: 1
+                description: Short symbol used to reference this metric in formulas.
+              metric:
+                $ref: '#/components/schemas/DefinedMetric'
+                description: Metric for this configuration.
+            required:
+            - symbol
+            - metric
+          description: Metric definitions used by this configuration.
+        formula:
+          type: string
+          description: Formula expression used to compute the metric.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+      required:
+      - metrics
+      - formula
+      - type
+      - severity
+      - category
+      description: Formula
+    AssetLabelTarget:
+      title: Asset Label Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_label
+          description: Type discriminator for this object.
+          enum:
+          - asset_label
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    MonitorObject:
+      title: Monitor Object
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the monitor.
+        is_enabled:
+          type: boolean
+          description: Whether the monitor is enabled.
+        name:
+          type: string
+          description: Display name of the monitor.
+        created_by:
+          type: string
+          description: Actor that originally created the monitor.
+        updated_by:
+          type: string
+          description: Actor that last updated the monitor.
+        updated_at:
+          type: string
+          description: Timestamp when the monitor was last updated.
+        created_at:
+          type: string
+          description: Timestamp when the monitor was created.
+        monitors:
+          description: Rule set configuration evaluated by this monitor.
+          anyOf:
+          - $ref: '#/components/schemas/MonitorRuleResponse'
+          - $ref: '#/components/schemas/SystemMonitorRuleResponse'
+        actions:
+          type: array
+          description: Actions executed when the monitor rules are triggered.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/EmailAction'
+            - $ref: '#/components/schemas/SlackAction'
+            - $ref: '#/components/schemas/TelegramAction'
+            - $ref: '#/components/schemas/WebhookAction'
+            - $ref: '#/components/schemas/PauseContractAction'
+            - $ref: '#/components/schemas/SequencerAction'
+            - $ref: '#/components/schemas/APICallAction'
+            - $ref: '#/components/schemas/CallContractAction'
+            - $ref: '#/components/schemas/LabelEntityAction'
+        tags:
+          type: array
+          description: Tags attached to the monitor for grouping and filtering.
+          items:
+            type: string
+      required:
+      - id
+      - created_by
+      - updated_by
+      - updated_at
+      - created_at
+      - monitors
+      - name
+      - is_enabled
+    SequencerAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: sequencer
+          description: Type discriminator for this object.
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        target:
+          type: string
+          enum:
+          - target
+          - source
+          title: Target
+          description: Target asset or entity selection for this rule or action.
+        comment:
+          type: string
+          title: Comment
+          description: Optional comment for this action.
+        expiration_time:
+          type: string
+          format: date-time
+          description: Timestamp for expiration time.
+      title: Sequencer Action
+      required:
+      - target
+    AddressPoisoningCampaignMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: address_poisoning_campaign
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            victims_amount:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - eq
+                  - neq
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for victims amount.
+                value:
+                  type: integer
+                  description: Comparison value for victims amount.
+              required:
+              - operator
+              - value
+              description: Victims Amount for this configuration.
+            operator_address:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for operator address.
+                value:
+                  type: array
+                  items:
+                    type: string
+                  description: Comparison value for operator address.
+              required:
+              - operator
+              - value
+              description: Operator Address for this configuration.
+            chain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chain.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chain.
+              required:
+              - operator
+              - value
+              description: Chain for this configuration.
+          required:
+          - victims_amount
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Address Poisoning Campaign
+    HMACAuthentication:
+      type: object
+      properties:
+        type:
+          type: string
+          const: hmac
+          description: Type discriminator for this object.
+        hmac_secret:
+          type: string
+          description: Secret value for hmac secret authentication.
+      required:
+      - type
+      - hmac_secret
+    ExploitContractDeployedWithReferenceToMonitoredAssetMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: exploit_contract_deployed_with_reference
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        parameters:
+          type: object
+          properties:
+            confidence:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for confidence.
+                value:
+                  type: number
+                  description: Comparison value for confidence.
+              required:
+              - operator
+              - value
+              description: Confidence for this configuration.
+          required:
+          - confidence
+          description: Parameters for this configuration.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      - parameters
+      description: Exploit Contract was Deployed with a Reference to a Monitored Asset
+    ImpersonatorTokenDeployedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: impersonator_token_deployed
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Impersonator Token Deployed
+    ImpersonatorDappDeployedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: impersonator_dapp_deployed
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            similarity_score:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - eq
+                  - neq
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for similarity score.
+                value:
+                  type: number
+                  minimum: 0
+                  maximum: 1
+                  description: Comparison value for similarity score.
+              required:
+              - operator
+              - value
+              description: Similarity Score for this configuration.
+            popularity_score:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - eq
+                  - neq
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for popularity score.
+                value:
+                  type: number
+                  description: Comparison value for popularity score.
+              required:
+              - operator
+              - value
+              description: Popularity Score for this configuration.
+          required:
+          - similarity_score
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Impersonator dApp Deployed
+    TelegramAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: telegram
+          description: 'Action type. '
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        integration_instance_id:
+          type: string
+          description: Identifier for the integration instance.
+        chats:
+          type: array
+          items:
+            type: object
+            properties:
+              chat_id:
+                type: string
+                description: Telegram channel ID.
+              topic_ids:
+                type: array
+                items:
+                  type: integer
+                description: Optional topic IDs within the channel where the message should be posted.
+            required:
+            - chat_id
+          description: Telegram chat and topic configuration for posting notifications.
+        message_format:
+          type: string
+          description: Customization of the message to send in the Telegram notification.
+      title: Telegram Action
+      required:
+      - type
+      - chats
+      - integration_instance_id
+    DelegateCallToNonApprovedContractMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: delegate_call_to_non_approved_contract
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            function_name:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  description: Comparison operator for function name.
+                value:
+                  type: string
+                  description: Comparison value for function name.
+              required:
+              - operator
+              - value
+              description: Function Name to match.
+            function_parameter:
+              type: array
+              items:
+                anyOf:
+                - type: object
+                  properties:
+                    parameter:
+                      type: string
+                      description: Parameter for this configuration.
+                    operator:
+                      type: string
+                      enum:
+                      - is
+                      - is_not
+                      - contains
+                      - not_contains
+                      description: Comparison operator for function parameter.
+                    value:
+                      type: string
+                      description: Comparison value for function parameter.
+                  required:
+                  - operator
+                  - value
+                  - parameter
+                - type: object
+                  properties:
+                    parameter:
+                      type: string
+                      description: Parameter for this configuration.
+                    operator:
+                      type: string
+                      enum:
+                      - is
+                      - is_not
+                      - eq
+                      - gte
+                      - lte
+                      - lt
+                      - gt
+                      - neq
+                      - increase_by
+                      - decrease_by
+                      - multiply_by
+                      - divide_by
+                      description: Comparison operator for function parameter.
+                    value:
+                      type: integer
+                      description: Comparison value for function parameter.
+                  required:
+                  - operator
+                  - value
+                  - parameter
+              description: Function Parameter for this configuration.
+            approved_contract:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for approved contract.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AssetIDTarget'
+                  description: Comparison value for approved contract.
+              required:
+              - operator
+              - value
+              description: Approved Contract for this configuration.
+          required:
+          - function_name
+          - approved_contract
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Standard Rule
+    CompositeMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: composite
+          description: Type discriminator for this object.
+        category:
+          type: string
+          enum:
+          - scam_fraud
+          - security
+          - compliance
+          - finance
+          description: Category for this configuration.
+        must_match_monitor_configs:
+          type: array
+          items:
+            type: object
+            properties:
+              monitor_id:
+                type: string
+                description: Identifier for the monitor.
+              severity:
+                $ref: '#/components/schemas/Severity'
+                description: Severity level for incidents that match this rule.
+            required:
+            - monitor_id
+            - severity
+          description: Must Match Monitor Configs for this configuration.
+        must_not_match_monitor_configs:
+          type: array
+          items:
+            type: object
+            properties:
+              monitor_id:
+                type: string
+                description: Identifier for the monitor.
+              severity:
+                $ref: '#/components/schemas/Severity'
+                description: Severity level for incidents that match this rule.
+            required:
+            - monitor_id
+            - severity
+          description: Must Not Match Monitor Configs for this configuration.
+        incidents_must_share_same_target:
+          type: boolean
+          default: false
+          description: Incidents Must Share Same Target for this configuration.
+        incidents_must_share_same_attacker:
+          type: boolean
+          default: false
+          description: Incidents Must Share Same Attacker for this configuration.
+        timeframe:
+          $ref: '#/components/schemas/Timeframe'
+          nullable: true
+          description: Time window for matching incidents. When null, all conditions must be met within a single transaction.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - must_match_monitor_configs
+      - must_not_match_monitor_configs
+      - severity
+      - category
+      description: Composite Rule
+    EventEmittedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: event_emitted
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            event_name:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  description: Comparison operator for event name.
+                value:
+                  type: string
+                  description: Comparison value for event name.
+              required:
+              - operator
+              - value
+              description: Event Name to match.
+            event_parameter:
+              type: array
+              items:
+                anyOf:
+                - type: object
+                  properties:
+                    parameter:
+                      type: string
+                      description: Parameter for this configuration.
+                    operator:
+                      type: string
+                      enum:
+                      - is
+                      - is_not
+                      - contains
+                      - not_contains
+                      description: Comparison operator for event parameter.
+                    value:
+                      type: string
+                      description: Comparison value for event parameter.
+                  required:
+                  - operator
+                  - value
+                  - parameter
+                - type: object
+                  properties:
+                    parameter:
+                      type: string
+                      description: Parameter for this configuration.
+                    operator:
+                      type: string
+                      enum:
+                      - is
+                      - is_not
+                      - eq
+                      - gte
+                      - lte
+                      - lt
+                      - gt
+                      - neq
+                      - increase_by
+                      - decrease_by
+                      - multiply_by
+                      - divide_by
+                      description: Comparison operator for event parameter.
+                    value:
+                      type: integer
+                      description: Comparison value for event parameter.
+                  required:
+                  - operator
+                  - value
+                  - parameter
+              description: Event Parameter for this configuration.
+          required:
+          - event_name
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Standard Rule
+    MonitorRuleResponse:
+      title: Monitor Rule Response
+      description: Monitor rule types the API returns for a monitor.
+      oneOf:
+      - type: array
+        items:
+          $ref: '#/components/schemas/ApprovalToMulticallContractMonitor'
+        title: Approval To Multicall Contract Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/AssetHasDeployedContractMonitor'
+        title: Asset Has Deployed Contract Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/BenignInteractionWithAnAssetMonitor'
+        title: Benign Interaction With An Asset Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ContractOwnerChangeMonitor'
+        title: Contract Owner Change Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ObjectOwnerChangeMonitor'
+        title: Object Owner Change Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/DelegateCallToNonApprovedContractMonitor'
+        title: Delegate Call To Non Approved Contract Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/Eip7702SetCodeUpgradeMonitor'
+        title: EIP 7702 Set Code Upgrade Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/EventEmittedMonitor'
+        title: Event Emitted Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/FunctionCallMonitor'
+        title: Function Call Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/MaliciousInteractionWithAssetMonitor'
+        title: Malicious Interaction With Asset Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/PigButcheringInteractionMonitor'
+        title: Pig Butchering Interaction Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ProxyUpgradeDetectedMonitor'
+        title: Proxy Upgrade Detected Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/TokenStateChangedToMaliciousMonitor'
+        title: Token State Changed To Malicious Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/ToxicityRateThresholdCrossedMonitor'
+        title: Toxicity Rate Threshold Crossed Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/TransferToNonApprovedEntityMonitor'
+        title: Transfer To Non Approved Entity Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/CompositeMonitor'
+        title: Composite Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/FormulaMonitor'
+        title: Formula Rules
+      - type: array
+        items:
+          $ref: '#/components/schemas/IPInfringementMonitor'
+        title: IPInfringement Rules
+      - type: array
+        title: Empty Rules
+        description: An empty list of rules.
+    AssetHasDeployedContractMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_has_deployed_contract
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            chain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chain.
+                value:
+                  $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chain.
+              required:
+              - operator
+              - value
+              description: Chain for this configuration.
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    APICallAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: api_call
+          description: Type discriminator for this object.
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        url:
+          type: string
+          description: Target URL.
+        authentication:
+          $ref: '#/components/schemas/Authentication'
+          description: Authentication configuration.
+        custom_headers:
+          type: object
+          properties: {}
+          description: Additional headers to include in the request.
+        request_type:
+          type: string
+          enum:
+          - GET
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          description: HTTP method to use.
+        body:
+          type: object
+          properties: {}
+          description: Request body payload.
+        incident_payload_override:
+          type: array
+          items:
+            type: object
+            properties:
+              key_to_override:
+                type: string
+                description: Payload key to override.
+              incident_field:
+                type: string
+                enum:
+                - targets
+                - attackers
+                - incident_name
+                - incident_start_date
+                - incident_end_date
+                - incident_duration
+                - severity
+                - dollars_funds_lost
+                - dollars_funds_exposed
+                description: Incident field mapped into the request payload.
+            required:
+            - key_to_override
+            - incident_field
+          description: Incident payload field overrides.
+      title: API Call Action
+      required:
+      - type
+      - url
+      - request_type
+      - incident_payload_override
+    MaliciousFundsExposureMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: malicious_funds_exposure
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            exposed_amount_usd:
+              type: array
+              items:
+                type: object
+                properties:
+                  operator:
+                    type: string
+                    enum:
+                    - eq
+                    - neq
+                    - gt
+                    - gte
+                    - lt
+                    - lte
+                    description: Comparison operator for exposed amount usd.
+                  value:
+                    type: number
+                    description: Comparison value for exposed amount usd.
+                required:
+                - operator
+                - value
+              minItems: 1
+              description: Exposed Amount USD for this configuration.
+            chains:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chains.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chains.
+              required:
+              - operator
+              - value
+              description: Chains for this configuration.
+          required:
+          - exposed_amount_usd
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Malicious Funds Exposure
+    BenignInteractionWithAnAssetMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: benign_interaction_with_an_asset
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            interaction_type:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for interaction type.
+                value:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - funds_transfer
+                    - approval
+                    - function_call
+                  description: Comparison value for interaction type.
+              required:
+              - operator
+              - value
+              description: Interaction Type for this configuration.
+            interacted_addresses:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for interacted addresses.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AssetIDTarget'
+                  description: Comparison value for interacted addresses.
+              required:
+              - operator
+              - value
+              description: Interacted Addresses for this configuration.
+            interaction_direction:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  description: Comparison operator for interaction direction.
+                value:
+                  type: string
+                  enum:
+                  - inbound
+                  - outbound
+                  - any
+                  description: Comparison value for interaction direction.
+              required:
+              - operator
+              - value
+              description: Interaction Direction for this configuration.
+            interaction_usd_value:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for interaction usd value.
+                value:
+                  type: integer
+                  description: Comparison value for interaction usd value.
+              required:
+              - operator
+              - value
+              description: Interaction USD Value for this configuration.
+          required:
+          - interacted_addresses
+          - interaction_direction
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Standard Rule
+    ToctouPackageDeployedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: toctou_package_deployed
+          description: Type discriminator for this object.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - severity
+      description: TOCTOU Package Deployed
+    DefinedMetric:
+      type: object
+      properties:
+        metric_id:
+          type: string
+          description: Identifier for the metric.
+        aggregation:
+          type: object
+          properties:
+            aggregation_function:
+              type: string
+              enum:
+              - sum
+              - avg
+              - min
+              - max
+              - std_dev
+              - count
+              description: Aggregation function to apply.
+            timeframe:
+              $ref: '#/components/schemas/Timeframe'
+              description: Timeframe window for aggregation.
+          required:
+          - aggregation_function
+          - timeframe
+          description: Aggregation configuration applied to metric data.
+      required:
+      - metric_id
+    PauseContractAction:
+      type: object
+      properties:
+        type:
+          type: string
+          const: pause-contract
+          description: Type discriminator for this object.
+        severity:
+          type: array
+          items:
+            $ref: '#/components/schemas/Severity'
+          description: Incident severities this action runs for. When omitted, null, or an empty list, the action runs for incidents of any severity. Must not contain duplicate values.
+        pause:
+          type: boolean
+          title: Pause
+          description: Whether to pause the contract.
+      title: Pause Contract Action
+      required:
+      - pause
+    Authentication:
+      anyOf:
+      - $ref: '#/components/schemas/HMACAuthentication'
+      - $ref: '#/components/schemas/AuthorizationHeaderAuthentication'
+      - $ref: '#/components/schemas/APIKeyAuthorization'
+      - $ref: '#/components/schemas/BasicAuth'
+    ToxicityRateThresholdCrossedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: toxicity_monitor
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            toxicity_category:
+              type: array
+              items:
+                type: object
+                properties:
+                  parameter:
+                    type: string
+                    description: Toxicity category parameter.
+                  operator:
+                    type: string
+                    enum:
+                    - gte
+                    - lte
+                    - lt
+                    - gt
+                    description: Comparison operator for toxicity category.
+                  value:
+                    type: string
+                    description: Comparison value for toxicity category.
+                required:
+                - parameter
+                - operator
+                - value
+              description: Toxicity category conditions for this configuration.
+          required:
+          - toxicity_category
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - parameters
+      - severity
+      description: Standard Rule
+    ProxyUpgradeDetectedMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: proxy_upgrade_detected
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    FrontendAttackMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: frontend_attack
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Frontend Attack
+    AssetIDExcludeTarget:
+      title: Asset ID Exclude Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: exclude_asset_id
+          description: Type discriminator for this object.
+        identifier:
+          type: string
+          description: Target identifier value.
+      required:
+      - type
+      - identifier
+    APIKeyAuthorization:
+      type: object
+      properties:
+        type:
+          type: string
+          const: api_key
+          description: Type discriminator for this object.
+        header_name:
+          type: string
+          description: Header name used for API key authentication.
+        api_key:
+          type: string
+          description: Secret value for api key authentication.
+      required:
+      - type
+      - header_name
+      - api_key
+    ObjectOwnerChangeMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: object_owner_change
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            change_type:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for change type.
+                value:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - transferred
+                    - frozen
+                    - shared
+                  description: Comparison value for change type.
+              required:
+              - operator
+              - value
+              description: Change Type for this configuration.
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    AssetTagTarget:
+      title: Asset Tag Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_tag
+          description: Type discriminator for this object.
+          enum:
+          - asset_tag
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    ContractOwnerChangeMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: contract_owner_change
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+    MaliciousInteractionWithAssetMonitor:
+      type: object
+      properties:
+        type:
+          type: string
+          const: malicious_interaction_with_asset
+          description: Type discriminator for this object.
+        target:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/AssetIDExcludeTarget'
+          description: Target asset or entity selection for this rule or action.
+        parameters:
+          type: object
+          properties:
+            chain:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for chain.
+                value:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/MonitoringSupportedChains'
+                  description: Comparison value for chain.
+              required:
+              - operator
+              - value
+              description: Chain for this configuration.
+            malicious_actor_label:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for malicious actor label.
+                value:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - custom_malicious
+                    - address_poisoning_imperatonator_wallet
+                    - wallet_drainer
+                    - exploiter
+                    - exploit_contract
+                    - ofac_address
+                    - malicious_contract_deployer
+                    - compromised
+                    - malicious_operator
+                  description: Comparison value for malicious actor label.
+              required:
+              - operator
+              - value
+              description: Malicious Actor Label for this configuration.
+            interaction_type:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - in
+                  - not_in
+                  description: Comparison operator for interaction type.
+                value:
+                  type: array
+                  items:
+                    type: string
+                    enum:
+                    - funds_transfer
+                    - approval
+                    - function_call
+                  description: Comparison value for interaction type.
+              required:
+              - operator
+              - value
+              description: Interaction Type for this configuration.
+            interaction_direction:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  description: Comparison operator for interaction direction.
+                value:
+                  type: string
+                  enum:
+                  - inbound
+                  - outbound
+                  - any
+                  description: Comparison value for interaction direction.
+              required:
+              - operator
+              - value
+              description: Interaction Direction for this configuration.
+            interaction_usd_value:
+              type: object
+              properties:
+                operator:
+                  type: string
+                  enum:
+                  - is
+                  - is_not
+                  - gt
+                  - gte
+                  - lt
+                  - lte
+                  description: Comparison operator for interaction usd value.
+                value:
+                  type: integer
+                  description: Comparison value for interaction usd value.
+              required:
+              - operator
+              - value
+              description: Interaction USD Value for this configuration.
+          required:
+          - interaction_type
+          - interaction_direction
+          - interaction_usd_value
+          description: Parameters for this configuration.
+        severity:
+          $ref: '#/components/schemas/Severity'
+          description: Severity level for incidents that match this rule.
+        is_silent:
+          type: boolean
+          default: false
+          description: Whether incidents from this rule should be silent.
+      required:
+      - type
+      - target
+      - severity
+      description: Standard Rule
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

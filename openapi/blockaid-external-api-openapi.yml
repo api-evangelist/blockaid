@@ -1,0 +1,568 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management external API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: external
+paths:
+  /v0/platform/cosigners/{id}/solana/evaluate:
+    post:
+      description: Test your cosigner policies against Solana transactions. You can simulate a transaction before it is sent, look up past transactions by signature, or evaluate everything that happened in a given time range.
+      operationId: evaluate_solana_transaction_route_external_v0_cosigners__id__solana_evaluate_post
+      parameters:
+      - description: Cosigner ID
+        in: path
+        name: id
+        required: true
+        schema:
+          description: Cosigner ID
+          title: Id
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolanaEvaluateTransactionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EvaluateTransactionResponse'
+                - $ref: '#/components/schemas/EvaluateHistoricalDataResponse'
+                title: Response Evaluate Solana Transaction Route External V0 Cosigners  Id  Solana Evaluate Post
+          description: Successful Response
+        '404':
+          description: Cosigner not found
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
+      security:
+      - APIKey: []
+      - JWT: []
+      summary: Evaluate Solana Transaction
+      tags:
+      - external
+components:
+  schemas:
+    PoliciesExternal:
+      properties:
+        decision:
+          type: string
+          enum:
+          - approve
+          - reject
+          - error
+          - pending
+          title: Decision
+          description: 'Policy decision outcome: "approve", "reject", "error", or "pending".'
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+          description: Human-readable reason for the decision. Present when a policy matched.
+        matched_policy:
+          anyOf:
+          - $ref: '#/components/schemas/MatchedPolicyInfoExternal'
+          - type: 'null'
+          description: Policy that determined the final decision. Null if no policy matched.
+        trace:
+          items:
+            $ref: '#/components/schemas/PolicyTraceEntryExternal'
+          type: array
+          title: Trace
+          description: Per-policy evaluation log.
+        should_handle_pending_tx:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Should Handle Pending Tx
+          description: True when this dry-run pending result means a real scan would create a manual pending transaction.
+      additionalProperties: false
+      type: object
+      required:
+      - decision
+      - trace
+      title: PoliciesExternal
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PolicyTraceEntryExternal:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Policy name.
+        action:
+          type: string
+          title: Action
+          description: Action defined by the policy.
+        type:
+          type: string
+          title: Type
+          description: Policy type.
+        result:
+          type: string
+          enum:
+          - matched
+          - not_matched
+          - skipped
+          title: Result
+          description: 'Evaluation result for this policy entry: "matched", "not_matched", or "skipped".'
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - action
+      - type
+      - result
+      title: PolicyTraceEntryExternal
+    SolanaEvaluateTransactionRequest:
+      discriminator:
+        propertyName: evaluation_type
+      oneOf:
+      - additionalProperties: false
+        description: Simulate a single encoded Solana transaction against cosigner policies.
+        properties:
+          chain:
+            allOf:
+            - const: mainnet
+              enum:
+              - mainnet
+              title: SupportedSolanaChains
+              type: string
+            description: Solana chain, "mainnet" is supported only.
+          evaluation_type:
+            const: simulate
+            description: Evaluation mode.
+            enum:
+            - simulate
+            title: Evaluation Type
+            type: string
+          inline_policies:
+            anyOf:
+            - items:
+                additionalProperties: true
+                description: A single policy definition for inline evaluation, bypassing persisted policy lookup.
+                properties:
+                  action:
+                    description: 'Policy action: "approve", "reject", or "pending".'
+                    title: Action
+                    type: string
+                  name:
+                    description: Policy name.
+                    title: Name
+                    type: string
+                  policy:
+                    description: Policy definition with policy_type_id, conditions, targets, etc.
+                    title: Policy
+                    type: object
+                required:
+                - name
+                - action
+                - policy
+                title: InlinePolicyEntry
+                type: object
+              type: array
+            - type: 'null'
+            description: Optional list of inline policy definitions to evaluate against instead of persisted policies. When provided, the cosigner's stored policies are ignored and these are used instead. Priority is derived from list order (index 0 = highest).
+            title: Inline Policies
+          metadata:
+            description: Additional context. Accepts a "domain" key for the dapp origin domain.
+            title: Metadata
+            type: object
+          transaction:
+            description: Base58-encoded Solana transaction to evaluate.
+            title: Transaction
+            type: string
+        required:
+        - evaluation_type
+        - chain
+        - transaction
+        title: EvaluateSolanaSimulateRequest
+        type: object
+      - additionalProperties: false
+        description: 'Evaluate one or more already-broadcast Solana transactions by signature.
+
+
+          The service fetches each transaction''s encoded bytes from a Solana RPC and
+
+          routes them through the historical pipeline, returning a per-policy summary.'
+        properties:
+          chain:
+            allOf:
+            - const: mainnet
+              enum:
+              - mainnet
+              title: SupportedSolanaChains
+              type: string
+            description: Solana chain, e.g. "mainnet", "devnet".
+          evaluation_type:
+            const: signatures
+            description: Evaluation mode.
+            enum:
+            - signatures
+            title: Evaluation Type
+            type: string
+          inline_policies:
+            anyOf:
+            - items:
+                additionalProperties: true
+                description: A single policy definition for inline evaluation, bypassing persisted policy lookup.
+                properties:
+                  action:
+                    description: 'Policy action: "approve", "reject", or "pending".'
+                    title: Action
+                    type: string
+                  name:
+                    description: Policy name.
+                    title: Name
+                    type: string
+                  policy:
+                    description: Policy definition with policy_type_id, conditions, targets, etc.
+                    title: Policy
+                    type: object
+                required:
+                - name
+                - action
+                - policy
+                title: InlinePolicyEntry
+                type: object
+              type: array
+            - type: 'null'
+            description: Optional list of inline policy definitions to evaluate against instead of persisted policies. When provided, the cosigner's stored policies are ignored and these are used instead. Priority is derived from list order (index 0 = highest).
+            title: Inline Policies
+          show_transaction_detail_for:
+            anyOf:
+            - items:
+                enum:
+                - approved
+                - rejected
+                - manual_approved
+                type: string
+              type: array
+            - type: 'null'
+            description: Transaction lists for asked verdicts.
+            title: Show Transaction Detail For
+          signatures:
+            description: Base58-encoded Solana transaction signatures to evaluate.
+            items:
+              type: string
+            title: Signatures
+            type: array
+        required:
+        - evaluation_type
+        - chain
+        - signatures
+        title: EvaluateSolanaSignaturesRequest
+        type: object
+      - additionalProperties: false
+        description: Evaluate Solana transactions in a time window resolved from on-chain history.
+        properties:
+          chain:
+            allOf:
+            - const: mainnet
+              enum:
+              - mainnet
+              title: SupportedSolanaChains
+              type: string
+            description: Solana chain, e.g. "mainnet", "devnet".
+          evaluation_type:
+            const: time_period
+            description: Evaluation mode.
+            enum:
+            - time_period
+            title: Evaluation Type
+            type: string
+          show_transaction_detail_for:
+            anyOf:
+            - items:
+                enum:
+                - approved
+                - rejected
+                - manual_approved
+                type: string
+              type: array
+            - type: 'null'
+            description: Transaction lists for asked verdicts.
+            title: Show Transaction Detail For
+          time_period:
+            allOf:
+            - additionalProperties: false
+              properties:
+                from:
+                  description: Start of window (inclusive, ISO 8601).
+                  format: date-time
+                  title: From
+                  type: string
+                to:
+                  description: End of window (inclusive, ISO 8601).
+                  format: date-time
+                  title: To
+                  type: string
+              required:
+              - from
+              - to
+              title: TimePeriodInput
+              type: object
+            description: Time window for query.
+        required:
+        - evaluation_type
+        - chain
+        - time_period
+        title: EvaluateSolanaTimePeriodRequest
+        type: object
+    PolicyEvaluationSummary:
+      properties:
+        policy_id:
+          type: string
+          title: Policy Id
+          description: Policy identifier.
+        policy_name:
+          type: string
+          title: Policy Name
+          description: Human-readable policy name.
+        total_evaluated:
+          type: integer
+          title: Total Evaluated
+          description: Transactions evaluated against this policy (excludes non-benign scans where policy eval was skipped).
+        approved:
+          type: integer
+          title: Approved
+          description: Count approved for this policy.
+        rejected:
+          type: integer
+          title: Rejected
+          description: Count rejected for this policy.
+        manual_approved:
+          type: integer
+          title: Manual Approved
+          description: Count manually approved for this policy.
+        approved_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Approved Transactions
+          description: Tx hashes when "approved" was requested in show_transaction_detail_for.
+        rejected_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Rejected Transactions
+          description: Tx hashes when "rejected" was requested in show_transaction_detail_for.
+        manual_approved_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Manual Approved Transactions
+          description: Tx hashes when "manual_approved" was requested in show_transaction_detail_for.
+        policy_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Policy type identifier.
+          title: Policy Type
+      additionalProperties: false
+      type: object
+      required:
+      - policy_id
+      - policy_name
+      - total_evaluated
+      - approved
+      - rejected
+      - manual_approved
+      title: PolicyEvaluationSummary
+    EvaluateHistoricalDataResponse:
+      properties:
+        cosigner_id:
+          type: string
+          title: Cosigner Id
+          description: The cosigner that was evaluated.
+        chain:
+          type: string
+          title: Chain
+          description: Chain used for evaluation.
+        summary:
+          allOf:
+          - $ref: '#/components/schemas/EvaluationSummary'
+          description: Aggregated counts across all transactions.
+        policies:
+          items:
+            $ref: '#/components/schemas/PolicyEvaluationSummary'
+          type: array
+          title: Policies
+          description: Per-policy aggregates and optional transaction hash lists.
+        scan:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Full scan payload of the first scanned transaction. Used for publishing to platform-api.
+          title: Scan
+        scan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Scan ID of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Id
+        scan_result:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Result type of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Result
+        scan_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ISO timestamp of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Timestamp
+        transaction_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ISO timestamp for the on-chain transaction when available from the scan (for example block or transaction time). Distinct from scan_timestamp when both are present.
+          title: Transaction Timestamp
+      additionalProperties: false
+      type: object
+      required:
+      - cosigner_id
+      - chain
+      - summary
+      - policies
+      title: EvaluateHistoricalDataResponse
+      description: Response containing the policy evaluation result for historical data.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EvaluateTransactionResponse:
+      properties:
+        policies:
+          $ref: '#/components/schemas/PoliciesExternal'
+        scan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scan Id
+      additionalProperties: true
+      type: object
+      required:
+      - policies
+      title: EvaluateTransactionResponse
+      description: Response containing the policy evaluation result for the submitted EVM transaction.
+    EvaluationSummary:
+      properties:
+        total_transactions:
+          type: integer
+          title: Total Transactions
+          description: Total number of transactions scanned for this evaluation.
+        approved:
+          type: integer
+          title: Approved
+          description: Transactions approved by all policies under this mode.
+        rejected:
+          type: integer
+          title: Rejected
+          description: Transactions rejected by at least one policy or blocked before policy evaluation (non-benign scans). Per-policy counts only reflect transactions that reached policy evaluation, so the sum of per-policy rejected counts may be less than this value.
+        manual_approved:
+          type: integer
+          title: Manual Approved
+          description: Transactions that required manual approval (pending decision).
+      additionalProperties: false
+      type: object
+      required:
+      - total_transactions
+      - approved
+      - rejected
+      - manual_approved
+      title: EvaluationSummary
+      description: 'Aggregated counts across all transactions.
+
+
+        Note: ``rejected`` includes transactions blocked before policy evaluation
+
+        (non-benign scans). Per-policy counts only reflect transactions that
+
+        reached policy evaluation, so ``sum(p.rejected for p in policies)`` may be
+
+        less than ``summary.rejected``.'
+    MatchedPolicyInfoExternal:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Policy name.
+        action:
+          type: string
+          title: Action
+          description: Action defined by the policy.
+        type:
+          type: string
+          title: Type
+          description: Policy type.
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - action
+      - type
+      title: MatchedPolicyInfoExternal
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

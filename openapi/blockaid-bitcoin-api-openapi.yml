@@ -1,0 +1,979 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Bitcoin API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Bitcoin
+paths:
+  /v0/bitcoin/transaction-raw/scan:
+    post:
+      tags:
+      - Bitcoin
+      summary: Scan Transaction
+      description: Scan a raw Bitcoin transaction for security risks before signing. Returns a validation verdict (Benign, Warning, or Malicious) and, when requested, a simulation of asset changes.
+      operationId: bitcoin_scan_transaction_v0_transaction_raw_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BitcoinTransactionScanRequest'
+              docs_api_name: TransactionScanRequest
+              title: Transaction Request
+        required: true
+      responses:
+        '200':
+          description: 'Successful response with validation verdict and, if requested, simulation of asset changes.
+
+
+            For more information about responses, see the [full response reference](/api-reference/end-user-protection/transaction-scanning/bitcoin/bitcoin-transaction-scanning-response-reference).
+
+
+            Note: HTTP 200 indicates the request was processed. Always check `validation.status` and `simulation.status` (when present), which may be `Error` with an `error` message (e.g. simulation failing due to invalid UTXOs).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BitcoinTransactionScanResponse'
+              examples:
+                Benign:
+                  summary: Benign transaction
+                  value:
+                    validation:
+                      status: Success
+                      result_type: Benign
+                      description: Transaction appears safe
+                      reason: No malicious patterns detected
+                      classification: Safe to sign
+                      features: []
+                    simulation: null
+                Malicious:
+                  summary: Malicious transaction
+                  value:
+                    validation:
+                      status: Success
+                      result_type: Malicious
+                      description: Known malicious address or pattern
+                      reason: drainer
+                      classification: Do not sign
+                      features: []
+                    simulation: null
+        '422':
+          description: Request validation failed (e.g. missing or invalid request body fields).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BitcoinHTTPValidationError'
+              examples:
+                Missing Required Field:
+                  summary: Missing required field
+                  value:
+                    detail:
+                    - loc:
+                      - body
+                      - transaction
+                      msg: field required
+                      type: value_error.missing
+                Invalid Type:
+                  summary: Invalid request body field
+                  value:
+                    detail:
+                    - loc:
+                      - body
+                      - chain
+                      msg: 'value is not a valid enumeration member; permitted: ''bitcoin'''
+                      type: type_error.enum
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/bitcoin/transaction/report:
+    post:
+      tags:
+      - Bitcoin
+      summary: Report Transaction
+      description: Submit an appeal or false-positive report for a Bitcoin transaction scan. Use when you believe a scan result was incorrect (e.g. should_be_benign, should_be_malicious, wrong_simulation_result).
+      operationId: bitcoin_report_transaction_v0_transaction_report_post
+      requestBody:
+        description: Appeal event type, report payload (prior scan request_id or full transaction params), and optional details.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BitcoinReportTransactionRequest'
+        required: true
+      responses:
+        '200':
+          description: Report accepted; response body is the HTTP status code (e.g. 201).
+          content:
+            application/json:
+              schema:
+                type: integer
+                title: Response Report Transaction V0 Transaction Report Post
+              examples:
+                Accepted:
+                  summary: Report accepted
+                  value: 201
+        '422':
+          description: Request validation failed (e.g. missing or invalid request body fields).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BitcoinHTTPValidationError'
+              examples:
+                Missing Required Field:
+                  summary: Missing required field
+                  value:
+                    detail:
+                    - loc:
+                      - body
+                      - details
+                      msg: field required
+                      type: value_error.missing
+                Invalid Event:
+                  summary: Invalid event type
+                  value:
+                    detail:
+                    - loc:
+                      - body
+                      - event
+                      msg: 'value is not a valid enumeration member; permitted: ''should_be_malicious'', ''should_be_benign'', ''wrong_simulation_result'''
+                      type: type_error.enum
+      deprecated: true
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/bitcoin/address/scan:
+    post:
+      tags:
+      - Bitcoin
+      summary: Scan Address
+      description: Gets an address and returns a full security assessment indicating whether or not this address is malicious as well as textual reasons of why the address was flagged that way.
+      operationId: bitcoin_scan_address_address_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BitcoinAddressScanRequestSchema'
+            examples:
+              Benign Address Scan:
+                summary: Benign Address Scan
+                value:
+                  chain: bitcoin
+                  address: bc1qqks2h7dwrhgxvdcm56dvqaymhey3gd0pt9w0ne
+              Malicious OFAC Address Scan:
+                summary: Malicious OFAC Address Scan
+                value:
+                  chain: bitcoin
+                  address: 39fhoB2DohisGBbHvvfmkdPdShT75CNHdX
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BitcoinAddressScanResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BitcoinHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    BitcoinTransactionScanResponse:
+      properties:
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/BitcoinSimulationResult'
+            docs_api_name: SimulationResult
+            title: Simulation Result
+          - $ref: '#/components/schemas/BitcoinSimulationErrorSchema'
+            title: Simulation Error
+          description: Simulation result; Only present if simulation option is included in the request
+          nullable: true
+        validation:
+          $ref: '#/components/schemas/BitcoinValidationResponse'
+          description: Validation result; Only present if validation option is included in the request
+          docs_api_name: ValidationResponse
+          nullable: true
+      type: object
+      title: Response
+    BitcoinAppealTransactionDataReport:
+      properties:
+        type:
+          type: string
+          const: params
+          title: Type
+          description: Discriminator; use "params" when supplying full transaction data.
+          default: params
+        params:
+          $ref: '#/components/schemas/BitcoinTransactionScanRequest'
+          docs_api_name: TransactionScanRequest
+          title: Transaction Request
+          description: Full transaction scan request (same shape as the scan endpoint).
+      type: object
+      required:
+      - params
+      title: Appeal Transaction Data Report
+    BitcoinReportTransactionRequest:
+      properties:
+        event:
+          $ref: '#/components/schemas/BitcoinAppealTypes'
+          description: 'Type of appeal: what you believe was wrong with the scan result.'
+        report:
+          anyOf:
+          - $ref: '#/components/schemas/BitcoinAppealRequestId'
+          - $ref: '#/components/schemas/BitcoinAppealTransactionDataReport'
+            docs_api_name: AppealTransactionDataReport
+          title: Report
+          description: Either a prior scan request ID or the full transaction parameters being reported.
+        details:
+          type: string
+          title: Details
+          description: Free-text explanation or context for the report.
+      type: object
+      required:
+      - event
+      - report
+      - details
+      title: 'AppealRequest[Annotated[RequestSchemaType[ChainSchema, Annotated[NewType, SkipValidation, PlainSerializer, GetPydanticSchema], Annotated[str, SkipValidation, PlainSerializer, GetPydanticSchema], Annotated[set[Options], FieldInfo(annotation=NoneType, required=False, default={<Options.validation: ''validation''>, <Options.simulation: ''simulation''>}, title=''Options'', description=''List of options to include in the response\n- `Options.validation`: Include Options.validation output in the response\n\n- `Options.simulation`: Include Options.simulation output in the response\n'', metadata=[MinLen(min_length=1)])]], FieldInfo(annotation=NoneType, required=True, title=''Transaction Request'', json_schema_extra={''docs_api_name'': ''TransactionScanRequest''})]]'
+    BitcoinInscriptionDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: INSCRIPTION
+          title: Type
+          description: Type of the asset (`INSCRIPTION`).
+          default: INSCRIPTION
+        name:
+          type: string
+          title: Name
+          description: Inscription's display name.
+        id:
+          type: string
+          title: Id
+          description: The Inscription ID.
+        sat:
+          type: integer
+          title: Sat
+          description: The Inscription sat.
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo.
+          nullable: true
+      type: object
+      required:
+      - name
+      - id
+      - sat
+      title: Inscription Asset Details
+    BitcoinRuneDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: RUNE
+          title: Type
+          description: Type of the asset (`RUNE`).
+          default: RUNE
+        name:
+          type: string
+          title: Name
+          description: The Rune name.
+        spaced_name:
+          type: string
+          title: Spaced Name
+          description: The Rune spaced name.
+        symbol:
+          type: string
+          title: Symbol
+          description: The Rune's symbol.
+        id:
+          type: string
+          title: Id
+          description: The Rune ID.
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo.
+          nullable: true
+        decimals:
+          type: integer
+          title: Decimals
+          description: Number of decimal places used to represent fractional units.
+      type: object
+      required:
+      - name
+      - spaced_name
+      - symbol
+      - id
+      - decimals
+      title: Inscription Asset Details
+    BitcoinAppealTypes:
+      type: string
+      enum:
+      - should_be_malicious
+      - should_be_benign
+      - wrong_simulation_result
+      title: Appeal Types
+      description: 'Reason for the appeal: false positive (should_be_benign), false negative (should_be_malicious), or incorrect simulation (wrong_simulation_result).'
+    BitcoinAssetTransferDetailsSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset.
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer.
+          nullable: true
+        value:
+          type: string
+          title: Value
+          description: Value of the transfer.
+        raw_value:
+          type: integer
+          title: Raw Value
+          description: Raw value of the transfer.
+      type: object
+      required:
+      - value
+      - raw_value
+      title: Asset Transfer Details
+    BitcoinNativeAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/BitcoinNativeAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/BitcoinAssetTransferDetailsSchema'
+          description: Details of the incoming transfer.
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/BitcoinAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer.
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: Asset category for this balance change (e.g. NATIVE, RUNE, INSCRIPTION).
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[NativeAssetDetailsSchema, AssetTransferDetailsSchema]
+    BitcoinValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: ValidationFeatureType
+    BitcoinSimulationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Simulation Error
+    BitcoinChainSchema:
+      type: string
+      enum:
+      - bitcoin
+      title: ChainSchema
+    BitcoinTotalUsdDiffSchema:
+      properties:
+        in:
+          type: number
+          title: In
+          description: Total incoming USD transfers.
+        out:
+          type: number
+          title: Out
+          description: Total outgoing USD transfers.
+        total:
+          type: number
+          title: Total
+          description: Total USD transfers.
+      type: object
+      required:
+      - in
+      - out
+      title: Total USD Diff
+    BitcoinValidationFeature:
+      properties:
+        type:
+          $ref: '#/components/schemas/BitcoinValidationFeatureType'
+          description: Severity or category of this finding (e.g. Benign, Warning, Malicious, Info).
+          title: type
+        feature_id:
+          type: string
+          title: feature_id
+          description: Unique identifier for this type of finding.
+        description:
+          type: string
+          title: Description
+          description: Human-readable explanation of this finding.
+        address:
+          type: string
+          title: Address
+          description: Bitcoin address that this finding is associated with.
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      title: ValidationFeatureSchemaType[Annotated[NewType, SkipValidation, PlainSerializer, GetPydanticSchema]]
+    BitcoinInscriptionDiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset.
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer.
+          nullable: true
+        inscription_id:
+          type: string
+          title: Inscription Id
+          description: Inscription ID of the transfer.
+      type: object
+      required:
+      - inscription_id
+      title: Inscription Transfer Details
+    BitcoinInscriptionAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/BitcoinInscriptionDetailsSchema'
+        in:
+          $ref: '#/components/schemas/BitcoinInscriptionDiffSchema'
+          description: Details of the incoming transfer.
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/BitcoinInscriptionDiffSchema'
+          description: Details of the outgoing transfer.
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: Asset category for this balance change (e.g. NATIVE, RUNE, INSCRIPTION).
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[InscriptionDetailsSchema, InscriptionDiffSchema]
+    BitcoinAddressFeatureModel:
+      properties:
+        type:
+          $ref: '#/components/schemas/BitcoinValidationFeatureType'
+        feature_id:
+          type: string
+          title: Feature Id
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      title: AddressFeatureModel
+    BitcoinNativeAssetDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: NATIVE
+          title: Type
+          description: Type of the asset (`NATIVE`).
+          default: NATIVE
+        symbol:
+          type: string
+          const: BTC
+          title: Symbol
+          description: Symbol of the asset.
+          default: BTC
+        name:
+          type: string
+          const: Bitcoin
+          title: Name
+          description: Name of the asset.
+          default: Bitcoin
+        decimals:
+          type: integer
+          const: 8
+          title: Decimals
+          description: Number of decimal places used to represent fractional units (e.g. 8 for BTC).
+          default: 8
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo.
+          nullable: true
+      type: object
+      required:
+      - logo_url
+      title: Native Asset Details
+    BitcoinAddressDetailsBaseSchema_Annotated_NewType__SkipValidation__PlainSerializer__GetPydanticSchema__:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+      type: object
+      required:
+      - account_address
+      title: Address Details
+    BitcoinHTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/BitcoinValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    BitcoinVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      title: Verdict
+    BitcoinSimulationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        assets_diffs:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/BitcoinNativeAssetDiff'
+                docs_api_name: NativeAssetDiff
+                title: Native asset Diff
+              - $ref: '#/components/schemas/BitcoinInscriptionAssetDiff'
+                docs_api_name: InscriptionAssetDiff
+                title: Inscription Asset Diff
+              - $ref: '#/components/schemas/BitcoinRunesAssetDiff'
+                docs_api_name: RunesAssetDiff
+                title: Runes Asset Diff
+            type: array
+            description: Asset balance changes for one account address.
+          type: object
+          title: Assets Diffs
+          description: Per-account list of asset balance changes (native, inscriptions, runes) for the simulated transaction.
+        address_details:
+          items:
+            $ref: '#/components/schemas/BitcoinAddressDetailsBaseSchema_Annotated_NewType__SkipValidation__PlainSerializer__GetPydanticSchema__'
+          type: array
+          title: Address Details
+          description: Details of addresses involved in the transaction.
+        account_summary:
+          $ref: '#/components/schemas/BitcoinAccountSummary'
+          description: Summary of the actions and asset transfers that were made by the requested account address.
+          docs_api_name: AccountSummary
+      type: object
+      required:
+      - status
+      - account_summary
+      title: Simulation Result
+    BitcoinValidationResponse:
+      anyOf:
+      - $ref: '#/components/schemas/BitcoinValidationResult'
+        docs_api_name: ValidationResult
+        title: Validation Result
+      - $ref: '#/components/schemas/BitcoinValidationErrorSchema'
+        title: Validation Error
+      title: ValidationResponseSchemaType[Annotated[NewType, SkipValidation, PlainSerializer, GetPydanticSchema]]
+    BitcoinInAppRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: in_app
+          title: Type
+          description: Identifies the request as coming from your own app (e.g. in-app send, swap, or internal flow).
+          default: in_app
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: Account information associated with the request
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent and IP information
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: true
+      type: object
+      title: In-App Request Metadata
+    BitcoinValidationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        result_type:
+          $ref: '#/components/schemas/BitcoinVerdict'
+          description: Verdict of the validation.
+          title: Result Verdict
+        description:
+          type: string
+          title: Description
+          description: A textual description about the validation result.
+        reason:
+          type: string
+          title: Reason
+          description: Human-readable explanation of why the transaction received the given `result_type` verdict.
+        classification:
+          type: string
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+        features:
+          items:
+            $ref: '#/components/schemas/BitcoinValidationFeature'
+            docs_api_name: ValidationFeature
+            title: Feature
+          type: array
+          title: Features
+          description: List of validation findings (addresses and classifications) that contributed to the verdict.
+      type: object
+      required:
+      - status
+      - result_type
+      - description
+      - reason
+      - classification
+      - features
+      title: Validation Result
+    BitcoinTransactionScanRequest:
+      properties:
+        chain:
+          $ref: '#/components/schemas/BitcoinChainSchema'
+        options:
+          items:
+            $ref: '#/components/schemas/BitcoinOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: 'Which parts of the response you need:
+
+
+            - **validation** — Security verdict (Benign/Warning/Malicious) and risk explanation. Use when deciding whether to block or warn.
+
+            - **simulation** — Predicted summary of balance and asset changes (e.g. "You will send 0.01 BTC to bc1q..."). Use when showing the user what the transaction does.
+
+
+            You can request one or both; default is both.'
+          default:
+          - validation
+          - simulation
+        account_address:
+          type: string
+          title: Account Address
+          description: The Bitcoin address that owns the UTXOs being spent.
+        transaction:
+          type: string
+          title: Transaction
+          description: The raw unsigned transaction in hexadecimal, as produced by the wallet or your app. This is the same payload the user would sign.
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/BitcoinWalletRequestMetadata'
+          - $ref: '#/components/schemas/BitcoinInAppRequestMetadata'
+          title: Metadata
+          description: 'Context of where the transaction was initiated: use wallet metadata when the user is signing in a wallet for an external site; use in-app metadata when the transaction is created within your own app.
+
+
+            Choosing the correct type improves risk analysis and reporting.'
+      type: object
+      required:
+      - chain
+      - account_address
+      - transaction
+      - metadata
+      title: Request
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    BitcoinAddressScanRequestSchema:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          $ref: '#/components/schemas/BitcoinChainSchema'
+      type: object
+      required:
+      - address
+      - chain
+      title: Request
+    BitcoinRunesAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/BitcoinRuneDetailsSchema'
+        in:
+          $ref: '#/components/schemas/BitcoinAssetTransferDetailsSchema'
+          description: Details of the incoming transfer.
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/BitcoinAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer.
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: Asset category for this balance change (e.g. NATIVE, RUNE, INSCRIPTION).
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[RuneDetailsSchema, AssetTransferDetailsSchema]
+    BitcoinValidationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Validation Error
+    BitcoinAddressScanResponseSchema:
+      properties:
+        result_type:
+          $ref: '#/components/schemas/BitcoinVerdict'
+          description: Verdict of the validation
+          title: Result Verdict
+        features:
+          items:
+            $ref: '#/components/schemas/BitcoinAddressFeatureModel'
+          type: array
+          title: Features
+          description: A list of textual features about this address that can be presented to the user.
+      type: object
+      required:
+      - result_type
+      title: AddressScanResponseSchema
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    BitcoinValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BitcoinWalletRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: wallet
+          title: Type
+          description: Identifies the request as a wallet signing a transaction on behalf of an external dApp. The type improves threat context and helps attribute risk to specific origins.
+        url:
+          type: string
+          title: Url
+          description: The full URL of the dApp or page where the user initiated the transaction (e.g. https://app.example.com/swap).
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: Account information associated with the request
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent and IP information
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: false
+      type: object
+      required:
+      - type
+      - url
+      title: Wallet Request Metadata
+    BitcoinAppealRequestId:
+      properties:
+        type:
+          type: string
+          const: request_id
+          title: Type
+          description: Discriminator; use "request_id" when referencing a prior scan.
+          default: request_id
+        id:
+          type: string
+          title: ID
+          description: Request ID from a previous transaction scan response.
+      type: object
+      required:
+      - id
+      title: Appeal Request ID
+    BitcoinOptions:
+      type: string
+      enum:
+      - validation
+      - simulation
+      title: Options
+    BitcoinAccountSummary:
+      properties:
+        account_assets_diffs:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/BitcoinNativeAssetDiff'
+              docs_api_name: NativeAssetDiff
+              title: Native asset Diff
+            - $ref: '#/components/schemas/BitcoinInscriptionAssetDiff'
+              docs_api_name: InscriptionAssetDiff
+              title: Inscription Asset Diff
+            - $ref: '#/components/schemas/BitcoinRunesAssetDiff'
+              docs_api_name: RunesAssetDiff
+              title: Runes Asset Diff
+          type: array
+          title: Account Assets Diffs
+          description: Per-asset balance changes (native BTC, inscriptions, runes) for the requested account.
+        total_usd_diff:
+          $ref: '#/components/schemas/BitcoinTotalUsdDiffSchema'
+          description: Net change in USD value (incoming minus outgoing) for the requested account.
+      type: object
+      required:
+      - total_usd_diff
+      title: Account Summary
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

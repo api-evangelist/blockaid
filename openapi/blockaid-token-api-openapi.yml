@@ -1,0 +1,1925 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Token API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Token
+paths:
+  /v0/token/scan:
+    post:
+      tags:
+      - Token
+      summary: Scan Token
+      description: Gets a token address and scan the token to identify any indication of malicious behavior
+      operationId: scan-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenValidationRequest'
+            examples:
+              Malicious ERC20 Token:
+                summary: Ethereum - Malicious ERC20 Token
+                value:
+                  chain: ethereum
+                  address: '0x66587563e933bbf3974b89156b47bb82b921eb35'
+              Malicious BSC ERC20 Token:
+                summary: BSC - Malicious ERC20 Token
+                value:
+                  chain: bsc
+                  address: '0x53da1d6c114d02be5db1c8c37a40a15920f007da'
+              Benign ERC721 Token:
+                summary: Ethereum - Benign ERC721 Token
+                value:
+                  chain: ethereum
+                  address: '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
+              Malicious ERC721 Token:
+                summary: Polygon - Malicious ERC721 Token
+                value:
+                  chain: polygon
+                  address: '0x37f2db133d402d339aaa9202379f15b549077f9a'
+              Malicious Base Token:
+                summary: Base - Malicious Token
+                value:
+                  chain: base
+                  address: '0x7b28085cefd0818e7ed7e8379a20f5cd34d770a7'
+              Warning ERC20 Token:
+                summary: BSC - Warning ERC20 Token
+                value:
+                  chain: bsc
+                  address: '0xcAC0C41a420Fa8AaE94A058E8D328A583F78EE37'
+              Malicious Impersonator ERC20 Token:
+                summary: BSC - Impersonator ERC20 Token
+                value:
+                  chain: bsc
+                  address: '0x53da1d6c114d02be5db1c8c37a40a15920f007da'
+              Malicious Rugpull Token:
+                summary: Malicious Rugpull Token
+                value:
+                  chain: base
+                  address: '0xfb7e4d31e5882826fcca1bf0197ed3c0d91eb3b1'
+              Malicious Backdoor Token:
+                summary: Token With Malicious Backdoor
+                value:
+                  chain: base
+                  address: '0x34b8a376c4547348acc700b751031fed76ed7de9'
+              Spam Solana Token:
+                summary: Solana - Unstable Token Price
+                value:
+                  chain: solana
+                  address: Ftkcs3GywU2jLjDD2WiFXcMCpQEPz3eCWk856uX7pump
+              Spam Starknet Token:
+                summary: Starknet - Airdrop Token
+                value:
+                  chain: starknet
+                  address: '0x005b9282d14bcc3c27c34ba16540d11f8252f9121929eeb3ab04d2b93e5357f8'
+              Benign Sui Token:
+                summary: Sui - Benign Token
+                value:
+                  chain: sui
+                  address: 0x0000000000000000000000000000000000000000000000000000000000000002::sui::SUI
+              Spam Sui Token:
+                summary: Sui - Spam Token
+                value:
+                  chain: sui
+                  address: 0x1decfb4bbe641608e970bad1a9cf953d98177f094fb673096f12ed6ebd88a1e8::rnft::TICKET_NFT
+              Malicious Hedera Token:
+                summary: Hedera - Malicious Metadata Token
+                value:
+                  chain: hedera
+                  address: 0.0.7910054
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenValidationResponse'
+        '404':
+          description: 'Token scan result is not available. This can occur when:
+
+            1. The token scan result is not yet available — try again later
+
+            2. The address is not a token
+
+            3. For cache-only requests: the token has never been scanned (cache miss); a backend rescan is triggered — retry later or wait for webhook updates.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Token scan not available:
+                  summary: Token Scan Result Not Available
+                  value:
+                    detail: Token scan is not available yet. Please try again later.
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/report:
+    post:
+      tags:
+      - Token
+      summary: Report Token
+      description: Report for misclassification of a token.
+      operationId: token-report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportRequest_TokenReportParams_'
+            examples:
+              Token report request_id example:
+                summary: Token report request_id example
+                value:
+                  event: FALSE_POSITIVE
+                  report:
+                    type: request_id
+                    request_id: 11111111-1111-1111-1111-111111111111
+                  details: Details about the report
+              Token report params example:
+                summary: Token report params example
+                value:
+                  event: FALSE_POSITIVE
+                  report:
+                    type: params
+                    params:
+                      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                      chain: ethereum
+                  details: Details about the report
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: true
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token-bulk/scan:
+    post:
+      tags:
+      - Token
+      summary: Scan Token Bulk
+      description: Gets a list of token addresses and scan the tokens to identify any indication of malicious behaviour
+      operationId: scan-token-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkTokenValidationRequest'
+            examples:
+              Ethereum Tokens:
+                summary: Ethereum - Bulk Tokens
+                value:
+                  chain: ethereum
+                  tokens:
+                  - '0x66587563e933bbf3974b89156b47bb82b921eb35'
+                  - '0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkTokenValidationResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/snapshot/full:
+    get:
+      tags:
+      - Token
+      summary: Full Snapshot
+      description: 'This endpoint provides a state snapshot of all token scans, allowing you to synchronize with the latest state
+
+
+        Specify your preferred page size to manage response size.
+
+        Use the provided cursor to navigate through the pages.
+
+        The cursor value will be null on the final page, indicating there are no more results to fetch.
+
+
+        To retrieve the complete data set, iterate through all pages using the cursors provided in the response'
+      operationId: token-snapshot-full
+      parameters:
+      - required: true
+        deprecated: false
+        explode: false
+        schema:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        name: chain
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Cursor to start from, if not provided, the first page will be returned
+        required: false
+        deprecated: false
+        explode: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+          description: Cursor to start from, if not provided, the first page will be returned
+        name: cursor
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Number of tokens to return in a page
+        required: false
+        deprecated: false
+        explode: false
+        schema:
+          type: integer
+          maximum: 5000.0
+          exclusiveMinimum: 0.0
+          title: Size
+          description: Number of tokens to return in a page
+          default: 50
+        name: size
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Filter tokens by type. Allowed values are "Fungible" or "NonFungible". If not provided, all types will be included.
+        required: false
+        deprecated: false
+        explode: false
+        schema:
+          anyOf:
+          - type: string
+            enum:
+            - Fungible
+            - NonFungible
+          - type: 'null'
+          title: Token Type
+          description: Filter tokens by type. Allowed values are "Fungible" or "NonFungible". If not provided, all types will be included.
+        name: token_type
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCursorPage_TokenValidationResponse_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/snapshot/diff:
+    get:
+      tags:
+      - Token
+      summary: Diff Snapshot
+      description: 'Retrieve tokens that experienced a state change within the specified timeframe
+
+
+        Specify your preferred page size to manage response size.
+
+        Specify the time frame in minutes.
+
+        it is recommended to use timeframes shorter than 30 minutes
+
+
+        Use the provided cursor to navigate through the pages.
+
+        The cursor value will be null on the final page, indicating there are no more results to fetch.
+
+        To retrieve the complete data set, iterate through all pages using the cursors provided in the response'
+      operationId: token-snapshot-diff
+      parameters:
+      - required: true
+        deprecated: false
+        explode: false
+        schema:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        name: chain
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Timeframe in minutes
+        required: false
+        deprecated: false
+        explode: false
+        schema:
+          type: integer
+          maximum: 360.0
+          exclusiveMinimum: 0.0
+          title: Timeframe
+          description: Timeframe in minutes
+          default: 10
+        name: timeframe
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Cursor to start from, if not provided, the first page will be returned
+        required: false
+        deprecated: false
+        explode: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Cursor
+          description: Cursor to start from, if not provided, the first page will be returned
+        name: cursor
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Number of tokens to return in a page
+        required: false
+        deprecated: false
+        explode: false
+        schema:
+          type: integer
+          maximum: 5000.0
+          exclusiveMinimum: 0.0
+          title: Size
+          description: Number of tokens to return in a page
+          default: 50
+        name: size
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCursorPage_TokenValidationResponse_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/hooks/{chain}:
+    get:
+      tags:
+      - Token
+      summary: Get a webhook
+      description: Get information about an existing webhook for a given chain
+      operationId: get-hook
+      parameters:
+      - required: true
+        deprecated: false
+        explode: false
+        schema:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        name: chain
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hook'
+        '404':
+          description: Hook not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+    post:
+      tags:
+      - Token
+      summary: Create a new webhook
+      description: Creates a webhook subscription for a chain to receive real-time token scan updates.
+      operationId: create-hook
+      parameters:
+      - required: true
+        deprecated: false
+        explode: false
+        schema:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        name: chain
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HookRequest'
+            examples:
+              Create Hook Filter Example:
+                summary: Create Hook Filter Example
+                value:
+                  url: https://example.com/
+                  shared_secret_key: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                  filter:
+                    filter_type: token_address
+                    token_addresses:
+                    - '0x1234567890abcdef1234567890abcdef12345678'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Hook'
+        '400':
+          description: Host not reachable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+    delete:
+      tags:
+      - Token
+      summary: Delete a webhook
+      description: Deletes the webhook subscription for a chain and stops further token scan updates.
+      operationId: delete-hook
+      parameters:
+      - required: true
+        deprecated: false
+        explode: false
+        schema:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        name: chain
+        in: path
+      responses:
+        '204':
+          description: Successful Response
+        '404':
+          description: Hook not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/hooks/:
+    get:
+      tags:
+      - Token
+      summary: List all webhooks
+      description: List all active webhook subscriptions across all chains
+      operationId: list-hooks
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Hook'
+                type: array
+                title: Response List-Hooks
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/bulk-export/jobs:
+    post:
+      tags:
+      - Token
+      summary: Create Export Job
+      description: Creates an asynchronous job to export token scan data for a chain in the requested format.
+      operationId: create-bulk-export-job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkExportJobRequest'
+              description: Export job request
+            examples:
+              Create Export Job Example:
+                summary: Create Export Job Example
+                value:
+                  chain: ethereum
+                  token_type: fungible
+                  format: jsonl_gzip
+                  sync_start_time: 0
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkExportJobResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/bulk-export/jobs/{job_id}:
+    get:
+      tags:
+      - Token
+      summary: Get Job Status
+      description: Retrieves the current status of the job and download URLs when status is `succeeded`.
+      operationId: get-bulk-export-job-status
+      parameters:
+      - description: The ID of an export job you already created.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          type: string
+          title: Job Id
+          description: The ID of an export job you already created.
+        name: job_id
+        in: path
+      responses:
+        '200':
+          description: Job status retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkExportJobStatusResponse'
+              examples:
+                Job Status Running:
+                  summary: Job Status Running
+                  value:
+                    status: running
+                Job Status Succeeded:
+                  summary: Job Status Succeeded
+                  value:
+                    status: succeeded
+                    files:
+                    - https://s3.amazonaws.com/bucket/path/file1.json.gz?signature=...
+                    - https://s3.amazonaws.com/bucket/path/file2.json.gz?signature=...
+                    expires_in: 86390
+                    chain: ethereum
+                    tokens_count: 150000
+        '404':
+          description: Job not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/token/recent-rugpull-risks:
+    get:
+      tags:
+      - Token
+      summary: Get Recent Rugpull Risks
+      description: Returns recently detected pre-dump rugpull-risk token addresses for the requested chain.
+      operationId: get-recent-rugpull-risks
+      parameters:
+      - description: Which chain to look at for recent rugpull tokens.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+          description: Which chain to look at for recent rugpull tokens.
+        name: chain
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Maximum number of token addresses to return (between 1 and 20)
+        required: false
+        deprecated: false
+        explode: false
+        schema:
+          type: integer
+          maximum: 20
+          minimum: 1
+          title: Results Limit
+          description: Maximum number of token addresses to return (between 1 and 20)
+          default: 5
+        name: results_limit
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      responses:
+        '200':
+          description: List of token addresses identified as recent rugpull risks
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                title: Response Get-Recent-Rugpull-Risks
+              examples:
+                Rugpull Addresses:
+                  summary: List of Rugpull Addresses
+                  value:
+                  - '0xfb7e4d31e5882826fcca1bf0197ed3c0d91eb3b1'
+                  - '0x34b8a376c4547348acc700b751031fed76ed7de9'
+        '422':
+          description: Validation Error - Invalid chain or parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    AttackType:
+      properties:
+        score:
+          type: string
+          title: Score
+          description: Score between 0 to 1 (double) that indicates the assurance this attack happened
+        threshold:
+          type: string
+          title: Threshold
+          description: If score is higher or equal to this field, the token is using this attack type
+          default: '1.0'
+        features:
+          type: object
+          title: Features
+          description: Object contains an extra information related to the attack
+      type: object
+      required:
+      - score
+      title: AttackType
+    TokenValidationResponse:
+      properties:
+        result_type:
+          $ref: '#/components/schemas/ResultType'
+          description: General indication
+        malicious_score:
+          type: string
+          title: Malicious Score
+          description: Score between 0 to 1 (double)
+        attack_types:
+          additionalProperties:
+            $ref: '#/components/schemas/AttackType'
+          type: object
+          title: Attack Types
+          description: Dictionary of detected attacks found during the scan
+        chain:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+          description: Blockchain network
+        address:
+          type: string
+          title: Address
+          description: Token address to validate (EVM / Solana)
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/SolanaMetadata'
+          - $ref: '#/components/schemas/BitcoinMetadataToken'
+          - $ref: '#/components/schemas/EvmMetadataToken'
+          title: Metadata
+          description: Metadata of the token
+        fees:
+          $ref: '#/components/schemas/Fees'
+          description: Fees associated with the token
+        features:
+          items:
+            $ref: '#/components/schemas/Feature'
+          type: array
+          title: Features
+          description: List of features associated with the token
+          default: []
+        trading_limits:
+          $ref: '#/components/schemas/TradingLimits'
+          description: Trading limits of the token
+        financial_stats:
+          $ref: '#/components/schemas/FinancialStats'
+          description: financial stats of the token
+      type: object
+      required:
+      - result_type
+      - malicious_score
+      - attack_types
+      - chain
+      - address
+      - metadata
+      - fees
+      - trading_limits
+      - financial_stats
+      title: TokenValidationResponse
+    RequestIDReport:
+      properties:
+        type:
+          type: string
+          const: request_id
+          title: Type
+          description: The type identifier indicating that a request ID from a previous scan is being used.
+        request_id:
+          type: string
+          title: Request Id
+          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
+      type: object
+      required:
+      - type
+      - request_id
+      title: RequestIDReport
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    BulkTokenValidationRequest:
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TokenMetadata'
+          description: Optional token metadata context (e.g., source/integration hints) used to enrich results.
+          default: {}
+        chain:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        tokens:
+          items:
+            type: string
+          type: array
+          title: Tokens
+          description: A list of token addresses to scan
+      type: object
+      required:
+      - chain
+      - tokens
+      title: BulkTokenValidationRequest
+    BulkScanError:
+      properties:
+        message:
+          $ref: '#/components/schemas/BulkScanErrorType'
+          description: Error message describing why the scan failed for this token
+      type: object
+      required:
+      - message
+      title: BulkScanError
+    TokenReportParams:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address of the token to report on.
+        chain:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+      type: object
+      required:
+      - address
+      - chain
+      title: TokenReportParams
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    TokenMetadata:
+      properties:
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Domain
+          description: cross reference transaction against the domain.
+      type: object
+      title: TokenMetadata
+    FinancialStats:
+      properties:
+        supply:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Supply
+          description: token supply
+        holders_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Holders Count
+          description: Amount of token holders
+        usd_price_per_unit:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Usd Price Per Unit
+          description: token price in USD
+        burned_liquidity_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Burned Liquidity Percentage
+          description: Token liquidity burned percentage
+        locked_liquidity_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Locked Liquidity Percentage
+          description: Token liquidity locked percentage
+        top_holders:
+          items:
+            $ref: '#/components/schemas/TopHolder'
+          type: array
+          title: Top Holders
+          description: Top token holders
+          default: []
+        total_reserve_in_usd:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Total Reserve In Usd
+          description: Total reserve in USD
+        dev_holding_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Dev Holding Percentage
+          description: Percentage of token's supply held in known developer wallets (0.0 to 100.0)
+          examples:
+          - 18.8
+        initial_snipers_holding_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Initial Snipers Holding Percentage
+          description: Percentage of token's supply _currently_ held by sniper bots (0.0 to 100.0). Currently available for Solana only.
+          examples:
+          - 18.8
+        snipers_holding_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Snipers Holding Percentage
+          description: Percentage of token's supply _initially_ held by sniper bots (0.0 to 100.0). Currently available for Solana only.
+          examples:
+          - 18.8
+        bundlers_holding_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Bundlers Holding Percentage
+          description: Percentage of token currently held by bundlers - wallets that bought in the exact same Solana slot, at any point in the token's life-cycle. Currently available for Solana only.
+          examples:
+          - 18.8
+        insiders_holding_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Insiders Holding Percentage
+          description: Percentage of supply that is currently held by insiders - defined as wallets exhibiting early acquisition behaviors typically associated with insider activity.
+          examples:
+          - 18.8
+        markets:
+          items:
+            $ref: '#/components/schemas/TokenMarket'
+          type: array
+          title: Markets
+          description: Token markets/pools
+      type: object
+      title: FinancialStats
+    Amount:
+      properties:
+        amount:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Amount
+          description: ''
+        amount_wei:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Amount Wei
+          description: ''
+      type: object
+      title: Amount
+    ImpersonationSource:
+      type: string
+      enum:
+      - TOP_TOKEN
+      - USER_DEFINED
+      title: ImpersonationSource
+      description: Source of the impersonation match
+    SolanaMetadata:
+      properties:
+        type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+          description: Type of the token
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the token
+        symbol:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Symbol
+          description: Symbol of the token
+        decimals:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Decimals
+          description: Decimals of the token
+        image_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Image Url
+          description: URL of the token image
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the token
+        deployer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deployer
+          description: Address of the deployer of the fungible token
+        deployer_balance:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Contract creator balance
+        contract_balance:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Contract balance
+        owner_balance:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Contract owner balance
+        owner:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Owner
+          description: Contract owner address
+        creation_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Creation Timestamp
+          description: Contract deploy date
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+          description: social links of the token
+          default: {}
+        urls:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Urls
+          description: Urls associated with the token
+        malicious_urls:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Malicious Urls
+          description: Malicious urls associated with the token
+        token_creation_initiator:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token Creation Initiator
+          description: Address of the token creation initiator, only set if the tokens was created by a well known token launch platform
+        impersonation_targets:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ImpersonationTarget'
+            type: array
+          - type: 'null'
+          title: Impersonation Targets
+          description: List of tokens that this token is impersonating, if detected as an impersonator
+        mint_authority:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Mint Authority
+          description: Solana token mint authority account
+        update_authority:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Update Authority
+          description: Solana token update authority account
+        freeze_authority:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Freeze Authority
+          description: Solana token freeze authority account
+        permanent_delegate:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Permanent Delegate
+          description: Solana token permanent delegate account
+      type: object
+      title: SolanaMetadata
+    ResultType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Spam
+      title: ResultType
+    BulkExportJobResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        status:
+          $ref: '#/components/schemas/JobStatus'
+      type: object
+      required:
+      - job_id
+      - status
+      title: BulkExportJobResponse
+    BulkScanErrorType:
+      type: string
+      enum:
+      - PENDING_SCAN_RESULT
+      - NOT_A_TOKEN
+      title: BulkScanErrorType
+    MarketType:
+      type: string
+      enum:
+      - BONDING_CURVE
+      - AMM
+      - UNKNOWN
+      title: MarketType
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
+    ExportFormat:
+      type: string
+      enum:
+      - jsonl_gzip
+      - parquet_snappy
+      title: ExportFormat
+      description: 'Output file format for the export: `jsonl_gzip` (JSON Lines compressed with gzip) or `parquet_snappy` (Apache Parquet compressed with Snappy).'
+    TopHolderLabel:
+      type: string
+      enum:
+      - market
+      - locker
+      - wallet
+      - contract
+      - program
+      title: TopHolderLabel
+    ErrorResponse:
+      properties:
+        detail:
+          type: string
+          title: Detail
+      type: object
+      required:
+      - detail
+      title: ErrorResponse
+    Fees:
+      properties:
+        transfer:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Transfer
+          description: Transfer fee of the token
+        transfer_fee_max_amount:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Transfer Fee Max Amount
+          description: The maximum value that a transfer fee will cost
+        buy:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Buy
+          description: Buy fee of the token
+        sell:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Sell
+          description: Sell fee of the token
+      type: object
+      title: Fees
+    HookRequest:
+      properties:
+        url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Url
+        shared_secret_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shared Secret Key
+          description: Optional shared secret key (32 characters), used to calculate the HMAC signature
+        filter:
+          anyOf:
+          - $ref: '#/components/schemas/TokenAddressFilter'
+          - $ref: '#/components/schemas/TokenTypeFilter'
+          - type: 'null'
+          title: Filter
+          description: Filter for webhook updates
+      type: object
+      required:
+      - url
+      title: HookRequest
+    BulkTokenValidationResponse:
+      properties:
+        results:
+          additionalProperties:
+            $ref: '#/components/schemas/TokenValidationResponse'
+          type: object
+          title: Results
+        errors:
+          additionalProperties:
+            $ref: '#/components/schemas/BulkScanError'
+          type: object
+          title: Errors
+          description: Errors encountered during bulk scanning, keyed by token address
+      type: object
+      required:
+      - results
+      title: BulkTokenValidationResponse
+    Feature:
+      properties:
+        feature_id:
+          $ref: '#/components/schemas/FeatureID'
+          description: Feature identifier
+        type:
+          $ref: '#/components/schemas/FeatureType'
+          description: Type of the feature
+        description:
+          type: string
+          title: Description
+          description: Description of the feature
+      type: object
+      required:
+      - feature_id
+      - type
+      - description
+      title: Feature
+    BitcoinMetadataToken:
+      properties:
+        type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+          description: Type of the token
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the token
+        symbol:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Symbol
+          description: Symbol of the token
+        decimals:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Decimals
+          description: Decimals of the token
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+          description: The unique ID for the Rune
+        number:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Number
+          description: The rune's unique sequential number.
+        formatted_name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Formatted Name
+          description: The formatted name of the rune, with spacers
+      type: object
+      title: BitcoinMetadataToken
+    TokenMarket:
+      properties:
+        market_type:
+          $ref: '#/components/schemas/MarketType'
+        market_name:
+          type: string
+          title: Market Name
+        pair_name:
+          type: string
+          title: Pair Name
+        address:
+          type: string
+          title: Address
+        base_token:
+          type: string
+          title: Base Token
+        quote_token:
+          type: string
+          title: Quote Token
+        reserve_in_usd:
+          type: number
+          title: Reserve In Usd
+      type: object
+      required:
+      - market_type
+      - market_name
+      - pair_name
+      - address
+      - base_token
+      - quote_token
+      - reserve_in_usd
+      title: TokenMarket
+    FeatureID:
+      type: string
+      enum:
+      - VERIFIED_CONTRACT
+      - UNVERIFIED_CONTRACT
+      - HIGH_TRADE_VOLUME
+      - MARKET_PLACE_SALES_HISTORY
+      - HIGH_REPUTATION_TOKEN
+      - ONCHAIN_ACTIVITY_VALIDATOR
+      - STATIC_CODE_SIGNATURE
+      - KNOWN_MALICIOUS
+      - IS_EOA
+      - IS_CONTRACT
+      - ERC20_CONTRACT
+      - TRUSTED_CONTRACT
+      - BENIGN_CREATOR
+      - METADATA
+      - AIRDROP_PATTERN
+      - IMPERSONATOR
+      - INORGANIC_VOLUME
+      - DYNAMIC_ANALYSIS
+      - CONCENTRATED_SUPPLY_DISTRIBUTION
+      - HONEYPOT
+      - INSUFFICIENT_LOCKED_LIQUIDITY
+      - UNSTABLE_TOKEN_PRICE
+      - RUGPULL
+      - WASH_TRADING
+      - CONSUMER_OVERRIDE
+      - INAPPROPRIATE_CONTENT
+      - HIGH_TRANSFER_FEE
+      - HIGH_BUY_FEE
+      - HIGH_SELL_FEE
+      - UNSELLABLE_TOKEN
+      - IS_MINTABLE
+      - REBASE_TOKEN
+      - LIQUID_STAKING_TOKEN
+      - MODIFIABLE_TAXES
+      - CAN_BLACKLIST
+      - CAN_WHITELIST
+      - HAS_TRADING_COOLDOWN
+      - EXTERNAL_FUNCTIONS
+      - HIDDEN_OWNER
+      - TRANSFER_PAUSEABLE
+      - OWNERSHIP_RENOUNCED
+      - OWNER_CAN_CHANGE_BALANCE
+      - PROXY_CONTRACT
+      - SIMILAR_MALICIOUS_CONTRACT
+      - IMPERSONATOR_SENSITIVE_ASSET
+      - IMPERSONATOR_HIGH_CONFIDENCE
+      - IMPERSONATOR_MEDIUM_CONFIDENCE
+      - IMPERSONATOR_LOW_CONFIDENCE
+      - IMPERSONATION_PROTECTED
+      - FAKE_VOLUME
+      - HIDDEN_SUPPLY_BY_KEY_HOLDER
+      - FAKE_TRADE_MAKER_COUNT
+      - TRANSFER_FROM_REVERTS
+      - OFFENSIVE_TOKEN_METADATA
+      - LISTED_ON_CENTRALIZED_EXCHANGE
+      - SANCTIONED_CREATOR
+      - SPAM_TEXT
+      - BONDING_CURVE_TOKEN
+      - HEAVILY_SNIPED
+      - SOLANA_TOKEN_2022
+      - POST_DUMP
+      - DEX_PAID
+      - LOW_REPUTATION_CREATOR
+      - SNIPE_AT_MINT
+      - TRANSFER_HOOK_ENABLED
+      - CONFIDENTIAL_TRANSFERS_ENABLED
+      - NON_TRANSERABLE
+      - TOKEN_BACKDOOR
+      - CREATED_VIA_LAUNCHPAD
+      - COMPROMISED_TOKEN
+      - LONG_FUND_TRAIL
+      title: FeatureID
+    TokenAddressFilter:
+      properties:
+        filter_type:
+          type: string
+          const: token_address
+          title: Filter Type
+          description: Type of filter applied to the webhook updates
+          default: token_address
+        token_addresses:
+          items:
+            type: string
+          type: array
+          title: Token Addresses
+          description: List of up to 100000 token addresses to filter webhook updates
+      type: object
+      required:
+      - token_addresses
+      title: TokenAddressFilter
+    Hook:
+      properties:
+        url:
+          type: string
+          minLength: 1
+          format: uri
+          title: Url
+        shared_secret_key:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Shared Secret Key
+          description: Optional shared secret key (32 characters), used to calculate the HMAC signature
+        chain:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        active:
+          type: boolean
+          title: Active
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+      type: object
+      required:
+      - url
+      - chain
+      - active
+      - created_at
+      - updated_at
+      title: Hook
+    BulkExportJobRequest:
+      properties:
+        chain:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        token_type:
+          anyOf:
+          - $ref: '#/components/schemas/TokenType'
+          - type: 'null'
+          description: 'Type of token standard: `fungible` for interchangeable tokens (e.g., ERC-20), or `non_fungible` for unique tokens (e.g., NFTs such as ERC-721/ERC-1155). If empty, all token types will be exported.'
+        format:
+          $ref: '#/components/schemas/ExportFormat'
+        sync_start_time:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Sync Start Time
+          description: Export only records with timestamps at or after this Unix timestamp. If empty or 0, all records will be exported.
+      type: object
+      required:
+      - chain
+      - format
+      title: BulkExportJobRequest
+    FeatureType:
+      type: string
+      enum:
+      - Benign
+      - Info
+      - Warning
+      - Malicious
+      title: FeatureType
+    EvmMetadataToken:
+      properties:
+        type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Type
+          description: Type of the token
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the token
+        symbol:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Symbol
+          description: Symbol of the token
+        decimals:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Decimals
+          description: Decimals of the token
+        image_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Image Url
+          description: URL of the token image
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+          description: Description of the token
+        deployer:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Deployer
+          description: Address of the deployer of the fungible token
+        deployer_balance:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Contract creator balance
+        contract_balance:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Contract balance
+        owner_balance:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Contract owner balance
+        owner:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Owner
+          description: Contract owner address
+        creation_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Creation Timestamp
+          description: Contract deploy date
+        external_links:
+          $ref: '#/components/schemas/ExternalLinks'
+          description: social links of the token
+          default: {}
+        urls:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Urls
+          description: Urls associated with the token
+        malicious_urls:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Malicious Urls
+          description: Malicious urls associated with the token
+        token_creation_initiator:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Token Creation Initiator
+          description: Address of the token creation initiator, only set if the tokens was created by a well known token launch platform
+        impersonation_targets:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ImpersonationTarget'
+            type: array
+          - type: 'null'
+          title: Impersonation Targets
+          description: List of tokens that this token is impersonating, if detected as an impersonator
+      type: object
+      title: EvmMetadataToken
+    ImpersonationTarget:
+      properties:
+        chain:
+          type: string
+          title: Chain
+          description: Blockchain network of the target token
+        address:
+          type: string
+          title: Address
+          description: Address of the token being impersonated
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: Name of the token being impersonated
+        symbol:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Symbol
+          description: Symbol of the token being impersonated
+        source:
+          anyOf:
+          - $ref: '#/components/schemas/ImpersonationSource'
+          - type: 'null'
+          description: Source of the impersonation match - either from top tokens or user-defined baseline
+      type: object
+      required:
+      - chain
+      - address
+      title: ImpersonationTarget
+    BulkExportJobStatusResponse:
+      properties:
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        files:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Files
+        expires_in:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Expires In
+          description: Seconds until URLs expire
+        chain:
+          anyOf:
+          - $ref: '#/components/schemas/TokenScanSupportedChains'
+          - type: 'null'
+        tokens_count:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Tokens Count
+          description: Number of tokens exported
+      type: object
+      required:
+      - status
+      title: BulkExportJobStatusResponse
+    TokenScanSupportedChains:
+      type: string
+      enum:
+      - arbitrum
+      - avalanche
+      - base
+      - bsc
+      - ethereum
+      - optimism
+      - polygon
+      - zora
+      - solana
+      - starknet
+      - starknet-sepolia
+      - stellar
+      - linea
+      - degen
+      - zksync
+      - scroll
+      - blast
+      - soneium-minato
+      - base-sepolia
+      - bitcoin
+      - abstract
+      - soneium
+      - ink
+      - berachain
+      - unichain
+      - ronin
+      - sui
+      - hedera
+      - hyperevm
+      - xlayer
+      - monad
+      - megaeth
+      - tempo
+      - sei
+      - kaia
+      - tron
+      - robinhood
+      title: TokenScanSupportedChains
+      description: The chain name
+    ParamReport_TokenReportParams_:
+      properties:
+        type:
+          type: string
+          const: params
+          title: Type
+        params:
+          $ref: '#/components/schemas/TokenReportParams'
+      type: object
+      required:
+      - type
+      - params
+      title: ParamReport[TokenReportParams]
+    TokenType:
+      type: string
+      enum:
+      - fungible
+      - non_fungible
+      title: TokenType
+      description: 'Type of token standard: `fungible` for interchangeable tokens (e.g., ERC-20), or `non_fungible` for unique tokens (e.g., NFTs such as ERC-721/ERC-1155).'
+    ReportRequest_TokenReportParams_:
+      properties:
+        event:
+          $ref: '#/components/schemas/EventEnum'
+          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
+        report:
+          anyOf:
+          - $ref: '#/components/schemas/ParamReport_TokenReportParams_'
+          - $ref: '#/components/schemas/RequestIDReport'
+          title: Report
+          description: Parameters identifying the token to report, provided either as token details (address and chain) or as a request ID from a previous scan.
+        details:
+          type: string
+          title: Details
+          description: Details about the report.
+      type: object
+      required:
+      - event
+      - report
+      - details
+      title: ReportRequest[TokenReportParams]
+    JobStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - succeeded
+      - failed
+      title: JobStatus
+      description: 'Current state of the job: `queued` (accepted, waiting to start), `running` (in progress), `succeeded` (completed successfully), `failed` (completed with an error).'
+    TokenValidationRequest:
+      properties:
+        metadata:
+          $ref: '#/components/schemas/TokenMetadata'
+          description: Optional token metadata context (e.g., source/integration hints) used to enrich results.
+          default: {}
+        chain:
+          $ref: '#/components/schemas/TokenScanSupportedChains'
+        address:
+          type: string
+          title: Address
+          description: Token address to validate (EVM / Solana / Stellar / Starknet)
+        token_id:
+          anyOf:
+          - type: integer
+          - type: 'null'
+          title: Token Id
+          description: The ID of the specific NFT within an ERC-721 or ERC-1155 collection.
+      type: object
+      required:
+      - chain
+      - address
+      title: TokenValidationRequest
+    TopHolder:
+      properties:
+        label:
+          anyOf:
+          - $ref: '#/components/schemas/TopHolderLabel'
+          - type: 'null'
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: Address
+        holding_percentage:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Holding Percentage
+          description: Holding position out of total token liquidity
+      type: object
+      title: TopHolder
+    TradingLimits:
+      properties:
+        max_buy:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Max amount that can be bought at once
+        max_sell:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Max amount that can be sold at once
+        max_holding:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Max amount that can be held by a single address
+        sell_limit_per_block:
+          anyOf:
+          - $ref: '#/components/schemas/Amount'
+          - type: 'null'
+          description: Maximum amount of the token that can be sold in a block
+      type: object
+      title: TradingLimits
+    TokenTypeFilter:
+      properties:
+        filter_type:
+          type: string
+          const: token_type
+          title: Filter Type
+          description: Type of filter applied to the webhook updates
+          default: token_type
+        token_type:
+          type: string
+          enum:
+          - Fungible
+          - NonFungible
+          title: Token Type
+          description: Type of token to filter
+      type: object
+      required:
+      - token_type
+      title: TokenTypeFilter
+    ExternalLinks:
+      properties:
+        homepage:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Homepage
+        twitter_page:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Twitter Page
+        telegram_channel_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Telegram Channel Id
+      type: object
+      title: ExternalLinks
+    TokenCursorPage_TokenValidationResponse_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/TokenValidationResponse'
+          type: array
+          title: Items
+        current_page:
+          type: string
+          title: Current Page
+          description: Cursor to refetch the current page
+        previous_page:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Previous Page
+          description: Cursor for the previous page
+        next_page:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Next Page
+          description: Cursor for the next page
+      type: object
+      required:
+      - items
+      - current_page
+      title: TokenCursorPage[TokenValidationResponse]
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

@@ -1,0 +1,1960 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Solana API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Solana
+paths:
+  /v0/solana/post-transaction/scan:
+    post:
+      tags:
+      - Solana
+      summary: Scan Post-Transaction
+      description: Scan a transaction that was already executed on chain, returns validation with features indicating address poisoning entities and malicious operators.
+      operationId: solana_scan_post_transaction_post_transaction_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolanaPostTransactionScanRequestSchema'
+            examples:
+              Direct $SOL Transfer to Benign Address - BENIGN:
+                summary: Direct $SOL Transfer to Benign Address - BENIGN
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  - validation
+                  tx_hash: 3diX8kbXNk6fc6JMpSSFEzvNUhHZxR5sYf68XG77LoWXtHQt4nrTyXpJzeKbMXQ7kfY4MK3Er5FKR7mQxnx6TwqG
+              Direct $SOL Transfer - Gas Estimation:
+                summary: Direct $SOL Transfer to Benign Address with Gas Estimation - BENIGN
+                value:
+                  chain: mainnet
+                  options:
+                  - gas_estimation
+                  tx_hash: 3diX8kbXNk6fc6JMpSSFEzvNUhHZxR5sYf68XG77LoWXtHQt4nrTyXpJzeKbMXQ7kfY4MK3Er5FKR7mQxnx6TwqG
+              Direct $SOL Transfer to Drainer Address - MALICIOUS:
+                summary: Direct $SOL Transfer to Drainer Address - MALICIOUS
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  - validation
+                  tx_hash: 2iR793oNEhR5vvixih3b63A6YQjRJbXzHX2LxBesn2kiHovKqznj1Pr4FEmHyii9GqhnJmYDZ6mNvKKPPm8GxxVD
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolanaResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolanaHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/solana/message/scan:
+    post:
+      tags:
+      - Solana
+      summary: Scan Transaction
+      description: Gets a transaction and returns a full simulation indicating what will happen in the transaction together with a recommended action and some textual reasons of why the transaction was flagged that way.
+      operationId: solana_scan_message_message_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolanaMessageScanRequestSchema'
+            examples:
+              Direct $SOL Transfer to Benign Address - BENIGN:
+                summary: Direct $SOL Transfer to Benign Address - BENIGN
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: 86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY
+                  transactions:
+                  - vxBNpvao9QJmLKXUThbbjRnxm3ufu4Wku97kHd5a67FDjSqeHwcPrBKTjAHp4ECr61eWwoxvUEVTuuWX65P9bCNDJrTJpX64vjdtpHA8cogA4C92Ubj813wUUA8Ey4Bvcrdj5c1bSTrGZVzb8QmCKyzMu9kMiSWpFtaFrNN8zb9grr81N3R3njrFgxCxNSjboFtomLyZ3iUQBaBkRF1DyzGyc1r1kd8FnptaDWteNCXJHUYFeH8wBDwZJzNZfz71CiugXhxBTJSAqSNC8JEWm7kmCqwjUqLd23L2x2s
+                  metadata:
+                    url: https://example.com
+              Direct $SOL Transfer - Gas Estimation:
+                summary: Direct $SOL Transfer - Gas Estimation
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - gas_estimation
+                  account_address: 86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY
+                  transactions:
+                  - vxBNpvao9QJmLKXUThbbjRnxm3ufu4Wku97kHd5a67FDjSqeHwcPrBKTjAHp4ECr61eWwoxvUEVTuuWX65P9bCNDJrTJpX64vjdtpHA8cogA4C92Ubj813wUUA8Ey4Bvcrdj5c1bSTrGZVzb8QmCKyzMu9kMiSWpFtaFrNN8zb9grr81N3R3njrFgxCxNSjboFtomLyZ3iUQBaBkRF1DyzGyc1r1kd8FnptaDWteNCXJHUYFeH8wBDwZJzNZfz71CiugXhxBTJSAqSNC8JEWm7kmCqwjUqLd23L2x2s
+                  metadata:
+                    url: https://example.com
+              Direct $SOL Transfer to Drainer Address - MALICIOUS:
+                summary: Direct $SOL Transfer to Drainer Address - MALICIOUS
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: 86xCnPeV69n6t3DnyGvkKobf9FdN2H9oiVDdaMpo2MMY
+                  transactions:
+                  - vxBNpvao9QJmLKXUThbbjRnxm3ufu4Wku97kHd5a67FDjSqeHwcPrBKTjAHp4ECr61eWwoxvUEVTuuWX65P9bCNDJrTJpX64vjdtpHA8cogA4C92Ubj813wUUA8Ey4Bvcrdj5c1bSTCnwoE8HeFYiyioRLNZTpShx8zkyzXaxkpUvPVRN26363bGvJDNSJt8bihmwAPxfrH7kSV9BvAuhRWsiuUAN4GZzyAiptknHZ1xjzrKAHz68UNJpWnYkaUThye6r3iULZUcp7baBaGAtnUmAdDMGG1UpBusWLF
+                  metadata:
+                    url: https://example.com
+              Swap $SOL to malicious rugpull token:
+                summary: Swap $SOL to malicious rugpull token
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: B1NJhggrcCmm6U7rxaFqyQqW3tyhvEXtmHfzHp5sovD7
+                  transactions:
+                  - 44gnAK9RG8XKNWB26VcxDDwgivHS4D49Qev76XmSKm9pNTm6zGYX48uuK4A1vDooteNbMguBfoNScQY6amVnBrGXLn9XytSwnpHqBu3rUDMaYqvQbkLVaJC4S2fbweQAsEDUn1eV9jfQFJZFimciXMjmerYecrUYG3WpSCE6FRH31oeJwQq1JeoDcjozyP3GAVsY7MNaFfKe8PCdFRW9WRcpDNG6FptYKc2H3qAXgZJwrXtbi6u4wDe2Ab2957JoANga4Ty74Ty5XRPgdGtdRFYENECJCya9ZxkF9sEaVaXpa5jJ7xBvfMXpwN74eBf6ej2Zg36J6eV5QfWBFFXPJcok5xszKiAJaBT7SnC1ud3hR1ucdhFKKLrpffBnEYNskY6oTVDnmjdqrX7nHFNZp8gjfCZTBiJQpKckt7sjPDSh32gV4ubRQPczxpw6urBEVZcB49gDdx1iN7gJ9uDwphNCFRcES1dnC9QzNaGaMe24CK3BDk8oEUPWK2y8WbeyyYcSNzAwh82kZ3jvgFMYZZXHxuihnsnRLzZtaFEC2weKpfg6Ziov5QBnsmeQ9ZC7R5jk326yJmRGsHgqMosSpZ2u5dxpUQ3E6C9oyR8VNa2CRH7VTVzRVdVab3CyxaF3bw4cmjRvWZLRbeb4BbBRJNt5cbMVTMZ8JY1ZxBQfoNmaeXvxiKFe1zNRxEncw6VoETK8wwEjTpPdnr6kB3fhbAVe2pK3DTbQzzgZQvVmP2XjL4HGSFxnQNeNjui8KRKTqMemmfXgSL8sUDYeBQXpSkfGb1gUyE9Wu
+                  metadata:
+                    url: https://example.com
+              SPL Token Transfer to Drainer Address - MALICIOUS:
+                summary: SPL Token Transfer to Drainer Address - MALICIOUS
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: 7kuKG4MaGvAKXoYRKzaoKqzbJS2oXD8F3bB5QFf1pDqc
+                  transactions:
+                  - 81Qpn3P2kuoBypMmUv3HbzEuvVgoNtkJeWKAKSZyt72ZV63x3hGZS6RncMY2QyXEJaVFxYnaVhTRdKTQK283n46MveXxY2LiTQRcfwjn4bDYDTCVC9FmxxAriYMkVKRt75DZLjnKK5TzhoDArnd7cx46qT8DfDofi1Z53ddhPJEaTNawitsFkVEeeDJBcrQHruwFQviYyDAEnUzZqMabd896RjLJrZM9GS5biY4vCxRUGm8KwM6nKP462DWeW7uxgN3WVJYwLLHoFwF1AHYZei4zC4qCdRqQd2BsQBwbhaTHQFASL3d4KMChpo5KgjnqxEUkfgV23beeT5GYCFaGGBQxjwu3sFx5hSpkKxYYFNncAdaJCyBEdU6GMeFm6Y1xvsassn6d1e5BkcMhe7c2BSAYjtygN3phhWBQCkwDt8pD9xELnuP98NeujWgzQwKT7yat8iknE7gHwXZY1dCRd9GgEkPsFxxoMngyNHVrrKRtBmrXE9Vo13vNXGJ7EJ7HmZn32TtZwMvejqpVyVptRnW3GfhGLDjYQPyytwAX3xGZNR4hEVToDetUko
+                  metadata:
+                    url: https://example.com
+              SPL Token Exposure to Benign Address - BENIGN:
+                summary: SPL Token Exposure to Benign Address - BENIGN
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: BmFdpraQhkiDQE6SnfG5omcA1VwzqfXrwtNYBwWTymy6
+                  transactions:
+                  - 3T4DHUNXqSgNrtRMsDwQr7oG7756JXW4uNJ7x7RKJLTcSJRe6PqyR5fQffnXh4KTHs4MyRrDhR1K3zCeRrWsJBeoXxrwPxzAVJCmDvMzEZBJH61Umvr3n5PLWD5rB2YerhKvLjDe3piLSwL5DXMBYkL6Zx8HqW1XpHQxYzcpd3CCbuiVBB29bBQR3A3zZFpsAJNYPerseKhAWB7ys3VurqHpe3X5DuvtUtq4SuP5RnVYtQEbQXnknfTPYpGvqhL4jFZbYz2iVywUYi9srLC4waN4NLigV46RqXHiggTwpBcyDtKkLBhZYT7EerJ1zayPWytqvvCyqrtdBd
+                  metadata:
+                    url: https://example.com
+              Eclipse - ETH Transfer to Benign Address - BENIGN:
+                summary: Eclipse - ETH Transfer to Benign Address - BENIGN
+                value:
+                  encoding: base58
+                  chain: eclipse_mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: B1NJhggrcCmm6U7rxaFqyQqW3tyhvEXtmHfzHp5sovD7
+                  transactions:
+                  - 3md7BBV9wFjYGnMWcMNyAZcjca2HGfXWZkrU8vvho66z2sJMZFcx6HZdBiAddjo2kzgBv3uZoac3domBRjJJSXkbBvokxS6XbcMjHkPqeTXhiTtvbKmJFR5Gted8tuNAQHBfXjF8st9KN2TPjhB6qt6QDP1zo33qN27joRDqYekuUUSFcS4rpuVSLDqchuPT31nTZrTFBFUL4ns13CBrhCdRwComhquznpLZhroPzg5Nby5Z19m34jM85fQaHmaTXBvM1jJQ6JACEGHXjfp2H8yrFjkZchHndMmdh
+                  metadata:
+                    url: https://example.com
+              Eclipse - 2022 Token Program Transfer to Benign Address - BENIGN:
+                summary: Eclipse - 2022 Token Program Transfer to Benign Address - BENIGN
+                value:
+                  encoding: base58
+                  chain: eclipse_mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: B1NJhggrcCmm6U7rxaFqyQqW3tyhvEXtmHfzHp5sovD7
+                  transactions:
+                  - sBkTbqV8HvcFj2vFYXv8mBzKScSTGnRp6XpW32PrjCi6ypjtcH25BwnP3boN1GvD6U2bVr5zNBNENiYGi9E2HSFYNZ1X4TtrJNN4Ss39aPqy1TfBz1EiY6Q43LfhhMFYEDUKmrLbCpgXAr9JfYrxZt6HZtR6PNHHkiMjJBrLWWrW2CGKqDLb3g9XNTW7Q6Hp2Ap1ez5PQ85ENTizbvoQgaaofJk2LTYy6kgiq1zws3tjr71pDmqUvgSF72vEb4R4DX9w5o1d1KHMHsAxKVFWve7rhnd41rY5LbLcK99cHv8VV5ffpdcYLGEo6mNEZcHuKKcZiHevdx7mHcdFXANgWLfyQqhc5JSbNA1RZdpZUvM9ERXTcfoP1tpojrCyM42rR3u5nVtaGU8DEb1RZL4ut1TydEVcs8a4E1Mozv7LWJaAq7LFvF7KXXwxMRuG6a7jvHe7Y35L4Ga6ATCaW66Moff9Tn6pDs7aCndEjWsWU5M4gKQbA6hhk7xsB8SPvxa5qNQ86tttGmtVn7jnMhvyZaGNfzpn72HvEEETovcfLTLqFptAPXy3FcaXYiJ3wtihgwW4Xnk9xZRRXu
+                  metadata:
+                    url: https://example.com
+              Eclipse - Token Program Transfer to a Known Malicious Address - MALICIOUS:
+                summary: Eclipse - Token Program Transfer to a Known Malicious Address - MALICIOUS
+                value:
+                  encoding: base58
+                  chain: eclipse_mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: B1NJhggrcCmm6U7rxaFqyQqW3tyhvEXtmHfzHp5sovD7
+                  transactions:
+                  - MrxPqMC3VtxFvCKEcR4QGEhkLVHkUeqfx8Hd1cszDDSdYBjVKBWj9YB9jFUKz4uk5LRxhqaQZShU4CXhZEJr5rFyDfAgXgd5QykWPULkXiX9RyAfaLsyyzhipHGv4YwquUuEeW8RH3WVfv8t1XV8UUUAFK9SXpSydHePA93Ro21qN7a19VxpbLYvdTeLB4XxPmzrv7LrUketWEJt7BtqaeGre9SghJmawbVRWmbmVmRitH8NE4Bb6k3FzDfWxPLMxnuDcTuG8r2HcvQq4zz5Tv5uBdaeyZ52tsjxhD3WRzcWcncySREgwJP7mXYLxkVDwG9VCQA59eA5umk5N316f8k7K75yqTQTkVrbyKSNShxe7hiLLH6VMa39P3Sfjj74k1Hk5T6HCcBKhdV2qv4iGdiJ5dtXcudSf2rE5fkaNFXYf11evWmQZs6swY6gjcPKUkZVTXsCqe6xwKye7itotk8fndYQPePkEh5qiHSaZUH4BDS2YSeU5kQ6GKfqhssjyhyLVjX3CYD5ZatEGSFvVBpEwimVY7AwS9BB56NuRv8ea3zt4TbCiJB
+                  metadata:
+                    url: https://example.com
+              Sonic - $SOL Transfer to Benign Address - BENIGN:
+                summary: Sonic - $SOL Transfer to Benign Address - BENIGN
+                value:
+                  encoding: base58
+                  chain: sonic_mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: CLam9zyDuGxBPAVSDvtHfQktLNPFhf5yXTmxQTBZyPaW
+                  transactions:
+                  - vxBNpvao9QJmLKXUThbbjRnxm3ufu4Wku97kHd5a67FDjSqeHwcPrBKTjAHp4ECr61eWwoxvUEVTuuWX65P9bCNDJrTJpXBGhg6KZBhF1MK7vHxzCgRw9WYECKvGG2U9SGbchzg5e6MwNqxnoqR9whxmJa3rXmNhfYY3mE8KwzBgYe656NJtKXs7G8Gr7MPGE8Sg578hCydVkDHtwJDNrYiSnGebaUrxxUbD8zsSA3hwiUbrMBdr6C5G85iFcXRgTLyj6ULNgMXfBZnZRth1yDKPgU6AdHaP15nJZxK
+                  metadata:
+                    url: https://example.com
+              Sonic - SPL Token Transfer to Benign Address - BENIGN:
+                summary: Sonic - SPL Token Transfer to Benign Address - BENIGN
+                value:
+                  encoding: base58
+                  chain: sonic_mainnet
+                  method: signAndSendTransaction
+                  options:
+                  - simulation
+                  - validation
+                  account_address: CLam9zyDuGxBPAVSDvtHfQktLNPFhf5yXTmxQTBZyPaW
+                  transactions:
+                  - 81Qpn3P2kuoBypMmUv3HbzEuvVgoNtkJeWKAKSZyt72ZV63x3hGZS6RncMY2QyXEJaVFxYnaVhTRdKTQK283n46MveXxY2MSrCiDZhj8x4P2Ygp6AMnmS7zGrgkGRxbq6gsmgB9AUzTmdcPGFcTs7UPe7DVbPuAMKLrVGvXYF9oJ718gm7szjaue2WG6jABvysygES1mNK81cJPPYHD3JSg55DBHaoptKWub8h7sgCrGmVVTFDmMQ1ExH9JXzenePp7XgHWNj7pFER4ipKDxU2Z2D1943yrHDtdR7gxKBmqYWg4yTA8w8DmPqbow2bBRGgbcJVsPeJr66JRpRANmUMpwWZRaHQesMFCXJQHB5M86p1J3CVVH3Ue36MwZSAn2JqNLCdWGL125cCCNTNs7Y2RLKgbdRN3nZ7w5FyXco2jEqf6uw33YN6UiBhNTd8EJ3cLmv1LGXPvB4zS6x7RYqutmBhBiS46CnTh3XNmJhGg9tYy9v1LvUfwXV4jYXNr5wcA71zKGCNn1YrLbrY2DmEeUPymdV7bYBxbjLPkai4LdxoQtY76dJEPdeo
+                  metadata:
+                    url: https://example.com
+              Jito Bundle - $SOL Transfer to Benign Address - BENIGN:
+                summary: Jito Bundle - $SOL Transfer to Benign Address - BENIGN
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signAllTransactions
+                  execution_mode: jito_bundle
+                  options:
+                  - simulation
+                  - validation
+                  account_address: BnFa6T6Sf7Cd28GW2ror8C88vdH1nPArKh4PnwFEgTmc
+                  transactions:
+                  - 51f46eijYzqyUy1CLj7ATXjBb7UohtK4RXAq3XGW6HtpvfR1pPMupDZPPZpEEgNysQ6ur2LNd6dZjXG4TRCHoSfiSgY94qhtA7HKW17PuxL41P9SR9nd6JywBTrHu4YbUB22AACKUXmjgn6Jgj47QXK5UjYdhof1sb6xGEmJyT8cuzDtGijT79rXSRuuirgvJ1S9bLz51r6wcr54h7yhwih4zogbKXqEgFpF24isikgwC8jR8BiHe53V9u4JwiffE2pKah4W7KyAb5KJdvmhHcYWqTuUBtsmYGcZD
+                  - ASzpcMc9FiUv3EbWL84xQMvdau9MwVGbZyxXLQxQuQKsaC9M4jegbACnu7rvbH3fDUqYajqsjh5WjVz2cH7ehA6oXpAg72rg7Htsmh5Rmy2wTu8yJTRxmhGUvudj6fRyqro2UmMAyMUXPNrP6hhHErBdtcmcazb7dLGLLT52AmKFq7t1kXcck2LhTshEeNQvM7BQJdZcN7u7qvufVA4yv3t12jFRYPpANKKLDKKYPb4Z7n94YVeZQwXomSsSpHnuhphJWcijcYDgrjw8ePcVqJ2dk5EpCWe1HBeL3ahQbUsqXgBijbU8j8XZJ2ff8tiQu7zVGCLvcrqyt2s9GwEXRVXgwWQbcwgz8U7x9fsPFErFrb1drbR5YFQPhnAabheFEDtfCjZ7SyyE7bxbJ4cxThJMQpPBMyssCVV8jzXq
+                  metadata:
+                    url: https://example.com
+              Jito Bundle - $SOL Transfer to Malicious Address - MALICIOUS:
+                summary: Jito Bundle - $SOL Transfer to Malicious Address - MALICIOUS
+                value:
+                  encoding: base58
+                  chain: mainnet
+                  method: signTransaction
+                  execution_mode: jito_bundle
+                  options:
+                  - simulation
+                  - validation
+                  account_address: BnFa6T6Sf7Cd28GW2ror8C88vdH1nPArKh4PnwFEgTmc
+                  transactions:
+                  - 4aKt55Zns792KfXX4d6zQenZtdyBcgzwEsEz8jTweWJPXQtCP8sczdc2L8mNvhq2AyNhLpc6qrQY8hF6TY4eZGS5P4CgYnYVuk4rsFvqstrojJH9JyBUoffX4GqyJZchKfZMX48wWuLecqDoDfkcnGCGr3m6Gr8n16qmhjsj4hY5JSeDSMDsE3SVK52WeK8o8uZS87G3MkFmFPMeRDKznvabRZz7ZLNc2ERQzCMT8CCozsFYHhnJ6bkpqAa5Nbf8zhaMvruiskJVwWk9ZA1QZCychAQy8hN4Ka2R5
+                  - 9xob5MMn1zb5JoqiUajypXU4Lo47sSQsN3L6aLPjjCe3kysE6tzq7f6U2CwmhCnUnpthqEcp96oWxqPLR4eCzWQ6nnFWoE7nouPT47BpEqzWxvrwLv4QDQoKj4zxbWiZsv6e9oc2xQUBzN67ofynEGfW9BQL971rF4TnwywGUFey4wwABjE6BDcrYRCBVKNFU1u2dwSua3QReMRah59zWTPkzUsT7AnyZaejBKR6u3rfY7FrbMX9u9tXXTFsR7d1AMM1WvHUuswvS2RDCnqtAoz4LkzTyny3UBft4XNwYUAfwrqwhmFJ1Es3TK5PsRn6iEikYZZXAQo1XxB4sfu94DhrirCAHhNJsH7Nw7LYcCsELumUN9akqUQ3ZCrx3YWMJHsTiThhKTiShkEtDw5v4hx99ogaQqh9eLQ3fHPM
+                  metadata:
+                    url: https://app.lpagent.io
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolanaResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolanaHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/solana/address/scan:
+    post:
+      tags:
+      - Solana
+      summary: Scan Address
+      description: Gets an address and returns a full security assessment indicating whether or not this address is malicious as well as textual reasons of why the address was flagged that way.
+      operationId: solana_scan_address_address_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SolanaAddressScanRequestSchema'
+            examples:
+              Benign Address Scan:
+                summary: Benign Address Scan
+                value:
+                  chain: mainnet
+                  address: 2ojv9BAiHUrvsm9gxDe7fJSzbNZSJcxZvf8dqmWGHG8S
+                  metadata:
+                    url: https://example.com
+              Mint Address Scan:
+                summary: USDC Mint Address Scan
+                value:
+                  chain: mainnet
+                  address: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+                  metadata:
+                    url: https://example.com
+              Token Address Scan:
+                summary: Token Address Scan
+                value:
+                  chain: mainnet
+                  address: DzHkPPfGbg6xmvvmEmx1toxKD91ZzWfNJU2hvP5eVMmT
+                  metadata:
+                    url: https://example.com
+              Contract Address Scan:
+                summary: Contract Address Scan
+                value:
+                  chain: mainnet
+                  address: '11111111111111111111111111111111'
+                  metadata:
+                    url: https://example.com
+              Malicious Address Scan:
+                summary: Malicious Address Scan
+                value:
+                  chain: mainnet
+                  address: BBQUMqaFELxTFh8r1xSttYMHX6ZKzLWhsmGod2vuxgEc
+                  metadata:
+                    url: https://example.com
+              Stake Account Address Scan:
+                summary: Stake Account Address Scan
+                value:
+                  chain: mainnet
+                  address: Drj6HXFGdir5ijXgGNmptfzDTsKQKmvpYtdj1vVE2SkM
+              Mutable Program Address Scan:
+                summary: Mutable Program Address Scan
+                value:
+                  chain: mainnet
+                  address: T1pyyaTNZsKv2WcRAB8oVnk93mLJw2XzjtVYqCsaHqt
+              Metaplex Metadata Address Scan:
+                summary: Metaplex Metadata Address Scan
+                value:
+                  chain: mainnet
+                  address: CBadLMgRQYNJUG9oRZnA367ri9ch2xwpLDQ7Y2BqUjhq
+              Vote Account Address Scan:
+                summary: Vote Account Address Scan
+                value:
+                  chain: mainnet
+                  address: odc2aCE7yWTcV8ApP1cHmVqQZTkLNduqaYyKE1XhpE3
+              Immutable Program Address Scan:
+                summary: Immutable Program Address Scan
+                value:
+                  chain: mainnet
+                  address: ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL
+              Program Derived Address Scan:
+                summary: Program Derived Address Scan
+                value:
+                  chain: mainnet
+                  address: HxkAfaGm9zD5BMTAfVsfWeX8rKVFDpFNxskECkhzij7
+              Address Lookup Table Address Scan:
+                summary: Address Lookup Table Address Scan
+                value:
+                  chain: mainnet
+                  address: 9JqEwvgiSLd5gvMKtKXTYtmKBuhByGRZe7iPzHNQd4s3
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolanaAddressScanResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SolanaHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    SolanaCaip2Chain:
+      type: string
+      enum:
+      - 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp
+      - EtWTRABZaYq6iMfeYKouRu166VU2xqa1
+      - EAQLJCV2mh23BsK2P9oYpV5CHVLDNHTxY
+      title: Caip2Chain
+    SolanaResponseResult:
+      properties:
+        simulation:
+          $ref: '#/components/schemas/SolanaSimulationResultSchema'
+          description: Transaction Simulation Result
+          nullable: true
+          title: Simulation
+        validation:
+          $ref: '#/components/schemas/SolanaValidationResultSchema'
+          description: Transaction Validation Result
+          nullable: true
+          title: Validation
+        gas_estimation:
+          $ref: '#/components/schemas/SolanaGasEstimationSchema'
+          description: Transaction Gas Estimation
+          nullable: true
+          title: Gas Estimation
+      type: object
+      required:
+      - simulation
+      - validation
+      - gas_estimation
+      title: Result
+    Solanamodules__transaction_scanning__controllers__schemas__error__TransactionErrorDetails:
+      properties:
+        type:
+          type: string
+          const: TransactionError
+          title: Type
+          default: TransactionError
+        category:
+          type: string
+          const: REVERT
+          title: Category
+          default: REVERT
+        message:
+          type: string
+          title: Message
+          description: Advanced message of the error
+          default: ''
+        transaction_index:
+          type: integer
+          title: Transaction Index
+          description: Index of the transaction in the bulk
+      additionalProperties: true
+      type: object
+      required:
+      - transaction_index
+      title: Transaction Error Details
+    SolanaTotalUsdDiffSchema:
+      properties:
+        in:
+          type: number
+          title: In
+          description: Total incoming USD transfers
+        out:
+          type: number
+          title: Out
+          description: Total outgoing USD transfers
+        total:
+          type: number
+          title: Total
+          description: Total USD transfers
+      type: object
+      required:
+      - in
+      - out
+      title: Total USD Diff
+    SolanaAccountSummary:
+      properties:
+        account_assets_diff:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SolanaNativeAssetDiff'
+              docs_api_name: NativeAssetDiff
+              title: Native SOL Diff
+            - $ref: '#/components/schemas/SolanaSplFungibleAssetDiff'
+              docs_api_name: SplFungibleAssetDiff
+              title: Fungible SPL Diff
+            - $ref: '#/components/schemas/SolanaSplNonFungibleAssetDiff'
+              docs_api_name: SplNonFungibleAssetDiff
+              title: Non Fungible SPL Diff
+            - $ref: '#/components/schemas/SolanaCnftAssetDiff'
+              docs_api_name: CnftAssetDiff
+              title: Compressed Non Fungible Diff
+          type: array
+          title: Account Assets Diffs
+          description: Assets diffs of the requested account address
+        account_delegations:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SolanaCnftDelegation'
+              docs_api_name: CnftDelegation
+              title: Cnft Delegation
+            - $ref: '#/components/schemas/SolanaFungibleSplTokenDelegation'
+              docs_api_name: FungibleSplTokenDelegation
+              title: Fungible SPL Token Delegation
+            - $ref: '#/components/schemas/SolanaNonFungibleSplTokenDelegation'
+              docs_api_name: NonFungibleSplTokenDelegation
+              title: Non-Fungible SPL Token Delegation
+          type: array
+          title: Account Exposures
+          description: Exposures made by the requested account address
+        account_ownerships_diff:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SolanaNativeSOLOwnershipDiff'
+              docs_api_name: NativeSOLOwnershipDiff
+              title: Native SOL Ownership Diff
+            - $ref: '#/components/schemas/SolanaStakedSOLOwnershipDiff'
+              docs_api_name: StakedSOLOwnershipDiff
+              title: Staked SOL Ownership Diff
+            - $ref: '#/components/schemas/SolanaFungibleSOLOwnershipDiff'
+              docs_api_name: FungibleSOLOwnershipDiff
+              title: Fungible SPL Token Ownership Diff
+            - $ref: '#/components/schemas/SolanaNonFungibleSOLOwnershipDiff'
+              docs_api_name: NonFungibleSOLOwnershipDiff
+              title: Non Fungible SPL Token Ownership Diff
+          type: array
+          title: Account Ownership Diffs
+          description: Ownership diffs of the requested account address
+        total_usd_diff:
+          $ref: '#/components/schemas/SolanaTotalUsdDiffSchema'
+          description: Total USD diff for the requested account address
+        total_usd_exposure:
+          additionalProperties:
+            type: number
+          type: object
+          title: Total USD Exposure
+          description: Total USD exposure for each of the spender addresses during the transaction
+      type: object
+      required:
+      - account_delegations
+      - account_ownerships_diff
+      - total_usd_diff
+      title: Account Summary
+    SolanaValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SolanaFungibleSOLOwnershipDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaSplFungibleAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        pre_owner:
+          type: string
+          title: Pre Owner
+          description: The owner prior to the transaction
+          nullable: true
+        post_owner:
+          type: string
+          title: Post Owner
+          description: The owner post the transaction
+          nullable: true
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - pre_owner
+      - post_owner
+      - asset_type
+      title: Account Single Asset Ownership Details
+    SolanaMessageScanRequestSchema:
+      properties:
+        encoding:
+          $ref: '#/components/schemas/SolanaEncodingSchema'
+          default: base58
+        chain:
+          anyOf:
+          - $ref: '#/components/schemas/SolanaChain'
+          - $ref: '#/components/schemas/SolanaCaip2Chain'
+          title: Chain
+          default: mainnet
+        options:
+          items:
+            $ref: '#/components/schemas/SolanaOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: 'List of options to include in the response
+
+            - `Options.validation`: Include Options.validation output in the response
+
+
+            - `Options.simulation`: Include Options.simulation output in the response
+
+
+            - `Options.gas_estimation`: Include gas estimation output in the response
+
+            '
+          default:
+          - validation
+          - simulation
+        account_address:
+          type: string
+          title: Account Address
+        transactions:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Transactions
+          description: Transactions to scan
+        metadata:
+          $ref: '#/components/schemas/SolanaRequestMetadataSchema'
+        method:
+          type: string
+          title: Method
+          description: The RPC method used by the dApp to propose the transaction
+          default: signAllTransactions
+        execution_mode:
+          $ref: '#/components/schemas/SolanaExecutionMode'
+          default: standard
+          description: The execution mode for the transaction(s). Use `jito_bundle` when the transactions are intended to be submitted as a Jito bundle. In bundle mode, simulation uses pre/post account state diffs instead of instruction-level parsing, and validation allows the `account_address` to appear in any (not necessarily all) of the bundle's transactions.
+      type: object
+      required:
+      - account_address
+      - transactions
+      - metadata
+      title: Transaction Scanning Request
+    SolanaNativeAssetDetailsSchema:
+      properties:
+        type:
+          $ref: '#/components/schemas/SolanaNativeToken'
+          description: Type of the asset (`"NativeToken"`)
+        decimals:
+          type: integer
+          title: Decimals
+        logo:
+          type: string
+          title: Logo
+          description: Logo of SOL
+          nullable: true
+      type: object
+      required:
+      - type
+      - decimals
+      title: Native SOL Details
+    SolanaStakedSOLOwnershipDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaStakedNativeDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        pre_owner:
+          type: string
+          title: Pre Owner
+          description: The owner prior to the transaction
+          nullable: true
+        post_owner:
+          type: string
+          title: Post Owner
+          description: The owner post the transaction
+          nullable: true
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - pre_owner
+      - post_owner
+      - asset_type
+      title: Account Single Asset Ownership Details
+    SolanaSplNonFungibleAssetDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: NFT
+          title: Type
+          default: NFT
+        name:
+          type: string
+          title: Name
+          description: token's name
+        symbol:
+          type: string
+          title: Symbol
+          description: token's symbol
+        address:
+          type: string
+          title: Address
+          description: Address of the token's contract
+        decimals:
+          type: integer
+          const: 0
+          title: Decimals
+          default: 0
+        logo:
+          type: string
+          title: Logo
+          description: URL of the asset's logo
+          nullable: true
+      type: object
+      required:
+      - name
+      - symbol
+      - address
+      title: Non Fungible Token Details
+    SolanaOptions:
+      type: string
+      enum:
+      - validation
+      - simulation
+      - gas_estimation
+      title: Options
+    SolanaSplNonFungibleAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaSplNonFungibleAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[SplNonFungibleAssetDetailsSchema, AssetDiffSchema]
+    SolanaCnftDelegation:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaCnftDetailsSchema'
+        asset_type:
+          type: string
+          title: Asset Type
+          readOnly: true
+        delegate:
+          type: string
+          title: Delegate
+          readOnly: true
+        delegation:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      - delegate
+      - delegation
+      title: AccountSingleAssetDelegationSchemaType[Annotated[Pubkey, SkipValidation, PlainSerializer, GetPydanticSchema], CnftDetailsSchema, AssetExposureBaseSchemaType[AssetDiffSchema]]
+    SolanaCnftDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: CNFT
+          title: Type
+          default: CNFT
+        name:
+          type: string
+          title: Name
+          description: token's name
+        symbol:
+          type: string
+          title: Symbol
+          description: token's symbol
+        address:
+          type: string
+          title: Address
+          description: Address of the token's contract
+        decimals:
+          type: integer
+          const: 0
+          title: Decimals
+          default: 0
+        logo:
+          type: string
+          title: Logo
+          description: URL of the asset's logo
+          nullable: true
+      type: object
+      required:
+      - name
+      - symbol
+      - address
+      title: cNFT Details
+    SolanaStakedNativeDetailsSchema:
+      properties:
+        type:
+          $ref: '#/components/schemas/SolanaStakedNative'
+          description: Type of the asset (`"StakedNative"`)
+        decimals:
+          type: integer
+          title: Decimals
+        logo:
+          type: string
+          title: Logo
+          description: Logo of SOL
+          nullable: true
+      type: object
+      required:
+      - type
+      - decimals
+      title: Staked SOL Details
+    SolanaCnftAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaCnftDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[CnftDetailsSchema, AssetDiffSchema]
+    SolanaStakedNative:
+      type: string
+      enum:
+      - STAKED_SOL
+      - STAKED_ETH
+      title: StakedNative
+    SolanaRequestMetadataSchema:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: URL of the dApp that originated the transaction
+          nullable: true
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: false
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: Account information associated with the request
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent and IP information
+      type: object
+      title: Metadata
+    SolanaNativeToken:
+      type: string
+      enum:
+      - SOL
+      - ETH
+      title: NativeToken
+    SolanaValidationResultSchema:
+      properties:
+        result_type:
+          $ref: '#/components/schemas/SolanaVerdict'
+          description: Verdict of the validation
+          title: Result Verdict
+        description:
+          type: string
+          title: Description
+          description: A textual description about the validation result
+        reason:
+          type: string
+          title: Reason
+          description: A textual description about the reasons the transaction was flagged with result_type
+        classification:
+          type: string
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+        features:
+          items:
+            type: string
+          type: array
+          uniqueItems: true
+          title: Features
+          description: A list of features about this transaction explaining the validation
+        extended_features:
+          items:
+            $ref: '#/components/schemas/SolanaValidationFeature'
+          type: array
+          title: Extended Features
+          description: A list of features explaining what is happening in the transaction in different levels of severity
+      type: object
+      required:
+      - result_type
+      - description
+      - reason
+      - classification
+      - features
+      - extended_features
+      title: Validation Result
+    SolanaNativeAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaNativeAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[NativeAssetDetailsSchema, AssetDiffSchema]
+    SolanaSplFungibleAssetDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: TOKEN
+          title: Type
+          default: TOKEN
+        name:
+          type: string
+          title: Name
+          description: token's name
+        symbol:
+          type: string
+          title: Symbol
+          description: token's symbol
+        address:
+          type: string
+          title: Address
+          description: Address of the token's contract
+        decimals:
+          type: integer
+          title: Decimals
+          description: token's decimals
+        logo:
+          type: string
+          title: Logo
+          description: URL of the asset's logo
+          nullable: true
+      type: object
+      required:
+      - name
+      - symbol
+      - address
+      - decimals
+      title: Fungible Token Details
+    SolanaInternalVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Error
+      title: InternalVerdict
+    SolanaHTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/SolanaValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SolanaSimulationResultSchema:
+      properties:
+        assets_diff:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/SolanaNativeAssetDiff'
+                docs_api_name: NativeAssetDiff
+                title: Native SOL Diff
+              - $ref: '#/components/schemas/SolanaSplFungibleAssetDiff'
+                docs_api_name: SplFungibleAssetDiff
+                title: Fungible SPL Diff
+              - $ref: '#/components/schemas/SolanaSplNonFungibleAssetDiff'
+                docs_api_name: SplNonFungibleAssetDiff
+                title: Non Fungible SPL Diff
+              - $ref: '#/components/schemas/SolanaCnftAssetDiff'
+                docs_api_name: CnftAssetDiff
+                title: Compressed Non Fungible Diff
+            type: array
+            description: Assets diff of an account address
+          type: object
+          title: Assets Diffs
+          description: Mapping between the address of an account to the assets diff during the transaction
+        delegations:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/SolanaCnftDelegation'
+                docs_api_name: CnftDelegation
+                title: Cnft Delegation
+              - $ref: '#/components/schemas/SolanaFungibleSplTokenDelegation'
+                docs_api_name: FungibleSplTokenDelegation
+                title: Fungible SPL Token Delegation
+              - $ref: '#/components/schemas/SolanaNonFungibleSplTokenDelegation'
+                docs_api_name: NonFungibleSplTokenDelegation
+                title: Non-Fungible SPL Token Delegation
+            type: array
+          type: object
+          title: Exposures
+          description: Mapping between the address of an account to the exposure of the assets during the transaction
+        assets_ownership_diff:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/SolanaNativeSOLOwnershipDiff'
+                docs_api_name: NativeSOLOwnershipDiff
+                title: Native SOL Ownership Diff
+              - $ref: '#/components/schemas/SolanaStakedSOLOwnershipDiff'
+                docs_api_name: StakedSOLOwnershipDiff
+                title: Staked SOL Ownership Diff
+              - $ref: '#/components/schemas/SolanaFungibleSOLOwnershipDiff'
+                docs_api_name: FungibleSOLOwnershipDiff
+                title: Fungible SPL Token Ownership Diff
+              - $ref: '#/components/schemas/SolanaNonFungibleSOLOwnershipDiff'
+                docs_api_name: NonFungibleSOLOwnershipDiff
+                title: Non Fungible SPL Token Ownership Diff
+            type: array
+          type: object
+          title: Ownership Diffs
+          description: Ownership diffs of the account addresses
+        accounts_details:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SolanaPdaAccountSchema'
+            - $ref: '#/components/schemas/SolanaSystemAccountDetailsSchema'
+            - $ref: '#/components/schemas/SolanaProgramAccountDetailsSchema'
+            - $ref: '#/components/schemas/SolanaTokenAccountDetailsSchema'
+            - $ref: '#/components/schemas/SolanaFungibleMintAccountDetailsSchema'
+            - $ref: '#/components/schemas/SolanaNonFungibleMintAccountDetailsSchema'
+            - $ref: '#/components/schemas/SolanaCnftMintAccountDetailsSchema'
+          type: array
+          title: Accounts Details
+          description: Details of addresses involved in the transaction
+        account_summary:
+          $ref: '#/components/schemas/SolanaAccountSummary'
+          description: Summary of the actions and asset transfers that were made by the requested account address
+          docs_api_name: AccountSummary
+        transaction_actions:
+          anyOf:
+          - items:
+              anyOf:
+              - $ref: '#/components/schemas/SolanaTransactionAction'
+              - type: string
+            type: array
+          - type: 'null'
+          title: Transaction Actions
+      type: object
+      required:
+      - assets_ownership_diff
+      - account_summary
+      title: Simulation Result
+    SolanaNonFungibleSplTokenDelegation:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaSplNonFungibleAssetDetailsSchema'
+        asset_type:
+          type: string
+          title: Asset Type
+          readOnly: true
+        delegate:
+          type: string
+          title: Delegate
+          readOnly: true
+        delegation:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      - delegate
+      - delegation
+      title: AccountSingleAssetDelegationSchemaType[Annotated[Pubkey, SkipValidation, PlainSerializer, GetPydanticSchema], SplNonFungibleAssetDetailsSchema, AssetExposureBaseSchemaType[AssetDiffSchema]]
+    SolanaNativeSOLOwnershipDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaNativeAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        pre_owner:
+          type: string
+          title: Pre Owner
+          description: The owner prior to the transaction
+          nullable: true
+        post_owner:
+          type: string
+          title: Post Owner
+          description: The owner post the transaction
+          nullable: true
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - pre_owner
+      - post_owner
+      - asset_type
+      title: Account Single Asset Ownership Details
+    SolanaMainnetChains:
+      type: string
+      enum:
+      - mainnet
+      - eclipse_mainnet
+      - sonic_mainnet
+      - 5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp
+      - EtWTRABZaYq6iMfeYKouRu166VU2xqa1
+      - EAQLJCV2mh23BsK2P9oYpV5CHVLDNHTxY
+      title: MainnetChains
+    SolanaSplFungibleAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaSplFungibleAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[SplFungibleAssetDetailsSchema, AssetDiffSchema]
+    SolanaPostTransactionScanRequestSchema:
+      properties:
+        chain:
+          anyOf:
+          - $ref: '#/components/schemas/SolanaChain'
+          - $ref: '#/components/schemas/SolanaCaip2Chain'
+          title: Chain
+          default: mainnet
+        options:
+          items:
+            $ref: '#/components/schemas/SolanaOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: 'List of options to include in the response
+
+            - `Options.validation`: Include Options.validation output in the response
+
+
+            - `Options.simulation`: Include Options.simulation output in the response
+
+
+            - `Options.gas_estimation`: Include gas estimation output in the response
+
+            '
+          default:
+          - validation
+          - simulation
+        tx_hash:
+          type: string
+          title: Tx Hash
+      type: object
+      required:
+      - tx_hash
+      title: PostTransactionScanRequestSchema
+    SolanaResponseSchema:
+      properties:
+        encoding:
+          $ref: '#/components/schemas/SolanaEncodingSchema'
+        status:
+          $ref: '#/components/schemas/SolanaResponseStatus'
+        result:
+          $ref: '#/components/schemas/SolanaResponseResult'
+          description: Result of the request
+          nullable: true
+        error:
+          type: string
+          title: Error
+          description: Error message if the simulation failed
+          nullable: true
+        error_details:
+          oneOf:
+          - $ref: '#/components/schemas/Solanamodules__transaction_scanning__controllers__schemas__error__ApiErrorDetails'
+          - $ref: '#/components/schemas/Solanamodules__transaction_scanning__controllers__schemas__error__TransactionErrorDetails'
+          - $ref: '#/components/schemas/Solanamodules__transaction_scanning__controllers__schemas__error__InstructionErrorDetails'
+          title: Error Details
+          description: Error details
+          discriminator:
+            propertyName: type
+            mapping:
+              ApiError: '#/components/schemas/Solanamodules__transaction_scanning__controllers__schemas__error__ApiErrorDetails'
+              InstructionError: '#/components/schemas/Solanamodules__transaction_scanning__controllers__schemas__error__InstructionErrorDetails'
+              TransactionError: '#/components/schemas/Solanamodules__transaction_scanning__controllers__schemas__error__TransactionErrorDetails'
+          nullable: true
+        request_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Request Id
+          description: Unique identifier of the request
+      type: object
+      required:
+      - encoding
+      - status
+      - request_id
+      title: Transaction Scanning Result
+    SolanaAddressScanRequestSchema:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          $ref: '#/components/schemas/SolanaMainnetChains'
+          default: mainnet
+      type: object
+      required:
+      - address
+      title: Request
+    SolanaEncodingSchema:
+      type: string
+      enum:
+      - base58
+      - base64
+      title: EncodingSchema
+    SolanaValidationFeature:
+      properties:
+        type:
+          $ref: '#/components/schemas/SolanaValidationFeatureType'
+          description: Feature Classification
+          title: type
+        feature_id:
+          type: string
+          title: feature_id
+          description: ''
+        description:
+          type: string
+          title: Description
+          description: Textual description
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: Address the feature refers to
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      title: ValidationFeature
+    SolanaFungibleMintAccountDetailsSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+        type:
+          type: string
+          const: FUNGIBLE_MINT_ACCOUNT
+          title: Type
+          default: FUNGIBLE_MINT_ACCOUNT
+        was_written_to:
+          type: boolean
+          title: Was Written To
+        was_created:
+          type: boolean
+          title: Was Created
+        name:
+          type: string
+          title: Name
+          description: Name of the mint
+        symbol:
+          type: string
+          title: Symbol
+          description: Symbol of the mint
+        logo:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo
+          description: Logo of the mint
+      type: object
+      required:
+      - account_address
+      - was_written_to
+      - was_created
+      - name
+      - symbol
+      - logo
+      title: Fungible Mint Account Details
+    SolanaPdaAccountSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+        type:
+          type: string
+          const: PDA
+          title: Type
+          default: PDA
+        was_written_to:
+          type: boolean
+          title: Was Written To
+        was_created:
+          type: boolean
+          title: Was Created
+        owner:
+          type: string
+          title: Owner
+          description: The address of the owning program
+      type: object
+      required:
+      - account_address
+      - was_written_to
+      - was_created
+      - owner
+      title: PDA
+    SolanaAddressFeatureModel:
+      properties:
+        type:
+          $ref: '#/components/schemas/SolanaInternalValidationFeatureType'
+        feature_id:
+          type: string
+          title: Feature Id
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      title: AddressFeatureModel
+    SolanaResponseStatus:
+      type: string
+      enum:
+      - SUCCESS
+      - ERROR
+      title: ResponseStatus
+    SolanaNonFungibleSOLOwnershipDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaSplNonFungibleAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        pre_owner:
+          type: string
+          title: Pre Owner
+          description: The owner prior to the transaction
+          nullable: true
+        post_owner:
+          type: string
+          title: Post Owner
+          description: The owner post the transaction
+          nullable: true
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - pre_owner
+      - post_owner
+      - asset_type
+      title: Account Single Asset Ownership Details
+    SolanaNonFungibleMintAccountDetailsSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+        type:
+          type: string
+          const: NON_FUNGIBLE_MINT_ACCOUNT
+          title: Type
+          default: NON_FUNGIBLE_MINT_ACCOUNT
+        was_written_to:
+          type: boolean
+          title: Was Written To
+        was_created:
+          type: boolean
+          title: Was Created
+        name:
+          type: string
+          title: Name
+          description: Name of the mint
+        symbol:
+          type: string
+          title: Symbol
+          description: Symbol of the mint
+        uri:
+          type: string
+          title: Uri
+          description: URI of the mint
+        logo:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo
+          description: Logo of the mint
+      type: object
+      required:
+      - account_address
+      - was_written_to
+      - was_created
+      - name
+      - symbol
+      - uri
+      - logo
+      title: Non-Fungible Mint Account Details
+    SolanaExecutionMode:
+      type: string
+      enum:
+      - standard
+      - jito_bundle
+      title: ExecutionMode
+      description: Execution mode for transaction scanning. `standard` for regular transactions, `jito_bundle` for Jito bundle transactions.
+    Solanamodules__transaction_scanning__controllers__schemas__error__ApiErrorDetails:
+      properties:
+        type:
+          type: string
+          const: ApiError
+          title: Type
+          default: ApiError
+        category:
+          type: string
+          const: NODE_ERROR
+          title: Category
+          default: NODE_ERROR
+        message:
+          type: string
+          title: Message
+          description: Advanced message of the error
+          default: ''
+      additionalProperties: true
+      type: object
+      title: Api Error Details
+    SolanaFungibleSplTokenDelegation:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SolanaSplFungibleAssetDetailsSchema'
+        asset_type:
+          type: string
+          title: Asset Type
+          readOnly: true
+        delegate:
+          type: string
+          title: Delegate
+          readOnly: true
+        delegation:
+          $ref: '#/components/schemas/SolanaAssetDiffSchema'
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      - delegate
+      - delegation
+      title: AccountSingleAssetDelegationSchemaType[Annotated[Pubkey, SkipValidation, PlainSerializer, GetPydanticSchema], SplFungibleAssetDetailsSchema, AssetExposureBaseSchemaType[AssetDiffSchema]]
+    SolanaAssetDiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        value:
+          type: number
+          title: Value
+          description: Value of the transfer
+        raw_value:
+          type: integer
+          title: Raw Value
+          description: Raw value of the transfer
+      type: object
+      required:
+      - value
+      - raw_value
+      title: Asset Transfer Details
+    SolanaTokenAccountDetailsSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+        type:
+          type: string
+          const: TOKEN_ACCOUNT
+          title: Type
+          default: TOKEN_ACCOUNT
+        was_written_to:
+          type: boolean
+          title: Was Written To
+        was_created:
+          type: boolean
+          title: Was Created
+        mint_address:
+          type: string
+          title: Mint Address
+          description: Encoded public key of the mint
+        owner_address:
+          type: string
+          title: Owner Address
+          description: Encoded public key of the owner
+      type: object
+      required:
+      - account_address
+      - was_written_to
+      - was_created
+      - mint_address
+      - owner_address
+      title: Token Account Details
+    SolanaVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Error
+      title: Verdict
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    SolanaCnftMintAccountDetailsSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+        type:
+          type: string
+          const: CNFT_MINT_ACCOUNT
+          title: Type
+          default: CNFT_MINT_ACCOUNT
+        was_written_to:
+          type: boolean
+          title: Was Written To
+        was_created:
+          type: boolean
+          title: Was Created
+        name:
+          type: string
+          title: Name
+          description: Name of the mint
+        symbol:
+          type: string
+          title: Symbol
+          description: Symbol of the mint
+        uri:
+          type: string
+          title: Uri
+          description: URI of the mint
+        logo:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Logo
+          description: Logo of the mint
+      type: object
+      required:
+      - account_address
+      - was_written_to
+      - was_created
+      - name
+      - symbol
+      - uri
+      - logo
+      title: cNFT Mint Account Details
+    Solanamodules__transaction_scanning__controllers__schemas__error__InstructionErrorDetails:
+      properties:
+        type:
+          type: string
+          const: InstructionError
+          title: Type
+          default: InstructionError
+        category:
+          type: string
+          const: REVERT
+          title: Category
+          default: REVERT
+        message:
+          type: string
+          title: Message
+          description: Human readable error
+          default: ''
+        number:
+          type: integer
+          title: Number
+          description: Error number
+          nullable: true
+        code:
+          type: string
+          title: Code
+          description: Machine readable error code
+          nullable: true
+        transaction_index:
+          type: integer
+          title: Transaction Index
+          description: Index of the transaction in the bulk
+        instruction_index:
+          type: integer
+          title: Instruction Index
+          description: Index of the instruction in the transaction
+        program_account:
+          type: string
+          title: Program Account
+          description: The program account that caused the error
+          nullable: true
+      additionalProperties: true
+      type: object
+      required:
+      - transaction_index
+      - instruction_index
+      title: Instruction Error Details
+    SolanaInternalValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: InternalValidationFeatureType
+    SolanaChain:
+      type: string
+      enum:
+      - mainnet
+      - testnet
+      - devnet
+      - eclipse_mainnet
+      - eclipse_devnet
+      - sonic_mainnet
+      title: Chain
+    SolanaTransactionAction:
+      type: string
+      enum:
+      - native_wrap
+      - native_transfer
+      - token_transfer
+      - swap
+      - mint
+      - stake
+      - approval
+      - proxy_upgrade
+      - ownership_change
+      - set_code_account
+      title: TransactionAction
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    SolanaGasEstimationSchema:
+      properties:
+        network_fee:
+          type: string
+          title: Network Fee
+          description: Base transaction fee in lamports
+        priority_fee:
+          type: string
+          title: Priority Fee
+          description: Prioritization fee in lamports
+        account_rent_fees:
+          items:
+            $ref: '#/components/schemas/SolanaAccountRentFeeSchema'
+          type: array
+          title: Account Rent Fees
+          description: Rent deposit fees for newly created accounts
+          default: []
+        total:
+          type: string
+          title: Total
+          description: Total fee in lamports
+      type: object
+      required:
+      - network_fee
+      - priority_fee
+      - total
+      title: GasEstimationSchema
+    SolanaAccountRentFeeSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+        account_type:
+          type: string
+          title: Account Type
+        lamports:
+          type: string
+          title: Lamports
+      type: object
+      required:
+      - account_address
+      - account_type
+      - lamports
+      title: AccountRentFee
+    SolanaAddressScanResponseSchema:
+      properties:
+        result_type:
+          $ref: '#/components/schemas/SolanaInternalVerdict'
+          description: Verdict of the validation
+          title: Result Verdict
+        features:
+          items:
+            $ref: '#/components/schemas/SolanaAddressFeatureModel'
+          type: array
+          title: Features
+          description: A list of textual features about this transaction that can be presented to the user.
+      type: object
+      required:
+      - result_type
+      title: AddressScanResponseSchema
+    SolanaValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: ValidationFeatureType
+    SolanaSystemAccountDetailsSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+        type:
+          type: string
+          const: SYSTEM_ACCOUNT
+          title: Type
+          default: SYSTEM_ACCOUNT
+        was_written_to:
+          type: boolean
+          title: Was Written To
+        was_created:
+          type: boolean
+          title: Was Created
+      type: object
+      required:
+      - account_address
+      - was_written_to
+      - was_created
+      title: System Account Details
+    SolanaProgramAccountDetailsSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+        type:
+          type: string
+          enum:
+          - PROGRAM
+          - NATIVE_PROGRAM
+          title: Type
+          default: PROGRAM
+        was_written_to:
+          type: boolean
+          title: Was Written To
+        was_created:
+          type: boolean
+          title: Was Created
+      type: object
+      required:
+      - account_address
+      - was_written_to
+      - was_created
+      title: Program Account Details
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

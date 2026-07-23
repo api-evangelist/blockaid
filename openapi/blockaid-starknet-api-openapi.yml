@@ -1,0 +1,1293 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Starknet API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Starknet
+paths:
+  /v0/starknet/transaction/scan:
+    post:
+      tags:
+      - Starknet
+      summary: Scan Transactions
+      operationId: starknet_scan_transaction_v0_transaction_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StarknetTransactionScanRequest'
+            examples:
+              Assets lost to a drainer:
+                summary: Assets lost to a drainer
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  - validation
+                  account_address: '0x62a2959fa6502b30cbfb51199fbbe72e72ee4f5a86ec754b4172c7d7beb6ff4'
+                  transaction:
+                    version: 3
+                    nonce: '0xc'
+                    sender_address: '0x1840b3c89a446c74a3962647a2a7fb449d83905c4511027dfa9e099c6886691'
+                    calldata:
+                    - '0x1'
+                    - '0x4b33a775b537a39c8960120806e815764f173e4fa76546e6706c31aa1b0ac4a'
+                    - '0x994f23fef04108984d50a4f870723cd46f95d592ed3de9a13f97d5c55846fb'
+                    - '0x9'
+                    - '0x1'
+                    - '0x53c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8'
+                    - '0x1'
+                    - '0x62a2959fa6502b30cbfb51199fbbe72e72ee4f5a86ec754b4172c7d7beb6ff4'
+                    - '0x1'
+                    - '0x5f612ce'
+                    - '0x0'
+                    - '0x0'
+                    - '0x0'
+                    chain_id: '0x534e5f4d41494e'
+                    nonce_data_availability_mode: 0
+                    paymaster_data: []
+                    account_deployment_data: []
+                  metadata:
+                    type: wallet
+                    url: giftnostra.com
+                  block_number: '0xa12e3'
+              An airdrop of malicious tokens:
+                summary: An airdrop of malicious tokens
+                value:
+                  chain: mainnet
+                  options:
+                  - validation
+                  - simulation
+                  account_address: '0x636b7483301a66791e4d0437ca0e9f0b4dfdb60e5facbebf73fe61addc0ee08'
+                  transaction:
+                    version: 3
+                    nonce: '0x4'
+                    sender_address: '0x636b7483301a66791e4d0437ca0e9f0b4dfdb60e5facbebf73fe61addc0ee08'
+                    calldata:
+                    - '0x1'
+                    - '0x79171811c2e56015eade41ca078eca64257bb248fbe724923f25755dbdea125'
+                    - '0x1462e1b8a17a17958e2da7cd66f95dc107f18febea3ba367894050769dfe5e2'
+                    - '0x4'
+                    - '0x1ac9d351e649a3abf851246f994191f519780de27e3e384622c51fa969010cc'
+                    - '0x2'
+                    - '0x10216c4da528f158da16ddf651b7878c16fe59816f32ead8924ea2dab957f35'
+                    - '0x5823c1ae122e587efe8e9072da659cdbbd86df895b8ba47fdca1f7f05de9eec'
+                    chain_id: '0x534e5f4d41494e'
+                    nonce_data_availability_mode: 0
+                    paymaster_data: []
+                    account_deployment_data: []
+                  metadata:
+                    type: in_app
+                  block_number: '0xa1b74'
+              A token swap on sithswap:
+                summary: A token swap on sithswap
+                value:
+                  chain: mainnet
+                  options:
+                  - validation
+                  - simulation
+                  account_address: '0x480074f93560135bf281b622e4301356c6ea4209603aec03a576449f0ab31b'
+                  transaction:
+                    version: 1
+                    nonce: '0x63'
+                    sender_address: '0x480074f93560135bf281b622e4301356c6ea4209603aec03a576449f0ab31b'
+                    calldata:
+                    - '0x2'
+                    - '0xda114221cb83fa859dbdb4c44beeaa0bb37c7537ad5ae66fe5e0efd20e6eb3'
+                    - '0x219209e083275171774dab1df80982e9df2096516f06319c5c6d71ae0a8480c'
+                    - '0x3'
+                    - '0x28c858a586fa12123a1ccb337a0a3b369281f91ea00544d0c086524b759f627'
+                    - '0x2a6d9261ce1a3f08'
+                    - '0x0'
+                    - '0x28c858a586fa12123a1ccb337a0a3b369281f91ea00544d0c086524b759f627'
+                    - '0x2c0f7bf2d6cf5304c29171bf493feb222fef84bdaf17805a6574b0c2e8bcc87'
+                    - '0xa'
+                    - '0x2a6d9261ce1a3f08'
+                    - '0x0'
+                    - '0x2d5f0a'
+                    - '0x0'
+                    - '0x1'
+                    - '0xda114221cb83fa859dbdb4c44beeaa0bb37c7537ad5ae66fe5e0efd20e6eb3'
+                    - '0x53c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8'
+                    - '0x1'
+                    - '0x480074f93560135bf281b622e4301356c6ea4209603aec03a576449f0ab31b'
+                    - '0x66d84c26'
+                    max_fee: '0x0'
+                  metadata:
+                    type: wallet
+                    url: https://app.sithswap.com
+                  block_number: '0xa8c33'
+              Outside execution - ETH approve via AVNU:
+                summary: Outside execution - ETH approve via AVNU
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  - validation
+                  account_address: '0x636b7483301a66791e4d0437ca0e9f0b4dfdb60e5facbebf73fe61addc0ee08'
+                  transaction:
+                    caller: '0x414e595f43414c4c4552'
+                    nonce: '0x19938eae0e9'
+                    execute_after: '0x68c1e11d'
+                    execute_before: '0x68c3b5dd'
+                    calls:
+                    - to: '0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7'
+                      selector: '0x219209e083275171774dab1df80982e9df2096516f06319c5c6d71ae0a8480c'
+                      calldata:
+                      - '0x4270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f'
+                      - '0x23e1e5803b4005'
+                      - '0x0'
+                  metadata:
+                    type: wallet
+                    url: https://app.avnu.fi
+                  block_number: '0xaae60'
+              Outside execution - ETH to STRK swap via AVNU:
+                summary: Outside execution - ETH to STRK swap via AVNU
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  - validation
+                  account_address: '0xbf7ba278658bb8ddb076939d0d10b96323177a594792285516b2d7b72f9899'
+                  transaction:
+                    caller: '0x414e595f43414c4c4552'
+                    nonce: '0x19938eae0e9'
+                    execute_after: '0x68c1e11d'
+                    execute_before: '0x68c3b5dd'
+                    calls:
+                    - to: '0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7'
+                      selector: '0x219209e083275171774dab1df80982e9df2096516f06319c5c6d71ae0a8480c'
+                      calldata:
+                      - '0x4270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f'
+                      - '0x23e1e5803b4005'
+                      - '0x0'
+                    - to: '0x4270219d365d6b017231b52e92b3fb5d7c8378b05e9abc97724537a80e93b0f'
+                      selector: '0x1171593aa5bdadda4d6b0efde6cc94ee7649c3163d5efeb19da6c16d63a2a63'
+                      calldata:
+                      - '0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7'
+                      - '0x2386f26fc10000'
+                      - '0x0'
+                      - '0x4718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d'
+                      - '0x11f5e7126de018e241'
+                      - '0x0'
+                      - '0x11c7ec70f70441984f'
+                      - '0x0'
+                      - '0xbf7ba278658bb8ddb076939d0d10b96323177a594792285516b2d7b72f9899'
+                      - '0x0'
+                      - '0x0'
+                      - '0x1'
+                      - '0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7'
+                      - '0x4718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d'
+                      - '0x5dd3d2f4429af886cd1a3b08289dbcea99a294197e9eb43b0e0325b4b'
+                      - '0xe8d4a51000'
+                      - '0x6'
+                      - '0x4718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d'
+                      - '0x49d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7'
+                      - '0x20c49ba5e353f80000000000000000'
+                      - '0x3e8'
+                      - '0x0'
+                      - '0x451472b543000000000000000000'
+                  metadata:
+                    type: wallet
+                    url: https://app.avnu.fi
+                  block_number: '0x2077c7'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StarknetTransactionScanResponse'
+                docs_api_name: TransactionScanResponse
+                title: Response Schema
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StarknetHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/starknet/transaction/report:
+    post:
+      tags:
+      - Starknet
+      summary: Report Transaction
+      operationId: starknet_report_transaction_v0_transaction_report_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StarknetReportTransactionRequest'
+              docs_api_name: ReportTransactionRequest
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: integer
+                title: Response Report Transaction V0 Transaction Report Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StarknetHTTPValidationError'
+      deprecated: true
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    StarknetTotalUsdDiffSchema:
+      properties:
+        in:
+          type: number
+          title: In
+          description: Total incoming USD transfers
+        out:
+          type: number
+          title: Out
+          description: Total outgoing USD transfers
+        total:
+          type: number
+          title: Total
+          description: Total USD transfers
+      type: object
+      required:
+      - in
+      - out
+      title: Total USD Diff
+    StarknetERC1155Exposure:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StarknetERC1155Details'
+          docs_api_name: ERC1155Details
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/StarknetERC1155ExposureSchema'
+          type: object
+          title: Spenders
+          description: Mapping between the spender address and the exposure of the asset
+      type: object
+      required:
+      - asset
+      title: 'AddressAssetExposureSchemaType[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema], Annotated[ERC1155DetailsSchema[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]], FieldInfo(annotation=NoneType, required=True, json_schema_extra={''docs_api_name'': ''ERC1155Details''})], ERC1155ExposureSchema]'
+    StarknetERC20DiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        value:
+          type: string
+          title: Value
+          description: Value of the transfer
+        raw_value:
+          type: integer
+          title: Raw Value
+          description: Raw value of the transfer
+      type: object
+      required:
+      - value
+      - raw_value
+      title: ERC20 Asset Transfer Details
+    StarknetSimulationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Simulation Error
+    StarknetTransactionScanRequest:
+      properties:
+        chain:
+          anyOf:
+          - $ref: '#/components/schemas/StarknetChain'
+            description: A CAIP-2 or a Starknet network name or a Starknet network name
+            title: Chain Name
+          - type: string
+            title: Chain ID
+            description: A Starknet network ID as hex or decimal string
+          title: Chain
+          description: The chain name or chain ID
+        options:
+          items:
+            $ref: '#/components/schemas/StarknetOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: 'List of options to include in the response
+
+            - `Options.validation`: Include Options.validation output in the response
+
+
+            - `Options.simulation`: Include Options.simulation output in the response
+
+            '
+          default:
+          - validation
+          - simulation
+        account_address:
+          type: string
+          title: Account Address
+        transaction:
+          anyOf:
+          - $ref: '#/components/schemas/StarknetInvokeV1TransactionSchema'
+          - $ref: '#/components/schemas/StarknetInvokeV3TransactionSchema'
+          - $ref: '#/components/schemas/StarknetDeployAccountV1TransactionSchema'
+          - $ref: '#/components/schemas/StarknetDeployAccountV3TransactionSchema'
+          - $ref: '#/components/schemas/StarknetOutsideExecutionSchema'
+          title: Transaction
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/StarknetWalletRequestMetadata'
+          - $ref: '#/components/schemas/StarknetInAppRequestMetadata'
+          title: Metadata
+          description: Metadata
+        block_number:
+          type: string
+          title: Block Number
+          description: Optional block number or tag context for the simulation
+          nullable: true
+      type: object
+      required:
+      - chain
+      - account_address
+      - transaction
+      - metadata
+      title: Request
+    StarknetTransactionScanResponse:
+      properties:
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/StarknetStarknetSimulationResultSchema'
+          - $ref: '#/components/schemas/StarknetSimulationErrorSchema'
+          title: Simulation
+          description: Simulation result; Only present if simulation option is included in the request
+          nullable: true
+        validation:
+          $ref: '#/components/schemas/StarknetValidationResponse'
+          description: Validation result; Only present if validation option is included in the request
+          docs_api_name: ValidationResponse
+          nullable: true
+          title: Validation
+      type: object
+      title: Response
+    StarknetVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Error
+      title: Verdict
+    StarknetERC721DiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        token_id:
+          type: string
+          title: Token Id
+          description: Token ID of the transfer
+      type: object
+      required:
+      - token_id
+      title: ERC721 Transfer Details
+    StarknetERC1155Details:
+      properties:
+        type:
+          type: string
+          const: ERC1155
+          title: Type
+          description: Type of the asset (`ERC1155`)
+          default: ERC1155
+        name:
+          type: string
+          title: Name
+          description: token's name
+        symbol:
+          type: string
+          title: Symbol
+          description: token's symbol
+        address:
+          type: string
+          title: Address
+          description: Address of the token's contract
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo
+          nullable: true
+      type: object
+      required:
+      - name
+      - symbol
+      - address
+      title: ERC1155 Asset Details
+    StarknetReportTransactionRequest:
+      properties:
+        event:
+          $ref: '#/components/schemas/StarknetAppealTypes'
+        report:
+          anyOf:
+          - $ref: '#/components/schemas/StarknetAppealRequestId'
+          - $ref: '#/components/schemas/StarknetAppealTransactionDataReport'
+            docs_api_name: AppealTransactionDataReport
+          title: Report
+        details:
+          type: string
+          title: Details
+      type: object
+      required:
+      - event
+      - report
+      - details
+      title: AppealRequest[TransactionScanRequest]
+    StarknetStarknetSimulationResultSchema:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        assets_diffs:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/StarknetERC20AssetDiff'
+                docs_api_name: ERC20AssetDiff
+                title: ERC20 Asset Diff
+              - $ref: '#/components/schemas/StarknetERC721AssetDiff'
+                docs_api_name: ERC721AssetDiff
+                title: ERC721 Asset Diff
+              - $ref: '#/components/schemas/StarknetERC1155AssetDiff'
+                docs_api_name: ERC1155AssetDiff
+                title: ERC1155 Asset Diff
+            type: array
+            description: Assets diff of an account address
+          type: object
+          title: Assets Diffs
+          description: Mapping between the address of an account to the assets diff during the transaction
+        exposures:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/StarknetERC20Exposure'
+                docs_api_name: ERC20Exposure
+                title: ERC20 Exposure
+              - $ref: '#/components/schemas/StarknetERC721Exposure'
+                docs_api_name: ERC721Exposure
+                title: ERC721 Exposure
+              - $ref: '#/components/schemas/StarknetERC1155Exposure'
+                docs_api_name: ERC1155Exposure
+                title: ERC1155 Exposure
+            type: array
+          type: object
+          title: Exposures
+          description: Mapping between the address of an account to the exposure of the assets during the transaction
+        address_details:
+          items:
+            $ref: '#/components/schemas/StarknetAddressDetailsBaseSchema'
+          type: array
+          title: Address Details
+          description: Details of addresses involved in the transaction
+        account_summary:
+          $ref: '#/components/schemas/StarknetAccountSummary'
+          description: Summary of the actions and asset transfers that were made by the requested account address
+          docs_api_name: AccountSummary
+          title: Account Summary
+        block_number:
+          type: string
+          title: Block Number
+          description: Optional block number or tag context for the simulation
+          nullable: true
+      type: object
+      required:
+      - status
+      - account_summary
+      title: Simulation Result
+    StarknetOptions:
+      type: string
+      enum:
+      - validation
+      - simulation
+      title: Options
+    StarknetInAppRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: in_app
+          title: Type
+          description: Metadata for in-app requests
+          default: in_app
+      type: object
+      title: In-App Request Metadata
+    StarknetChain:
+      type: string
+      enum:
+      - mainnet
+      title: Chain
+    StarknetERC721AssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StarknetERC721Details'
+        in:
+          $ref: '#/components/schemas/StarknetERC721DiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/StarknetERC721DiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[ERC721DetailsSchema[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]], ERC721DiffSchema]
+    StarknetERC721Exposure:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StarknetERC721Details'
+          docs_api_name: ERC721Details
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/StarknetERC721ExposureSchema'
+          type: object
+          title: Spenders
+          description: Mapping between the spender address and the exposure of the asset
+      type: object
+      required:
+      - asset
+      title: 'AddressAssetExposureSchemaType[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema], Annotated[ERC721DetailsSchema[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]], FieldInfo(annotation=NoneType, required=True, json_schema_extra={''docs_api_name'': ''ERC721Details''})], ERC721ExposureSchema]'
+    StarknetValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    StarknetDeployAccountV1TransactionSchema:
+      properties:
+        version:
+          type: integer
+          const: 1
+          title: Version
+          description: The version of the transaction.
+        nonce:
+          type: string
+          title: Nonce
+          description: The nonce of the transaction.
+        class_hash:
+          type: string
+          title: Class Hash
+          description: The hash of the contract class.
+        contract_address_salt:
+          type: string
+          title: Contract Address Salt
+          description: The salt of the contract address.
+        constructor_calldata:
+          items:
+            type: string
+          type: array
+          title: Constructor Calldata
+          description: The arguments that are passed to the constructor function.
+        max_fee:
+          type: string
+          title: Max Fee
+          description: The maximum fee that the sender is willing to pay.
+      type: object
+      required:
+      - version
+      - nonce
+      - class_hash
+      - contract_address_salt
+      - constructor_calldata
+      - max_fee
+      title: Deploy Account V1 Transaction
+    StarknetAppealRequestId:
+      properties:
+        type:
+          type: string
+          const: request_id
+          title: Type
+          default: request_id
+        id:
+          type: string
+          title: Id
+      type: object
+      required:
+      - id
+      title: AppealRequestId
+    StarknetERC20AssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StarknetERC20Details'
+        in:
+          $ref: '#/components/schemas/StarknetERC20DiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/StarknetERC20DiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[ERC20DetailsSchema[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]], ERC20DiffSchema]
+    StarknetDeployAccountV3TransactionSchema:
+      properties:
+        version:
+          type: integer
+          const: 3
+          title: Version
+          description: The version of the transaction.
+        nonce:
+          type: string
+          title: Nonce
+          description: The nonce of the transaction.
+        class_hash:
+          type: string
+          title: Class Hash
+          description: The hash of the contract class.
+        contract_address_salt:
+          type: string
+          title: Contract Address Salt
+          description: The salt of the contract address.
+        constructor_calldata:
+          items:
+            type: string
+          type: array
+          title: Constructor Calldata
+          description: The arguments that are passed to the constructor function.
+        max_fee:
+          type: string
+          title: Max Fee
+          description: The maximum fee that the sender is willing to pay.
+      type: object
+      required:
+      - version
+      - nonce
+      - class_hash
+      - contract_address_salt
+      - constructor_calldata
+      - max_fee
+      title: Deploy Account V3 Transaction
+    StarknetERC721ExposureSchema:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/StarknetERC721DiffSchema'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the exposure
+          nullable: true
+        is_approved_for_all:
+          type: boolean
+          title: Is Approved For All
+          description: Whether `setApprovalForAll` was invoked
+      type: object
+      required:
+      - exposure
+      - is_approved_for_all
+      title: ERC721ExposureSchema
+    StarknetOutsideExecutionSchema:
+      properties:
+        caller:
+          type: string
+          title: Caller
+          description: The address allowed to execute, or 0 for ANY_CALLER
+        nonce:
+          type: string
+          title: Nonce
+          description: Replay-protection nonce, scoped to the outside execution context
+        execute_after:
+          type: string
+          title: Execute After
+          description: Unix timestamp. The message cannot be executed before this time.
+        execute_before:
+          type: string
+          title: Execute Before
+          description: Unix timestamp. The message cannot be executed after this time.
+        calls:
+          items:
+            $ref: '#/components/schemas/StarknetOutsideCallSchema'
+          type: array
+          minItems: 1
+          title: Calls
+          description: The calls to execute on the user's account.
+      type: object
+      required:
+      - caller
+      - nonce
+      - execute_after
+      - execute_before
+      - calls
+      title: Outside Execution (SNIP-9)
+    StarknetOutsideCallSchema:
+      properties:
+        to:
+          type: string
+          title: To
+          description: The address of the contract to call.
+        selector:
+          type: string
+          title: Selector
+          description: The selector of the function to call.
+        calldata:
+          items:
+            type: string
+          type: array
+          title: Calldata
+          description: The calldata to pass to the function.
+          default: []
+      type: object
+      required:
+      - to
+      - selector
+      title: Outside Call
+    StarknetInvokeV1TransactionSchema:
+      properties:
+        version:
+          type: integer
+          const: 1
+          title: Version
+          description: The version of the transaction.
+        nonce:
+          type: string
+          title: Nonce
+          description: The nonce of the transaction.
+        sender_address:
+          type: string
+          title: Sender Address
+          description: The address of the sender.
+        calldata:
+          items:
+            type: string
+          type: array
+          title: Calldata
+          description: The arguments that are passed to the validate and execute functions.
+        max_fee:
+          type: string
+          title: Max Fee
+          description: The maximum fee that the sender is willing to pay.
+      type: object
+      required:
+      - version
+      - nonce
+      - sender_address
+      - max_fee
+      title: Invoke V1 Transaction
+    StarknetInvokeV3TransactionSchema:
+      properties:
+        version:
+          type: integer
+          const: 3
+          title: Version
+          description: The version of the transaction.
+        nonce:
+          type: string
+          title: Nonce
+          description: The nonce of the transaction.
+        sender_address:
+          type: string
+          title: Sender Address
+          description: The address of the sender.
+        calldata:
+          items:
+            type: string
+          type: array
+          title: Calldata
+          description: The arguments that are passed to the validate and execute functions.
+        chain_id:
+          type: string
+          title: Chain Id
+          description: The id of the chain to which the transaction is sent.
+        nonce_data_availability_mode:
+          type: integer
+          const: 0
+          title: Nonce Data Availability Mode
+          description: The nonce data availability mode.
+          default: 0
+        paymaster_data:
+          items:
+            type: string
+          type: array
+          maxItems: 0
+          title: Paymaster Data
+          description: For future use. Currently this value is always empty.
+        account_deployment_data:
+          items:
+            type: string
+          type: array
+          maxItems: 0
+          title: Account Deployment Data
+          description: For future use. Currently this value is always empty.
+      type: object
+      required:
+      - version
+      - nonce
+      - sender_address
+      - calldata
+      - chain_id
+      title: Invoke V3 Transaction
+    StarknetWalletRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: wallet
+          title: Type
+          description: Metadata for wallet requests
+        url:
+          type: string
+          title: Url
+          description: URL of the dApp originating the transaction
+      type: object
+      required:
+      - type
+      - url
+      title: Wallet Request Metadata
+    StarknetValidationResponse:
+      anyOf:
+      - $ref: '#/components/schemas/StarknetValidationResult'
+        docs_api_name: ValidationResult
+        title: Validation Successful Result
+      - $ref: '#/components/schemas/StarknetValidationErrorSchema'
+      title: ValidationResponseSchemaType[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]]
+    StarknetValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: ValidationFeatureType
+    StarknetERC721Details:
+      properties:
+        type:
+          type: string
+          const: ERC721
+          title: Type
+          description: Type of the asset (`ERC721`)
+          default: ERC721
+        name:
+          type: string
+          title: Name
+          description: token's name
+        symbol:
+          type: string
+          title: Symbol
+          description: token's symbol
+        address:
+          type: string
+          title: Address
+          description: Address of the token's contract
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo
+          nullable: true
+      type: object
+      required:
+      - name
+      - symbol
+      - address
+      title: ERC721 Asset Details
+    StarknetValidationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        result_type:
+          $ref: '#/components/schemas/StarknetVerdict'
+          description: Verdict of the validation
+          title: Result Verdict
+        description:
+          type: string
+          title: Description
+          description: A textual description about the validation result
+        reason:
+          type: string
+          title: Reason
+          description: A textual description about the reasons the transaction was flagged with result_type
+        classification:
+          type: string
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+        features:
+          items:
+            $ref: '#/components/schemas/StarknetValidationFeature'
+            docs_api_name: ValidationFeature
+            title: Feature
+          type: array
+          title: Features
+      type: object
+      required:
+      - status
+      - result_type
+      - description
+      - reason
+      - classification
+      - features
+      title: Validation Result
+    StarknetERC1155DiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        token_id:
+          type: string
+          title: Token Id
+          description: Token ID of the transfer
+        value:
+          type: integer
+          title: Value
+          description: Value of the transfer
+      type: object
+      required:
+      - token_id
+      - value
+      title: ERC1155 Transfer Details
+    StarknetAddressDetailsBaseSchema:
+      properties:
+        account_address:
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+      type: object
+      required:
+      - account_address
+      title: Address Details
+    StarknetAppealTypes:
+      type: string
+      enum:
+      - should_be_malicious
+      - should_be_benign
+      - wrong_simulation_result
+      title: AppealTypes
+    StarknetERC20Exposure:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StarknetERC20Details'
+          docs_api_name: ERC20Details
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/StarknetERC20ExposureSchema'
+          type: object
+          title: Spenders
+          description: Mapping between the spender address and the exposure of the asset
+      type: object
+      required:
+      - asset
+      title: 'AddressAssetExposureSchemaType[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema], Annotated[ERC20DetailsSchema[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]], FieldInfo(annotation=NoneType, required=True, json_schema_extra={''docs_api_name'': ''ERC20Details''})], ERC20ExposureSchema]'
+    StarknetERC1155ExposureSchema:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/StarknetERC1155DiffSchema'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the exposure
+          nullable: true
+        is_approved_for_all:
+          type: boolean
+          title: Is Approved For All
+          description: Whether `setApprovalForAll` was invoked
+      type: object
+      required:
+      - exposure
+      - is_approved_for_all
+      title: ERC1155ExposureSchema
+    StarknetERC1155AssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StarknetERC1155Details'
+        in:
+          $ref: '#/components/schemas/StarknetERC1155DiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/StarknetERC1155DiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[ERC1155DetailsSchema[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]], ERC1155DiffSchema]
+    StarknetHTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/StarknetValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    StarknetAppealTransactionDataReport:
+      properties:
+        type:
+          type: string
+          const: params
+          title: Type
+          default: params
+        params:
+          $ref: '#/components/schemas/StarknetTransactionScanRequest'
+      type: object
+      required:
+      - params
+      title: Appeal Transaction Data Report
+    StarknetValidationFeature:
+      properties:
+        type:
+          $ref: '#/components/schemas/StarknetValidationFeatureType'
+          description: Feature Classification
+          title: type
+        feature_id:
+          type: string
+          title: feature_id
+          description: ''
+        description:
+          type: string
+          title: Description
+          description: Textual description
+        address:
+          type: string
+          title: Address
+          description: Address the feature refers to
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      title: ValidationFeatureSchemaType[Annotated[int, SkipValidation, PlainSerializer, GetPydanticSchema]]
+    StarknetERC20Details:
+      properties:
+        type:
+          type: string
+          const: ERC20
+          title: Type
+          description: Type of the asset (`ERC20`)
+          default: ERC20
+        name:
+          type: string
+          title: Name
+          description: token's name
+        symbol:
+          type: string
+          title: Symbol
+          description: token's symbol
+        address:
+          type: string
+          title: Address
+          description: Address of the token's contract
+        decimals:
+          type: integer
+          title: Decimals
+          description: token's decimals
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo
+          nullable: true
+      type: object
+      required:
+      - name
+      - symbol
+      - address
+      - decimals
+      title: ERC20 Asset Details
+    StarknetERC20ExposureSchema:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/StarknetERC20DiffSchema'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the exposure
+          nullable: true
+        approval:
+          type: string
+          title: Approval
+          description: Approval value of the ERC20 token
+        expiration:
+          type: string
+          format: date-time
+          title: Expiration
+          description: Expiration date of the approval
+          nullable: true
+      type: object
+      required:
+      - exposure
+      - approval
+      title: ERC20 Exposure
+    StarknetAccountSummary:
+      properties:
+        account_assets_diffs:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/StarknetERC20AssetDiff'
+              docs_api_name: ERC20AssetDiff
+              title: ERC20 Asset Diff
+            - $ref: '#/components/schemas/StarknetERC721AssetDiff'
+              docs_api_name: ERC721AssetDiff
+              title: ERC721 Asset Diff
+            - $ref: '#/components/schemas/StarknetERC1155AssetDiff'
+              docs_api_name: ERC1155AssetDiff
+              title: ERC1155 Asset Diff
+          type: array
+          title: Account Assets Diffs
+          description: Assets diffs of the requested account address
+        account_exposures:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/StarknetERC20Exposure'
+              docs_api_name: ERC20Exposure
+              title: ERC20 Exposure
+            - $ref: '#/components/schemas/StarknetERC721Exposure'
+              docs_api_name: ERC721Exposure
+              title: ERC721 Exposure
+            - $ref: '#/components/schemas/StarknetERC1155Exposure'
+              docs_api_name: ERC1155Exposure
+              title: ERC1155 Exposure
+          type: array
+          title: Account Exposures
+          description: Exposures made by the requested account address
+        total_usd_diff:
+          $ref: '#/components/schemas/StarknetTotalUsdDiffSchema'
+          description: Total USD diff for the requested account address
+        total_usd_exposure:
+          additionalProperties:
+            type: number
+          type: object
+          title: Total USD Exposure
+          description: Total USD exposure for each of the spender addresses during the transaction
+      type: object
+      required:
+      - account_exposures
+      - total_usd_diff
+      title: Account Summary
+    StarknetValidationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Validation Error
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

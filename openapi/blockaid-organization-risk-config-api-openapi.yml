@@ -1,0 +1,239 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Organization Risk Config API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Organization Risk Config
+paths:
+  /v0/platform/organization/configuration/risk-exposure:
+    get:
+      tags:
+      - Organization Risk Config
+      summary: Get organization risk configuration
+      description: Returns your organization's current risk exposure settings, including category risk scores and verdict thresholds.
+      operationId: get-organization-risk-config
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationRiskConfigView'
+              examples:
+                With overrides:
+                  summary: Org with category and verdict overrides
+                  value:
+                    categories:
+                    - category: sanctioned_entity
+                      default_risk_score: 1.0
+                      override_risk_score: 0.7
+                    - category: stolen_funds
+                      default_risk_score: 0.9
+                      override_risk_score: null
+                    - category: mixer
+                      default_risk_score: 0.8
+                      override_risk_score: null
+                    verdicts:
+                    - level: warning
+                      default_threshold: 0.26
+                      override_threshold: 0.3
+                    - level: high_risk
+                      default_threshold: 0.51
+                      override_threshold: 0.6
+                    - level: malicious
+                      default_threshold: 0.76
+                      override_threshold: null
+    patch:
+      tags:
+      - Organization Risk Config
+      summary: Update organization risk configuration
+      description: Update your organization's risk exposure settings. Pass a category name or verdict level with a new value to override the platform default, or pass null to revert to the default. Any key you omit stays unchanged.
+      operationId: patch-organization-risk-config
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchRiskConfigRequest'
+            examples:
+              Set and clear overrides:
+                summary: Override two categories and tighten two verdict levels (clearing one)
+                value:
+                  category_overrides:
+                    sanctioned_entity: 0.7
+                    stolen_funds: 0.5
+                  verdict_overrides:
+                    warning: 0.3
+                    high_risk: 0.6
+                    malicious: null
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationRiskConfigView'
+              examples:
+                Updated config:
+                  summary: Result after applying the example request
+                  value:
+                    categories:
+                    - category: sanctioned_entity
+                      default_risk_score: 1.0
+                      override_risk_score: null
+                    - category: stolen_funds
+                      default_risk_score: 0.9
+                      override_risk_score: 0.7
+                    - category: mixer
+                      default_risk_score: 0.8
+                      override_risk_score: null
+                    verdicts:
+                    - level: warning
+                      default_threshold: 0.26
+                      override_threshold: 0.3
+                    - level: high_risk
+                      default_threshold: 0.51
+                      override_threshold: 0.6
+                    - level: malicious
+                      default_threshold: 0.76
+                      override_threshold: null
+        '400':
+          description: Returned when a value is out of the [0, 1] range or the resulting verdict thresholds are not strictly increasing (warning < high_risk < malicious).
+        '404':
+          description: Returned when an unknown category name is provided.
+components:
+  schemas:
+    OrganizationRiskConfigView:
+      type: object
+      description: Your organization's risk exposure settings, including category risk scores and verdict thresholds.
+      properties:
+        categories:
+          type: array
+          description: The risk score configuration for each exposure category.
+          items:
+            $ref: '#/components/schemas/OrganizationCategoryRiskView'
+        verdicts:
+          type: array
+          description: The score thresholds that determine each verdict level.
+          items:
+            $ref: '#/components/schemas/VerdictThresholdView'
+      required:
+      - categories
+      - verdicts
+    VerdictThresholdView:
+      type: object
+      description: A verdict level with its platform default threshold and the organization's override (null when unset).
+      properties:
+        level:
+          type: string
+          enum:
+          - warning
+          - high_risk
+          - malicious
+          description: The verdict level this threshold applies to. benign is excluded as it is the implicit default below warning.
+          example: warning
+        default_threshold:
+          type: number
+          description: The minimum aggregate score at which this verdict is applied, as set by Blockaid.
+          example: 0.26
+        override_threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: Your organization's custom minimum score for this verdict. Overrides the platform default when set, or null to use the default.
+          example: null
+      required:
+      - level
+      - default_threshold
+      - override_threshold
+    PatchRiskConfigRequest:
+      type: object
+      description: A partial update to your organization's risk exposure settings. Only the fields you include are changed.
+      properties:
+        category_overrides:
+          type: object
+          description: Risk score overrides by category name. Pass a value in [0, 1] to set an override, or null to revert to the platform default.
+          additionalProperties:
+            anyOf:
+            - type: number
+            - type: 'null'
+          example:
+            sanctioned_entity: 0.7
+            stolen_funds: 0.5
+        verdict_overrides:
+          type: object
+          description: Verdict threshold overrides by level. Pass a value in [0, 1] to set an override, or null to revert to the platform default. The resulting thresholds must be strictly increasing (warning < high_risk < malicious).
+          properties:
+            warning:
+              anyOf:
+              - type: number
+              - type: 'null'
+              example: 0.3
+              description: Scores at or above this value are classified as warning. Set to null to revert to the platform default.
+            high_risk:
+              anyOf:
+              - type: number
+              - type: 'null'
+              example: 0.6
+              description: Scores at or above this value are classified as high_risk. Set to null to revert to the platform default.
+            malicious:
+              anyOf:
+              - type: number
+              - type: 'null'
+              example: null
+              description: Scores at or above this value are classified as malicious. Set to null to revert to the platform default.
+          additionalProperties: false
+    OrganizationCategoryRiskView:
+      type: object
+      description: A risk-exposure category with its platform default score and the organization's override (null when unset).
+      properties:
+        category:
+          type: string
+          description: The exposure category name, such as sanctioned_entity, stolen_funds, or mixer.
+          example: sanctioned_entity
+        default_risk_score:
+          type: number
+          description: Scores at or above this value contribute to this category's risk. Platform default, set by Blockaid.
+          example: 0.9
+        override_risk_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: Your organization's custom risk score for this category. Overrides the platform default when set, or null to use the default.
+          example: null
+      required:
+      - category
+      - default_risk_score
+      - override_risk_score
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

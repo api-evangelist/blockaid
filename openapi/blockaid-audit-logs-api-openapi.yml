@@ -1,0 +1,264 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Audit Logs API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Audit Logs
+paths:
+  /v0/platform/audit-logs/search:
+    post:
+      summary: Search Audit Logs
+      deprecated: false
+      description: Returns audit events for the organization. Dates are interpreted in UTC. Request/response enums are aligned so values returned can be reused as filters.
+      tags:
+      - Audit Logs
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditLogSearchRequest'
+            examples:
+              Search Audit Logs Example:
+                summary: Search audit logs with date range and filters
+                value:
+                  start_date: '2024-01-01T00:00:00Z'
+                  end_date: '2024-01-31T23:59:59Z'
+                  sort: desc
+                  actor_types:
+                  - user
+                  actions:
+                  - create
+                  - edit
+                  entity_types:
+                  - monitor
+                  - asset
+                  page: 1
+                  page_size: 100
+                  timezone: Asia/Jerusalem
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogSearchResponse'
+              example:
+                items:
+                - id: al_abc123
+                  actor: user@example.com
+                  entity_id: mon_456
+                  chain: null
+                  summary: Monitor created
+                  timestamp: '2024-01-15T10:30:00Z'
+                  actor_type: user
+                  action: create
+                  entity_type: monitor
+                total: 1
+                page: 1
+                pages: 1
+                size: 1
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+components:
+  schemas:
+    AuditLogSearchResponse:
+      title: Audit Log Search Response
+      type: object
+      description: Paginated list of audit log events matching the search criteria.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogItem'
+          description: Audit log events returned for this page.
+        total:
+          type: integer
+          description: Total number of matching audit log events.
+        page:
+          type: integer
+          description: Current page number.
+        pages:
+          type: integer
+          description: Total number of pages available.
+        size:
+          type: integer
+          description: Number of events returned in this page.
+      required:
+      - items
+      - total
+      - page
+      - pages
+      - size
+    AuditLogItem:
+      title: Audit Log Item
+      type: object
+      description: A single audit event. Excludes internal fields such as organization_id, metadata, destination, and actor_name.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the audit log entry.
+        actor:
+          type: string
+          description: Identifier of the actor that performed the action (e.g. email address or API key ID).
+        entity_id:
+          type: string
+          description: Identifier of the entity affected by the action.
+        chain:
+          type: string
+          description: Blockchain network associated with the event, if applicable.
+        summary:
+          type: string
+          description: Human-readable description of the event.
+        timestamp:
+          type: string
+          format: date-time
+          description: UTC timestamp of when the event occurred.
+        actor_type:
+          $ref: '#/components/schemas/AuditActorType'
+        action:
+          $ref: '#/components/schemas/AuditActionType'
+        entity_type:
+          $ref: '#/components/schemas/AuditEntityType'
+      required:
+      - id
+      - timestamp
+      - actor_type
+      - action
+      - entity_type
+    AuditActionType:
+      type: string
+      enum:
+      - create
+      - edit
+      - delete
+      - info
+      title: AuditActionType
+      description: The type of action recorded in the audit log.
+    AuditEntityType:
+      type: string
+      enum:
+      - cosigner
+      - cosigner_policy
+      - cosigner_transaction
+      - cosigner_manual_action
+      - label
+      - asset
+      - monitor
+      - api_key
+      - user_session
+      - audit_export
+      - metric
+      - response_wallet
+      - rpc_gateway_rule
+      - settings
+      - endpoint
+      - feature
+      - backoffice_api_key
+      - organization
+      - organization_extended
+      title: AuditEntityType
+      description: The type of entity affected by the audited action.
+    AuditActorType:
+      type: string
+      enum:
+      - user
+      - system
+      - API
+      title: AuditActorType
+      description: The type of actor that performed the audited action.
+    AuditLogSearchRequest:
+      title: Audit Log Search Request
+      type: object
+      description: Request body for searching audit logs. Dates are interpreted in UTC.
+      properties:
+        start_date:
+          type: string
+          format: date-time
+          description: Start of the date range (UTC, inclusive).
+        end_date:
+          type: string
+          format: date-time
+          description: End of the date range (UTC, inclusive).
+        sort:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+          description: Sort order for results by timestamp.
+        actor_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditActorType'
+          description: Filter results to events performed by these actor types.
+        actor_names:
+          type: array
+          items:
+            type: string
+          description: Filter results to events performed by these actor names.
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditActionType'
+          description: Filter results to these action types.
+        entity_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditEntityType'
+          description: Filter results to events affecting these entity types.
+        entity_ids:
+          type: array
+          items:
+            type: string
+          description: Filter results to events affecting these entity IDs.
+        chains:
+          type: array
+          items:
+            type: string
+          description: Filter results to events associated with these chain names.
+        search_text:
+          type: string
+          description: Free-text search across audit log fields.
+        page:
+          type: integer
+          minimum: 1
+          default: 1
+          description: Page number to return (1-indexed).
+        page_size:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 100
+          description: Number of results per page.
+      required:
+      - start_date
+      - end_date
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

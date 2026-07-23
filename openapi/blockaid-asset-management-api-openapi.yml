@@ -1,0 +1,2314 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Asset Management
+paths:
+  /v0/platform/assets/:
+    post:
+      tags:
+      - Asset Management
+      summary: Create Asset
+      description: Create an asset for the given address or domain. The new asset will be onboarded to the platform's inventory and monitored according to your monitoring policy.
+      operationId: create-asset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/AddressRequest'
+              - $ref: '#/components/schemas/DomainRequest'
+              - $ref: '#/components/schemas/PerpRequest'
+              - $ref: '#/components/schemas/MarketRequest'
+              title: Asset
+            examples:
+              Create EVM Contract:
+                summary: Create EVM Contract Example
+                value:
+                  identifier_type: address
+                  identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                  tags:
+                  - example
+                  alias: Bedrock
+                  runtime: evm
+                  chain_name: bsc
+                  contract_interface:
+                  - address: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                    abi_json:
+                    - inputs:
+                      - internalType: address
+                        name: defaultAdmin
+                        type: address
+                      - internalType: address
+                        name: minter
+                        type: address
+                      - internalType: address
+                        name: defaultFreezeToRecipient
+                        type: address
+                      stateMutability: nonpayable
+                      type: constructor
+                    - anonymous: false
+                      inputs:
+                      - indexed: true
+                        internalType: address
+                        name: owner
+                        type: address
+                      - indexed: true
+                        internalType: address
+                        name: spender
+                        type: address
+                      - indexed: false
+                        internalType: uint256
+                        name: value
+                        type: uint256
+                      name: Approval
+                      type: event
+                    - anonymous: false
+                      inputs:
+                      - indexed: true
+                        internalType: bytes32
+                        name: role
+                        type: bytes32
+                      - indexed: true
+                        internalType: bytes32
+                        name: previousAdminRole
+                        type: bytes32
+                      - indexed: true
+                        internalType: bytes32
+                        name: newAdminRole
+                        type: bytes32
+                      name: RoleAdminChanged
+                      type: event
+                    - anonymous: false
+                      inputs:
+                      - indexed: true
+                        internalType: bytes32
+                        name: role
+                        type: bytes32
+                      - indexed: true
+                        internalType: address
+                        name: account
+                        type: address
+                      - indexed: true
+                        internalType: address
+                        name: sender
+                        type: address
+                      name: RoleGranted
+                      type: event
+                    - anonymous: false
+                      inputs:
+                      - indexed: true
+                        internalType: bytes32
+                        name: role
+                        type: bytes32
+                      - indexed: true
+                        internalType: address
+                        name: account
+                        type: address
+                      - indexed: true
+                        internalType: address
+                        name: sender
+                        type: address
+                      name: RoleRevoked
+                      type: event
+                    - anonymous: false
+                      inputs:
+                      - indexed: true
+                        internalType: address
+                        name: from
+                        type: address
+                      - indexed: true
+                        internalType: address
+                        name: to
+                        type: address
+                      - indexed: false
+                        internalType: uint256
+                        name: value
+                        type: uint256
+                      name: Transfer
+                      type: event
+                    - anonymous: false
+                      inputs:
+                      - indexed: false
+                        internalType: address[]
+                        name: users
+                        type: address[]
+                      name: UsersFrozen
+                      type: event
+                    - anonymous: false
+                      inputs:
+                      - indexed: false
+                        internalType: address[]
+                        name: users
+                        type: address[]
+                      name: UsersUnfrozen
+                      type: event
+                    - inputs: []
+                      name: DEFAULT_ADMIN_ROLE
+                      outputs:
+                      - internalType: bytes32
+                        name: ''
+                        type: bytes32
+                      stateMutability: view
+                      type: function
+                    - inputs: []
+                      name: FREEZER_ROLE
+                      outputs:
+                      - internalType: bytes32
+                        name: ''
+                        type: bytes32
+                      stateMutability: view
+                      type: function
+                    - inputs: []
+                      name: MINTER_ROLE
+                      outputs:
+                      - internalType: bytes32
+                        name: ''
+                        type: bytes32
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: owner
+                        type: address
+                      - internalType: address
+                        name: spender
+                        type: address
+                      name: allowance
+                      outputs:
+                      - internalType: uint256
+                        name: ''
+                        type: uint256
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: spender
+                        type: address
+                      - internalType: uint256
+                        name: amount
+                        type: uint256
+                      name: approve
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: account
+                        type: address
+                      name: balanceOf
+                      outputs:
+                      - internalType: uint256
+                        name: ''
+                        type: uint256
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: address[]
+                        name: recipients
+                        type: address[]
+                      - internalType: uint256[]
+                        name: amounts
+                        type: uint256[]
+                      name: batchTransfer
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: uint256
+                        name: amount
+                        type: uint256
+                      name: burn
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: account
+                        type: address
+                      - internalType: uint256
+                        name: amount
+                        type: uint256
+                      name: burnFrom
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs: []
+                      name: decimals
+                      outputs:
+                      - internalType: uint8
+                        name: ''
+                        type: uint8
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: spender
+                        type: address
+                      - internalType: uint256
+                        name: subtractedValue
+                        type: uint256
+                      name: decreaseAllowance
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs: []
+                      name: freezeToRecipient
+                      outputs:
+                      - internalType: address
+                        name: ''
+                        type: address
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: address[]
+                        name: users
+                        type: address[]
+                      name: freezeUsers
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: ''
+                        type: address
+                      name: frozenUsers
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: bytes32
+                        name: role
+                        type: bytes32
+                      name: getRoleAdmin
+                      outputs:
+                      - internalType: bytes32
+                        name: ''
+                        type: bytes32
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: bytes32
+                        name: role
+                        type: bytes32
+                      - internalType: address
+                        name: account
+                        type: address
+                      name: grantRole
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: bytes32
+                        name: role
+                        type: bytes32
+                      - internalType: address
+                        name: account
+                        type: address
+                      name: hasRole
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: spender
+                        type: address
+                      - internalType: uint256
+                        name: addedValue
+                        type: uint256
+                      name: increaseAllowance
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: to
+                        type: address
+                      - internalType: uint256
+                        name: amount
+                        type: uint256
+                      name: mint
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs: []
+                      name: name
+                      outputs:
+                      - internalType: string
+                        name: ''
+                        type: string
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: bytes32
+                        name: role
+                        type: bytes32
+                      - internalType: address
+                        name: account
+                        type: address
+                      name: renounceRole
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: bytes32
+                        name: role
+                        type: bytes32
+                      - internalType: address
+                        name: account
+                        type: address
+                      name: revokeRole
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: recipient
+                        type: address
+                      name: setFreezeToRecipient
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: bytes4
+                        name: interfaceId
+                        type: bytes4
+                      name: supportsInterface
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: view
+                      type: function
+                    - inputs: []
+                      name: symbol
+                      outputs:
+                      - internalType: string
+                        name: ''
+                        type: string
+                      stateMutability: view
+                      type: function
+                    - inputs: []
+                      name: totalSupply
+                      outputs:
+                      - internalType: uint256
+                        name: ''
+                        type: uint256
+                      stateMutability: view
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: to
+                        type: address
+                      - internalType: uint256
+                        name: amount
+                        type: uint256
+                      name: transfer
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: address
+                        name: from
+                        type: address
+                      - internalType: address
+                        name: to
+                        type: address
+                      - internalType: uint256
+                        name: amount
+                        type: uint256
+                      name: transferFrom
+                      outputs:
+                      - internalType: bool
+                        name: ''
+                        type: bool
+                      stateMutability: nonpayable
+                      type: function
+                    - inputs:
+                      - internalType: address[]
+                        name: users
+                        type: address[]
+                      name: unfreezeUsers
+                      outputs: []
+                      stateMutability: nonpayable
+                      type: function
+              create sui example:
+                summary: Create Sui Address Example
+                value:
+                  identifier_type: address
+                  identifier: '0xe1b45a0e641b9955a20aa0ad1c1f4ad86aad8afb07296d4085e349a50e90bdca'
+                  tags:
+                  - example
+                  alias: bluefin
+                  runtime: sui
+                  chain_name: mainnet
+                  package_interface: []
+              Create Hyperliquid Address:
+                summary: Create Hyperliquid (Perps) Address Example
+                value:
+                  identifier_type: address
+                  identifier: '0xabcde12345abcde12345abcde12345abcde12345'
+                  tags:
+                  - example
+                  alias: my-hyperliquid-vault
+                  chain_name: hyperliquid
+              Create Polymarket Address:
+                summary: Create Polymarket (Markets) Address Example
+                value:
+                  identifier_type: address
+                  identifier: '0xabcde12345abcde12345abcde12345abcde12345'
+                  tags:
+                  - example
+                  alias: my-polymarket-contract
+                  chain_name: polymarket
+              Create Domain:
+                summary: Create Domain Example
+                value:
+                  identifier_type: domain
+                  identifier: example.com
+                  tags:
+                  - example
+                  alias: Example Domain
+        required: true
+      responses:
+        '200':
+          description: Asset created successfully
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                - $ref: '#/components/schemas/PerpResponse'
+                - $ref: '#/components/schemas/MarketResponse'
+                items:
+                  anyOf:
+                  - $ref: '#/components/schemas/AddressResponse'
+                  - $ref: '#/components/schemas/DomainResponse'
+                  - $ref: '#/components/schemas/PerpResponse'
+                  - $ref: '#/components/schemas/MarketResponse'
+                type: array
+                title: Response 200 Create-Asset
+              examples:
+                Address:
+                  summary: Address Asset Created
+                  value:
+                  - identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                    identifier_type: address
+                    alias: Bedrock
+                    tags:
+                    - example
+                    added_by: user@example.com
+                    created_at: '2025-01-15T12:00:00Z'
+                    address_details:
+                      chain: bsc
+                      runtime: evm
+                      properties: []
+                      address: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                Domain:
+                  summary: Domain Asset Created
+                  value:
+                  - identifier: example.com
+                    identifier_type: domain
+                    alias: Example Domain
+                    tags: []
+                    added_by: user@example.com
+                    created_at: '2025-01-15T12:00:00Z'
+        '409':
+          description: Asset already exists
+          content:
+            application/json:
+              examples:
+                Duplicate Address:
+                  summary: Address Already Exists
+                  value:
+                    detail: Failed to add address because one or more already exists
+                Duplicate Domain:
+                  summary: Domain Already Exists
+                  value:
+                    detail: Failed to add domain because it already exists in the inventory
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+              examples:
+                Type Mismatch:
+                  summary: Type Mismatch Error
+                  value:
+                    error_code: type_mismatch
+                    description: Only domain and address identifier types are valid.
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                Generic Error:
+                  summary: Generic Error During Creation
+                  value:
+                    error_code: generic_error
+                    description: Failed to create monitored asset.
+                Missing ABI:
+                  summary: Missing ABI Error
+                  value:
+                    error_code: missing_abi
+                    description: Failed to auto-fetch contract interface, please provide the interface json while creating the asset
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                Implementation Missing ABI:
+                  summary: Implementation Missing ABI Error
+                  value:
+                    error_code: implementation_missing_abi
+                    description: Failed to auto-fetch contract interface for the implementation of the proxy, please provide both the proxy and implementation's interface json while creating the asset
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                Unsupported Runtime:
+                  summary: Unsupported Runtime Error
+                  value:
+                    error_code: unsupported_runtime
+                    description: Unsupported runtime solana.
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              examples:
+                Missing Required Field:
+                  summary: Missing Required Field
+                  value:
+                    detail:
+                    - loc:
+                      - body
+                      - identifier
+                      msg: field required
+                      type: value_error.missing
+                Invalid Identifier Type:
+                  summary: Invalid Identifier Type
+                  value:
+                    detail:
+                    - loc:
+                      - body
+                      - identifier_type
+                      msg: 'value is not a valid enumeration member; permitted: ''address'', ''domain'''
+                      type: type_error.enum
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/assets/{identifier}:
+    get:
+      tags:
+      - Asset Management
+      summary: Get Asset
+      description: Retrieve details for an asset in your inventory by its identifier, runtime, and chain.
+      operationId: get-asset
+      parameters:
+      - description: The contract address or domain that identifies this asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          type: string
+          title: Identifier
+        example: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        name: identifier
+        in: path
+      - description: The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedRuntimes'
+        example: evm
+        name: runtime
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedChains'
+        example: bsc
+        name: chain_name
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      responses:
+        '200':
+          description: Successful response with the asset details (address or domain).
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                - $ref: '#/components/schemas/PerpResponse'
+                - $ref: '#/components/schemas/MarketResponse'
+                title: Response 200 Get-Asset
+              examples:
+                Address Asset:
+                  summary: Address Asset Retrieved
+                  value:
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                    identifier_type: address
+                    alias: Bedrock
+                    tags:
+                    - example
+                    added_by: API
+                    created_at: '2025-07-14T20:10:58.180233'
+                    address_details:
+                      chain: bsc
+                      runtime: evm
+                      properties:
+                      - token
+                      - address
+                      - erc20
+                      - contract
+                      address: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        '404':
+          description: No asset exists for the given identifier, runtime, and chain combination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+              examples:
+                Not Found:
+                  summary: Asset Not Found
+                  value:
+                    error_code: not_found
+                    description: Asset not found
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        '422':
+          description: Request validation failed (e.g. missing or invalid query parameters).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              examples:
+                Missing Required Query:
+                  summary: Missing Required Query Parameter
+                  value:
+                    detail:
+                    - loc:
+                      - query
+                      - runtime
+                      msg: field required
+                      type: value_error.missing
+                Invalid Runtime:
+                  summary: Invalid Runtime Value
+                  value:
+                    detail:
+                    - loc:
+                      - query
+                      - runtime
+                      msg: 'value is not a valid enumeration member; permitted: ''evm'', ''solana'', ...'
+                      type: type_error.enum
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    delete:
+      tags:
+      - Asset Management
+      summary: Delete Asset
+      description: Remove an asset from your inventory by its identifier, runtime, and chain. The asset is removed from monitoring and related detection rules.
+      operationId: delete-asset
+      parameters:
+      - description: The contract address or domain that identifies this asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          type: string
+          title: Identifier
+        example: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        name: identifier
+        in: path
+      - description: The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedRuntimes'
+        example: evm
+        name: runtime
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedChains'
+        example: bsc
+        name: chain_name
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      responses:
+        '200':
+          description: Successful response; the asset has been removed from the inventory.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Empty body. The asset has been removed from the inventory.
+                additionalProperties: false
+              examples:
+                Success:
+                  summary: Asset Deleted
+                  value: {}
+        '404':
+          description: No asset exists for the given identifier, runtime, and chain combination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+              examples:
+                Not Found:
+                  summary: Asset Not Found
+                  value:
+                    error_code: not_found
+                    description: Asset not found
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        '422':
+          description: Request validation failed (e.g. missing or invalid query parameters).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              examples:
+                Missing Required Query:
+                  summary: Missing Required Query Parameter
+                  value:
+                    detail:
+                    - loc:
+                      - query
+                      - runtime
+                      msg: field required
+                      type: value_error.missing
+                Invalid Runtime:
+                  summary: Invalid Runtime Value
+                  value:
+                    detail:
+                    - loc:
+                      - query
+                      - runtime
+                      msg: 'value is not a valid enumeration member; permitted: ''evm'', ''solana'', ...'
+                      type: type_error.enum
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    patch:
+      tags:
+      - Asset Management
+      summary: Update an Asset
+      description: Update an existing asset in your inventory (e.g. alias, tags) by its identifier, runtime, and chain.
+      operationId: patch-asset
+      parameters:
+      - description: The contract address or domain that identifies this asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          type: string
+          title: Identifier
+        example: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        name: identifier
+        in: path
+      - description: The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedRuntimes'
+        example: evm
+        name: runtime
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      - description: Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset.
+        required: true
+        deprecated: false
+        explode: false
+        schema:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedChains'
+        example: bsc
+        name: chain_name
+        in: query
+        allowEmptyValue: false
+        allowReserved: false
+      requestBody:
+        description: Fields to update (alias, tags). Include identifier, runtime, and chain_name to match the path and query.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetUpdateRequest'
+            examples:
+              Update Address:
+                summary: Update Address Example
+                value:
+                  identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                  tags:
+                  - example
+                  - new_tag
+                  chain_name: bsc
+                  runtime: evm
+        required: true
+      responses:
+        '200':
+          description: Successful response with the updated asset details (address or domain).
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                - $ref: '#/components/schemas/PerpResponse'
+                - $ref: '#/components/schemas/MarketResponse'
+                title: Response 200 Patch-Asset
+              examples:
+                not_found:
+                  summary: Asset not found
+                  value:
+                    error_code: not_found
+                    description: Asset not found
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        '404':
+          description: No asset exists for the given identifier, runtime, and chain combination.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+              examples:
+                Not Found:
+                  summary: Asset Not Found
+                  value:
+                    error_code: not_found
+                    description: Asset not found
+                    identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+        '422':
+          description: Request validation failed (e.g. missing or invalid query or body parameters).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              examples:
+                Missing Required Query:
+                  summary: Missing Required Query Parameter
+                  value:
+                    detail:
+                    - loc:
+                      - query
+                      - chain_name
+                      msg: field required
+                      type: value_error.missing
+                Invalid Body Field:
+                  summary: Invalid Request Body Field
+                  value:
+                    detail:
+                    - loc:
+                      - body
+                      - tags
+                      msg: value is not a valid list
+                      type: type_error.list
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/assets/search:
+    post:
+      summary: Search Assets
+      deprecated: false
+      description: Search and filter platform assets (addresses/domains) using structured filters, pagination, and sorting.
+      tags:
+      - Asset Management
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                filter:
+                  type: object
+                  properties:
+                    identifier_type:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - address
+                        - domain
+                      description: Return only results matching the specified asset identifier type (blockchain address or domain).
+                    chain:
+                      $ref: '#/components/schemas/APIFilters'
+                      description: Return only results that match the specified blockchain network filter.
+                    tags:
+                      $ref: '#/components/schemas/APIFilters'
+                      description: Return only results that match the specified tag filter.
+                    name:
+                      $ref: '#/components/schemas/APIFilters'
+                      description: Return only results that match the specified asset name filter.
+                  description: A set of fields used to filter asset search results.
+                page_size:
+                  type: integer
+                  default: 50
+                  description: Determine how many results are returned per page.
+                page:
+                  type: integer
+                  description: Return only results for the specified page number.
+                sort:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                        description: Which field to sort results by.
+                        enum:
+                        - identifier
+                        - created_at
+                      operator:
+                        type: string
+                        description: 'Sort order: ascending or descending.'
+                        enum:
+                        - asc
+                        - desc
+                    required:
+                    - field
+                    - operator
+                  description: Sort results based on the specified rules.
+              required:
+              - sort
+            examples:
+              Search By Chain:
+                summary: Search assets by chain
+                value:
+                  filter:
+                    identifier_type:
+                    - address
+                    chain:
+                      eq: ethereum
+                  page_size: 25
+                  page: 1
+                  sort:
+                  - field: created_at
+                    operator: desc
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    description: Total number of results matching the request.
+                  page:
+                    type: integer
+                    description: Current page number returned. This is relevant only if a specific page number was mentioned in the request.
+                  pages:
+                    type: integer
+                    description: Total number of pages available.
+                  size:
+                    type: integer
+                    description: Number of items returned in the current response.
+                  items:
+                    type: array
+                    items:
+                      anyOf:
+                      - $ref: '#/components/schemas/AddressResponse'
+                      - $ref: '#/components/schemas/DomainResponse'
+                    description: List of assets returned in the response.
+                required:
+                - total
+                - items
+                - pages
+                - page
+                - size
+                description: Successful response containing paginated search results.
+              example:
+                total: 1
+                page: 1
+                pages: 1
+                size: 1
+                items:
+                - identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                  identifier_type: address
+                  alias: Bedrock
+                  tags:
+                  - example
+                  added_by: API
+                  created_at: '2025-07-14T20:10:58.180233'
+                  address_details:
+                    chain: ethereum
+                    runtime: evm
+                    address: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/assets/addresses/{chain_name}/{address}:
+    get:
+      summary: Get Address Asset
+      deprecated: false
+      description: Get asset details for a given identifier and chain.
+      operationId: get-asset
+      tags:
+      - Asset Management
+      parameters:
+      - name: chain_name
+        in: path
+        description: Which chain this address asset is on.
+        required: true
+        schema:
+          type: string
+      - name: address
+        in: path
+        description: The contract or wallet address for this asset.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Asset retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressResponse'
+              example:
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                identifier_type: address
+                alias: Bedrock
+                tags:
+                - example
+                added_by: API
+                created_at: '2025-07-14T20:10:58.180233'
+                address_details:
+                  chain: bsc
+                  runtime: evm
+                  properties:
+                  - token
+                  - address
+                  - erc20
+                  - contract
+                  address: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '404':
+          description: Asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                title: Response 200 Patch-Asset
+              example:
+                error_code: not_found
+                description: Asset not found
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                - loc:
+                  - path
+                  - identifier
+                  msg: value is not valid
+                  type: value_error
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    delete:
+      summary: Delete Address Asset
+      deprecated: false
+      description: Delete an asset for a given identifier and chain. The asset will be removed from the inventory and related detection rules, specifically targeting this asset.
+      operationId: delete-asset
+      tags:
+      - Asset Management
+      parameters:
+      - name: chain_name
+        in: path
+        description: Which chain this address asset is on.
+        required: true
+        schema:
+          type: string
+      - name: address
+        in: path
+        description: The contract or wallet address for this asset.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Asset deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+              example: {}
+          headers: {}
+        '404':
+          description: Asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                title: Response 200 Patch-Asset
+              example:
+                error_code: not_found
+                description: Asset not found
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                - loc:
+                  - path
+                  - identifier
+                  msg: value is not valid
+                  type: value_error
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    patch:
+      summary: Update Address Asset
+      deprecated: false
+      description: Update asset details for a given identifier.
+      operationId: patch-asset
+      tags:
+      - Asset Management
+      parameters:
+      - name: chain_name
+        in: path
+        description: Which chain this address asset is on.
+        required: true
+        schema:
+          type: string
+      - name: address
+        in: path
+        description: The contract or wallet address for this asset.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetUpdateRequest'
+            examples:
+              Update Asset:
+                value:
+                  identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                  tags:
+                  - example
+                  - new_tag
+                  chain_name: bsc
+                  runtime: evm
+                summary: Update asset example
+        required: true
+      responses:
+        '200':
+          description: Asset updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressResponse'
+              example:
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                identifier_type: address
+                alias: Bedrock
+                tags:
+                - example
+                - new_tag
+                added_by: API
+                created_at: '2025-07-14T20:10:58.180233'
+                address_details:
+                  chain: bsc
+                  runtime: evm
+                  properties:
+                  - token
+                  - address
+                  - erc20
+                  - contract
+                  address: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '404':
+          description: Asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                title: Response 200 Patch-Asset
+              example:
+                error_code: not_found
+                description: Asset not found
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                - loc:
+                  - path
+                  - identifier
+                  msg: value is not valid
+                  type: value_error
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/assets/domains/{domain}:
+    get:
+      summary: Get Domain Asset
+      deprecated: false
+      description: Get asset details for a given identifier and chain.
+      operationId: get-asset
+      tags:
+      - Asset Management
+      parameters:
+      - name: domain
+        in: path
+        description: The domain name for this asset.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Asset retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainResponse'
+              example:
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                identifier_type: address
+                alias: Bedrock
+                tags:
+                - example
+                added_by: API
+                created_at: '2025-07-14T20:10:58.180233'
+                address_details:
+                  chain: bsc
+                  runtime: evm
+                  properties:
+                  - token
+                  - address
+                  - erc20
+                  - contract
+                  address: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '404':
+          description: Asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                title: Response 200 Patch-Asset
+              example:
+                error_code: not_found
+                description: Asset not found
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                - loc:
+                  - path
+                  - identifier
+                  msg: value is not valid
+                  type: value_error
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    delete:
+      summary: Delete Domain Asset
+      deprecated: false
+      description: Delete an asset for a given identifier and chain. The asset will be removed from the inventory and related detection rules, specifically targeting this asset.
+      operationId: delete-asset
+      tags:
+      - Asset Management
+      parameters:
+      - name: domain
+        in: path
+        description: The domain name for this asset.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Asset deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+              example: {}
+          headers: {}
+        '404':
+          description: Asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                title: Response 200 Patch-Asset
+              example:
+                error_code: not_found
+                description: Asset not found
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                - loc:
+                  - path
+                  - identifier
+                  msg: value is not valid
+                  type: value_error
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    patch:
+      summary: Update Domain Asset
+      deprecated: false
+      description: Update asset details for a given identifier.
+      operationId: patch-asset
+      tags:
+      - Asset Management
+      parameters:
+      - name: domain
+        in: path
+        description: The domain name for this asset.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssetUpdateRequest'
+            examples:
+              Update Asset:
+                value:
+                  identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+                  tags:
+                  - example
+                  - new_tag
+                  chain_name: bsc
+                  runtime: evm
+                summary: Update asset example
+        required: true
+      responses:
+        '200':
+          description: Asset updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainResponse'
+              example:
+                identifier: bedrock.app
+                identifier_type: domain
+                alias: Bedrock Domain
+                tags:
+                - example
+                - new_tag
+                added_by: API
+                created_at: '2025-07-14T20:10:58.180233'
+                domain_details:
+                  domain: bedrock.app
+          headers: {}
+        '404':
+          description: Asset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                title: Response 200 Patch-Asset
+              example:
+                error_code: not_found
+                description: Asset not found
+                identifier: '0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41'
+          headers: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+              example:
+                detail:
+                - loc:
+                  - path
+                  - identifier
+                  msg: value is not valid
+                  type: value_error
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/assets/{asset_id}:
+    get:
+      tags:
+      - Asset Management
+      summary: Get Asset by ID
+      description: Retrieve an asset by its unique platform asset ID (UUID format).
+      operationId: get-asset-by-id
+      parameters:
+      - description: The unique platform asset ID.
+        required: true
+        schema:
+          type: string
+          title: Asset Id
+        example: ad5fe269-447d-4990-9231-8f9192421d49
+        name: asset_id
+        in: path
+      responses:
+        '200':
+          description: Successful response with the asset details.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/AddressResponse'
+                - $ref: '#/components/schemas/DomainResponse'
+                title: Response 200 Get-Asset-By-Id
+        '404':
+          description: No asset exists for the given asset ID.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetErrorResponse'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+components:
+  schemas:
+    BaseAddressDetails:
+      properties:
+        chain:
+          type: string
+          title: Chain
+          description: The chain of the asset.
+        runtime:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedRuntimes'
+          description: The runtime of the asset.
+        properties:
+          items:
+            type: string
+          type: array
+          title: Properties
+          description: The properties list of the asset.
+        address:
+          type: string
+          title: Address
+          description: The address of the asset.
+      type: object
+      required:
+      - chain
+      - runtime
+      - properties
+      - address
+      title: BaseAddressDetails
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    APIFilters:
+      title: API Filters
+      anyOf:
+      - title: Equals Filter
+        description: Filter by exact value match.
+        type: object
+        properties:
+          eq:
+            type: string
+            description: Return only results where the field equals this value.
+        required:
+        - eq
+      - title: In List Filter
+        description: Filter by matching any value in a list.
+        type: object
+        properties:
+          in:
+            type: array
+            items:
+              type: string
+            description: Return only results where the field matches any value in this list.
+        required:
+        - in
+      - title: Contains All Filter
+        description: Filter by requiring all listed values to be present.
+        type: object
+        properties:
+          contains_all:
+            type: array
+            items:
+              type: string
+            description: Return only results where the field contains all values in this list.
+        required:
+        - contains_all
+      - title: Contains Filter
+        description: Filter by substring match.
+        type: object
+        properties:
+          contains:
+            type: string
+            description: Return results where the field contains the given value (substring match).
+        required:
+        - contains
+      description: A filter object that supports common query operators.
+    ABIFallback:
+      properties:
+        type:
+          type: string
+          enum:
+          - fallback
+          title: Type
+        stateMutability:
+          type: string
+          enum:
+          - nonpayable
+          - payable
+          title: Statemutability
+      type: object
+      required:
+      - type
+      title: ABIFallback
+    DomainResponse:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - domain
+          title: Identifier Type
+          default: domain
+          description: The asset type.
+        identifier:
+          type: string
+          title: Identifier
+          description: The domain name for this asset.
+        asset_id:
+          type: string
+        alias:
+          type: string
+          title: Alias
+          description: The alias of the asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Tags assigned to the asset.
+        added_by:
+          type: string
+          title: Added By
+          description: The user who added the asset.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The date and time the asset was created.
+      type: object
+      required:
+      - identifier
+      - tags
+      - added_by
+      - created_at
+      - identifier_type
+      - asset_id
+      title: DomainResponse
+    ABIFunction:
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          title: Type
+        name:
+          type: string
+          title: Name
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+        outputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Outputs
+        stateMutability:
+          type: string
+          enum:
+          - pure
+          - view
+          - nonpayable
+          - payable
+          title: Statemutability
+        constant:
+          type: boolean
+          title: Constant
+        payable:
+          type: boolean
+          title: Payable
+      type: object
+      required:
+      - type
+      - name
+      - stateMutability
+      title: ABIFunction
+    ABIEvent:
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+          title: Type
+        name:
+          type: string
+          title: Name
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+        anonymous:
+          type: boolean
+          title: Anonymous
+          default: false
+      type: object
+      required:
+      - type
+      - name
+      title: ABIEvent
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ABIParameter:
+      properties:
+        name:
+          type: string
+          title: Name
+        type:
+          type: string
+          title: Type
+        internalType:
+          type: string
+          title: Internaltype
+        components:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Components
+      type: object
+      required:
+      - name
+      - type
+      title: ABIParameter
+    MarketResponse:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - market
+          title: Identifier Type
+          default: market
+          description: The asset type.
+        identifier:
+          type: string
+          title: Identifier
+          description: The market slug for this asset.
+        asset_id:
+          type: string
+        alias:
+          type: string
+          title: Alias
+          description: The alias of the asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Tags assigned to this asset.
+        added_by:
+          type: string
+          title: Added By
+          description: The user who added the asset.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The date and time the asset was created.
+        address_details:
+          $ref: '#/components/schemas/BaseAddressDetails'
+      type: object
+      required:
+      - identifier
+      - tags
+      - added_by
+      - created_at
+      - address_details
+      - identifier_type
+      - asset_id
+      title: MarketResponse
+    PerpResponse:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - perp
+          title: Identifier Type
+          default: perp
+          description: The asset type.
+        identifier:
+          type: string
+          title: Identifier
+          description: The perp identifier (e.g. "btc-usdc").
+        asset_id:
+          type: string
+        alias:
+          type: string
+          title: Alias
+          description: The alias of the asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Tags assigned to this asset.
+        added_by:
+          type: string
+          title: Added By
+          description: The user who added the asset.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The date and time the asset was created.
+        address_details:
+          $ref: '#/components/schemas/BaseAddressDetails'
+      type: object
+      required:
+      - identifier
+      - tags
+      - added_by
+      - created_at
+      - address_details
+      - identifier_type
+      - asset_id
+      title: PerpResponse
+    MonitoringSupportedRuntimes:
+      type: string
+      enum:
+      - evm
+      - sui
+      - solana
+      - stellar
+      - hedera
+      - bitcoin
+      - hyperliquid
+      - polymarket
+      - aster
+      - lighter
+      - tron
+      title: MonitoringSupportedRuntimes
+      description: The runtime name
+    MonitoringSupportedChains:
+      type: string
+      enum:
+      - abstract
+      - apechain
+      - arbitrum
+      - avalanche
+      - avalanche-fuji
+      - base
+      - berachain
+      - bitcoin
+      - blast
+      - bsc
+      - degen
+      - ethereum
+      - ethereum-sepolia
+      - gnosis
+      - hedera
+      - hyperevm
+      - hyperliquid
+      - aster
+      - lighter
+      - ink
+      - kaia
+      - katana
+      - kite-ai
+      - linea
+      - monad
+      - optimism
+      - plume
+      - polymarket
+      - polygon
+      - ronin
+      - scroll
+      - sei
+      - solana
+      - soneium
+      - soneium-minato
+      - stellar
+      - sui
+      - unichain
+      - worldchain
+      - zksync
+      - mainnet
+      - kaia
+      - tron
+      - robinhood
+      - arc
+      - xlayer
+      title: MonitoringSupportedChains
+      description: The chain name
+    ABIError:
+      properties:
+        type:
+          type: string
+          enum:
+          - error
+          title: Type
+        name:
+          type: string
+          title: Name
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+          default: []
+      type: object
+      required:
+      - type
+      - name
+      title: ABIError
+    PerpRequest:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - perp
+          title: Identifier Type
+          default: perp
+        identifier:
+          type: string
+          title: Identifier
+          description: The perp identifier.
+        chain_name:
+          type: string
+          enum:
+          - hyperliquid
+          - aster
+          - lighter
+          title: Chain Name
+          description: 'The perpetuals protocol. Supported values: "hyperliquid", "aster", "lighter".'
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address.
+      type: object
+      required:
+      - identifier
+      - chain_name
+      title: PerpRequest
+    ABIConstructor:
+      properties:
+        type:
+          type: string
+          enum:
+          - constructor
+          title: Type
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+        stateMutability:
+          type: string
+          enum:
+          - nonpayable
+          - payable
+          title: Statemutability
+      type: object
+      required:
+      - type
+      title: ABIConstructor
+    ABIReceive:
+      properties:
+        type:
+          type: string
+          enum:
+          - receive
+          title: Type
+        stateMutability:
+          type: string
+          enum:
+          - payable
+          title: Statemutability
+      type: object
+      required:
+      - type
+      - stateMutability
+      title: ABIReceive
+    MarketRequest:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - market
+          title: Identifier Type
+          default: market
+        identifier:
+          type: string
+          title: Identifier
+          description: The market slug for this asset.
+        chain_name:
+          type: string
+          enum:
+          - polymarket
+          title: Chain Name
+          default: polymarket
+          description: Must be "polymarket" for prediction market assets.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address.
+      type: object
+      required:
+      - identifier
+      - chain_name
+      title: MarketRequest
+    AssetErrorResponse:
+      properties:
+        error_code:
+          $ref: '#/components/schemas/AssetsErrorCode'
+        description:
+          type: string
+          title: Description
+        identifier:
+          type: string
+          title: Identifier
+      type: object
+      required:
+      - error_code
+      - description
+      title: AssetErrorResponse
+    DomainRequest:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - domain
+          title: Identifier Type
+          default: domain
+        identifier:
+          type: string
+          title: Identifier
+          description: The domain name for this asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address or domain.
+      type: object
+      required:
+      - identifier
+      title: DomainRequest
+    AddressResponse:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - address
+          title: Identifier Type
+          default: address
+          description: The asset type.
+        identifier:
+          type: string
+          title: Identifier
+          description: The contract or wallet address for this asset.
+        asset_id:
+          type: string
+        alias:
+          type: string
+          title: Alias
+          description: The alias of the asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Tags assigned to this asset.
+        added_by:
+          type: string
+          title: Added By
+          description: The user who added the asset.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The date and time the asset was created.
+        address_details:
+          $ref: '#/components/schemas/BaseAddressDetails'
+      type: object
+      required:
+      - identifier
+      - tags
+      - added_by
+      - created_at
+      - address_details
+      - identifier_type
+      - asset_id
+      title: AddressResponse
+    ContractInterface:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address of the contract.
+        abi_json:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ABIFunction'
+            - $ref: '#/components/schemas/ABIConstructor'
+            - $ref: '#/components/schemas/ABIFallback'
+            - $ref: '#/components/schemas/ABIReceive'
+            - $ref: '#/components/schemas/ABIEvent'
+            - $ref: '#/components/schemas/ABIError'
+          type: array
+          title: Abi Json
+          description: The ABI of the contract.
+      type: object
+      required:
+      - address
+      - abi_json
+      title: ContractInterface
+    AssetUpdateRequest:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address or domain.
+      type: object
+      title: AssetUpdateRequest
+    AddressRequest:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - address
+          title: Identifier Type
+          default: address
+        identifier:
+          type: string
+          title: Identifier
+          description: The contract or wallet address for this asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address or domain.
+        runtime:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedRuntimes'
+          description: Deprecated. This field is optional and kept for backward compatibility only. It should not be used.
+        chain_name:
+          allOf:
+          - $ref: '#/components/schemas/MonitoringSupportedChains'
+          description: The chain where the asset resides in.
+        contract_interface:
+          items:
+            $ref: '#/components/schemas/ContractInterface'
+          type: array
+          title: Contract Interface
+          description: "The contract interfaces for the asset (for evm the ABI file).\n        If the asset is a proxy, include the implementation contract interface as well.\n        Will be auto-fetched if not provided.\n        "
+      type: object
+      required:
+      - identifier
+      - chain_name
+      title: AddressRequest
+    AssetsErrorCode:
+      type: string
+      enum:
+      - missing_abi
+      - type_mismatch
+      - generic_error
+      - already_exists
+      - unsupported_runtime
+      - attached_system_rule
+      - inconsistent_runtime
+      - implementation_missing_abi
+      - not_found
+      title: AssetsErrorCode
+      description: The error code returned by the Assets API in case of an error.
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

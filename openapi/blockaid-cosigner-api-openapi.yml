@@ -1,0 +1,3975 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management cosigner API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: cosigner
+paths:
+  /v0/platform/cosigners/{id}/policies/:
+    get:
+      tags:
+      - cosigner
+      summary: Get Cosigner Policies Route
+      description: Get all policies for a cosigner by ID.
+      operationId: get_cosigner_policies_route_external_v0_cosigners__id__policies__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Cosigner ID
+          title: Id
+        description: Cosigner ID
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPoliciesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - cosigner
+      summary: Set Cosigner Policies Route
+      description: Set policies for a cosigner by ID.
+      operationId: set_cosigner_policies_route_external_v0_cosigners__id__policies__post
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Cosigner ID
+          title: Id
+        description: Cosigner ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPoliciesRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetPoliciesResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /v0/platform/cosigners:
+    post:
+      tags:
+      - cosigner
+      summary: Create a new Cosigner
+      description: Create a cosigner and determine what it does on proposal, approval, and rejection.
+      operationId: create_cosigner_external_route_external_v0_cosigners__post
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCosignerExternalRequest'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CosignerExternalResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/cosigners/search:
+    post:
+      tags:
+      - cosigner
+      summary: Get Cosigners Paginated Route
+      description: Returns a paginated list of Cosigners based on the provided search criteria.
+      operationId: get_cosigners_paginated_route_external_v0_cosigners_search_post
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CosignerSearchRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CosignerPage_CosignerExternalResponse_'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/cosigners/by-name/{name}:
+    get:
+      tags:
+      - cosigner
+      summary: Get Cosigner By Name
+      description: Fetch a cosigner by name.
+      operationId: get_cosigner_by_name_route_external_v0_cosigners_by_name__name__get
+      parameters:
+      - name: name
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CosignerExternalResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/cosigners/{id}:
+    get:
+      tags:
+      - cosigner
+      summary: Get Cosigner External Route
+      description: Fetch a cosigner by ID.
+      operationId: get_cosigner_external_route_external_v0_cosigners__id__get
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CosignerExternalResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    delete:
+      tags:
+      - cosigner
+      summary: Delete Cosigner External Route
+      description: Remove a cosigner by ID.
+      operationId: delete_cosigner_external_route_external_v0_cosigners__id__delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Id
+      responses:
+        '204':
+          description: Successful Response
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    patch:
+      tags:
+      - cosigner
+      summary: Update Cosigner External Route
+      description: Update a cosigner by ID; the fields you send replace the existing ones.
+      operationId: update_cosigner_external_route_external_v0_cosigners__id__patch
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCosignerExternalRequest'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CosignerExternalResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/cosigners/{id}/evm/evaluate:
+    post:
+      tags:
+      - cosigner
+      summary: Evaluate EVM Transaction
+      description: Run policy evaluation against an EVM transaction for the given cosigner. Returns the policy decision and per-policy trace.
+      operationId: evaluate_transaction_route_external_v0_cosigners__id__evm_evaluate_post
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Cosigner ID
+          title: Id
+        description: Cosigner ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EvaluateTransactionRequest'
+            example:
+              evaluation_type: simulate
+              chain: ethereum
+              account_address: '0x1234'
+              data:
+                from: '0x1234'
+                to: '0x1E0049783F008A0085193E00003D00cd54003c71'
+                value: '0x0'
+                data: '0xa22cb465'
+              metadata:
+                domain: https://app.safe.global
+      x-codeSamples:
+      - lang: bash
+        label: Simulate transaction
+        source: "curl -X POST \"https://api.blockaid.io/v0/platform/cosigners/<cosigner_id>/evm/evaluate\" \\\n  -H \"X-API-Key: <api_key>\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"evaluation_type\": \"simulate\",\n    \"chain\": \"ethereum\",\n    \"account_address\": \"0x1234\",\n    \"data\": {\n      \"from\": \"0x1234\",\n      \"to\": \"0x1E0049783F008A0085193E00003D00cd54003c71\",\n      \"value\": \"0x0\",\n      \"data\": \"0xa22cb465\"\n    },\n    \"metadata\": {\n      \"domain\": \"https://app.safe.global\"\n    }\n  }'"
+      - lang: bash
+        label: Simulate EIP-712
+        source: "curl -X POST \"https://api.blockaid.io/v0/platform/cosigners/<cosigner_id>/evm/evaluate\" \\\n  -H \"X-API-Key: <api_key>\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"evaluation_type\": \"simulate\",\n    \"chain\": \"ethereum\",\n    \"account_address\": \"0xSigner\",\n    \"data\": {\n      \"type\": \"eip712\",\n      \"typed_data\": \"{\\\"types\\\":{},\\\"primaryType\\\":\\\"Order\\\",\\\"domain\\\":{},\\\"message\\\":{}}\",\n      \"eip712_executor\": \"0xSafeExecutor\"\n    },\n    \"metadata\": {\n      \"domain\": \"https://app.safe.global\"\n    }\n  }'"
+      - lang: bash
+        label: Evaluate tx hash
+        source: "curl -X POST \"https://api.blockaid.io/v0/platform/cosigners/<cosigner_id>/evm/evaluate\" \\\n  -H \"X-API-Key: <api_key>\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"evaluation_type\": \"tx_hash\",\n    \"tx_hash\": \"0xabc\",\n    \"chain\": \"ethereum\",\n    \"show_transaction_detail_for\": []\n  }'"
+      - lang: bash
+        label: Evaluate time period
+        source: "curl -X POST \"https://api.blockaid.io/v0/platform/cosigners/<cosigner_id>/evm/evaluate\" \\\n  -H \"X-API-Key: <api_key>\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"evaluation_type\": \"time_period\",\n    \"chain\": \"ethereum\",\n    \"time_period\": {\n      \"from\": \"2026-03-01T12:34:56+00:00\",\n      \"to\": \"2026-03-02T01:02:03+00:00\"\n    },\n    \"show_transaction_detail_for\": []\n  }'"
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/EvaluateTransactionResponse'
+                - $ref: '#/components/schemas/EvaluateHistoricalDataResponse'
+                title: Response Evaluate Transaction Route External V0 Cosigners  Id  Evm Evaluate Post
+        '404':
+          description: Cosigner not found
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+components:
+  schemas:
+    UnknownTarget:
+      properties:
+        type:
+          type: string
+          title: Type
+          default: unknown
+      additionalProperties: true
+      type: object
+      title: UnknownTarget
+      description: Unknown target type - client should handle gracefully.
+    FunctionCallPolicyResponse:
+      properties:
+        type:
+          type: string
+          enum:
+          - function_call
+          const: function_call
+          title: Type
+        rules:
+          $ref: '#/components/schemas/FunctionCallRules-Output'
+        target:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/MissingAssetIDTarget'
+            - $ref: '#/components/schemas/UnknownTarget'
+          title: Target
+          type: array
+      type: object
+      required:
+      - type
+      - target
+      - rules
+      title: FunctionCallPolicyResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    TokenSpendApprovalAmountRule:
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/LessThanComparisonOperator'
+          - $ref: '#/components/schemas/GreaterThanComparisonOperator'
+          - $ref: '#/components/schemas/EqualityOperator'
+          title: Operator
+        value:
+          title: Value
+          type: string
+      required:
+      - operator
+      - value
+      title: TokenSpendApprovalAmountRule
+      type: object
+    MovedAssetsPolicyResponse:
+      properties:
+        rules:
+          $ref: '#/components/schemas/MovedAssetsRules-Output'
+        type:
+          const: moved_assets
+          enum:
+          - moved_assets
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: MovedAssetsPolicyResponse
+      type: object
+    RiskExposureRules-Input:
+      properties:
+        category_thresholds:
+          items:
+            $ref: '#/components/schemas/CategoryThreshold-Input'
+          title: Category Thresholds
+          type: array
+      required:
+      - category_thresholds
+      title: RiskExposureRules
+      type: object
+    IgnoreThresholdRule:
+      properties:
+        operator:
+          $ref: '#/components/schemas/LessThanComparisonOperator'
+        value:
+          type: integer
+          title: Value
+      type: object
+      required:
+      - operator
+      - value
+      title: IgnoreThresholdRule
+    TransactionUSDValueRules-Output:
+      properties:
+        transaction_usd_value:
+          $ref: '#/components/schemas/TransactionUSDValueRule'
+      type: object
+      required:
+      - transaction_usd_value
+      title: TransactionUSDValueRules
+    TokenSpendApprovalPolicyResponse:
+      properties:
+        rules:
+          $ref: '#/components/schemas/TokenSpendApprovalRules-Output'
+        type:
+          const: token_spend_approval
+          enum:
+          - token_spend_approval
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: TokenSpendApprovalPolicyResponse
+      type: object
+    EvaluationSummary:
+      properties:
+        total_transactions:
+          type: integer
+          title: Total Transactions
+          description: Total number of transactions scanned for this evaluation.
+        approved:
+          type: integer
+          title: Approved
+          description: Transactions approved by all policies under this mode.
+        rejected:
+          type: integer
+          title: Rejected
+          description: Transactions rejected by at least one policy or blocked before policy evaluation (non-benign scans). Per-policy counts only reflect transactions that reached policy evaluation, so the sum of per-policy rejected counts may be less than this value.
+        manual_approved:
+          type: integer
+          title: Manual Approved
+          description: Transactions that required manual approval (pending decision).
+      additionalProperties: false
+      type: object
+      required:
+      - total_transactions
+      - approved
+      - rejected
+      - manual_approved
+      title: EvaluationSummary
+      description: 'Aggregated counts across all transactions.
+
+
+        Note: ``rejected`` includes transactions blocked before policy evaluation
+
+        (non-benign scans). Per-policy counts only reflect transactions that
+
+        reached policy evaluation, so ``sum(p.rejected for p in policies)`` may be
+
+        less than ``summary.rejected``.'
+    EventParameter:
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/EqualityOperator'
+          - $ref: '#/components/schemas/LessThanComparisonOperator'
+          - $ref: '#/components/schemas/GreaterThanComparisonOperator'
+          title: Operator
+        value:
+          type: string
+          title: Value
+        parameter:
+          type: string
+          title: Parameter
+      type: object
+      required:
+      - operator
+      - value
+      - parameter
+      title: EventParameter
+    EvaluateTransactionRequest:
+      discriminator:
+        propertyName: evaluation_type
+      oneOf:
+      - additionalProperties: false
+        description: 'Simulate mode: evaluate a hypothetical EVM transaction against cosigner policies.'
+        properties:
+          account_address:
+            description: Address of the account initiating the transaction.
+            title: Account Address
+            type: string
+          chain:
+            allOf:
+            - enum:
+              - arbitrum
+              - base
+              - bsc
+              - gnosis
+              - ethereum
+              - optimism
+              - polygon
+              - sepolia
+              - monad
+              - katana
+              title: SupportedEvmChains
+              type: string
+            description: Chain name, e.g. "ethereum", "polygon".
+          data:
+            anyOf:
+            - additionalProperties: false
+              description: Standard EVM transaction payload.
+              properties:
+                data:
+                  description: Calldata as a hex string, for example "0xa22cb465...".
+                  title: Data
+                  type: string
+                from:
+                  description: Sender address.
+                  title: From
+                  type: string
+                to:
+                  description: Recipient or contract address.
+                  title: To
+                  type: string
+                type:
+                  const: transaction
+                  default: transaction
+                  description: Transaction type discriminator. Defaults to "transaction".
+                  enum:
+                  - transaction
+                  title: Type
+                  type: string
+                value:
+                  description: Wei value as a hex string, for example "0x0".
+                  title: Value
+                  type: string
+              required:
+              - from
+              - to
+              - value
+              - data
+              title: EvmSendTransaction
+              type: object
+            - additionalProperties: false
+              description: EIP-712 typed-data signing payload.
+              properties:
+                eip712_executor:
+                  anyOf:
+                  - type: string
+                  - type: 'null'
+                  description: Executor contract address, for example a Safe executor.
+                  title: Eip712 Executor
+                type:
+                  const: eip712
+                  description: Must be "eip712".
+                  enum:
+                  - eip712
+                  title: Type
+                  type: string
+                typed_data:
+                  description: EIP-712 typed-data structure as a JSON string.
+                  title: Typed Data
+                  type: string
+              required:
+              - type
+              - typed_data
+              title: EvmEip712Data
+              type: object
+            description: EVM transaction payload.
+            title: Data
+          evaluation_type:
+            const: simulate
+            description: Evaluation mode. Use "simulate" for dry-run evaluation of calldata.
+            enum:
+            - simulate
+            title: Evaluation Type
+            type: string
+          inline_policies:
+            anyOf:
+            - items:
+                additionalProperties: true
+                description: A single policy definition for inline evaluation, bypassing persisted policy lookup.
+                properties:
+                  action:
+                    description: 'Policy action: "approve", "reject", or "pending".'
+                    title: Action
+                    type: string
+                  name:
+                    description: Policy name.
+                    title: Name
+                    type: string
+                  policy:
+                    description: Policy definition with policy_type_id, conditions, targets, etc.
+                    title: Policy
+                    type: object
+                required:
+                - name
+                - action
+                - policy
+                title: InlinePolicyEntry
+                type: object
+              type: array
+            - type: 'null'
+            description: Optional list of inline policy definitions to evaluate against instead of persisted policies. When provided, the cosigner's stored policies are ignored and these are used instead. Priority is derived from list order (index 0 = highest).
+            title: Inline Policies
+          metadata:
+            description: Additional context. Accepts a "domain" key for the dapp origin domain.
+            title: Metadata
+            type: object
+          options:
+            description: Evaluation options to apply. Defaults to ["validation"].
+            items:
+              type: string
+            title: Options
+            type: array
+        required:
+        - evaluation_type
+        - chain
+        - account_address
+        - data
+        title: EvaluateSimulateRequest
+        type: object
+      - additionalProperties: false
+        properties:
+          chain:
+            allOf:
+            - enum:
+              - arbitrum
+              - base
+              - bsc
+              - gnosis
+              - ethereum
+              - optimism
+              - polygon
+              - sepolia
+              - monad
+              - katana
+              title: SupportedEvmChains
+              type: string
+            description: Chain identifier.
+          evaluation_type:
+            const: tx_hash
+            description: Evaluation mode.
+            enum:
+            - tx_hash
+            title: Evaluation Type
+            type: string
+          inline_policies:
+            anyOf:
+            - items:
+                additionalProperties: true
+                description: A single policy definition for inline evaluation, bypassing persisted policy lookup.
+                properties:
+                  action:
+                    description: 'Policy action: "approve", "reject", or "pending".'
+                    title: Action
+                    type: string
+                  name:
+                    description: Policy name.
+                    title: Name
+                    type: string
+                  policy:
+                    description: Policy definition with policy_type_id, conditions, targets, etc.
+                    title: Policy
+                    type: object
+                required:
+                - name
+                - action
+                - policy
+                title: InlinePolicyEntry
+                type: object
+              type: array
+            - type: 'null'
+            description: Optional list of inline policy definitions to evaluate against instead of persisted policies. When provided, the cosigner's stored policies are ignored and these are used instead. Priority is derived from list order (index 0 = highest).
+            title: Inline Policies
+          show_transaction_detail_for:
+            anyOf:
+            - items:
+                enum:
+                - approved
+                - rejected
+                - manual_approved
+                type: string
+              type: array
+            - type: 'null'
+            description: Transaction hash lists for asked verdicts.
+            title: Show Transaction Detail For
+          tx_hash:
+            description: Transaction hash to evaluate.
+            title: Tx Hash
+            type: string
+        required:
+        - evaluation_type
+        - tx_hash
+        - chain
+        title: EvaluateTxHashRequest
+        type: object
+      - additionalProperties: false
+        properties:
+          chain:
+            allOf:
+            - enum:
+              - arbitrum
+              - base
+              - bsc
+              - gnosis
+              - ethereum
+              - optimism
+              - polygon
+              - sepolia
+              - monad
+              - katana
+              title: SupportedEvmChains
+              type: string
+            description: Chain identifier.
+          evaluation_type:
+            const: time_period
+            description: Evaluation mode.
+            enum:
+            - time_period
+            title: Evaluation Type
+            type: string
+          show_transaction_detail_for:
+            anyOf:
+            - items:
+                enum:
+                - approved
+                - rejected
+                - manual_approved
+                type: string
+              type: array
+            - type: 'null'
+            description: Transaction hash lists for asked verdicts.
+            title: Show Transaction Detail For
+          time_period:
+            allOf:
+            - additionalProperties: false
+              properties:
+                from:
+                  description: Start of window (inclusive, ISO 8601).
+                  format: date-time
+                  title: From
+                  type: string
+                to:
+                  description: End of window (inclusive, ISO 8601).
+                  format: date-time
+                  title: To
+                  type: string
+              required:
+              - from
+              - to
+              title: TimePeriodInput
+              type: object
+            description: Time window for query.
+        required:
+        - evaluation_type
+        - time_period
+        - chain
+        title: EvaluateTimePeriodRequest
+        type: object
+      title: EvaluateTransactionRequest
+      description: Request body for evaluating an EVM transaction against cosigner policies.
+    CalledAddressRules-Input:
+      properties:
+        called_addresses:
+          title: Called Addresses
+          $ref: '#/components/schemas/CalledAddressesRule'
+      type: object
+      required:
+      - called_addresses
+      title: CalledAddressRules
+    FireblocksCosignerUpdateExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - fireblocks
+          const: fireblocks
+          title: Type
+        vault_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vault Ids
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          anyOf:
+          - $ref: '#/components/schemas/ApproverSigningMode'
+          - type: 'null'
+        security_policy:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalPolicyOption'
+          - type: 'null'
+        unsupported_chain_behavior:
+          anyOf:
+          - $ref: '#/components/schemas/DecisionAction'
+          - type: 'null'
+      type: object
+      required:
+      - type
+      title: FireblocksCosignerUpdateExternal
+    TokenSpendApprovalPolicyRequest:
+      properties:
+        rules:
+          $ref: '#/components/schemas/TokenSpendApprovalRules-Input'
+        type:
+          const: token_spend_approval
+          enum:
+          - token_spend_approval
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: TokenSpendApprovalPolicyRequest
+      type: object
+    FunctionCallRules-Input:
+      properties:
+        function_name:
+          $ref: '#/components/schemas/FunctionName'
+        function_parameters:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/FunctionParameter'
+            type: array
+          - type: 'null'
+          title: Function Parameters
+      type: object
+      required:
+      - function_name
+      title: FunctionCallRules
+    OtherChainPolicyResponse:
+      description: Policy response for other/unsupported chains as returned by the API.
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          $ref: '#/components/schemas/UnsupportedChainPolicyResponse'
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: OtherChainPolicyResponse
+    CalledAddressRules-Output:
+      properties:
+        called_addresses:
+          title: Called Addresses
+          $ref: '#/components/schemas/CalledAddressesRule'
+      type: object
+      required:
+      - called_addresses
+      title: CalledAddressRules
+    TelegramExternalAction:
+      properties:
+        type:
+          type: string
+          enum:
+          - telegram
+          const: telegram
+          title: Type
+        chats:
+          items:
+            $ref: '#/components/schemas/TelegramExternalChannel'
+          type: array
+          minItems: 1
+          title: Chats
+        message_format:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message Format
+      type: object
+      required:
+      - type
+      - chats
+      title: TelegramExternalAction
+    GainingAddressesPolicyResponse:
+      properties:
+        type:
+          type: string
+          enum:
+          - gaining_addresses
+          const: gaining_addresses
+          title: Type
+        rules:
+          $ref: '#/components/schemas/GainingAddressesRules-Output'
+      type: object
+      required:
+      - type
+      - rules
+      title: GainingAddressesPolicyResponse
+    RiskExposureRules-Output:
+      properties:
+        category_thresholds:
+          items:
+            $ref: '#/components/schemas/CategoryThreshold-Output'
+          title: Category Thresholds
+          type: array
+      required:
+      - category_thresholds
+      title: RiskExposureRules
+      type: object
+    MovedAssetsRule:
+      properties:
+        operator:
+          $ref: '#/components/schemas/InclutionOperator'
+        value:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/UnknownTarget'
+          title: Value
+          type: array
+      required:
+      - operator
+      - value
+      title: MovedAssetsRule
+      type: object
+    BitcoinCompositePolicyRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - composite
+          const: composite
+          title: Type
+          default: composite
+        operator:
+          type: string
+          enum:
+          - and
+          - or
+          title: Operator
+        rules:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+            - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+            - $ref: '#/components/schemas/BitcoinCompositePolicyRequest'
+            discriminator:
+              propertyName: type
+              mapping:
+                composite: '#/components/schemas/BitcoinCompositePolicyRequest'
+                gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+                transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+          type: array
+          title: Rules
+      type: object
+      required:
+      - operator
+      - rules
+      title: BitcoinCompositePolicyRequest
+    CosignerSafeResponseExternal:
+      properties:
+        chain:
+          type: string
+          title: Chain
+        type:
+          type: string
+          enum:
+          - safe
+          const: safe
+          title: Type
+        override_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Override Address
+        cosigner_address:
+          type: string
+          title: Cosigner Address
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        wallet_address:
+          title: Wallet Address
+          type: string
+      type: object
+      required:
+      - involvement_level
+      - chain
+      - security_policy
+      - type
+      - override_address
+      - wallet_address
+      - cosigner_address
+      title: CosignerSafeResponseExternal
+    TransactionUSDValueRules-Input:
+      properties:
+        transaction_usd_value:
+          $ref: '#/components/schemas/TransactionUSDValueRule'
+      type: object
+      required:
+      - transaction_usd_value
+      title: TransactionUSDValueRules
+    SolanaPolicyResponse:
+      description: A single Solana chain policy as returned by the API.
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          anyOf:
+          - $ref: '#/components/schemas/FunctionCallPolicyResponse'
+          - $ref: '#/components/schemas/GainingAddressesPolicyResponse'
+          - $ref: '#/components/schemas/SquadsConfigTransactionPolicyResponse'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyResponse'
+          - $ref: '#/components/schemas/RollingUsdLimitPolicyResponse'
+          - $ref: '#/components/schemas/BaseCompositePolicyResponse'
+          - $ref: '#/components/schemas/UnknownPolicyResponse'
+          title: Policy
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: SolanaPolicyResponse
+    MerklCampaignRules-Output:
+      properties:
+        campaigns:
+          items:
+            $ref: '#/components/schemas/MerklCampaignItem'
+          minItems: 1
+          title: Campaigns
+          type: array
+      required:
+      - campaigns
+      title: MerklCampaignRules
+      type: object
+    EventEmittedRules-Output:
+      properties:
+        event_name:
+          $ref: '#/components/schemas/EventName'
+        event_parameters:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EventParameter'
+            type: array
+          - type: 'null'
+          title: Event Parameters
+      type: object
+      required:
+      - event_name
+      title: EventEmittedRules
+    NonApprovedGainingPercentage:
+      properties:
+        operator:
+          $ref: '#/components/schemas/LessThanComparisonOperator'
+        value:
+          type: number
+          title: Value
+      type: object
+      required:
+      - operator
+      - value
+      title: NonApprovedGainingPercentage
+    GetPoliciesResponse:
+      description: Response containing all policies for a cosigner (per chain).
+      properties:
+        policies:
+          $ref: '#/components/schemas/PoliciesResponse'
+      type: object
+      required:
+      - policies
+      title: GetPoliciesResponse
+    FunctionCallRules-Output:
+      properties:
+        function_name:
+          $ref: '#/components/schemas/FunctionName'
+        function_parameters:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/FunctionParameter'
+            type: array
+          - type: 'null'
+          title: Function Parameters
+      type: object
+      required:
+      - function_name
+      title: FunctionCallRules
+    BitcoinPolicyResponse:
+      description: A single Bitcoin chain policy as returned by the API.
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          anyOf:
+          - $ref: '#/components/schemas/GainingAddressesPolicyResponse'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyResponse'
+          - $ref: '#/components/schemas/BaseCompositePolicyResponse'
+          - $ref: '#/components/schemas/UnknownPolicyResponse'
+          title: Policy
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: BitcoinPolicyResponse
+    RollingUsdLimitPolicyRequest:
+      properties:
+        rules:
+          $ref: '#/components/schemas/RollingUsdLimitRules-Input'
+        type:
+          const: rolling_usd_limit
+          enum:
+          - rolling_usd_limit
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: RollingUsdLimitPolicyRequest
+      type: object
+    Eip712VerifyingContractsRule:
+      description: Rule matching EIP-712 domain verifying contract addresses.
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/InclutionOperator'
+          - $ref: '#/components/schemas/EqualityOperator'
+          title: Operator
+        value:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: string
+          title: Value
+      required:
+      - operator
+      - value
+      title: Eip712VerifyingContractsRule
+      type: object
+    EqualityOperator:
+      type: string
+      enum:
+      - eq
+      - ne
+      title: EqualityOperator
+    FunctionName:
+      properties:
+        operator:
+          $ref: '#/components/schemas/EqualityOperator'
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - operator
+      - value
+      title: FunctionName
+    FireblocksCosignerDataExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - fireblocks
+          const: fireblocks
+          title: Type
+        integration_instance_id:
+          type: string
+          title: Integration Instance Id
+        scope:
+          type: string
+          enum:
+          - specific_vaults
+          const: specific_vaults
+          title: Scope
+          description: Defines whether the Cosigner applies to the entire workspace or only to specific vaults.
+        vault_ids:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: Vault Ids
+          description: 'Vaults that Cosigner will be applied to. Required when scope is `specific_vaults` '
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          $ref: '#/components/schemas/ApproverSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        unsupported_chain_behavior:
+          $ref: '#/components/schemas/DecisionAction'
+      type: object
+      required:
+      - type
+      - unsupported_chain_behavior
+      - security_policy
+      - integration_instance_id
+      - scope
+      - involvement_level
+      - vault_ids
+      title: FireblocksCosignerDataExternal
+      description: Configuration required to connect and operate a Fireblocks cosigner.
+    EVMCompositePolicyRequest:
+      description: Composite EVM policy that combines multiple sub-policies with AND/OR logic.
+      properties:
+        type:
+          type: string
+          enum:
+          - composite
+          const: composite
+          title: Type
+          default: composite
+        operator:
+          type: string
+          enum:
+          - and
+          - or
+          title: Operator
+        rules:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/CalledAddressPolicyRequest'
+            - $ref: '#/components/schemas/Eip712SignaturePolicyRequest'
+            - $ref: '#/components/schemas/EventEmittedPolicyRequest'
+            - $ref: '#/components/schemas/FunctionCallPolicyRequest'
+            - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+            - $ref: '#/components/schemas/MerklCampaignPolicyRequest'
+            - $ref: '#/components/schemas/MovedAssetsPolicyRequest'
+            - $ref: '#/components/schemas/RiskExposurePolicyRequest'
+            - $ref: '#/components/schemas/RollingUsdLimitPolicyRequest'
+            - $ref: '#/components/schemas/TokenSpendApprovalPolicyRequest'
+            - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+            - $ref: '#/components/schemas/EVMCompositePolicyRequest'
+            discriminator:
+              propertyName: type
+              mapping:
+                called_address: '#/components/schemas/CalledAddressPolicyRequest'
+                composite: '#/components/schemas/EVMCompositePolicyRequest'
+                event_emitted: '#/components/schemas/EventEmittedPolicyRequest'
+                function_call: '#/components/schemas/FunctionCallPolicyRequest'
+                gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+                transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+                eip_712_signature: '#/components/schemas/Eip712SignaturePolicyRequest'
+                merkl_campaign: '#/components/schemas/MerklCampaignPolicyRequest'
+                moved_assets: '#/components/schemas/MovedAssetsPolicyRequest'
+                risk_exposure: '#/components/schemas/RiskExposurePolicyRequest'
+                rolling_usd_limit: '#/components/schemas/RollingUsdLimitPolicyRequest'
+                token_spend_approval: '#/components/schemas/TokenSpendApprovalPolicyRequest'
+          type: array
+          title: Rules
+      type: object
+      required:
+      - operator
+      - rules
+      title: EVMCompositePolicyRequest
+    TokenSpendApprovalRules-Output:
+      properties:
+        approval_amount:
+          anyOf:
+          - $ref: '#/components/schemas/TokenSpendApprovalAmountRule'
+          - type: 'null'
+        approval_usd_value:
+          $ref: '#/components/schemas/TokenSpendApprovalUsdValueRule'
+      required:
+      - approval_usd_value
+      title: TokenSpendApprovalRules
+      type: object
+    PoliciesExternal:
+      properties:
+        decision:
+          type: string
+          enum:
+          - approve
+          - reject
+          - error
+          - pending
+          title: Decision
+          description: 'Policy decision outcome: "approve", "reject", "error", or "pending".'
+        reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reason
+          description: Human-readable reason for the decision. Present when a policy matched.
+        matched_policy:
+          anyOf:
+          - $ref: '#/components/schemas/MatchedPolicyInfoExternal'
+          - type: 'null'
+          description: Policy that determined the final decision. Null if no policy matched.
+        trace:
+          items:
+            $ref: '#/components/schemas/PolicyTraceEntryExternal'
+          type: array
+          title: Trace
+          description: Per-policy evaluation log.
+        should_handle_pending_tx:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Should Handle Pending Tx
+          description: True when this dry-run pending result means a real scan would create a manual pending transaction.
+      additionalProperties: false
+      type: object
+      required:
+      - decision
+      - trace
+      title: PoliciesExternal
+    UtilaCosignerUpdateExternal:
+      properties:
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          anyOf:
+          - $ref: '#/components/schemas/SignerSigningMode'
+          - type: 'null'
+        security_policy:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalPolicyOption'
+          - type: 'null'
+        type:
+          const: utila
+          enum:
+          - utila
+          title: Type
+          type: string
+        unsupported_chain_behavior:
+          anyOf:
+          - $ref: '#/components/schemas/DecisionAction'
+          - type: 'null'
+      required:
+      - type
+      title: UtilaCosignerUpdateExternal
+      type: object
+    MovedAssetsRules-Output:
+      properties:
+        direction:
+          allOf:
+          - $ref: '#/components/schemas/MovedAssetsDirection'
+          default:
+            operator: is
+            value: outbound_only
+        moved_assets:
+          $ref: '#/components/schemas/MovedAssetsRule'
+      required:
+      - moved_assets
+      title: MovedAssetsRules
+      type: object
+    TokenSpendApprovalUsdValueRule:
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/LessThanComparisonOperator'
+          - $ref: '#/components/schemas/GreaterThanComparisonOperator'
+          - $ref: '#/components/schemas/EqualityOperator'
+          title: Operator
+        value:
+          title: Value
+          type: string
+      required:
+      - operator
+      - value
+      title: TokenSpendApprovalUsdValueRule
+      type: object
+    CreateCosignerExternalRequest:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        proposal_actions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TelegramExternalAction'
+            - $ref: '#/components/schemas/SlackExternalAction'
+            - $ref: '#/components/schemas/EmailExternalAction'
+            discriminator:
+              propertyName: type
+              mapping:
+                email: '#/components/schemas/EmailExternalAction'
+                slack: '#/components/schemas/SlackExternalAction'
+                telegram: '#/components/schemas/TelegramExternalAction'
+          type: array
+          minItems: 1
+          title: Proposal Actions
+        rejection_actions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TelegramExternalAction'
+            - $ref: '#/components/schemas/SlackExternalAction'
+            - $ref: '#/components/schemas/EmailExternalAction'
+            discriminator:
+              propertyName: type
+              mapping:
+                email: '#/components/schemas/EmailExternalAction'
+                slack: '#/components/schemas/SlackExternalAction'
+                telegram: '#/components/schemas/TelegramExternalAction'
+          type: array
+          minItems: 1
+          title: Rejection Actions
+        approval_actions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TelegramExternalAction'
+            - $ref: '#/components/schemas/SlackExternalAction'
+            - $ref: '#/components/schemas/EmailExternalAction'
+            discriminator:
+              propertyName: type
+              mapping:
+                email: '#/components/schemas/EmailExternalAction'
+                slack: '#/components/schemas/SlackExternalAction'
+                telegram: '#/components/schemas/TelegramExternalAction'
+          type: array
+          minItems: 1
+          title: Approval Actions
+        malicious_actions:
+          anyOf:
+          - items:
+              discriminator:
+                mapping:
+                  email: '#/components/schemas/EmailExternalAction'
+                  slack: '#/components/schemas/SlackExternalAction'
+                  telegram: '#/components/schemas/TelegramExternalAction'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/TelegramExternalAction'
+              - $ref: '#/components/schemas/SlackExternalAction'
+              - $ref: '#/components/schemas/EmailExternalAction'
+            minItems: 1
+            type: array
+          - type: 'null'
+          title: Malicious Actions
+        name:
+          type: string
+          title: Name
+        data:
+          oneOf:
+          - $ref: '#/components/schemas/FireblocksCosignerDataExternal'
+          - $ref: '#/components/schemas/FordefiCosignerDataExternal'
+          - $ref: '#/components/schemas/UtilaCosignerDataExternal'
+          - $ref: '#/components/schemas/CosignerSafeDataExternal'
+          - $ref: '#/components/schemas/CosignerSquadsDataExternal'
+          title: Data
+          discriminator:
+            propertyName: type
+            mapping:
+              fireblocks: '#/components/schemas/FireblocksCosignerDataExternal'
+              fordefi: '#/components/schemas/FordefiCosignerDataExternal'
+              safe: '#/components/schemas/CosignerSafeDataExternal'
+              squads: '#/components/schemas/CosignerSquadsDataExternal'
+              utila: '#/components/schemas/UtilaCosignerDataExternal'
+      type: object
+      required:
+      - tags
+      - proposal_actions
+      - rejection_actions
+      - approval_actions
+      - name
+      - data
+      title: CreateCosignerExternalRequest
+    CosignerSearchRequest:
+      properties:
+        page:
+          type: integer
+          minimum: 1.0
+          title: Page
+          default: 1
+        page_size:
+          type: integer
+          maximum: 100.0
+          minimum: 1.0
+          title: Page Size
+          default: 50
+        sort:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/SortByField'
+            type: array
+          - type: 'null'
+          title: Sort
+      type: object
+      title: CosignerSearchRequest
+    SetPoliciesRequest:
+      description: Request body for setting cosigner policies (wraps PoliciesRequest).
+      properties:
+        policies:
+          $ref: '#/components/schemas/PoliciesRequest'
+      type: object
+      required:
+      - policies
+      title: SetPoliciesRequest
+    UnknownPolicyResponse:
+      description: Policy response for an unknown or future policy type; clients should handle gracefully.
+      properties:
+        type:
+          type: string
+          title: Type
+        rules:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Rules
+        target:
+          anyOf:
+          - type: object
+          - type: 'null'
+          title: Target
+      additionalProperties: true
+      type: object
+      required:
+      - type
+      title: UnknownPolicyResponse
+    CalledAddressPolicyRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - called_address
+          const: called_address
+          title: Type
+        rules:
+          $ref: '#/components/schemas/CalledAddressRules-Input'
+      type: object
+      required:
+      - type
+      - rules
+      title: CalledAddressPolicyRequest
+    FordefiCosignerResponseExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - fordefi
+          const: fordefi
+          title: Type
+        integration_instance_id:
+          type: string
+          title: Integration Instance Id
+        scope:
+          $ref: '#/components/schemas/WorkspaceScope'
+        vaults:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/VaultDetails'
+            - $ref: '#/components/schemas/VaultError'
+          type: array
+          title: Vaults
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        unsupported_chain_behavior:
+          $ref: '#/components/schemas/DecisionAction'
+      type: object
+      required:
+      - type
+      - unsupported_chain_behavior
+      - security_policy
+      - integration_instance_id
+      - scope
+      - involvement_level
+      - vaults
+      title: FordefiCosignerResponseExternal
+    RiskCategory:
+      enum:
+      - sanctioned_entity
+      - stolen_funds
+      - scam_investment_fraud
+      - mixer
+      - darknet_market
+      - darknet_service
+      - child_abuse_material
+      - terrorism_financing
+      - ransomware
+      - enforcement_action
+      - government_seized_assets
+      - illegal_service
+      - high_risk_unlicensed_exchange
+      - gambling_service
+      - centralized_exchange_regulated
+      - crypto_atm
+      - p2p_exchange_regulated
+      - p2p_exchange_high_risk_unregulated
+      - defi_liquidity_pool_dex_pool
+      - mining_pool_miner
+      - online_marketplace
+      - custodial_wallet_service
+      - payment_processor
+      - uncategorised_service
+      - uncategorized_entity
+      title: RiskCategory
+      type: string
+    ApprovedGainingAddresses:
+      properties:
+        operator:
+          $ref: '#/components/schemas/InclutionOperator'
+        value:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/UnknownTarget'
+          type: array
+          title: Value
+      type: object
+      required:
+      - operator
+      - value
+      title: ApprovedGainingAddresses
+    EmailExternalAction:
+      properties:
+        type:
+          type: string
+          enum:
+          - email
+          const: email
+          title: Type
+        to:
+          items:
+            type: string
+          type: array
+          minItems: 1
+          title: To
+        cc:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Cc
+          description: Optional CC email addresses.
+        bcc:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Bcc
+          description: Optional BCC email addresses.
+        body:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Body
+      type: object
+      required:
+      - type
+      - to
+      title: EmailExternalAction
+    BitcoinPolicyRequest:
+      description: A single Bitcoin chain policy for request (gaining addresses, transaction USD value, or composite).
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          oneOf:
+          - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+          - $ref: '#/components/schemas/BitcoinCompositePolicyRequest'
+          title: Policy
+          discriminator:
+            propertyName: type
+            mapping:
+              composite: '#/components/schemas/BitcoinCompositePolicyRequest'
+              gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+              transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: BitcoinPolicyRequest
+    AssetLabelTarget:
+      title: Asset Label Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_label
+          description: Type discriminator for this object.
+          enum:
+          - asset_label
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    ThresholdPercentage:
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/LessThanComparisonOperator'
+          - $ref: '#/components/schemas/GreaterThanComparisonOperator'
+          title: Operator
+        value:
+          maximum: 100.0
+          minimum: 0.0
+          title: Value
+          type: integer
+      required:
+      - operator
+      - value
+      title: ThresholdPercentage
+      type: object
+    PolicyEvaluationSummary:
+      properties:
+        policy_id:
+          type: string
+          title: Policy Id
+          description: Policy identifier.
+        policy_name:
+          type: string
+          title: Policy Name
+          description: Human-readable policy name.
+        total_evaluated:
+          type: integer
+          title: Total Evaluated
+          description: Transactions evaluated against this policy (excludes non-benign scans where policy eval was skipped).
+        approved:
+          type: integer
+          title: Approved
+          description: Count approved for this policy.
+        rejected:
+          type: integer
+          title: Rejected
+          description: Count rejected for this policy.
+        manual_approved:
+          type: integer
+          title: Manual Approved
+          description: Count manually approved for this policy.
+        approved_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Approved Transactions
+          description: Tx hashes when "approved" was requested in show_transaction_detail_for.
+        rejected_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Rejected Transactions
+          description: Tx hashes when "rejected" was requested in show_transaction_detail_for.
+        manual_approved_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Manual Approved Transactions
+          description: Tx hashes when "manual_approved" was requested in show_transaction_detail_for.
+        policy_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Policy type identifier.
+          title: Policy Type
+      additionalProperties: false
+      type: object
+      required:
+      - policy_id
+      - policy_name
+      - total_evaluated
+      - approved
+      - rejected
+      - manual_approved
+      title: PolicyEvaluationSummary
+    UnsupportedChainPolicyResponse:
+      properties:
+        type:
+          type: string
+          enum:
+          - unsupported_chain
+          const: unsupported_chain
+          title: Type
+      type: object
+      required:
+      - type
+      title: UnsupportedChainPolicyResponse
+    TelegramExternalChannel:
+      properties:
+        chat_id:
+          type: string
+          title: Chat Id
+          description: Telegram channel ID.
+        topic_ids:
+          items:
+            type: integer
+          type: array
+          title: Topic Ids
+          description: Optional topic IDs within the channel where the message should be posted.
+      type: object
+      required:
+      - chat_id
+      - topic_ids
+      title: TelegramExternalChannel
+    SummaryStatus:
+      properties:
+        ok:
+          type: integer
+          title: Ok
+        pending:
+          type: integer
+          title: Pending
+        error:
+          type: integer
+          title: Error
+      type: object
+      required:
+      - ok
+      - pending
+      - error
+      title: SummaryStatus
+    CalledAddressPolicyResponse:
+      properties:
+        type:
+          type: string
+          enum:
+          - called_address
+          const: called_address
+          title: Type
+        rules:
+          $ref: '#/components/schemas/CalledAddressRules-Output'
+      type: object
+      required:
+      - type
+      - rules
+      title: CalledAddressPolicyResponse
+    MovedAssetsDirectionValue:
+      const: outbound_only
+      enum:
+      - outbound_only
+      title: MovedAssetsDirectionValue
+      type: string
+    Action:
+      type: string
+      enum:
+      - approve
+      - reject
+      title: Action
+      description: What the cosigner should do when a transaction is proposed (e.g. sign, reject).
+    TimeWindowScale:
+      enum:
+      - minutes
+      - hours
+      - days
+      title: TimeWindowScale
+      type: string
+    RollingUsdLimitRules-Output:
+      properties:
+        max_usd_value:
+          $ref: '#/components/schemas/MaxUsdValueRule'
+        time_window:
+          $ref: '#/components/schemas/TimeWindowRule'
+      required:
+      - max_usd_value
+      - time_window
+      title: RollingUsdLimitRules
+      type: object
+    Eip712SignaturePolicyResponse:
+      description: Resolved EIP-712 signature policy returned to API consumers.
+      properties:
+        rules:
+          $ref: '#/components/schemas/Eip712SignatureRules-Output'
+        type:
+          const: eip_712_signature
+          enum:
+          - eip_712_signature
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: Eip712SignaturePolicyResponse
+      type: object
+    GainingAddressesRules-Input:
+      properties:
+        approved_gaining_addresses:
+          title: Approved Gaining Addresses
+          $ref: '#/components/schemas/ApprovedGainingAddresses'
+        transaction_filter:
+          $ref: '#/components/schemas/TransactionFilter'
+        ignore_threshold:
+          anyOf:
+          - $ref: '#/components/schemas/IgnoreThresholdRule'
+          - type: 'null'
+        non_approved_gaining_percentage:
+          anyOf:
+          - $ref: '#/components/schemas/NonApprovedGainingPercentage'
+          - type: 'null'
+      type: object
+      required:
+      - approved_gaining_addresses
+      - transaction_filter
+      title: GainingAddressesRules
+    PoliciesResponse:
+      description: Response containing policy arrays per chain as returned by the API.
+      properties:
+        evm:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EVMPolicyResponse'
+            type: array
+          - type: 'null'
+          title: Evm
+        solana:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/SolanaPolicyResponse'
+            type: array
+          - type: 'null'
+          title: Solana
+        bitcoin:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BitcoinPolicyResponse'
+            type: array
+          - type: 'null'
+          title: Bitcoin
+        sui:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/SuiPolicyResponse'
+            type: array
+          - type: 'null'
+          title: Sui
+        other:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/OtherChainPolicyResponse'
+            type: array
+          - type: 'null'
+          title: Other
+      type: object
+      title: PoliciesResponse
+    VaultDetails:
+      properties:
+        vault_id:
+          type: string
+          title: Vault Id
+        name:
+          type: string
+          title: Name
+        addresses:
+          items:
+            $ref: '#/components/schemas/AddressDetails'
+          type: array
+          title: Addresses
+      type: object
+      required:
+      - vault_id
+      - name
+      - addresses
+      title: VaultDetails
+    OtherChainPolicyRequest:
+      description: Policy for chains that do not have specific policy types; uses unsupported_chain policy.
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          $ref: '#/components/schemas/UnsupportedChainPolicyRequest'
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: OtherChainPolicyRequest
+    PolicyTraceEntryExternal:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Policy name.
+        action:
+          type: string
+          title: Action
+          description: Action defined by the policy.
+        type:
+          type: string
+          title: Type
+          description: Policy type.
+        result:
+          type: string
+          enum:
+          - matched
+          - not_matched
+          - skipped
+          title: Result
+          description: 'Evaluation result for this policy entry: "matched", "not_matched", or "skipped".'
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - action
+      - type
+      - result
+      title: PolicyTraceEntryExternal
+    EvaluateHistoricalDataResponse:
+      properties:
+        cosigner_id:
+          type: string
+          title: Cosigner Id
+          description: The cosigner that was evaluated.
+        chain:
+          type: string
+          title: Chain
+          description: Chain used for evaluation.
+        summary:
+          allOf:
+          - $ref: '#/components/schemas/EvaluationSummary'
+          description: Aggregated counts across all transactions.
+        policies:
+          items:
+            $ref: '#/components/schemas/PolicyEvaluationSummary'
+          type: array
+          title: Policies
+          description: Per-policy aggregates and optional transaction hash lists.
+        scan:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Full scan payload of the first scanned transaction. Used for publishing to platform-api.
+          title: Scan
+        scan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Scan ID of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Id
+        scan_result:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Result type of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Result
+        scan_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ISO timestamp of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Timestamp
+        transaction_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ISO timestamp for the on-chain transaction when available from the scan (for example block or transaction time). Distinct from scan_timestamp when both are present.
+          title: Transaction Timestamp
+      additionalProperties: false
+      type: object
+      required:
+      - cosigner_id
+      - chain
+      - summary
+      - policies
+      title: EvaluateHistoricalDataResponse
+      description: Response containing the policy evaluation result for historical data.
+    AssetTagTarget:
+      title: Asset Tag Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_tag
+          description: Type discriminator for this object.
+          enum:
+          - asset_tag
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    TokenSpendApprovalRules-Input:
+      properties:
+        approval_amount:
+          anyOf:
+          - $ref: '#/components/schemas/TokenSpendApprovalAmountRule'
+          - type: 'null'
+        approval_usd_value:
+          $ref: '#/components/schemas/TokenSpendApprovalUsdValueRule'
+      required:
+      - approval_usd_value
+      title: TokenSpendApprovalRules
+      type: object
+    RollingUsdLimitPolicyResponse:
+      properties:
+        rules:
+          $ref: '#/components/schemas/RollingUsdLimitRules-Output'
+        type:
+          const: rolling_usd_limit
+          enum:
+          - rolling_usd_limit
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: RollingUsdLimitPolicyResponse
+      type: object
+    GreaterThanComparisonOperator:
+      type: string
+      enum:
+      - gt
+      - gte
+      title: GreaterThanComparisonOperator
+    ConfigActionRule:
+      description: Rule matching the Squads multisig config action(s) in a transaction.
+      properties:
+        operator:
+          $ref: '#/components/schemas/InclutionOperator'
+        value:
+          items:
+            $ref: '#/components/schemas/SquadsConfigAction'
+          title: Value
+          type: array
+      required:
+      - operator
+      - value
+      title: ConfigActionRule
+      type: object
+    SquadsConfigTransactionRules-Output:
+      properties:
+        squads_config_action:
+          $ref: '#/components/schemas/ConfigActionRule'
+      required:
+      - squads_config_action
+      title: SquadsConfigTransactionRules
+      type: object
+    EventEmittedPolicyResponse:
+      properties:
+        type:
+          type: string
+          enum:
+          - event_emitted
+          const: event_emitted
+          title: Type
+        rules:
+          $ref: '#/components/schemas/EventEmittedRules-Output'
+        target:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/MissingAssetIDTarget'
+            - $ref: '#/components/schemas/UnknownTarget'
+          title: Target
+          type: array
+      type: object
+      required:
+      - type
+      - target
+      - rules
+      title: EventEmittedPolicyResponse
+    SolanaCompositePolicyRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - composite
+          const: composite
+          title: Type
+          default: composite
+        operator:
+          type: string
+          enum:
+          - and
+          - or
+          title: Operator
+        rules:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/FunctionCallPolicyRequest'
+            - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+            - $ref: '#/components/schemas/RollingUsdLimitPolicyRequest'
+            - $ref: '#/components/schemas/SquadsConfigTransactionPolicyRequest'
+            - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+            - $ref: '#/components/schemas/SolanaCompositePolicyRequest'
+            discriminator:
+              propertyName: type
+              mapping:
+                composite: '#/components/schemas/SolanaCompositePolicyRequest'
+                gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+                transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+                function_call: '#/components/schemas/FunctionCallPolicyRequest'
+                rolling_usd_limit: '#/components/schemas/RollingUsdLimitPolicyRequest'
+                squads_config_transaction: '#/components/schemas/SquadsConfigTransactionPolicyRequest'
+          type: array
+          title: Rules
+      type: object
+      required:
+      - operator
+      - rules
+      title: SolanaCompositePolicyRequest
+    SortByField:
+      properties:
+        field:
+          type: string
+          enum:
+          - id
+          - created_at
+          title: Field
+        operator:
+          type: string
+          enum:
+          - asc
+          - desc
+          title: Operator
+      type: object
+      required:
+      - field
+      - operator
+      title: SortByField
+    InclutionOperator:
+      type: string
+      enum:
+      - in
+      - not_in
+      title: InclutionOperator
+    EvaluateTransactionResponse:
+      properties:
+        policies:
+          $ref: '#/components/schemas/PoliciesExternal'
+        scan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scan Id
+      additionalProperties: true
+      type: object
+      required:
+      - policies
+      title: EvaluateTransactionResponse
+      description: Response containing the policy evaluation result for the submitted EVM transaction.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    UnsupportedChainPolicyRequest:
+      description: Placeholder policy for chains that do not support granular policy types.
+      properties:
+        type:
+          type: string
+          enum:
+          - unsupported_chain
+          const: unsupported_chain
+          title: Type
+      type: object
+      required:
+      - type
+      title: UnsupportedChainPolicyRequest
+    UtilaCosignerResponseExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - utila
+          const: utila
+          title: Type
+        integration_instance_id:
+          type: string
+          title: Integration Instance Id
+        addresses:
+          items:
+            $ref: '#/components/schemas/AddressDetails'
+          type: array
+          title: Addresses
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        unsupported_chain_behavior:
+          $ref: '#/components/schemas/DecisionAction'
+      type: object
+      required:
+      - type
+      - unsupported_chain_behavior
+      - security_policy
+      - integration_instance_id
+      - involvement_level
+      - addresses
+      title: UtilaCosignerResponseExternal
+    GainingAddressesPolicyRequest:
+      description: Policy that evaluates based on approved gaining addresses and transaction filters.
+      properties:
+        type:
+          type: string
+          enum:
+          - gaining_addresses
+          const: gaining_addresses
+          title: Type
+        rules:
+          $ref: '#/components/schemas/GainingAddressesRules-Input'
+      type: object
+      required:
+      - type
+      - rules
+      title: GainingAddressesPolicyRequest
+    FordefiCosignerDataExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - fordefi
+          const: fordefi
+          title: Type
+        integration_instance_id:
+          type: string
+          title: Integration Instance Id
+        scope:
+          $ref: '#/components/schemas/WorkspaceScope'
+        vault_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vault Ids
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        unsupported_chain_behavior:
+          $ref: '#/components/schemas/DecisionAction'
+      type: object
+      required:
+      - type
+      - unsupported_chain_behavior
+      - security_policy
+      - integration_instance_id
+      - scope
+      - involvement_level
+      title: FordefiCosignerDataExternal
+    DecisionAction:
+      enum:
+      - approve
+      - reject
+      - pending
+      title: DecisionAction
+      type: string
+    ApproverSigningMode:
+      type: string
+      enum:
+      - active_approval
+      - reporting_only
+      title: ApproverSigningMode
+      description: "This Cosigner's participation level in transaction approval: \n\n - `active_approval` - Cosigner actively approves or rejects transactions. \n - `reporting_only` - Cosigner approves all transactions."
+    CosignerStatusExternal:
+      type: string
+      enum:
+      - pending
+      - ok
+      - error
+      description: "The current status of the Cosigner. \n\n - `ok` - The Cosigner is active. \n - `pending` - The Cosigner is waiting for the final activation steps in the multisig wallet to be completed. \n - `error` - Something went wrong and the Cosigner is not working properly."
+      title: CosignerStatusExternal
+    SuiPolicyResponse:
+      description: A single Sui chain policy as returned by the API.
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          anyOf:
+          - $ref: '#/components/schemas/GainingAddressesPolicyResponse'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyResponse'
+          - $ref: '#/components/schemas/RollingUsdLimitPolicyResponse'
+          - $ref: '#/components/schemas/BaseCompositePolicyResponse'
+          - $ref: '#/components/schemas/UnknownPolicyResponse'
+          title: Policy
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: SuiPolicyResponse
+    CosignerSquadsUpdateDataExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - squads
+          const: squads
+          title: Type
+        involvement_level:
+          anyOf:
+          - $ref: '#/components/schemas/SignerSigningMode'
+          - type: 'null'
+        security_policy:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalPolicyOption'
+          - type: 'null'
+        wallet_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Wallet Address
+      type: object
+      required:
+      - type
+      title: CosignerSquadsUpdateDataExternal
+    TransactionFilterValue:
+      type: string
+      enum:
+      - all_actions
+      - transfers
+      - approvals
+      title: TransactionFilterValue
+    FordefiCosignerUpdateExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - fordefi
+          const: fordefi
+          title: Type
+        vault_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Vault Ids
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          anyOf:
+          - $ref: '#/components/schemas/SignerSigningMode'
+          - type: 'null'
+        security_policy:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalPolicyOption'
+          - type: 'null'
+        unsupported_chain_behavior:
+          anyOf:
+          - $ref: '#/components/schemas/DecisionAction'
+          - type: 'null'
+      type: object
+      required:
+      - type
+      title: FordefiCosignerUpdateExternal
+    EventName:
+      properties:
+        operator:
+          $ref: '#/components/schemas/EqualityOperator'
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - operator
+      - value
+      title: EventName
+    SetPoliciesResponse:
+      description: Response returned after successfully setting cosigner policies.
+      properties:
+        policies:
+          $ref: '#/components/schemas/PoliciesResponse'
+      type: object
+      required:
+      - policies
+      title: SetPoliciesResponse
+    MerklCampaignPolicyResponse:
+      properties:
+        rules:
+          $ref: '#/components/schemas/MerklCampaignRules-Output'
+        type:
+          const: merkl_campaign
+          enum:
+          - merkl_campaign
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: MerklCampaignPolicyResponse
+      type: object
+    TimeWindowRule:
+      properties:
+        scale:
+          $ref: '#/components/schemas/TimeWindowScale'
+        value:
+          minimum: 1.0
+          title: Value
+          type: integer
+      required:
+      - value
+      - scale
+      title: TimeWindowRule
+      type: object
+    VaultError:
+      properties:
+        vault_id:
+          type: string
+          title: Vault Id
+        error:
+          type: string
+          title: Error
+      type: object
+      required:
+      - vault_id
+      - error
+      title: VaultError
+    AssetIDTarget:
+      title: Asset ID Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_id
+          description: Type discriminator for this object.
+          enum:
+          - asset_id
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    SquadsConfigAction:
+      enum:
+      - changeThreshold
+      - addMember
+      - removeMember
+      - changeTimelock
+      title: SquadsConfigAction
+      type: string
+    Eip712SignatureRules-Output:
+      description: Aggregated rules for evaluating EIP-712 typed-data signatures.
+      properties:
+        primary_type:
+          $ref: '#/components/schemas/Eip712PrimaryTypeRule'
+        verifying_contracts:
+          anyOf:
+          - $ref: '#/components/schemas/Eip712VerifyingContractsRule'
+          - type: 'null'
+      required:
+      - primary_type
+      title: Eip712SignatureRules
+      type: object
+    CosignerSafeUpdateDataExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - safe
+          const: safe
+          title: Type
+        override_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Override Address
+        involvement_level:
+          anyOf:
+          - $ref: '#/components/schemas/SignerSigningMode'
+          - type: 'null'
+        security_policy:
+          anyOf:
+          - $ref: '#/components/schemas/ExternalPolicyOption'
+          - type: 'null'
+        wallet_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Wallet Address
+      type: object
+      required:
+      - type
+      title: CosignerSafeUpdateDataExternal
+    TransactionUSDValuePolicyRequest:
+      description: Policy that evaluates based on transaction USD value thresholds.
+      properties:
+        type:
+          type: string
+          enum:
+          - transaction_usd_value
+          const: transaction_usd_value
+          title: Type
+        rules:
+          $ref: '#/components/schemas/TransactionUSDValueRules-Input'
+      type: object
+      required:
+      - type
+      - rules
+      title: TransactionUSDValuePolicyRequest
+    CalledAddressesRule:
+      properties:
+        operator:
+          $ref: '#/components/schemas/InclutionOperator'
+        value:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/AssetIDTarget'
+            - $ref: '#/components/schemas/AssetTagTarget'
+            - $ref: '#/components/schemas/AssetLabelTarget'
+            - $ref: '#/components/schemas/UnknownTarget'
+          type: array
+          title: Value
+      type: object
+      required:
+      - operator
+      - value
+      title: CalledAddressesRule
+    MerklCampaignRules-Input:
+      properties:
+        campaigns:
+          items:
+            $ref: '#/components/schemas/MerklCampaignItem'
+          minItems: 1
+          title: Campaigns
+          type: array
+      required:
+      - campaigns
+      title: MerklCampaignRules
+      type: object
+    MerklCampaignAction:
+      enum:
+      - supply_to_vault
+      - supply_to_specific_market
+      - supply_token_to_any_market
+      - borrow_from_specific_market
+      - borrow_token_from_any_market
+      - use_token_as_collateral_on_specific_market
+      title: MerklCampaignAction
+      type: string
+    MerklCampaignItem:
+      properties:
+        action:
+          $ref: '#/components/schemas/MerklCampaignAction'
+        amount:
+          exclusiveMinimum: 0.0
+          title: Amount
+          type: number
+        chain:
+          title: Chain
+          type: string
+        end_time_utc:
+          format: date-time
+          title: End Time Utc
+          type: string
+        market_token_vault:
+          pattern: ^0x[a-fA-F0-9]{40}$|^0x[a-fA-F0-9]{64}$
+          title: Market Token Vault
+          type: string
+        reward_token_address:
+          pattern: ^0x[a-fA-F0-9]{40}$
+          title: Reward Token Address
+          type: string
+        start_time_utc:
+          format: date-time
+          title: Start Time Utc
+          type: string
+      required:
+      - chain
+      - start_time_utc
+      - end_time_utc
+      - action
+      - market_token_vault
+      - reward_token_address
+      - amount
+      title: MerklCampaignItem
+      type: object
+    RiskExposurePolicyRequest:
+      properties:
+        rules:
+          $ref: '#/components/schemas/RiskExposureRules-Input'
+        type:
+          const: risk_exposure
+          enum:
+          - risk_exposure
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: RiskExposurePolicyRequest
+      type: object
+    TransactionUSDValuePolicyResponse:
+      properties:
+        type:
+          type: string
+          enum:
+          - transaction_usd_value
+          const: transaction_usd_value
+          title: Type
+        rules:
+          $ref: '#/components/schemas/TransactionUSDValueRules-Output'
+      type: object
+      required:
+      - type
+      - rules
+      title: TransactionUSDValuePolicyResponse
+    MovedAssetsRules-Input:
+      properties:
+        direction:
+          allOf:
+          - $ref: '#/components/schemas/MovedAssetsDirection'
+          default:
+            operator: is
+            value: outbound_only
+        moved_assets:
+          $ref: '#/components/schemas/MovedAssetsRule'
+      required:
+      - moved_assets
+      title: MovedAssetsRules
+      type: object
+    EVMPolicyResponse:
+      description: A single EVM chain policy as returned by the API (may include unknown policy types).
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          anyOf:
+          - $ref: '#/components/schemas/CalledAddressPolicyResponse'
+          - $ref: '#/components/schemas/Eip712SignaturePolicyResponse'
+          - $ref: '#/components/schemas/EventEmittedPolicyResponse'
+          - $ref: '#/components/schemas/FunctionCallPolicyResponse'
+          - $ref: '#/components/schemas/GainingAddressesPolicyResponse'
+          - $ref: '#/components/schemas/MerklCampaignPolicyResponse'
+          - $ref: '#/components/schemas/MovedAssetsPolicyResponse'
+          - $ref: '#/components/schemas/RiskExposurePolicyResponse'
+          - $ref: '#/components/schemas/RollingUsdLimitPolicyResponse'
+          - $ref: '#/components/schemas/TokenSpendApprovalPolicyResponse'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyResponse'
+          - $ref: '#/components/schemas/BaseCompositePolicyResponse'
+          - $ref: '#/components/schemas/UnknownPolicyResponse'
+          title: Policy
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: EVMPolicyResponse
+    SolanaPolicyRequest:
+      description: A single Solana chain policy for request (gaining addresses, transaction USD value, or composite).
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          oneOf:
+          - $ref: '#/components/schemas/FunctionCallPolicyRequest'
+          - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+          - $ref: '#/components/schemas/RollingUsdLimitPolicyRequest'
+          - $ref: '#/components/schemas/SquadsConfigTransactionPolicyRequest'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+          - $ref: '#/components/schemas/SolanaCompositePolicyRequest'
+          title: Policy
+          discriminator:
+            propertyName: type
+            mapping:
+              composite: '#/components/schemas/SolanaCompositePolicyRequest'
+              gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+              transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+              function_call: '#/components/schemas/FunctionCallPolicyRequest'
+              rolling_usd_limit: '#/components/schemas/RollingUsdLimitPolicyRequest'
+              squads_config_transaction: '#/components/schemas/SquadsConfigTransactionPolicyRequest'
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: SolanaPolicyRequest
+    Eip712SignaturePolicyRequest:
+      description: Inbound policy definition for EIP-712 signature matching.
+      properties:
+        rules:
+          $ref: '#/components/schemas/Eip712SignatureRules-Input'
+        type:
+          const: eip_712_signature
+          enum:
+          - eip_712_signature
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: Eip712SignaturePolicyRequest
+      type: object
+    MaxUsdValueRule:
+      properties:
+        operator:
+          const: lte
+          enum:
+          - lte
+          title: Operator
+          type: string
+        value:
+          anyOf:
+          - type: integer
+          - type: number
+          title: Value
+      required:
+      - operator
+      - value
+      title: MaxUsdValueRule
+      type: object
+    GainingAddressesRules-Output:
+      properties:
+        approved_gaining_addresses:
+          title: Approved Gaining Addresses
+          $ref: '#/components/schemas/ApprovedGainingAddresses'
+        transaction_filter:
+          $ref: '#/components/schemas/TransactionFilter'
+        ignore_threshold:
+          anyOf:
+          - $ref: '#/components/schemas/IgnoreThresholdRule'
+          - type: 'null'
+        non_approved_gaining_percentage:
+          anyOf:
+          - $ref: '#/components/schemas/NonApprovedGainingPercentage'
+          - type: 'null'
+      type: object
+      required:
+      - approved_gaining_addresses
+      - transaction_filter
+      title: GainingAddressesRules
+    MovedAssetsDirection:
+      properties:
+        operator:
+          const: is
+          enum:
+          - is
+          title: Operator
+          type: string
+        value:
+          $ref: '#/components/schemas/MovedAssetsDirectionValue'
+      required:
+      - operator
+      - value
+      title: MovedAssetsDirection
+      type: object
+    SquadsConfigTransactionRules-Input:
+      properties:
+        squads_config_action:
+          $ref: '#/components/schemas/ConfigActionRule'
+      required:
+      - squads_config_action
+      title: SquadsConfigTransactionRules
+      type: object
+    Eip712SignatureRules-Input:
+      description: Aggregated rules for evaluating EIP-712 typed-data signatures.
+      properties:
+        primary_type:
+          $ref: '#/components/schemas/Eip712PrimaryTypeRule'
+        verifying_contracts:
+          anyOf:
+          - $ref: '#/components/schemas/Eip712VerifyingContractsRule'
+          - type: 'null'
+      required:
+      - primary_type
+      title: Eip712SignatureRules
+      type: object
+    EventEmittedRules-Input:
+      properties:
+        event_name:
+          $ref: '#/components/schemas/EventName'
+        event_parameters:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EventParameter'
+            type: array
+          - type: 'null'
+          title: Event Parameters
+      type: object
+      required:
+      - event_name
+      title: EventEmittedRules
+    SlackExternalAction:
+      properties:
+        type:
+          type: string
+          enum:
+          - slack
+          const: slack
+          title: Type
+        message_format:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Message Format
+          description: Customization of the message to send in the Slack notification.
+        channels:
+          items:
+            type: string
+          minItems: 1
+          title: Channels
+          type: array
+      type: object
+      required:
+      - type
+      - channels
+      title: SlackExternalAction
+    SuiPolicyRequest:
+      description: A single Sui chain policy for request (gaining addresses, transaction USD value, or composite).
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          oneOf:
+          - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+          - $ref: '#/components/schemas/RollingUsdLimitPolicyRequest'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+          - $ref: '#/components/schemas/SuiCompositePolicyRequest'
+          title: Policy
+          discriminator:
+            propertyName: type
+            mapping:
+              composite: '#/components/schemas/SuiCompositePolicyRequest'
+              gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+              transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+              rolling_usd_limit: '#/components/schemas/RollingUsdLimitPolicyRequest'
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: SuiPolicyRequest
+    SquadsConfigTransactionPolicyRequest:
+      properties:
+        rules:
+          $ref: '#/components/schemas/SquadsConfigTransactionRules-Input'
+        type:
+          const: squads_config_transaction
+          enum:
+          - squads_config_transaction
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: SquadsConfigTransactionPolicyRequest
+      type: object
+    CosignerSquadsDataExternal:
+      properties:
+        chain:
+          type: string
+          enum:
+          - solana-mainnet
+          const: solana-mainnet
+          title: Chain
+        type:
+          type: string
+          enum:
+          - squads
+          const: squads
+          title: Type
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        wallet_address:
+          title: Wallet Address
+          type: string
+      type: object
+      required:
+      - involvement_level
+      - chain
+      - security_policy
+      - type
+      - wallet_address
+      title: CosignerSquadsDataExternal
+    AddressDetails:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          type: string
+          title: Chain
+      type: object
+      required:
+      - address
+      - chain
+      title: AddressDetails
+    RollingUsdLimitRules-Input:
+      properties:
+        max_usd_value:
+          $ref: '#/components/schemas/MaxUsdValueRule'
+        time_window:
+          $ref: '#/components/schemas/TimeWindowRule'
+      required:
+      - max_usd_value
+      - time_window
+      title: RollingUsdLimitRules
+      type: object
+    LessThanComparisonOperator:
+      type: string
+      enum:
+      - lt
+      - lte
+      title: LessThanComparisonOperator
+    ExternalPolicyOption:
+      description: External API representation of policy options
+      enum:
+      - blockaid_ootb_policy
+      - advanced_control_policy
+      title: ExternalPolicyOption
+      type: string
+    CategoryThreshold-Input:
+      properties:
+        category:
+          $ref: '#/components/schemas/RiskCategory'
+        threshold_percentage:
+          $ref: '#/components/schemas/ThresholdPercentage'
+      required:
+      - category
+      - threshold_percentage
+      title: CategoryThreshold
+      type: object
+    MovedAssetsPolicyRequest:
+      properties:
+        rules:
+          $ref: '#/components/schemas/MovedAssetsRules-Input'
+        type:
+          const: moved_assets
+          enum:
+          - moved_assets
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: MovedAssetsPolicyRequest
+      type: object
+    SignerSigningMode:
+      type: string
+      enum:
+      - active_approval
+      - reporting_only
+      title: SignerSigningMode
+      description: "This Cosigner's participation level in transaction approval: \n\n - `active_approval` - Cosigner actively approves or rejects transactions. \n - `reporting_only` - Cosigner reviews transactions without approving or signing."
+    WorkspaceScope:
+      type: string
+      enum:
+      - all_vaults
+      - specific_vaults
+      title: WorkspaceScope
+    FunctionCallPolicyRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - function_call
+          const: function_call
+          title: Type
+        rules:
+          $ref: '#/components/schemas/FunctionCallRules-Input'
+        target:
+          items:
+            $ref: '#/components/schemas/AssetIDTarget'
+          title: Target
+          type: array
+      type: object
+      required:
+      - type
+      - target
+      - rules
+      title: FunctionCallPolicyRequest
+    CosignerExternalResponse:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+        proposal_actions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TelegramExternalAction'
+            - $ref: '#/components/schemas/SlackExternalAction'
+            - $ref: '#/components/schemas/EmailExternalAction'
+            discriminator:
+              propertyName: type
+              mapping:
+                email: '#/components/schemas/EmailExternalAction'
+                slack: '#/components/schemas/SlackExternalAction'
+                telegram: '#/components/schemas/TelegramExternalAction'
+          type: array
+          minItems: 1
+          title: Proposal Actions
+        rejection_actions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TelegramExternalAction'
+            - $ref: '#/components/schemas/SlackExternalAction'
+            - $ref: '#/components/schemas/EmailExternalAction'
+            discriminator:
+              propertyName: type
+              mapping:
+                email: '#/components/schemas/EmailExternalAction'
+                slack: '#/components/schemas/SlackExternalAction'
+                telegram: '#/components/schemas/TelegramExternalAction'
+          type: array
+          minItems: 1
+          title: Rejection Actions
+        approval_actions:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/TelegramExternalAction'
+            - $ref: '#/components/schemas/SlackExternalAction'
+            - $ref: '#/components/schemas/EmailExternalAction'
+            discriminator:
+              propertyName: type
+              mapping:
+                email: '#/components/schemas/EmailExternalAction'
+                slack: '#/components/schemas/SlackExternalAction'
+                telegram: '#/components/schemas/TelegramExternalAction'
+          type: array
+          minItems: 1
+          title: Approval Actions
+        malicious_actions:
+          anyOf:
+          - items:
+              discriminator:
+                mapping:
+                  email: '#/components/schemas/EmailExternalAction'
+                  slack: '#/components/schemas/SlackExternalAction'
+                  telegram: '#/components/schemas/TelegramExternalAction'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/TelegramExternalAction'
+              - $ref: '#/components/schemas/SlackExternalAction'
+              - $ref: '#/components/schemas/EmailExternalAction'
+            minItems: 1
+            type: array
+          - type: 'null'
+          title: Malicious Actions
+        id:
+          type: string
+          title: Id
+          order: 1
+          description: The Cosigner's assigned unique ID.
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+          description: The Cosigner name as defined upon creation.
+          order: 2
+        status:
+          allOf:
+          - $ref: '#/components/schemas/CosignerStatusExternal'
+          order: 3
+        error:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Error
+          description: If the Cosigner status is `error`, this field will show more information about the error.
+          order: 4
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The timestamp the Cosigner was created.
+        updated_at:
+          type: string
+          format: date-time
+          title: Updated At
+        updated_by:
+          title: Updated By
+          description: The user who last updated the Cosigner.
+          anyOf:
+          - type: string
+          - type: 'null'
+        data:
+          oneOf:
+          - $ref: '#/components/schemas/FireblocksCosignerResponseExternal'
+          - $ref: '#/components/schemas/FordefiCosignerResponseExternal'
+          - $ref: '#/components/schemas/CosignerSafeResponseExternal'
+          - $ref: '#/components/schemas/CosignerSquadsResponseExternal'
+          - $ref: '#/components/schemas/UtilaCosignerResponseExternal'
+          title: Data
+          discriminator:
+            propertyName: type
+            mapping:
+              fireblocks: '#/components/schemas/FireblocksCosignerResponseExternal'
+              fordefi: '#/components/schemas/FordefiCosignerResponseExternal'
+              safe: '#/components/schemas/CosignerSafeResponseExternal'
+              squads: '#/components/schemas/CosignerSquadsResponseExternal'
+              utila: '#/components/schemas/UtilaCosignerResponseExternal'
+        created_by:
+          title: Created By
+          type: string
+        selected_chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Selected Chains
+      type: object
+      required:
+      - tags
+      - proposal_actions
+      - rejection_actions
+      - approval_actions
+      - id
+      - name
+      - status
+      - created_at
+      - updated_at
+      - updated_by
+      - created_by
+      - data
+      title: CosignerExternalResponse
+    RiskExposurePolicyResponse:
+      properties:
+        rules:
+          $ref: '#/components/schemas/RiskExposureRules-Output'
+        type:
+          const: risk_exposure
+          enum:
+          - risk_exposure
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: RiskExposurePolicyResponse
+      type: object
+    MissingAssetIDTarget:
+      properties:
+        type:
+          type: string
+          enum:
+          - asset_id
+          const: asset_id
+          title: Type
+        identifier:
+          type: string
+          title: Identifier
+        chain:
+          type: string
+          title: Chain
+        runtime:
+          type: string
+          title: Runtime
+      type: object
+      required:
+      - type
+      - identifier
+      - chain
+      - runtime
+      title: MissingAssetIDTarget
+    CosignerSquadsResponseExternal:
+      properties:
+        chain:
+          type: string
+          enum:
+          - solana-mainnet
+          const: solana-mainnet
+          title: Chain
+        type:
+          type: string
+          enum:
+          - squads
+          const: squads
+          title: Type
+        cosigner_address:
+          type: string
+          title: Cosigner Address
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        wallet_address:
+          title: Wallet Address
+          type: string
+      type: object
+      required:
+      - involvement_level
+      - chain
+      - security_policy
+      - type
+      - wallet_address
+      - cosigner_address
+      title: CosignerSquadsResponseExternal
+    UpdateCosignerExternalRequest:
+      properties:
+        name:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Name
+        tags:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Tags
+          description: Tags assigned to the Cosigner.
+        proposal_actions:
+          anyOf:
+          - items:
+              discriminator:
+                mapping:
+                  email: '#/components/schemas/EmailExternalAction'
+                  slack: '#/components/schemas/SlackExternalAction'
+                  telegram: '#/components/schemas/TelegramExternalAction'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/TelegramExternalAction'
+              - $ref: '#/components/schemas/SlackExternalAction'
+              - $ref: '#/components/schemas/EmailExternalAction'
+            type: array
+          - type: 'null'
+          title: Proposal Actions
+          description: Actions to trigger when a transaction proposal is submitted.
+        rejection_actions:
+          anyOf:
+          - items:
+              discriminator:
+                mapping:
+                  email: '#/components/schemas/EmailExternalAction'
+                  slack: '#/components/schemas/SlackExternalAction'
+                  telegram: '#/components/schemas/TelegramExternalAction'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/TelegramExternalAction'
+              - $ref: '#/components/schemas/SlackExternalAction'
+              - $ref: '#/components/schemas/EmailExternalAction'
+            type: array
+          - type: 'null'
+          title: Rejection Actions
+          description: Actions to trigger when a transaction proposal is rejected.
+        approval_actions:
+          anyOf:
+          - items:
+              discriminator:
+                mapping:
+                  email: '#/components/schemas/EmailExternalAction'
+                  slack: '#/components/schemas/SlackExternalAction'
+                  telegram: '#/components/schemas/TelegramExternalAction'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/TelegramExternalAction'
+              - $ref: '#/components/schemas/SlackExternalAction'
+              - $ref: '#/components/schemas/EmailExternalAction'
+            type: array
+          - type: 'null'
+          title: Approval Actions
+          description: Actions to trigger when a transaction proposal is approved.
+        malicious_actions:
+          anyOf:
+          - items:
+              discriminator:
+                mapping:
+                  email: '#/components/schemas/EmailExternalAction'
+                  slack: '#/components/schemas/SlackExternalAction'
+                  telegram: '#/components/schemas/TelegramExternalAction'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/TelegramExternalAction'
+              - $ref: '#/components/schemas/SlackExternalAction'
+              - $ref: '#/components/schemas/EmailExternalAction'
+            type: array
+          - type: 'null'
+          title: Malicious Actions
+        data:
+          oneOf:
+          - $ref: '#/components/schemas/FireblocksCosignerUpdateExternal'
+          - $ref: '#/components/schemas/FordefiCosignerUpdateExternal'
+          - $ref: '#/components/schemas/UtilaCosignerUpdateExternal'
+          - $ref: '#/components/schemas/CosignerSafeUpdateDataExternal'
+          - $ref: '#/components/schemas/CosignerSquadsUpdateDataExternal'
+          title: Data
+          discriminator:
+            propertyName: type
+            mapping:
+              fireblocks: '#/components/schemas/FireblocksCosignerUpdateExternal'
+              fordefi: '#/components/schemas/FordefiCosignerUpdateExternal'
+              safe: '#/components/schemas/CosignerSafeUpdateDataExternal'
+              squads: '#/components/schemas/CosignerSquadsUpdateDataExternal'
+              utila: '#/components/schemas/UtilaCosignerUpdateExternal'
+      type: object
+      required:
+      - data
+      title: UpdateCosignerExternalRequest
+    TransactionFilter:
+      properties:
+        operator:
+          type: string
+          enum:
+          - is
+          const: is
+          title: Operator
+        value:
+          $ref: '#/components/schemas/TransactionFilterValue'
+      type: object
+      required:
+      - operator
+      - value
+      title: TransactionFilter
+    FunctionParameter:
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/EqualityOperator'
+          - $ref: '#/components/schemas/LessThanComparisonOperator'
+          - $ref: '#/components/schemas/GreaterThanComparisonOperator'
+          title: Operator
+        value:
+          type: string
+          title: Value
+        parameter:
+          type: string
+          title: Parameter
+      type: object
+      required:
+      - operator
+      - value
+      - parameter
+      title: FunctionParameter
+    CosignerSafeDataExternal:
+      properties:
+        chain:
+          type: string
+          title: Chain
+        type:
+          type: string
+          enum:
+          - safe
+          const: safe
+          title: Type
+        override_address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Override Address
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        wallet_address:
+          title: Wallet Address
+          type: string
+      type: object
+      required:
+      - involvement_level
+      - chain
+      - security_policy
+      - type
+      - override_address
+      - wallet_address
+      title: CosignerSafeDataExternal
+    CategoryThreshold-Output:
+      properties:
+        category:
+          $ref: '#/components/schemas/RiskCategory'
+        threshold_percentage:
+          $ref: '#/components/schemas/ThresholdPercentage'
+      required:
+      - category
+      - threshold_percentage
+      title: CategoryThreshold
+      type: object
+    TransactionUSDValueRule:
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/LessThanComparisonOperator'
+          - $ref: '#/components/schemas/GreaterThanComparisonOperator'
+          - $ref: '#/components/schemas/EqualityOperator'
+          title: Operator
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - operator
+      - value
+      title: TransactionUSDValueRule
+    CosignerPage_CosignerExternalResponse_:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/CosignerExternalResponse'
+          type: array
+          title: Items
+          description: The list of Cosigners returned in the page.
+        total:
+          anyOf:
+          - minimum: 0.0
+            type: integer
+          - type: 'null'
+          title: Total
+          description: The total number of Cosigners across all pages.
+        page:
+          anyOf:
+          - minimum: 1.0
+            type: integer
+          - type: 'null'
+          title: Page
+          description: Current page index (1-based).
+        size:
+          anyOf:
+          - minimum: 1.0
+            type: integer
+          - type: 'null'
+          title: Size
+          description: Number of Cosigners per page.
+        pages:
+          anyOf:
+          - minimum: 0.0
+            type: integer
+          - type: 'null'
+          title: Pages
+          description: Total number of pages available given the current page size and total.
+        status_summary:
+          $ref: '#/components/schemas/SummaryStatus'
+      type: object
+      required:
+      - items
+      - total
+      - page
+      - size
+      - status_summary
+      title: CosignerPage[CosignerExternalResponse]
+    FireblocksCosignerResponseExternal:
+      properties:
+        type:
+          type: string
+          enum:
+          - fireblocks
+          const: fireblocks
+          title: Type
+        integration_instance_id:
+          type: string
+          title: Integration Instance Id
+          description: The ID of the integration instance used to connect to the Fireblocks workspace. Acquired using the Search Integrations endpoint.
+        scope:
+          type: string
+          enum:
+          - specific_vaults
+          const: specific_vaults
+          title: Scope
+          default: specific_vaults
+        vaults:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/VaultDetails'
+            - $ref: '#/components/schemas/VaultError'
+          type: array
+          title: Vaults
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        involvement_level:
+          $ref: '#/components/schemas/ApproverSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        unsupported_chain_behavior:
+          $ref: '#/components/schemas/DecisionAction'
+      type: object
+      required:
+      - type
+      - unsupported_chain_behavior
+      - security_policy
+      - integration_instance_id
+      - involvement_level
+      - vaults
+      title: FireblocksCosignerResponseExternal
+    PoliciesRequest:
+      description: Request body containing policy arrays per chain (EVM, Solana, Bitcoin, Sui, other).
+      properties:
+        evm:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/EVMPolicyRequest'
+            type: array
+          - type: 'null'
+          title: Evm
+        solana:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/SolanaPolicyRequest'
+            type: array
+          - type: 'null'
+          title: Solana
+        bitcoin:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/BitcoinPolicyRequest'
+            type: array
+          - type: 'null'
+          title: Bitcoin
+        sui:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/SuiPolicyRequest'
+            type: array
+          - type: 'null'
+          title: Sui
+        other:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/OtherChainPolicyRequest'
+            type: array
+          - type: 'null'
+          title: Other
+      type: object
+      title: PoliciesRequest
+    SuiCompositePolicyRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - composite
+          const: composite
+          title: Type
+          default: composite
+        operator:
+          type: string
+          enum:
+          - and
+          - or
+          title: Operator
+        rules:
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+            - $ref: '#/components/schemas/RollingUsdLimitPolicyRequest'
+            - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+            - $ref: '#/components/schemas/SuiCompositePolicyRequest'
+            discriminator:
+              propertyName: type
+              mapping:
+                composite: '#/components/schemas/SuiCompositePolicyRequest'
+                gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+                transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+                rolling_usd_limit: '#/components/schemas/RollingUsdLimitPolicyRequest'
+          type: array
+          title: Rules
+      type: object
+      required:
+      - operator
+      - rules
+      title: SuiCompositePolicyRequest
+    EVMPolicyRequest:
+      description: A single EVM chain policy definition for request (e.g. called address, event emitted, function call, gaining addresses, transaction USD value, or composite).
+      properties:
+        name:
+          type: string
+          title: Name
+        action:
+          $ref: '#/components/schemas/Action'
+        policy:
+          oneOf:
+          - $ref: '#/components/schemas/CalledAddressPolicyRequest'
+          - $ref: '#/components/schemas/Eip712SignaturePolicyRequest'
+          - $ref: '#/components/schemas/EventEmittedPolicyRequest'
+          - $ref: '#/components/schemas/FunctionCallPolicyRequest'
+          - $ref: '#/components/schemas/GainingAddressesPolicyRequest'
+          - $ref: '#/components/schemas/MerklCampaignPolicyRequest'
+          - $ref: '#/components/schemas/MovedAssetsPolicyRequest'
+          - $ref: '#/components/schemas/RiskExposurePolicyRequest'
+          - $ref: '#/components/schemas/RollingUsdLimitPolicyRequest'
+          - $ref: '#/components/schemas/TokenSpendApprovalPolicyRequest'
+          - $ref: '#/components/schemas/TransactionUSDValuePolicyRequest'
+          - $ref: '#/components/schemas/EVMCompositePolicyRequest'
+          title: Policy
+          discriminator:
+            propertyName: type
+            mapping:
+              called_address: '#/components/schemas/CalledAddressPolicyRequest'
+              composite: '#/components/schemas/EVMCompositePolicyRequest'
+              event_emitted: '#/components/schemas/EventEmittedPolicyRequest'
+              function_call: '#/components/schemas/FunctionCallPolicyRequest'
+              gaining_addresses: '#/components/schemas/GainingAddressesPolicyRequest'
+              transaction_usd_value: '#/components/schemas/TransactionUSDValuePolicyRequest'
+              eip_712_signature: '#/components/schemas/Eip712SignaturePolicyRequest'
+              merkl_campaign: '#/components/schemas/MerklCampaignPolicyRequest'
+              moved_assets: '#/components/schemas/MovedAssetsPolicyRequest'
+              risk_exposure: '#/components/schemas/RiskExposurePolicyRequest'
+              rolling_usd_limit: '#/components/schemas/RollingUsdLimitPolicyRequest'
+              token_spend_approval: '#/components/schemas/TokenSpendApprovalPolicyRequest'
+      type: object
+      required:
+      - name
+      - action
+      - policy
+      title: EVMPolicyRequest
+    MerklCampaignPolicyRequest:
+      properties:
+        rules:
+          $ref: '#/components/schemas/MerklCampaignRules-Input'
+        type:
+          const: merkl_campaign
+          enum:
+          - merkl_campaign
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: MerklCampaignPolicyRequest
+      type: object
+    Eip712PrimaryTypeRule:
+      description: Rule matching the EIP-712 primaryType field.
+      properties:
+        operator:
+          anyOf:
+          - $ref: '#/components/schemas/InclutionOperator'
+          - $ref: '#/components/schemas/EqualityOperator'
+          title: Operator
+        value:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: string
+          title: Value
+      required:
+      - operator
+      - value
+      title: Eip712PrimaryTypeRule
+      type: object
+    EventEmittedPolicyRequest:
+      properties:
+        type:
+          type: string
+          enum:
+          - event_emitted
+          const: event_emitted
+          title: Type
+        rules:
+          $ref: '#/components/schemas/EventEmittedRules-Input'
+        target:
+          items:
+            $ref: '#/components/schemas/AssetIDTarget'
+          title: Target
+          type: array
+      type: object
+      required:
+      - type
+      - target
+      - rules
+      title: EventEmittedPolicyRequest
+    SquadsConfigTransactionPolicyResponse:
+      properties:
+        rules:
+          $ref: '#/components/schemas/SquadsConfigTransactionRules-Output'
+        type:
+          const: squads_config_transaction
+          enum:
+          - squads_config_transaction
+          title: Type
+          type: string
+      required:
+      - type
+      - rules
+      title: SquadsConfigTransactionPolicyResponse
+      type: object
+    BaseCompositePolicyResponse:
+      description: Composite policy response; rules may be various policy response types or unknown.
+      properties:
+        type:
+          type: string
+          enum:
+          - composite
+          const: composite
+          title: Type
+          default: composite
+        operator:
+          type: string
+          enum:
+          - and
+          - or
+          title: Operator
+        rules:
+          items: {}
+          type: array
+          title: Rules
+      type: object
+      required:
+      - operator
+      - rules
+      title: BaseCompositePolicyResponse
+    MatchedPolicyInfoExternal:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Policy name.
+        action:
+          type: string
+          title: Action
+          description: Action defined by the policy.
+        type:
+          type: string
+          title: Type
+          description: Policy type.
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - action
+      - type
+      title: MatchedPolicyInfoExternal
+    UtilaCosignerDataExternal:
+      properties:
+        chains:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Chains
+        integration_instance_id:
+          title: Integration Instance Id
+          type: string
+        involvement_level:
+          $ref: '#/components/schemas/SignerSigningMode'
+        security_policy:
+          $ref: '#/components/schemas/ExternalPolicyOption'
+        type:
+          const: utila
+          enum:
+          - utila
+          title: Type
+          type: string
+        unsupported_chain_behavior:
+          $ref: '#/components/schemas/DecisionAction'
+      required:
+      - type
+      - unsupported_chain_behavior
+      - security_policy
+      - integration_instance_id
+      - involvement_level
+      title: UtilaCosignerDataExternal
+      type: object
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

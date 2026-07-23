@@ -1,0 +1,1006 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Hedera API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Hedera
+paths:
+  /v0/hedera/transaction/scan:
+    post:
+      tags:
+      - Hedera
+      summary: Scan Transaction
+      description: Get a risk recommendation with plain-language reasons for a Hedera transaction.
+      operationId: hedera_scan_transaction_v0_transaction_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HederaTransactionRequestSchema'
+            examples:
+              HBAR Transfer:
+                summary: HBAR Transfer
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  account_address: 0.0.9352077
+                  transaction: KmEKXQoVCgwIjvztygYQn6yo3QISBRiawrcDEgIYBhiAwtcvIgIIeDIVSEJBUiB0cmFuc2ZlciBleGFtcGxlciAKHgoNCgUYjee6BBD/p9a5BwoNCgUYha/rARCAqNa5BxIA
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              HBAR Allowance:
+                summary: HBAR Allowance
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  account_address: 0.0.9352077
+                  transaction: KmIKXgoVCgwIjvztygYQ06G/9AISBRiawrcDEgIYAxiAwtcvIgIIeDIfSEJBUiBhbGxvd2FuY2UgYXBwcm92YWwgZXhhbXBsZYIDFgoUCgUYjee6BBIFGIWv6wEYgMq17gESAA==
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              Token Transfer:
+                summary: Token Transfer
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  account_address: 0.0.9352077
+                  transaction: KmQKYAoVCgwIjvztygYQtdP9hgMSBRiawrcDEgIYCBiAwtcvIgIIeDIWVG9rZW4gdHJhbnNmZXIgZXhhbXBsZXIiEiAKBBjjtUASCwoFGI3nugQQ/4h6EgsKBRiFr+sBEICJehIA
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              Token Transfer with Malicious Token:
+                summary: Token Transfer with Malicious Token
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  account_address: 0.0.9352077
+                  transaction: KmUKYQoVCgwIkv7tygYQuKDQjAESBRiawrcDEgIYCRiAwtcvIgIIeDIWVG9rZW4gdHJhbnNmZXIgZXhhbXBsZXIjEiEKBRiX1PkDEgsKBRiN57oEEP+IehILCgUYha/rARCAiXoSAA==
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              Token Allowance:
+                summary: Token Allowance
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  account_address: 0.0.1440772
+                  transaction: KlUKUQoUCgsI4pPuygYQu+TDPxIFGJrCtwMSAhgJGIDC1y8iAgh4MhBVU0RDIGFwcHJvdmFsICQ1ggMZGhcKBBjjtUASBBiE+FcaBBj18wcgwJaxAhIA
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              NFT Transfer:
+                summary: NFT Transfer
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  account_address: 0.0.9352077
+                  transaction: KlMKTwoVCgwIrZfuygYQyIHyxQMSBRiawrcDEgIYBRiAwtcvIgIIeDIMTkZUIHRyYW5zZmVychsSGQoEGPjMNRoRCgUYjee6BBIFGIWv6wEY7i8SAA==
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              Unsupported Transaction Example - Token Wipe:
+                summary: Unsupported Transaction Example - Token Wipe
+                value:
+                  chain: mainnet
+                  options:
+                  - simulation
+                  account_address: 0.0.9352077
+                  transaction: KisKJwoGEgQYtcovEgIYAxiAiXoiAgh4ugIQCgQY47VAEgQYtcovGMCEPRIA
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HederaTransactionScanResponseSchema'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HederaHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/hedera/address/scan:
+    post:
+      tags:
+      - Hedera
+      summary: Scan Address
+      operationId: hedera_scan_address_v0_address_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HederaAddressScanRequestSchema'
+            examples:
+              Native Coin - Benign:
+                value:
+                  address: 0.0.1456986
+                  chain: mainnet
+              Malicious Address:
+                value:
+                  address: 0.0.9268759
+                  chain: mainnet
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HederaAddressScanResponseSchema'
+              examples:
+                Example Response:
+                  value:
+                    result_type: Benign
+                    features:
+                    - type: Info
+                      feature_id: IS_EOA
+                      description: This address is an EOA
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HederaHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    HederaValidationResponse:
+      properties:
+        type:
+          $ref: '#/components/schemas/HederaValidationFeatureType'
+          description: The security classification of the feature (Benign, Warning, Malicious or Info).
+          title: type
+        feature_id:
+          type: string
+          title: feature_id
+          description: The ID of the feature associated with this transaction.
+        description:
+          type: string
+          title: Description
+          description: Textual description of the feature.
+        address:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Address
+          description: Address the feature relates to.
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      title: ValidationFeatureSchemaType[Annotated[Address, GetPydanticSchema]]
+    HederaValidationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        result_type:
+          $ref: '#/components/schemas/HederaVerdict'
+          description: Verdict of the validation
+          title: Result Verdict
+        description:
+          type: string
+          title: Description
+          description: A textual description about the validation result
+        reason:
+          type: string
+          title: Reason
+          description: A textual description about the reasons the transaction was flagged with result_type
+        classification:
+          type: string
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+        features:
+          items:
+            $ref: '#/components/schemas/HederaValidationResponse'
+            title: Feature
+            docs_api_name: ValidationFeature
+          type: array
+          title: Features
+      type: object
+      required:
+      - status
+      - result_type
+      - description
+      - reason
+      - classification
+      - features
+      title: Validation Result
+    HederaNativeAssetDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: NATIVE
+          title: Type
+          description: Type of the asset (`NATIVE`)
+          default: NATIVE
+      type: object
+      title: NativeAssetDetailsSchema
+    HederaAddressAssetExposureSchemaType:
+      properties:
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/HederaNativeAssetDetailsSchema'
+          - $ref: '#/components/schemas/HederaTokenDetailsSchema'
+          - $ref: '#/components/schemas/HederaNFTDetailsSchema'
+          title: Asset
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/HederaAssetExposureSchema'
+          type: object
+          title: Spenders
+          description: Mapping between the spender address and the exposure of the asset
+      type: object
+      required:
+      - asset
+      title: AddressAssetExposureSchemaType[Annotated[Address, GetPydanticSchema], Union[NativeAssetDetailsSchema, TokenDetailsSchema, NFTDetailsSchema], AssetExposureSchema]
+    HederaValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: ValidationFeatureType
+    HederaAddressScanRequestSchema:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address to validate.
+        chain:
+          $ref: '#/components/schemas/HederaChain'
+      type: object
+      required:
+      - address
+      - chain
+      title: AddressScanRequestSchema
+    HederaGenericErrorDetails:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: The error code
+        category:
+          type: string
+          title: Category
+      type: object
+      required:
+      - code
+      - category
+      title: GenericErrorDetails
+    HederaAddressScanResponseSchema:
+      properties:
+        result_type:
+          $ref: '#/components/schemas/HederaValidationResultType'
+          description: 'The outcome of the address scan, indicating the assessed risk level of the scanned address. <br /> Possible values: <br /> - `Malicious` — The address is confirmed to be associated with malicious activity. <br /> - `High-Risk` — The address shows strong indicators of high-risk or potentially malicious behavior. <br /> - `Warning` — The address exhibits suspicious signals that may require caution. <br /> - `Benign` — No known malicious or risky activity was detected for the address. <br /> - `Error` — The scan could not be completed successfully.'
+        features:
+          items:
+            $ref: '#/components/schemas/HederaAddressScanFeature'
+          type: array
+          title: Features
+          description: A list of human-readable textual features describing the scanned address, intended for display to the end user.
+      type: object
+      required:
+      - result_type
+      title: AddressScanResponseSchema
+    HederaUnsupportedTransactionTypeErrorDetails:
+      properties:
+        category:
+          type: string
+          const: INVALID_INPUT
+          title: Category
+        code:
+          type: string
+          enum:
+          - UNSUPPORTED_TRANSACTION_TYPE
+          title: Code
+        transaction_type:
+          type: string
+          title: Transaction Type
+          description: The unsupported transaction type
+      type: object
+      required:
+      - category
+      - code
+      - transaction_type
+      title: UnsupportedTransactionTypeErrorDetails
+    HederaTransactionScanResponseSchema:
+      properties:
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/HederaSimulationResponse'
+            docs_api_name: SimulationResult
+            title: Simulation Result Schema
+          - $ref: '#/components/schemas/HederaSimulationErrorSchema'
+          title: Simulation
+          description: Simulation result; Only present if simulation option is included in the request
+          nullable: true
+        validation:
+          anyOf:
+          - $ref: '#/components/schemas/HederaValidationResult'
+            docs_api_name: ValidationResult
+            title: Validation Successful Result
+          - $ref: '#/components/schemas/HederaValidationErrorSchema'
+          title: Validation
+          description: Validation result; Only present if validation option is included in the request
+          nullable: true
+          docs_api_name: ValidationResponse
+      type: object
+      title: Transaction Scan Response
+      description: Transaction scan response schema.
+    HederaTransactionAction:
+      type: string
+      enum:
+      - native_wrap
+      - native_transfer
+      - token_transfer
+      - swap
+      - mint
+      - stake
+      - approval
+      - proxy_upgrade
+      - ownership_change
+      - set_code_account
+      title: TransactionAction
+    HederaTokenDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: TOKEN
+          title: Type
+          description: Type of the asset (`TOKEN`)
+          default: TOKEN
+        id:
+          type: string
+          title: Id
+          description: The token ID
+        name:
+          type: string
+          title: Name
+          description: The token name
+        symbol:
+          type: string
+          title: Symbol
+          description: The token's symbol
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo
+          nullable: true
+        decimals:
+          type: integer
+          title: Decimals
+          description: Decimals of the asset
+        description:
+          type: string
+          title: Description
+          description: The token description
+      type: object
+      required:
+      - id
+      - name
+      - symbol
+      - decimals
+      - description
+      title: Token Asset Details
+    HederaTotalUsdDiffSchema:
+      properties:
+        in:
+          type: number
+          title: In
+          description: Total incoming USD transfers
+        out:
+          type: number
+          title: Out
+          description: Total outgoing USD transfers
+        total:
+          type: number
+          title: Total
+          description: Total USD transfers
+      type: object
+      required:
+      - in
+      - out
+      title: Total USD Diff
+    HederaTransactionRequestSchema:
+      properties:
+        chain:
+          $ref: '#/components/schemas/HederaChain'
+        options:
+          items:
+            $ref: '#/components/schemas/HederaOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: "Select which component will be included in the response. \n\n - `simulation` - Include the results of the transaction simulation in your response. \n - `validation` - Include a security validation of the transaction in your response."
+          default:
+          - validation
+          - simulation
+        account_address:
+          title: Account Address
+          description: The address to relate the transaction to. Account address determines in which perspective the transaction is simulated and validated.
+        transaction:
+          type: string
+          title: Transaction
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/HederaWalletRequestMetadata'
+          - $ref: '#/components/schemas/HederaInAppRequestMetadata'
+          title: Metadata
+          description: Additional information regarding the wallet involved in the transaction.
+      additionalProperties: true
+      type: object
+      required:
+      - chain
+      - account_address
+      - transaction
+      - metadata
+      title: Request
+    HederaERC721DiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        token_id:
+          type: string
+          title: Token Id
+          description: Token ID of the transfer
+      type: object
+      required:
+      - token_id
+      title: ERC721 Transfer Details
+    HederaAccountSummaryBaseSchemaType:
+      properties:
+        account_assets_diffs:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/HederaAccountNativeAssetTransferDiffDetailsSchema'
+              title: Native asset Diff
+              docs_api_name: NativeAssetDiff
+            - $ref: '#/components/schemas/HederaAccountTokenTransferDiffDetailsSchema'
+              title: Tokens Asset Diff
+              docs_api_name: TokensAssetDiff
+            - $ref: '#/components/schemas/NFTDetailsSchema_ERC721DiffSchema'
+              title: NFT Asset Diff
+              docs_api_name: NFTAssetDiff
+          type: array
+          title: Account Assets Diffs
+          description: Assets diffs of the requested account address
+        account_exposures:
+          items:
+            $ref: '#/components/schemas/HederaAddressAssetExposureSchemaType'
+          type: array
+          title: Account Exposures
+          description: Exposures made by the requested account address
+        total_usd_diff:
+          $ref: '#/components/schemas/HederaTotalUsdDiffSchema'
+          description: Total USD diff for the requested account address
+        total_usd_exposure:
+          additionalProperties:
+            type: number
+          type: object
+          title: Total USD Exposure
+          description: Total USD exposure for each of the spender addresses during the transaction
+      type: object
+      required:
+      - account_exposures
+      - total_usd_diff
+      title: Account Summary
+    NFTDetailsSchema_ERC721DiffSchema:
+      properties:
+        asset:
+          $ref: '#/components/schemas/HederaNFTDetailsSchema'
+        in:
+          $ref: '#/components/schemas/HederaERC721DiffSchema'
+          description: Details of the incoming transfer
+          title: In
+          nullable: true
+        out:
+          $ref: '#/components/schemas/HederaERC721DiffSchema'
+          description: Details of the outgoing transfer
+          title: Out
+          nullable: true
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[NFTDetailsSchema, ERC721DiffSchema]
+    HederaAssetExposureSchema:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/HederaAssetTransferDetailsSchema'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the exposure
+          nullable: true
+      type: object
+      required:
+      - exposure
+      title: AssetExposureSchema
+    HederaValidationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Validation Error
+    HederaNFTDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: NFT
+          title: Type
+          description: Type of the asset (`NFT`)
+          default: NFT
+        id:
+          type: string
+          title: Id
+          description: The NFT ID
+        nft_type:
+          type: string
+          title: Nft Type
+          description: The NFT's collection ID (token ID)
+        name:
+          type: string
+          title: Name
+          description: NFT's display name
+        description:
+          type: string
+          title: Description
+          description: The NFT's description
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the NFT's image
+          nullable: true
+      type: object
+      required:
+      - id
+      - nft_type
+      - name
+      - description
+      title: NFT Asset Details
+    HederaChain:
+      type: string
+      enum:
+      - mainnet
+      title: Chain
+      description: The chain the transaction runs on.
+    HederaOptions:
+      type: string
+      enum:
+      - validation
+      - simulation
+      title: Options
+    HederaFeatureType:
+      type: string
+      enum:
+      - Malicious
+      - Warning
+      - Benign
+      - High-Risk
+      - Info
+      title: FeatureType
+      description: The risk classification indicated by the feature. Possible values are `Malicious`, `High-Risk`, `Warning`, `Benign`, or `Info`.
+    HederaAddressScanFeature:
+      properties:
+        type:
+          anyOf:
+          - $ref: '#/components/schemas/HederaFeatureType'
+          - type: string
+          title: Type
+        feature_id:
+          type: string
+          title: Feature Id
+          description: The unique identifier for the feature.
+        description:
+          type: string
+          title: Description
+          description: A human-readable description explaining the feature.
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      title: AddressScanFeature
+    HederaAddressDetailsBaseSchema:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+      type: object
+      required:
+      - account_address
+      title: Address Details
+    HederaHTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/HederaValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    HederaAccountNativeAssetTransferDiffDetailsSchema:
+      properties:
+        asset:
+          $ref: '#/components/schemas/HederaNativeAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/HederaAssetTransferDetailsSchema'
+          description: Details of the incoming transfer
+          title: In
+          nullable: true
+        out:
+          $ref: '#/components/schemas/HederaAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer
+          title: Out
+          nullable: true
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[NativeAssetDetailsSchema, AssetTransferDetailsSchema]
+    HederaAssetTransferDetailsSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        value:
+          type: string
+          title: Value
+          description: Value of the transfer
+        raw_value:
+          type: integer
+          title: Raw Value
+          description: Raw value of the transfer
+      type: object
+      required:
+      - value
+      - raw_value
+      title: Asset Transfer Details
+    HederaSimulationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+        error_details:
+          anyOf:
+          - $ref: '#/components/schemas/HederaGenericErrorDetails'
+          - $ref: '#/components/schemas/HederaUnsupportedTransactionTypeErrorDetails'
+          title: Error Details
+          description: Error details if the simulation failed.
+      type: object
+      required:
+      - status
+      - error
+      title: Simulation Error
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    HederaSimulationResponse:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        assets_diffs:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/HederaAccountNativeAssetTransferDiffDetailsSchema'
+                title: Native asset Diff
+                docs_api_name: NativeAssetDiff
+              - $ref: '#/components/schemas/HederaAccountTokenTransferDiffDetailsSchema'
+                title: Tokens Asset Diff
+                docs_api_name: TokensAssetDiff
+              - $ref: '#/components/schemas/NFTDetailsSchema_ERC721DiffSchema'
+                title: NFT Asset Diff
+                docs_api_name: NFTAssetDiff
+            type: array
+            description: Assets diff of an account address
+          type: object
+          title: Assets Diffs
+          description: Mapping between the address of an account to the assets diff during the transaction
+        exposures:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/HederaAddressAssetExposureSchemaType'
+            type: array
+          type: object
+          title: Exposures
+          description: Mapping between the address of an account to the exposure of the assets during the transaction
+        address_details:
+          items:
+            $ref: '#/components/schemas/HederaAddressDetailsBaseSchema'
+          type: array
+          title: Address Details
+          description: Details of addresses involved in the transaction
+        account_summary:
+          $ref: '#/components/schemas/HederaAccountSummaryBaseSchemaType'
+          description: Summary of the actions and asset transfers that were made by the requested account address
+          docs_api_name: AccountSummary
+        transaction_actions:
+          anyOf:
+          - items:
+              anyOf:
+              - $ref: '#/components/schemas/HederaTransactionAction'
+              - type: string
+            type: array
+          - type: 'null'
+          title: Transaction Actions
+      type: object
+      required:
+      - status
+      - account_summary
+      title: Simulation Result
+    HederaValidationResultType:
+      type: string
+      enum:
+      - Malicious
+      - High-Risk
+      - Warning
+      - Benign
+      - Error
+      title: ValidationResultType
+    HederaInAppRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: in_app
+          title: Type
+          description: Metadata for in-app requests
+          default: in_app
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: Account information associated with the request
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent and IP information
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: true
+      type: object
+      title: In-App Request Metadata
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    HederaAccountTokenTransferDiffDetailsSchema:
+      properties:
+        asset:
+          $ref: '#/components/schemas/HederaTokenDetailsSchema'
+        in:
+          $ref: '#/components/schemas/HederaAssetTransferDetailsSchema'
+          description: Details of the incoming transfer
+          title: In
+          nullable: true
+        out:
+          $ref: '#/components/schemas/HederaAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer
+          title: Out
+          nullable: true
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[TokenDetailsSchema, AssetTransferDetailsSchema]
+    HederaVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Error
+      title: Verdict
+    HederaWalletRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: wallet
+          title: Type
+          description: Metadata for wallet requests
+        url:
+          type: string
+          title: Url
+          description: URL of the dApp the transaction originated from.
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: Account information associated with the request
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent and IP information
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: false
+      type: object
+      required:
+      - type
+      - url
+      title: Wallet Request Metadata
+    HederaValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

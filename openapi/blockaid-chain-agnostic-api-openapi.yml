@@ -1,0 +1,564 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Chain Agnostic API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Chain Agnostic
+paths:
+  /v0/address/risk-exposure:
+    post:
+      tags:
+      - Chain Agnostic
+      summary: Address Risk Exposure
+      description: Gets an address and returns risk exposure data.
+      operationId: address-risk-exposure
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RiskExposureAddressScanRequest'
+            examples:
+              Malicious EVM:
+                summary: Ethereum - Malicious Address
+                value:
+                  chain: ethereum
+                  address: '0x946D45c866AFD5b8F436d40E551D8E50A5B84230'
+                  metadata:
+                    account:
+                      account_id: user-123
+                    connection:
+                      user_agent: Mozilla/5.0
+                      ip_address: 1.1.1.1
+              Benign EVM:
+                summary: Ethereum - Benign Address
+                value:
+                  chain: ethereum
+                  address: '0x4d224452801ACEd8B2F0aebE155379bb5D594381'
+                  metadata:
+                    account:
+                      account_id: user-456
+                    connection:
+                      user_agent: Mozilla/5.0
+                      ip_address: 2.2.2.2
+              Solana:
+                summary: Solana - Address
+                value:
+                  chain: solana
+                  address: 9bknqj2UtB4MunG1PEMSjuT4R65coJr2tPzwN6uAcYyC
+                  metadata:
+                    account:
+                      account_id: user-789
+                    connection:
+                      user_agent: Mozilla/5.0
+                      ip_address: 3.3.3.3
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiskProfilingResponse'
+              examples:
+                Malicious Address:
+                  value:
+                    address: '0x946D45c866AFD5b8F436d40E551D8E50A5B84230'
+                    blocklist: true
+                    name: null
+                    risk_summary:
+                      risk_level: Malicious
+                      total_usd: 150000
+                      total_malicious_exposure: 120000
+                    exposures:
+                    - category: stolen_funds
+                      amount_usd: 80000
+                      percentage: 53.3
+                      risk_level: Malicious
+                    - category: mining_pool_miner
+                      amount_usd: 40000
+                      percentage: 26.7
+                      risk_level: Warning
+                    - category: uncategorized_entity
+                      amount_usd: 30000
+                      percentage: 20.0
+                      risk_level: Benign
+                Benign Address:
+                  value:
+                    address: '0x4d224452801ACEd8B2F0aebE155379bb5D594381'
+                    blocklist: false
+                    name: ApeCoin
+                    risk_summary:
+                      risk_level: Benign
+                      total_usd: 0
+                      total_malicious_exposure: 0
+                    exposures: []
+                Solana:
+                  value:
+                    address: 9bknqj2utb4mung1pemsjut4r65cojr2tpzwn6uacyyc
+                    blocklist: false
+                    name: null
+                    risk_summary:
+                      risk_level: Benign
+                      total_usd: 0
+                      total_malicious_exposure: 0
+                    exposures:
+                    - category: uncategorized_entity
+                      amount_usd: 0
+                      percentage: 100
+                      risk_level: Benign
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/address/report:
+    post:
+      tags:
+      - Chain Agnostic
+      summary: Report Address
+      description: Report a misclassification of an address
+      operationId: address-report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportRequest_AddressReportParams_'
+            examples:
+              Evm address report request_id example:
+                summary: Evm address report request_id example
+                value:
+                  event: FALSE_NEGATIVE
+                  report:
+                    type: request_id
+                    request_id: 11111111-1111-1111-1111-111111111111
+                  details: Details about the report
+              Evm address report params example:
+                summary: Evm address report params example
+                value:
+                  event: FALSE_POSITIVE
+                  report:
+                    type: params
+                    params:
+                      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+                      domain: https://example.com
+                      chain: ethereum
+                  details: Details about the report
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: true
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    RiskProfilingResponse:
+      description: Compliance risk exposure for an address, including an overall risk summary and exposure breakdown.
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address being profiled.
+        blocklist:
+          type: boolean
+          title: Blocklist
+          description: Whether the address is explicitly blocklisted.
+          default: false
+        name:
+          type: string
+          title: Name
+          description: Resolved entity name associated with the address, if known.
+        risk_summary:
+          $ref: '#/components/schemas/RiskSummary'
+        exposures:
+          items:
+            $ref: '#/components/schemas/RiskExposure'
+          type: array
+          title: Exposures
+          description: Exposure breakdown by category.
+      type: object
+      required:
+      - address
+      - risk_summary
+      title: RiskProfilingResponse
+    RiskExposureAddressScanRequest:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address to scan.
+        metadata:
+          $ref: '#/components/schemas/ScanRequestMetadata'
+        chain:
+          $ref: '#/components/schemas/RiskExposureSupportedChains'
+      type: object
+      required:
+      - address
+      - chain
+      title: RiskExposureAddressScanRequest
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    RiskExposure:
+      description: An exposure category contributing to the address's compliance risk profile.
+      properties:
+        category:
+          type: string
+          title: Category
+          description: Exposure category name (e.g., sanctioned_entity, scam_investment_fraud, stolen_funds).
+        amount_usd:
+          type: number
+          title: Amount Usd
+          description: Estimated exposure amount in USD for this category.
+        percentage:
+          type: number
+          title: Percentage
+          description: Percentage of total exposure attributed to this category.
+        risk_level:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
+          description: Compliance risk level associated with this exposure category.
+      type: object
+      required:
+      - category
+      - amount_usd
+      - percentage
+      - risk_level
+      title: RiskExposure
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ReportRequest_AddressReportParams_:
+      properties:
+        event:
+          allOf:
+          - $ref: '#/components/schemas/EventEnum'
+          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
+        report:
+          anyOf:
+          - $ref: '#/components/schemas/ParamReport_AddressReportParams_'
+          - $ref: '#/components/schemas/RequestIDReport'
+          title: Report
+          description: Parameters identifying the address to report, provided either as address details (address, domain, and chain) or as a request ID from a previous scan.
+        details:
+          type: string
+          title: Details
+          description: Details about the report.
+      type: object
+      required:
+      - event
+      - report
+      - details
+      title: ReportRequest[AddressReportParams]
+    RequestIDReport:
+      properties:
+        type:
+          type: string
+          const: request_id
+          title: Type
+          description: The type identifier indicating that a request ID from a previous scan is being used.
+        request_id:
+          type: string
+          title: Request Id
+          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
+      type: object
+      required:
+      - type
+      - request_id
+      title: RequestIDReport
+    RiskExposureSupportedChains:
+      enum:
+      - ethereum
+      - base
+      - bsc
+      - arbitrum
+      - optimism
+      - aster
+      - polygon
+      - hyperevm
+      - hyperliquid
+      - lighter
+      - tron
+      - bitcoin
+      - solana
+      - polymarket
+      title: RiskExposureSupportedChains
+      type: string
+      description: Supported chains for risk exposure
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    ParamReport_AddressReportParams_:
+      properties:
+        type:
+          type: string
+          enum:
+          - params
+          title: Type
+        params:
+          $ref: '#/components/schemas/AddressReportParams'
+      type: object
+      required:
+      - type
+      - params
+      title: ParamReport[AddressReportParams]
+    AddressReportParams:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address to report on.
+        domain:
+          type: string
+          title: Domain
+          description: The domain related to this address.
+        chain:
+          allOf:
+          - $ref: '#/components/schemas/AddressReportSupportedChains'
+          description: The chain name
+      type: object
+      required:
+      - address
+      - domain
+      - chain
+      title: AddressReportParams
+    routers__chain_agnostic__models__response__ValidationResultType:
+      type: string
+      enum:
+      - Malicious
+      - Warning
+      - Benign
+      - High-Risk
+      title: ValidationResultType
+      description: The type of validation result.
+    ScanRequestMetadata:
+      properties:
+        domain:
+          type: string
+          title: Domain
+          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
+        non_dapp:
+          type: boolean
+          title: Non Dapp
+          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: End-user account context (id, age, country, creation time, and account_addresses).
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent, IP information, and origin.
+      type: object
+      title: ScanRequestMetadata
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AddressReportSupportedChains:
+      type: string
+      enum:
+      - arbitrum
+      - avalanche
+      - base
+      - base-sepolia
+      - lordchain
+      - lordchain-testnet
+      - metacade
+      - metacade-testnet
+      - bsc
+      - ethereum
+      - optimism
+      - polygon
+      - zksync
+      - zksync-sepolia
+      - zora
+      - linea
+      - blast
+      - scroll
+      - ethereum-sepolia
+      - degen
+      - avalanche-fuji
+      - gnosis
+      - worldchain
+      - soneium-minato
+      - ronin
+      - apechain
+      - berachain
+      - berachain-bartio
+      - ink
+      - ink-sepolia
+      - abstract
+      - abstract-testnet
+      - soneium
+      - unichain
+      - sei
+      - flow-evm
+      - hyperevm
+      - katana
+      - plume
+      - xlayer
+      - monad
+      - monad-testnet
+      - hedera
+      - tempo
+      - tempo-testnet
+      - kite-ai
+      - kaia
+      - solana
+      - eclipse
+      - sonic
+      - starknet
+      - sui
+      - bitcoin
+      - stellar
+      - plasma
+      - mantle
+      - robinhood
+      - arc
+      title: AddressReportSupportedChains
+      description: The chain name
+    RiskSummary:
+      description: Aggregated compliance risk summary for the profiled address.
+      properties:
+        risk_level:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
+          description: Overall compliance risk level for the address.
+        total_usd:
+          type: number
+          title: Total Usd
+          description: Total estimated USD exposure considered in the profile.
+        total_malicious_exposure:
+          type: number
+          title: Total Malicious Exposure
+          description: Total estimated USD exposure associated with malicious risk.
+      type: object
+      required:
+      - risk_level
+      - total_usd
+      - total_malicious_exposure
+      title: RiskSummary
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

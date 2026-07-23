@@ -1,0 +1,411 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Report API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Report
+paths:
+  /v0/scan/report:
+    post:
+      tags:
+      - Report
+      summary: Report
+      description: Report a misclassification of any entity (transaction, address, site, token, etc.) using a request ID from a previous scan.
+      operationId: generic-report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenericReportRequest'
+            examples:
+              Report with request_id:
+                summary: Report with request_id
+                value:
+                  event: FALSE_POSITIVE
+                  request_id: 11111111-1111-1111-1111-111111111111
+                  details: Details about the report
+                  metadata:
+                    domain: https://app.uniswap.org
+                    account:
+                      account_id: user-abc-123
+                      account_creation_timestamp: '2023-01-15T00:00:00Z'
+                      user_age: 30
+                      user_country_code: US
+                    connection:
+                      ip_address: 192.168.1.1
+                      user_agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /tx/v0/report:
+    post:
+      tags:
+      - Report
+      summary: Report transaction
+      description: Report a transaction
+      operationId: report-transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportTxRequest'
+            examples:
+              Example Report:
+                summary: Example Report
+                value:
+                  domain: example.org
+                  jsonRpcMethod: SetApprovalForAll
+                  jsonRpcParams: '{"from": "0x0000000000000000000000000000000000000000", "to": "0x0000000000000000000000000000000000000000", "value": "0x0"}'
+                  chain: ethereum
+                  blockNumber: '19624900'
+                  classification: approval_farming
+                  resultType: Malicious
+                  features: '["The contract 0x0000000000000000000000000000000000000000 involved in the transaction is unverified"]'
+                  details: This transaction is incorrect because of ...
+                  reporter: my_name@example.org
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: true
+      security:
+      - APIKey: []
+      - ClientID: []
+  /dapp/v1/report:
+    post:
+      tags:
+      - Report
+      summary: Report site
+      description: Report a misclassification of a site.
+      operationId: report-site
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportSiteRequest'
+            examples:
+              request example:
+                summary: Request Example
+                value:
+                  url: www.malicious-example.com
+                  classification: Malicious
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: true
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    ReportTxRequest:
+      properties:
+        domain:
+          type: string
+          title: Domain
+        jsonRpcMethod:
+          type: string
+          title: Jsonrpcmethod
+        jsonRpcParams:
+          type: string
+          title: Jsonrpcparams
+        chain:
+          $ref: '#/components/schemas/TransactionScanSupportedChains'
+        blockNumber:
+          type: string
+          title: Blocknumber
+        classification:
+          type: string
+          title: Classification
+        resultType:
+          type: string
+          title: Resulttype
+        features:
+          type: string
+          title: Features
+        details:
+          type: string
+          title: Details
+        reporter:
+          type: string
+          title: Reporter
+      type: object
+      required:
+      - jsonRpcMethod
+      - jsonRpcParams
+      title: ReportTxRequest
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    SiteClassification:
+      type: string
+      enum:
+      - Malicious
+      - Benign
+      title: SiteClassification
+      description: Classification result for a scanned URL.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
+    TransactionScanSupportedChains:
+      type: string
+      enum:
+      - arbitrum
+      - avalanche
+      - base
+      - base-sepolia
+      - lordchain
+      - lordchain-testnet
+      - metacade
+      - metacade-testnet
+      - bsc
+      - ethereum
+      - optimism
+      - polygon
+      - zksync
+      - zksync-sepolia
+      - zora
+      - linea
+      - blast
+      - scroll
+      - ethereum-sepolia
+      - degen
+      - avalanche-fuji
+      - gnosis
+      - worldchain
+      - soneium-minato
+      - ronin
+      - apechain
+      - berachain
+      - berachain-bartio
+      - ink
+      - ink-sepolia
+      - abstract
+      - abstract-testnet
+      - soneium
+      - unichain
+      - sei
+      - flow-evm
+      - hyperevm
+      - megaeth
+      - katana
+      - plume
+      - xlayer
+      - monad
+      - monad-testnet
+      - tempo
+      - tempo-testnet
+      - kite-ai
+      - kaia
+      - plasma
+      - mantle
+      - robinhood
+      - arc
+      title: TransactionScanSupportedChains
+      description: The chain name
+    ReportSiteRequest:
+      properties:
+        url:
+          type: string
+          title: Url
+        classification:
+          $ref: '#/components/schemas/SiteClassification'
+      type: object
+      required:
+      - url
+      - classification
+      title: ReportSiteRequest
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    ScanRequestMetadata:
+      properties:
+        domain:
+          type: string
+          title: Domain
+          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
+        non_dapp:
+          type: boolean
+          title: Non Dapp
+          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: End-user account context (id, age, country, creation time, and account_addresses).
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent, IP information, and origin.
+      type: object
+      title: ScanRequestMetadata
+    GenericReportRequest:
+      type: object
+      required:
+      - event
+      - request_id
+      - details
+      - metadata
+      title: GenericReportRequest
+      properties:
+        event:
+          allOf:
+          - $ref: '#/components/schemas/EventEnum'
+          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
+        request_id:
+          type: string
+          title: Request Id
+          description: 'The request ID of a previous scan. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
+        details:
+          type: string
+          title: Details
+          description: Details about the report.
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/ScanRequestMetadata'
+          title: Metadata
+          description: 'Client-side context: the originating dApp domain, end-user account info, and connection details.'
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

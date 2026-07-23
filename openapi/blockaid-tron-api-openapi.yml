@@ -1,0 +1,2871 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Tron API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Tron
+paths:
+  /v0/tron/transaction/scan:
+    post:
+      tags:
+      - Tron
+      summary: Scan Transaction
+      description: Get a risk recommendation with plain-language reasons for a Tron transaction.
+      operationId: scan-tron-transaction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/routers__tron__transaction__models__TransactionRequest'
+            examples:
+              TRX Deposit:
+                summary: Tron - TRX deposit
+                value:
+                  metadata:
+                    non_dapp: true
+                  options:
+                  - simulation
+                  account_address: TWoajZTHi5XzRMSn4Bk4wee2SQ2mgT4KB9
+                  data:
+                    from: TWoajZTHi5XzRMSn4Bk4wee2SQ2mgT4KB9
+                    to: TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR
+                    data: '0xd0e30db0'
+                    value: '0x3B9ACA00'
+              Token Transfer:
+                summary: Tron - Token transfer
+                value:
+                  metadata:
+                    non_dapp: true
+                  options:
+                  - simulation
+                  account_address: TKhJBwsH7hvegxrUHW4oHT5t1BUDds2UG4
+                  data:
+                    from: TKhJBwsH7hvegxrUHW4oHT5t1BUDds2UG4
+                    to: TMacq4TDUw5q8NFBwmbY4RLXvzvG5JTkvi
+                    data: '0xa9059cbb0000000000000000000000411dfc220065fc86526f12a2001611f6daf9e0062800000000000000000000000000000000000000000000010f0cf064dd59200000'
+              Native Transfer:
+                summary: Tron - Native transfer
+                value:
+                  metadata:
+                    non_dapp: true
+                  chain: tron
+                  options:
+                  - simulation
+                  - trace
+                  account_address: TWoajZTHi5XzRMSn4Bk4wee2SQ2mgT4KB9
+                  block: latest
+                  data:
+                    from: TWoajZTHi5XzRMSn4Bk4wee2SQ2mgT4KB9
+                    to: TGRPrkvVuLJzkvUof6sH1fevxu4KczdxtD
+                    value: '0x3b9aca00'
+              Contract Creation:
+                summary: Tron - Contract creation
+                value:
+                  metadata:
+                    non_dapp: true
+                  options:
+                  - simulation
+                  block: latest
+                  account_address: TWoajZTHi5XzRMSn4Bk4wee2SQ2mgT4KB9
+                  data:
+                    from: TWoajZTHi5XzRMSn4Bk4wee2SQ2mgT4KB9
+                    data: '0x60806040527f3fad920548ed9f22deb8333b4cc1e4f9bc36666a1c2aa30ad59a0a3bb9dcbb9260405160405180910390a1603f80603d6000396000f3fe6080604052600080fdfea26474726f6e582212202903d5efa637ba85226f176b520075ab6b401112b9bc3456e7f753df1ada55eb64736f6c63430008060033'
+              Token Transfer to Malicious Address:
+                summary: Tron - Token transfer to malicious address
+                value:
+                  metadata:
+                    non_dapp: true
+                  options:
+                  - simulation
+                  - validation
+                  account_address: TKhJBwsH7hvegxrUHW4oHT5t1BUDds2UG4
+                  data:
+                    from: TKhJBwsH7hvegxrUHW4oHT5t1BUDds2UG4
+                    to: TMacq4TDUw5q8NFBwmbY4RLXvzvG5JTkvi
+                    data: '0xa9059cbb00000000000000000000004102d8b1afe419aaee6ea2a421913b93bc1d55791300000000000000000000000000000000000000000000010f0cf064dd59200000'
+        required: true
+      responses:
+        '200':
+          description: Transaction scanned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/routers__tron__response__TransactionScanResponse'
+              example:
+                simulation:
+                  status: Success
+                  assets_diffs:
+                    TChke7mJtUjn1QefSeDZhsPc3gcLck4nTt:
+                    - asset_type: ERC20
+                      asset:
+                        type: ERC20
+                        address: TMacq4TDUw5q8NFBwmbY4RLXvzvG5JTkvi
+                        logo_url: https://dm8wquhbuh2eq.cloudfront.net/token/0x7F5bd5235a22EBe67ff9c619082601273A0D3B70/tron/sec/90a55f4e-3713-47d8-9ace-abafe5356b07
+                        decimals: 18
+                        name: PePe
+                        symbol: PePe
+                      in:
+                      - usd_price: '147.384477049999986775'
+                        summary: Receiving 5000 PePe
+                        value: '5000.0'
+                        raw_value: '0x10f0cf064dd59200000'
+                      out: []
+                    TNiTAGAoecoRKj8A89LRQjCWaHtqUzY9S6:
+                    - asset_type: ERC20
+                      asset:
+                        type: ERC20
+                        address: TMacq4TDUw5q8NFBwmbY4RLXvzvG5JTkvi
+                        logo_url: https://dm8wquhbuh2eq.cloudfront.net/token/0x7F5bd5235a22EBe67ff9c619082601273A0D3B70/tron/sec/90a55f4e-3713-47d8-9ace-abafe5356b07
+                        decimals: 18
+                        name: PePe
+                        symbol: PePe
+                      in: []
+                      out:
+                      - usd_price: '147.384477049999986775'
+                        summary: Sending 5000 PePe
+                        value: '5000.0'
+                        raw_value: '0x10f0cf064dd59200000'
+                  transaction_actions:
+                  - token_transfer
+                  params:
+                    from: TNiTAGAoecoRKj8A89LRQjCWaHtqUzY9S6
+                    to: TMacq4TDUw5q8NFBwmbY4RLXvzvG5JTkvi
+                    value: '0x0'
+                    data: '0xa9059cbb0000000000000000000000411dfc220065fc86526f12a2001611f6daf9e0062800000000000000000000000000000000000000000000010f0cf064dd59200000'
+                    block_tag: latest
+                    chain: tron
+                    calldata:
+                      function_selector: '0xa9059cbb'
+                      function_signature: transfer(address,uint256)
+                  total_usd_diff:
+                    TNiTAGAoecoRKj8A89LRQjCWaHtqUzY9S6:
+                      in: '0.0'
+                      out: '147.384477049999986775'
+                      total: '-147.384477049999986775'
+                    TChke7mJtUjn1QefSeDZhsPc3gcLck4nTt:
+                      in: '147.384477049999986775'
+                      out: '0.0'
+                      total: '147.384477049999986775'
+                  exposures: {}
+                  total_usd_exposure: {}
+                  address_details: {}
+                  account_summary:
+                    assets_diffs:
+                    - asset_type: ERC20
+                      asset:
+                        type: ERC20
+                        address: TMacq4TDUw5q8NFBwmbY4RLXvzvG5JTkvi
+                        logo_url: https://dm8wquhbuh2eq.cloudfront.net/token/0x7F5bd5235a22EBe67ff9c619082601273A0D3B70/tron/sec/90a55f4e-3713-47d8-9ace-abafe5356b07
+                        decimals: 18
+                        name: PePe
+                        symbol: PePe
+                      in: []
+                      out:
+                      - usd_price: '147.384477049999986775'
+                        summary: Sending 5000 PePe
+                        value: '5000.0'
+                        raw_value: '0x10f0cf064dd59200000'
+                      balance_changes:
+                        before:
+                          usd_price: '98603.847380880787123296'
+                          value: '3345123.2231'
+                          raw_value: '0x2c45b7e47fb07ef0fc000'
+                        after:
+                          usd_price: '98456.462903830787136521'
+                          value: '3340123.2231'
+                          raw_value: '0x2c34c7157962a95efc000'
+                    traces:
+                    - type: ERC20AssetTrace
+                      trace_type: AssetTrace
+                      from_address: TNiTAGAoecoRKj8A89LRQjCWaHtqUzY9S6
+                      to_address: TChke7mJtUjn1QefSeDZhsPc3gcLck4nTt
+                      asset:
+                        type: ERC20
+                        address: TMacq4TDUw5q8NFBwmbY4RLXvzvG5JTkvi
+                        logo_url: https://dm8wquhbuh2eq.cloudfront.net/token/0x7F5bd5235a22EBe67ff9c619082601273A0D3B70/tron/sec/90a55f4e-3713-47d8-9ace-abafe5356b07
+                        decimals: 18
+                        name: PePe
+                        symbol: PePe
+                      diff:
+                        usd_price: '147.384477049999986775'
+                        value: '5000.0'
+                        raw_value: '0x10f0cf064dd59200000'
+                    total_usd_diff:
+                      in: '0.0'
+                      out: '147.384477049999986775'
+                      total: '-147.384477049999986775'
+                    exposures: []
+                    total_usd_exposure: {}
+                block: '77951991'
+                chain: tron
+                account_address: TNiTAGAoecoRKj8A89LRQjCWaHtqUzY9S6
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/tron/address/scan:
+    post:
+      tags:
+      - Tron
+      summary: Scan Address
+      description: Get a risk recommendation with plain-language reasons for a Tron address.
+      operationId: scan-tron-address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateTronAddress'
+            examples:
+              Malicious:
+                summary: Tron - Malicious Address
+                value:
+                  chain: tron
+                  address: TQZFV1xeGKGHcCNQdw6erx3CFXQ9jfXeQR
+                  metadata:
+                    domain: https://example.com
+              Benign:
+                summary: Tron - Benign Address
+                value:
+                  chain: tron
+                  address: TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR
+                  metadata:
+                    domain: https://example.com
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddressValidation'
+              examples:
+                Malicious Address:
+                  value:
+                    result_type: Malicious
+                    features:
+                    - type: Malicious
+                      feature_id: KNOWN_MALICIOUS
+                      description: This address has recorded malicious activity
+                    - type: Warning
+                      feature_id: NEW
+                      description: This address has no history on this chain
+                Benign Address:
+                  value:
+                    result_type: Benign
+                    features:
+                    - type: Benign
+                      feature_id: TRUSTED_CONTRACT
+                      description: A trusted contract, safe to interact with
+                    - type: Benign
+                      feature_id: VERIFIED_CONTRACT
+                      description: This contract is verified
+                    - type: Info
+                      feature_id: ERC20_CONTRACT
+                      description: This address is an ERC20 token
+                    - type: Info
+                      feature_id: IS_CONTRACT
+                      description: This address is a contract
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    routers__tron__response__TransactionScanFeature:
+      properties:
+        type:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__TransactionScanFeatureType'
+          description: Type/severity
+        feature_id:
+          type: string
+          title: Feature Id
+          description: Feature name
+        description:
+          type: string
+          title: Description
+          description: Textual description
+        address:
+          type: string
+          title: Address
+          description: Address the feature refers to
+        metadata:
+          type: object
+          title: Metadata
+          description: Metadata related to the feature
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      title: TransactionScanFeature
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    routers__tron__response__OwnershipChange:
+      properties:
+        owners:
+          items:
+            type: string
+          type: array
+          title: Owners
+      type: object
+      required:
+      - owners
+      title: OwnershipChange
+    routers__tron__response__ERC1155AddressAssetBalanceChangeDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC1155
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC1155TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+        balance_changes:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC1155BalanceChanges'
+          title: Balance Changes
+          description: shows the balance before making the transaction and after
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: ERC1155AddressAssetBalanceChangeDiff
+    routers__tron__response__NativeAsset:
+      properties:
+        type:
+          type: string
+          enum:
+          - NATIVE
+          title: Type
+          description: The type of the model
+        details:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__NativeAssetDetails'
+          title: Details
+          description: Details
+      type: object
+      required:
+      - type
+      - details
+      title: NativeAsset
+    routers__tron__response__TransactionValidationError:
+      properties:
+        status:
+          type: string
+          enum:
+          - Success
+          title: Status
+          description: A string indicating if the simulation was successful or not.
+        result_type:
+          type: string
+          enum:
+          - Error
+          title: Result Type
+          description: A string indicating if the transaction is safe to sign or not.
+        description:
+          type: string
+          enum:
+          - ''
+          title: Description
+          description: A textual description that can be presented to the user about what this transaction is doing.
+        reason:
+          type: string
+          enum:
+          - ''
+          title: Reason
+          description: A textual description about the reasons the transaction was flagged with result_type.
+        classification:
+          type: string
+          enum:
+          - ''
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+        features:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__TransactionScanFeature'
+          type: array
+          title: Features
+          description: A list of features about this transaction explaining the validation.
+        error:
+          type: string
+          title: Error
+          description: An error message if the validation failed.
+      type: object
+      required:
+      - status
+      - result_type
+      - description
+      - reason
+      - classification
+      - features
+      - error
+      title: TransactionValidationError
+    routers__tron__session_keys__SessionKey:
+      properties:
+        key:
+          type: string
+          title: Key
+        signer:
+          type: string
+          title: Signer
+        policies:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__session_keys__TransferPolicy'
+            - $ref: '#/components/schemas/routers__tron__session_keys__CallPolicy'
+            - $ref: '#/components/schemas/routers__tron__session_keys__GasPolicy'
+            - $ref: '#/components/schemas/routers__tron__session_keys__ExpirationPolicy'
+          type: array
+          title: Policies
+      type: object
+      required:
+      - key
+      - signer
+      - policies
+      title: SessionKey
+    routers__tron__session_keys__CallPolicy:
+      properties:
+        type:
+          type: string
+          enum:
+          - CALL_POLICY
+          title: Type
+          default: CALL_POLICY
+        to_address:
+          type: string
+          title: To Address
+        method:
+          type: string
+          title: Method
+        value_limit:
+          type: string
+          title: Value Limit
+        args:
+          items:
+            $ref: '#/components/schemas/routers__tron__session_keys__ArgumentCondition'
+          type: array
+          title: Args
+      type: object
+      required:
+      - to_address
+      title: CallPolicy
+    routers__tron__response__ERC20AssetTrace:
+      properties:
+        trace_type:
+          type: string
+          enum:
+          - AssetTrace
+          title: Trace Type
+          description: type of the trace
+        from_address:
+          type: string
+          title: From Address
+          description: The address where the assets are moved from
+        to_address:
+          type: string
+          title: To Address
+          description: The address where the assets are moved to
+        labels:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__TraceLabels'
+            - type: string
+          type: array
+          title: Labels
+          description: List of labels that describe the trace
+        type:
+          type: string
+          enum:
+          - ERC20AssetTrace
+          title: Type
+          description: The type of the model
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: Description of the asset in the trace
+        diff:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+          title: Diff
+          description: The difference in value for the asset in the trace
+      type: object
+      required:
+      - trace_type
+      - from_address
+      - to_address
+      - type
+      - asset
+      - diff
+      title: ERC20AssetTrace
+    routers__tron__session_keys__ExpirationPolicy:
+      properties:
+        type:
+          type: string
+          enum:
+          - EXPIRATION_POLICY
+          title: Type
+          default: EXPIRATION_POLICY
+        start_time:
+          type: string
+          format: date-time
+          title: Start Time
+        end_time:
+          type: string
+          format: date-time
+          title: End Time
+      type: object
+      title: ExpirationPolicy
+    routers__tron__response__ERC721AddressAssetBalanceChangeDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC721
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC721TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+        balance_changes:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC721BalanceChanges'
+          title: Balance Changes
+          description: shows the balance before making the transaction and after
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: ERC721AddressAssetBalanceChangeDiff
+    routers__tron__response__ERC721ExposureTrace:
+      properties:
+        trace_type:
+          type: string
+          enum:
+          - ExposureTrace
+          title: Trace Type
+          description: type of the trace
+        owner:
+          type: string
+          title: Owner
+          description: The owner of the assets
+        spender:
+          type: string
+          title: Spender
+          description: The spender of the assets
+        type:
+          type: string
+          enum:
+          - ERC721ExposureTrace
+          title: Type
+          description: The type of the model
+        exposed:
+          $ref: '#/components/schemas/routers__tron__response__NonFungibleTokenBalance'
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC721TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: Description of the asset in the trace
+      type: object
+      required:
+      - trace_type
+      - owner
+      - spender
+      - type
+      - asset
+      title: ERC721ExposureTrace
+    routers__tron__response__TraceLabels:
+      type: string
+      enum:
+      - GAS_FEE
+      title: TraceLabels
+      description: Label assigned to a trace entry.
+    routers__tron__transaction__models__Transaction:
+      properties:
+        from:
+          type: string
+          pattern: ^T[1-9A-HJ-NP-Za-km-z]{33}$
+          title: From
+          description: The source address of the transaction in Tron base58 format
+        to:
+          type: string
+          pattern: ^T[1-9A-HJ-NP-Za-km-z]{33}$
+          title: To
+          description: The destination address of the transaction in Tron base58 format
+        data:
+          type: string
+          title: Data
+          description: The encoded call data of the transaction in hex string format
+          default: 0x
+        value:
+          type: string
+          title: Value
+          description: The value of the transaction in Wei in hex string format
+          default: '0x0'
+      type: object
+      required:
+      - from
+      title: Transaction
+    routers__evm__models__ValidationResultType:
+      type: string
+      enum:
+      - Malicious
+      - Warning
+      - Benign
+      - Error
+      title: ValidationResultType
+      description: Overall validation outcome for the scan.
+    routers__tron__response__ERC721Exposure:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__AssetDiffResponse'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: user friendly description of the approval
+        is_approved_for_all:
+          type: boolean
+          title: Is Approved For All
+          description: boolean indicates whether an is_approved_for_all function was used (missing in case of ERC20 / ERC1155)
+      type: object
+      required:
+      - exposure
+      - is_approved_for_all
+      title: ERC721Exposure
+    Feature:
+      properties:
+        feature_id:
+          $ref: '#/components/schemas/FeatureID'
+          description: Feature identifier
+        type:
+          $ref: '#/components/schemas/FeatureType'
+          description: Type of the feature
+        description:
+          type: string
+          title: Description
+          description: Description of the feature
+      type: object
+      required:
+      - feature_id
+      - type
+      - description
+      title: Feature
+    routers__tron__response__UnsupportedEIP712MessageErrorDetails:
+      properties:
+        code:
+          type: string
+          enum:
+          - UNSUPPORTED_EIP712_MESSAGE
+          title: Code
+          description: The type of the model
+        category:
+          type: string
+          const: INVALID_INPUT
+          title: Category
+          default: INVALID_INPUT
+        domain_name:
+          type: string
+          title: Domain Name
+          description: The domain name that is unsupported
+        message_type:
+          type: string
+          title: Message Type
+          description: The message type that is unsupported
+      type: object
+      required:
+      - code
+      - domain_name
+      - message_type
+      title: UnsupportedEIP712MessageErrorDetails
+    routers__tron__response__Balance:
+      properties:
+        raw_value:
+          type: string
+          title: Raw Value
+          description: The raw value of the balance in hex string format
+        value:
+          type: string
+          title: Value
+          description: The value of the balance in decimal string format
+      type: object
+      required:
+      - raw_value
+      title: Balance
+    FeatureID:
+      type: string
+      enum:
+      - VERIFIED_CONTRACT
+      - UNVERIFIED_CONTRACT
+      - HIGH_TRADE_VOLUME
+      - MARKET_PLACE_SALES_HISTORY
+      - HIGH_REPUTATION_TOKEN
+      - ONCHAIN_ACTIVITY_VALIDATOR
+      - STATIC_CODE_SIGNATURE
+      - KNOWN_MALICIOUS
+      - IS_EOA
+      - IS_CONTRACT
+      - ERC20_CONTRACT
+      - TRUSTED_CONTRACT
+      - BENIGN_CREATOR
+      - METADATA
+      - AIRDROP_PATTERN
+      - IMPERSONATOR
+      - INORGANIC_VOLUME
+      - DYNAMIC_ANALYSIS
+      - CONCENTRATED_SUPPLY_DISTRIBUTION
+      - HONEYPOT
+      - INSUFFICIENT_LOCKED_LIQUIDITY
+      - UNSTABLE_TOKEN_PRICE
+      - RUGPULL
+      - WASH_TRADING
+      - CONSUMER_OVERRIDE
+      - INAPPROPRIATE_CONTENT
+      - HIGH_TRANSFER_FEE
+      - HIGH_BUY_FEE
+      - HIGH_SELL_FEE
+      - UNSELLABLE_TOKEN
+      - IS_MINTABLE
+      - REBASE_TOKEN
+      - LIQUID_STAKING_TOKEN
+      - MODIFIABLE_TAXES
+      - CAN_BLACKLIST
+      - CAN_WHITELIST
+      - HAS_TRADING_COOLDOWN
+      - EXTERNAL_FUNCTIONS
+      - HIDDEN_OWNER
+      - TRANSFER_PAUSEABLE
+      - OWNERSHIP_RENOUNCED
+      - OWNER_CAN_CHANGE_BALANCE
+      - PROXY_CONTRACT
+      - SIMILAR_MALICIOUS_CONTRACT
+      - IMPERSONATOR_SENSITIVE_ASSET
+      - IMPERSONATOR_HIGH_CONFIDENCE
+      - IMPERSONATOR_MEDIUM_CONFIDENCE
+      - IMPERSONATOR_LOW_CONFIDENCE
+      - IMPERSONATION_PROTECTED
+      - FAKE_VOLUME
+      - HIDDEN_SUPPLY_BY_KEY_HOLDER
+      - FAKE_TRADE_MAKER_COUNT
+      - TRANSFER_FROM_REVERTS
+      - OFFENSIVE_TOKEN_METADATA
+      - LISTED_ON_CENTRALIZED_EXCHANGE
+      - SANCTIONED_CREATOR
+      - SPAM_TEXT
+      - BONDING_CURVE_TOKEN
+      - HEAVILY_SNIPED
+      - SOLANA_TOKEN_2022
+      - POST_DUMP
+      - DEX_PAID
+      - LOW_REPUTATION_CREATOR
+      - SNIPE_AT_MINT
+      - TRANSFER_HOOK_ENABLED
+      - CONFIDENTIAL_TRANSFERS_ENABLED
+      - NON_TRANSERABLE
+      - TOKEN_BACKDOOR
+      - CREATED_VIA_LAUNCHPAD
+      - COMPROMISED_TOKEN
+      - LONG_FUND_TRAIL
+      title: FeatureID
+    routers__tron__response__NativeBalanceChanges:
+      properties:
+        before:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+          title: Before
+          description: balance of the account before making the transaction
+        after:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+          title: After
+          description: balance of the account after making the transaction
+      type: object
+      required:
+      - before
+      - after
+      title: NativeBalanceChanges
+    routers__tron__response__TransactionValidationSuccessResultType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      title: TransactionValidationSuccessResultType
+      description: Result type returned when validation succeeds.
+    routers__tron__response__TransactionSimulation:
+      properties:
+        status:
+          type: string
+          enum:
+          - Success
+          title: Status
+          description: A string indicating if the simulation was successful or not.
+        assets_diffs:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/routers__tron__response__ERC20AddressAssetDiff'
+              - $ref: '#/components/schemas/routers__tron__response__ERC721AddressAssetDiff'
+              - $ref: '#/components/schemas/routers__tron__response__ERC1155AddressAssetDiff'
+              - $ref: '#/components/schemas/routers__tron__response__NativeAddressAssetDiff'
+            type: array
+          type: object
+          title: Assets Diffs
+          description: dictionary describes the assets differences as a result of this transaction for every involved address
+        transaction_actions:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__TransactionAction'
+            - type: string
+          type: array
+          title: Transaction Actions
+          description: Describes the nature of the transaction and what happened as part of it
+        total_usd_diff:
+          additionalProperties:
+            $ref: '#/components/schemas/routers__tron__response__USDDiff'
+          type: object
+          title: Total Usd Diff
+          description: dictionary represents the usd value each address gained / lost during this transaction
+        exposures:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/routers__tron__response__ERC20AddressExposure'
+              - $ref: '#/components/schemas/routers__tron__response__ERC721AddressExposure'
+              - $ref: '#/components/schemas/routers__tron__response__ERC1155AddressExposure'
+            type: array
+          type: object
+          title: Exposures
+          description: dictionary describes the exposure differences as a result of this transaction for every involved address (as a result of any approval / setApproval / permit function)
+        total_usd_exposure:
+          additionalProperties:
+            additionalProperties:
+              type: string
+            type: object
+          type: object
+          title: Total Usd Exposure
+          description: a dictionary representing the usd value each address is exposed to, split by spenders
+        address_details:
+          additionalProperties:
+            $ref: '#/components/schemas/routers__tron__response__AddressDetails'
+          type: object
+          title: Address Details
+          description: a dictionary including additional information about each relevant address in the transaction.
+        account_summary:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__AccountSummary'
+          title: Account Summary
+          description: Account summary for the account address. account address is determined implicit by the `from` field in the transaction request, or explicit by the account_address field in the request.
+        params:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__JsonRPCParams'
+          title: Params
+          description: The parameters of the transaction that was simulated.
+        contract_management:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/routers__tron__response__ProxyUpgradeManagement'
+              - $ref: '#/components/schemas/routers__tron__response__OwnershipChangeManagement'
+              - $ref: '#/components/schemas/routers__tron__response__ModulesChangeManagement'
+              - $ref: '#/components/schemas/routers__tron__response__SetCodeAccountManagement'
+              - $ref: '#/components/schemas/routers__tron__response__ContractCreation'
+            type: array
+          type: object
+          title: Contract Management
+          description: Describes the state differences as a result of this transaction for every involved address
+        session_key:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/routers__tron__session_keys__SessionKey'
+            type: array
+          type: object
+          title: Session Key
+          description: Session keys created in this transaction per address
+        missing_balances:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__MissingBalance'
+          type: array
+          title: Missing Balances
+          description: Missing balances in the transaction
+        simulation_run_count:
+          type: integer
+          title: Simulation Run Count
+          description: The number of times the simulation ran until success
+      type: object
+      required:
+      - status
+      - assets_diffs
+      - transaction_actions
+      - total_usd_diff
+      - exposures
+      - total_usd_exposure
+      - address_details
+      - account_summary
+      - session_key
+      title: TransactionSimulation
+    routers__tron__response__ERC721AddressAssetDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC721
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC721TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: ERC721AddressAssetDiff
+    routers__tron__response__TransactionScanResponse:
+      properties:
+        validation:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__response__TransactionValidation'
+          - $ref: '#/components/schemas/routers__tron__response__TransactionValidationError'
+          title: Validation
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__response__TransactionSimulation'
+          - $ref: '#/components/schemas/routers__tron__response__TransactionSimulationError'
+          title: Simulation
+        events:
+          items:
+            $ref: '#/components/schemas/routers__tron__models__TransactionScanEvent'
+          type: array
+          title: Events
+        gas_estimation:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__models__TransactionScanGasEstimation'
+          - $ref: '#/components/schemas/routers__tron__models__TransactionScanGasEstimationError'
+          title: Gas Estimation
+        user_operation_gas_estimation:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__models__UserOperationV6GasEstimation'
+          - $ref: '#/components/schemas/routers__tron__models__UserOperationV7GasEstimation'
+          - $ref: '#/components/schemas/routers__tron__models__TransactionScanGasEstimationError'
+          title: User Operation Gas Estimation
+        features:
+          type: object
+          title: Features
+        block:
+          type: string
+          title: Block
+        chain:
+          type: string
+          title: Chain
+        account_address:
+          type: string
+          title: Account Address
+      type: object
+      required:
+      - block
+      - chain
+      title: TransactionScanResponse
+    routers__tron__response__JsonRPCParams:
+      properties:
+        from:
+          type: string
+          title: From
+          description: The address the transaction is sent from.
+        to:
+          type: string
+          title: To
+          description: The address the transaction is directed to.
+        value:
+          type: string
+          title: Value
+          description: The value to be sent.
+        data:
+          type: string
+          title: Data
+          description: The data to be sent.
+        gas:
+          type: string
+          title: Gas
+          description: The gas to be sent.
+        gas_price:
+          type: string
+          title: Gas Price
+          description: The gas price to be sent.
+        block_tag:
+          type: string
+          title: Block Tag
+          description: The block tag to be sent.
+        chain:
+          type: string
+          title: Chain
+          description: The chain to be sent.
+        calldata:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__CallData'
+          title: Calldata
+          description: The calldata to be sent.
+        user_operation_calldata:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__CallData'
+          title: User Operation Calldata
+          description: The user operation call data to be sent.
+      type: object
+      title: JsonRPCParams
+    routers__tron__response__TransactionSimulationError:
+      properties:
+        status:
+          type: string
+          enum:
+          - Error
+          title: Status
+          description: A string indicating if the simulation was successful or not.
+        error:
+          type: string
+          title: Error
+          description: An error message if the simulation failed.
+        error_details:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__response__GeneralInsufficientFundsErrorDetails'
+          - $ref: '#/components/schemas/routers__tron__response__GeneralInvalidAddressErrorDetails'
+          - $ref: '#/components/schemas/routers__tron__response__GenericErrorDetails'
+          - $ref: '#/components/schemas/routers__tron__response__UnsupportedEIP712MessageErrorDetails'
+          title: Error Details
+          description: Error details if the simulation failed.
+        description:
+          type: string
+          title: Description
+          description: A string explaining why the transaction failed
+      type: object
+      required:
+      - status
+      - error
+      - description
+      title: TransactionSimulationError
+    routers__tron__response__FungibleTokenBalance:
+      properties:
+        raw_value:
+          type: string
+          title: Raw Value
+        value:
+          type: number
+          title: Value
+        usd_price:
+          type: number
+          title: Usd Price
+      type: object
+      required:
+      - raw_value
+      title: FungibleTokenBalance
+    routers__tron__session_keys__GasPolicy:
+      properties:
+        type:
+          type: string
+          enum:
+          - GAS_POLICY
+          title: Type
+          default: GAS_POLICY
+        value_limit:
+          type: string
+          title: Value Limit
+      type: object
+      required:
+      - value_limit
+      title: GasPolicy
+    routers__tron__models__MetadataDapp:
+      properties:
+        domain:
+          type: string
+          title: Domain
+          description: The full URL of the DApp or website that initiated the transaction, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
+      type: object
+      required:
+      - domain
+      title: MetadataDapp
+    routers__tron__models__TransactionScanLogParamInfo:
+      properties:
+        type:
+          type: string
+          title: Type
+        value:
+          anyOf:
+          - type: string
+          - type: object
+          - items: {}
+            type: array
+          title: Value
+        internalType:
+          type: string
+          title: Internaltype
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - type
+      - value
+      title: TransactionScanLogParamInfo
+    routers__tron__response__TransactionScanFeatureType:
+      type: string
+      enum:
+      - Malicious
+      - Warning
+      - Benign
+      - Info
+      title: TransactionScanFeatureType
+      description: Security result of a transaction scan feature.
+    routers__tron__token_details__NativeAssetDetails:
+      properties:
+        type:
+          type: string
+          enum:
+          - NATIVE
+          title: Type
+          description: asset type.
+        name:
+          type: string
+          title: Name
+          description: string represents the name of the asset
+        symbol:
+          type: string
+          title: Symbol
+          description: asset's symbol name
+        chain_name:
+          type: string
+          title: Chain Name
+        chain_id:
+          type: integer
+          title: Chain Id
+        decimals:
+          type: integer
+          title: Decimals
+        logo_url:
+          type: string
+          title: Logo Url
+      type: object
+      required:
+      - type
+      - chain_name
+      - chain_id
+      - decimals
+      - logo_url
+      title: NativeAssetDetails
+    AddressValidation:
+      properties:
+        result_type:
+          allOf:
+          - $ref: '#/components/schemas/routers__evm__models__ValidationResultType'
+          description: A string indicating if the transaction is safe to sign or not.
+        features:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/Feature'
+            type: array
+          - items:
+              type: string
+            type: array
+          title: Features
+          description: A list of features explaining the scan result (each feature includes a type, feature_id, and description).
+        error:
+          type: string
+          title: Error
+          description: An error message returned when `result_type` is `Error`.
+      type: object
+      required:
+      - result_type
+      title: AddressValidation
+    routers__tron__response__ERC1155Asset:
+      properties:
+        type:
+          type: string
+          enum:
+          - ERC1155
+          title: Type
+          description: The type of the model
+        token_id:
+          type: integer
+          title: Token Id
+          description: Token Id
+        details:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC1155TokenDetails'
+          title: Details
+          description: Details
+      type: object
+      required:
+      - type
+      - token_id
+      - details
+      title: ERC1155Asset
+    routers__tron__response__ERC1155Exposure:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__AssetDiffResponse'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: user friendly description of the approval
+        is_approved_for_all:
+          type: boolean
+          title: Is Approved For All
+          description: boolean indicates whether an is_approved_for_all function was used (missing in case of ERC20 / ERC1155)
+      type: object
+      required:
+      - exposure
+      - is_approved_for_all
+      title: ERC1155Exposure
+    routers__tron__response__MissingBalance:
+      properties:
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NativeAssetDetails'
+          title: Asset
+          description: The asset that is missing balance
+        required_balance:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__Balance'
+          title: Required Balance
+          description: The required balance of the asset for this action
+        current_balance:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__Balance'
+          title: Current Balance
+          description: The account address's current balance of the asset
+        missing_balance:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__Balance'
+          title: Missing Balance
+          description: The account address's missing balance of the asset
+      type: object
+      required:
+      - asset
+      - required_balance
+      - current_balance
+      - missing_balance
+      title: MissingBalance
+    routers__tron__response__USDDiff:
+      properties:
+        in:
+          type: string
+          title: In
+        out:
+          type: string
+          title: Out
+        total:
+          type: string
+          title: Total
+      type: object
+      required:
+      - in
+      - out
+      - total
+      title: USDDiff
+    routers__tron__response__GeneralInvalidAddressErrorDetails:
+      properties:
+        code:
+          type: string
+          enum:
+          - GENERAL_INVALID_ADDRESS
+          title: Code
+          description: The type of the model
+        category:
+          type: string
+          const: INVALID_INPUT
+          title: Category
+          default: INVALID_INPUT
+        address:
+          type: string
+          title: Address
+          description: The address that is invalid
+      type: object
+      required:
+      - code
+      - address
+      title: GeneralInvalidAddressErrorDetails
+    routers__tron__response__ERC20AddressExposure:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC20
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: TokenDetailsResponse
+          description: description of the asset for the current diff
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/routers__tron__response__ERC20Exposure'
+          type: object
+          title: Spenders
+          description: dictionary of spender addresses where the exposure has changed during this transaction for the current address and asset
+      type: object
+      required:
+      - asset_type
+      - asset
+      - spenders
+      title: ERC20AddressExposure
+    routers__tron__models__UserOperationV6GasEstimation:
+      properties:
+        status:
+          type: string
+          enum:
+          - Success
+          title: Status
+        pre_verification_gas_estimate:
+          type: string
+          title: Pre Verification Gas Estimate
+        verification_gas_estimate:
+          type: string
+          title: Verification Gas Estimate
+        call_gas_estimate:
+          type: string
+          title: Call Gas Estimate
+      type: object
+      required:
+      - status
+      - pre_verification_gas_estimate
+      - verification_gas_estimate
+      - call_gas_estimate
+      title: UserOperationV6GasEstimation
+    routers__tron__session_keys__ArgumentCondition:
+      properties:
+        index:
+          type: integer
+          title: Index
+        condition:
+          $ref: '#/components/schemas/routers__tron__session_keys__Condition'
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - index
+      - condition
+      - value
+      title: ArgumentCondition
+    routers__tron__response__ERC20AddressAssetDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC20
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: ERC20AddressAssetDiff
+    routers__tron__token_details__ERC20TokenDetails:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: string represents the name of the asset
+        symbol:
+          type: string
+          title: Symbol
+          description: asset's symbol name
+        address:
+          type: string
+          title: Address
+          description: address of the token
+        logo_url:
+          type: string
+          title: Logo Url
+          description: url of the token logo
+        type:
+          type: string
+          enum:
+          - ERC20
+          title: Type
+          description: asset type.
+        decimals:
+          type: integer
+          title: Decimals
+          description: asset's decimals
+      type: object
+      required:
+      - address
+      - type
+      - decimals
+      title: ERC20TokenDetails
+    routers__tron__token_details__ERC1155TokenDetails:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: string represents the name of the asset
+        symbol:
+          type: string
+          title: Symbol
+          description: asset's symbol name
+        address:
+          type: string
+          title: Address
+          description: address of the token
+        logo_url:
+          type: string
+          title: Logo Url
+          description: url of the token logo
+        type:
+          type: string
+          enum:
+          - ERC1155
+          title: Type
+          description: asset type.
+      type: object
+      required:
+      - address
+      - type
+      title: ERC1155TokenDetails
+    routers__tron__transaction__models__TransactionRequest:
+      properties:
+        options:
+          items:
+            $ref: '#/components/schemas/routers__tron__models__ValidationOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          description: List of one or more of options for the desired output. "simulation" - include simulation output in your response. "validation" - include security validation of the transaction in your response. "gas_estimation" - include gas estimation result in your response. Default is ["validation"]
+          default:
+          - validation
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__models__MetadataNonDapp'
+          - $ref: '#/components/schemas/routers__tron__models__MetadataDapp'
+          title: Metadata
+          description: Additional context for the scan (e.g., dapp URL/domain, integration source). Used to enrich results and reduce false positives/negatives.
+        state_override:
+          additionalProperties:
+            $ref: '#/components/schemas/routers__tron__models__AddressStateOverride'
+          type: object
+          title: State Override
+          description: Override the state of the chain. This is useful for testing purposes.
+        simulate_with_estimated_gas:
+          type: boolean
+          title: Simulate With Estimated Gas
+          description: Simulate transactions using gas estimation result. This requires "gas_estimation" option to be enabled.
+          default: false
+        account_address:
+          type: string
+          pattern: ^T[1-9A-HJ-NP-Za-km-z]{33}$
+          title: Account Address
+          description: The address to relate the transaction to in Tron base58 format. Account address determines in which perspective the transaction is simulated and validated.
+        data:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__transaction__models__Transaction'
+          title: Data
+          description: Transaction parameters
+      type: object
+      required:
+      - metadata
+      - account_address
+      - data
+      title: TransactionRequest
+    routers__tron__response__ERC721Asset:
+      properties:
+        type:
+          type: string
+          enum:
+          - ERC721
+          title: Type
+          description: The type of the model
+        token_id:
+          type: integer
+          title: Token Id
+          description: Token Id
+        details:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC1155TokenDetails'
+          title: Details
+          description: Details
+      type: object
+      required:
+      - type
+      - token_id
+      - details
+      title: ERC721Asset
+    routers__tron__response__NativeAddressAssetDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - NATIVE
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__NativeAssetDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: NativeAddressAssetDiff
+    routers__tron__response__ERC20BalanceChanges:
+      properties:
+        before:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+          title: Before
+          description: balance of the account before making the transaction
+        after:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+          title: After
+          description: balance of the account after making the transaction
+      type: object
+      required:
+      - before
+      - after
+      title: ERC20BalanceChanges
+    routers__tron__response__ERC20AddressAssetBalanceChangeDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC20
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+        balance_changes:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC20BalanceChanges'
+          title: Balance Changes
+          description: shows the balance before making the transaction and after
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: ERC20AddressAssetBalanceChangeDiff
+    routers__tron__response__ContractCreation:
+      properties:
+        type:
+          type: string
+          enum:
+          - CONTRACT_CREATION
+          title: Type
+          description: The type of the state change
+        deployer:
+          type: string
+          title: Deployer
+          description: The direct creator address of the new contract
+      type: object
+      required:
+      - type
+      - deployer
+      title: ContractCreation
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    routers__tron__response__AccountSummary:
+      properties:
+        assets_diffs:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__ERC20AddressAssetBalanceChangeDiff'
+            - $ref: '#/components/schemas/routers__tron__response__ERC721AddressAssetBalanceChangeDiff'
+            - $ref: '#/components/schemas/routers__tron__response__ERC1155AddressAssetBalanceChangeDiff'
+            - $ref: '#/components/schemas/routers__tron__response__NativeAddressAssetBalanceChangeDiff'
+          type: array
+          title: Assets Diffs
+          description: All assets diffs related to the account address
+        traces:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__ERC20AssetTrace'
+            - $ref: '#/components/schemas/routers__tron__response__ERC721AssetTrace'
+            - $ref: '#/components/schemas/routers__tron__response__ERC1155AssetTrace'
+            - $ref: '#/components/schemas/routers__tron__response__NativeAssetTrace'
+            - $ref: '#/components/schemas/routers__tron__response__ERC20ExposureTrace'
+            - $ref: '#/components/schemas/routers__tron__response__ERC721ExposureTrace'
+            - $ref: '#/components/schemas/routers__tron__response__ERC1155ExposureTrace'
+          type: array
+          title: Traces
+          description: All assets traces related to the account address
+        total_usd_diff:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__USDDiff'
+          title: Total Usd Diff
+          description: Total usd diff related to the account address
+        exposures:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__ERC20AddressExposure'
+            - $ref: '#/components/schemas/routers__tron__response__ERC721AddressExposure'
+            - $ref: '#/components/schemas/routers__tron__response__ERC1155AddressExposure'
+          type: array
+          title: Exposures
+          description: All assets exposures related to the account address
+        total_usd_exposure:
+          additionalProperties:
+            type: string
+          type: object
+          title: Total Usd Exposure
+          description: Total usd exposure related to the account address
+      type: object
+      required:
+      - assets_diffs
+      - traces
+      - total_usd_diff
+      - exposures
+      - total_usd_exposure
+      title: AccountSummary
+    routers__tron__response__ERC721Diff:
+      properties:
+        usd_price:
+          type: string
+          title: Usd Price
+          description: usd equal of the asset that was transferred from this address
+        summary:
+          type: string
+          title: Summary
+          description: user friendly description of the asset transfer
+        token_id:
+          type: string
+          title: Token Id
+          description: id of the token
+        arbitrary_collection_token:
+          type: boolean
+          title: Arbitrary Collection Token
+          description: Indicates whether the token ID represents an arbitrary token from a collection, unpredictable while running the simulation
+        logo_url:
+          type: string
+          title: Logo Url
+          description: url of the token logo
+      type: object
+      required:
+      - token_id
+      - arbitrary_collection_token
+      title: ERC721Diff
+    routers__tron__response__NativeAssetTrace:
+      properties:
+        trace_type:
+          type: string
+          enum:
+          - AssetTrace
+          title: Trace Type
+          description: type of the trace
+        from_address:
+          type: string
+          title: From Address
+          description: The address where the assets are moved from
+        to_address:
+          type: string
+          title: To Address
+          description: The address where the assets are moved to
+        labels:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__TraceLabels'
+            - type: string
+          type: array
+          title: Labels
+          description: List of labels that describe the trace
+        type:
+          type: string
+          enum:
+          - NativeAssetTrace
+          title: Type
+          description: The type of the model
+        asset:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__NativeAssetDetails'
+          title: Asset
+          description: Description of the asset in the trace
+        diff:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+          title: Diff
+          description: The difference in value for the asset in the trace
+      type: object
+      required:
+      - trace_type
+      - from_address
+      - to_address
+      - type
+      - asset
+      - diff
+      title: NativeAssetTrace
+    routers__tron__models__UserOperationV7GasEstimation:
+      properties:
+        status:
+          type: string
+          enum:
+          - Success
+          title: Status
+        pre_verification_gas_estimate:
+          type: string
+          title: Pre Verification Gas Estimate
+        verification_gas_estimate:
+          type: string
+          title: Verification Gas Estimate
+        call_gas_estimate:
+          type: string
+          title: Call Gas Estimate
+        paymaster_verification_gas_estimate:
+          type: string
+          title: Paymaster Verification Gas Estimate
+      type: object
+      required:
+      - status
+      - pre_verification_gas_estimate
+      - verification_gas_estimate
+      - call_gas_estimate
+      - paymaster_verification_gas_estimate
+      title: UserOperationV7GasEstimation
+    routers__tron__models__AddressStateOverride:
+      properties:
+        balance:
+          type: string
+          title: Balance
+          description: Fake balance to set for the account before executing the call.
+        nonce:
+          type: string
+          title: Nonce
+          description: Fake nonce to set for the account before executing the call.
+        code:
+          type: string
+          title: Code
+          description: Fake EVM bytecode to inject into the account before executing the call.
+        state:
+          additionalProperties:
+            type: string
+          type: object
+          title: State
+          description: Fake key-value mapping to override all slots in the account storage before executing the call.
+        stateDiff:
+          additionalProperties:
+            type: string
+          type: object
+          title: Statediff
+          description: Fake key-value mapping to override individual slots in the account storage before executing the call.
+        movePrecompileToAddress:
+          type: string
+          title: Moveprecompiletoaddress
+          description: Moves precompile to given address
+      type: object
+      title: AddressStateOverride
+    routers__tron__token_details__ERC721TokenDetails:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: string represents the name of the asset
+        symbol:
+          type: string
+          title: Symbol
+          description: asset's symbol name
+        address:
+          type: string
+          title: Address
+          description: address of the token
+        logo_url:
+          type: string
+          title: Logo Url
+          description: url of the token logo
+        type:
+          type: string
+          enum:
+          - ERC721
+          title: Type
+          description: asset type.
+      type: object
+      required:
+      - address
+      - type
+      title: ERC721TokenDetails
+    routers__tron__response__ERC1155AssetTrace:
+      properties:
+        trace_type:
+          type: string
+          enum:
+          - AssetTrace
+          title: Trace Type
+          description: type of the trace
+        from_address:
+          type: string
+          title: From Address
+          description: The address where the assets are moved from
+        to_address:
+          type: string
+          title: To Address
+          description: The address where the assets are moved to
+        labels:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__TraceLabels'
+            - type: string
+          type: array
+          title: Labels
+          description: List of labels that describe the trace
+        type:
+          type: string
+          enum:
+          - ERC1155AssetTrace
+          title: Type
+          description: The type of the model
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC1155TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: Description of the asset in the trace
+        diff:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+          title: Diff
+          description: The difference in value for the asset in the trace
+      type: object
+      required:
+      - trace_type
+      - from_address
+      - to_address
+      - type
+      - asset
+      - diff
+      title: ERC1155AssetTrace
+    routers__tron__response__NonFungibleTokenBalance:
+      properties:
+        token_id:
+          type: string
+          title: Token Id
+        amount:
+          type: integer
+          title: Amount
+        usd_price:
+          type: number
+          title: Usd Price
+        is_mint:
+          type: boolean
+          title: Is Mint
+          default: false
+        logo_url:
+          type: string
+          title: Logo Url
+      type: object
+      required:
+      - token_id
+      - amount
+      title: NonFungibleTokenBalance
+    routers__tron__response__CallData:
+      properties:
+        function_selector:
+          type: string
+          title: Function Selector
+          description: The function selector of the function called in the transaction
+        function_signature:
+          type: string
+          title: Function Signature
+          description: The function signature of the function called in the transaction
+        function_declaration:
+          type: string
+          title: Function Declaration
+          description: The function declaration of the function called in the transaction
+      type: object
+      required:
+      - function_selector
+      title: CallData
+    routers__tron__response__ERC20Diff:
+      properties:
+        usd_price:
+          type: string
+          title: Usd Price
+          description: usd equal of the asset that was transferred from this address
+        summary:
+          type: string
+          title: Summary
+          description: user friendly description of the asset transfer
+        value:
+          type: string
+          title: Value
+          description: value after divided by decimals, that was transferred from this address
+        raw_value:
+          type: string
+          title: Raw Value
+          description: value before divided by decimal, that was transferred from this address
+      type: object
+      required:
+      - raw_value
+      title: ERC20Diff
+    FeatureType:
+      type: string
+      enum:
+      - Benign
+      - Info
+      - Warning
+      - Malicious
+      title: FeatureType
+    routers__tron__session_keys__TransferPolicy:
+      properties:
+        type:
+          type: string
+          enum:
+          - TRANSFER_POLICY
+          title: Type
+          default: TRANSFER_POLICY
+        asset_details:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__NativeAssetDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          title: Asset Details
+        value_limit:
+          type: string
+          title: Value Limit
+        recipient:
+          type: string
+          title: Recipient
+      type: object
+      required:
+      - asset_details
+      title: TransferPolicy
+    routers__tron__models__ValidationOptions:
+      type: string
+      enum:
+      - validation
+      - simulation
+      - events
+      title: ValidationOptions
+      description: Response sections to include (e.g., validation, simulation, events).
+    routers__tron__response__TransactionValidation:
+      properties:
+        status:
+          type: string
+          enum:
+          - Success
+          title: Status
+          description: A string indicating if the simulation was successful or not.
+        result_type:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__TransactionValidationSuccessResultType'
+          description: A string indicating if the transaction is safe to sign or not.
+        description:
+          type: string
+          title: Description
+          description: A textual description that can be presented to the user about what this transaction is doing.
+          default: ''
+        reason:
+          type: string
+          title: Reason
+          description: A textual description about the reasons the transaction was flagged with result_type.
+          default: ''
+        classification:
+          type: string
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+          default: ''
+        features:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__TransactionScanFeature'
+          type: array
+          title: Features
+          description: A list of features about this transaction explaining the validation.
+      type: object
+      required:
+      - status
+      - result_type
+      - features
+      title: TransactionValidation
+    routers__tron__response__AssetDiffResponse:
+      anyOf:
+      - $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+      - $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+      - $ref: '#/components/schemas/routers__tron__response__ERC20Diff'
+      - $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+      title: AssetDiffResponse
+    routers__tron__session_keys__Condition:
+      type: string
+      enum:
+      - UNCONSTRAINED
+      - EQUAL
+      - GREATER
+      - LESS
+      - GREATER_OR_EQUAL
+      - LESS_OR_EQUAL
+      - NOT_EQUAL
+      title: Condition
+      description: Comparison operator used to evaluate an argument/value against a policy constraint.
+    routers__tron__response__SetCodeAccountManagement:
+      properties:
+        type:
+          type: string
+          enum:
+          - SET_CODE_ACCOUNT
+          title: Type
+          description: The type of the state change
+        delegated_address:
+          type: string
+          title: Delegated Address
+          description: The delegated address
+      type: object
+      required:
+      - type
+      - delegated_address
+      title: SetCodeAccountManagement
+    routers__tron__models__TransactionScanEvent:
+      properties:
+        emitter_address:
+          type: string
+          title: Emitter Address
+        emitter_name:
+          type: string
+          title: Emitter Name
+        name:
+          type: string
+          title: Name
+        params:
+          items:
+            $ref: '#/components/schemas/routers__tron__models__TransactionScanLogParamInfo'
+          type: array
+          title: Params
+        topics:
+          items:
+            type: string
+          type: array
+          title: Topics
+        data:
+          type: string
+          title: Data
+      type: object
+      required:
+      - emitter_address
+      - topics
+      - data
+      title: TransactionScanEvent
+    routers__tron__response__NativeDiff:
+      properties:
+        usd_price:
+          type: string
+          title: Usd Price
+          description: usd equal of the asset that was transferred from this address
+        summary:
+          type: string
+          title: Summary
+          description: user friendly description of the asset transfer
+        value:
+          type: string
+          title: Value
+          description: value after divided by decimals, that was transferred from this address
+        raw_value:
+          type: string
+          title: Raw Value
+          description: value before divided by decimal, that was transferred from this address
+      type: object
+      required:
+      - raw_value
+      title: NativeDiff
+    ValidateTronAddress:
+      properties:
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__models__MetadataNonDapp'
+          - $ref: '#/components/schemas/routers__tron__models__MetadataDapp'
+          title: Metadata
+          description: Additional context for the scan (e.g., dapp URL/domain, integration source). Used to enrich results and reduce false positives/negatives.
+        chain:
+          type: string
+          enum:
+          - tron
+          title: Chain
+          description: The chain (tron).
+        address:
+          type: string
+          pattern: ^T[1-9A-HJ-NP-Za-km-z]{33}$
+          title: Address
+          description: The Tron address to validate (base58 format).
+      type: object
+      required:
+      - metadata
+      - chain
+      - address
+      title: ValidateTronAddress
+    routers__tron__response__ERC721AssetTrace:
+      properties:
+        trace_type:
+          type: string
+          enum:
+          - AssetTrace
+          title: Trace Type
+          description: type of the trace
+        from_address:
+          type: string
+          title: From Address
+          description: The address where the assets are moved from
+        to_address:
+          type: string
+          title: To Address
+          description: The address where the assets are moved to
+        labels:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/routers__tron__response__TraceLabels'
+            - type: string
+          type: array
+          title: Labels
+          description: List of labels that describe the trace
+        type:
+          type: string
+          enum:
+          - ERC721AssetTrace
+          title: Type
+          description: The type of the model
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC721TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: Description of the asset in the trace
+        diff:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+          title: Diff
+          description: The difference in value for the asset in the trace
+      type: object
+      required:
+      - trace_type
+      - from_address
+      - to_address
+      - type
+      - asset
+      - diff
+      title: ERC721AssetTrace
+    routers__tron__response__ERC20Exposure:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__AssetDiffResponse'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: user friendly description of the approval
+        approval:
+          type: string
+          title: Approval
+          description: the amount that was asked in the approval request for this spender from the current address and asset
+        approval_usd_price:
+          type: string
+          title: Approval Usd Price
+          description: the usd price of the approval amount
+        expiration:
+          type: string
+          format: date-time
+          title: Expiration
+          description: the expiration time of the permit2 protocol
+      type: object
+      required:
+      - exposure
+      - approval
+      title: ERC20Exposure
+    routers__tron__response__ModulesChange:
+      properties:
+        modules:
+          items:
+            type: string
+          type: array
+          title: Modules
+      type: object
+      required:
+      - modules
+      title: ModulesChange
+    routers__tron__response__ERC1155Diff:
+      properties:
+        usd_price:
+          type: string
+          title: Usd Price
+          description: usd equal of the asset that was transferred from this address
+        summary:
+          type: string
+          title: Summary
+          description: user friendly description of the asset transfer
+        token_id:
+          type: string
+          title: Token Id
+          description: id of the token
+        value:
+          type: string
+          title: Value
+          description: value before divided by decimal, that was transferred from this address
+        arbitrary_collection_token:
+          type: boolean
+          title: Arbitrary Collection Token
+          description: Indicates whether the token ID represents an arbitrary token from a collection, unpredictable while running the simulation
+        logo_url:
+          type: string
+          title: Logo Url
+          description: url of the token logo
+      type: object
+      required:
+      - token_id
+      - value
+      - arbitrary_collection_token
+      title: ERC1155Diff
+    routers__tron__response__ProxyUpgradeManagement:
+      properties:
+        type:
+          type: string
+          enum:
+          - PROXY_UPGRADE
+          title: Type
+          description: The type of the state change
+        before:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__AddressChange'
+          title: Before
+          description: The state before the transaction
+        after:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__AddressChange'
+          title: After
+          description: The state after the transaction
+      type: object
+      required:
+      - type
+      - before
+      - after
+      title: ProxyUpgradeManagement
+    routers__tron__response__ERC721AddressExposure:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC721
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC721TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: TokenDetailsResponse
+          description: description of the asset for the current diff
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/routers__tron__response__ERC721Exposure'
+          type: object
+          title: Spenders
+          description: dictionary of spender addresses where the exposure has changed during this transaction for the current address and asset
+      type: object
+      required:
+      - asset_type
+      - asset
+      - spenders
+      title: ERC721AddressExposure
+    routers__tron__response__ERC1155AddressExposure:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC1155
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC1155TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: TokenDetailsResponse
+          description: description of the asset for the current diff
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/routers__tron__response__ERC1155Exposure'
+          type: object
+          title: Spenders
+          description: dictionary of spender addresses where the exposure has changed during this transaction for the current address and asset
+      type: object
+      required:
+      - asset_type
+      - asset
+      - spenders
+      title: ERC1155AddressExposure
+    routers__tron__response__ERC721BalanceChanges:
+      properties:
+        before:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+          title: Before
+          description: balance of the account before making the transaction
+        after:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC721Diff'
+          title: After
+          description: balance of the account after making the transaction
+      type: object
+      required:
+      - before
+      - after
+      title: ERC721BalanceChanges
+    routers__tron__response__ERC20Asset:
+      properties:
+        type:
+          type: string
+          enum:
+          - ERC20
+          title: Type
+          description: The type of the model
+        details:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          title: Details
+          description: Details
+      type: object
+      required:
+      - type
+      - details
+      title: ERC20Asset
+    routers__tron__response__AddressChange:
+      properties:
+        address:
+          type: string
+          title: Address
+      type: object
+      required:
+      - address
+      title: AddressChange
+    routers__tron__response__GeneralInsufficientFundsErrorDetails:
+      properties:
+        code:
+          type: string
+          enum:
+          - GENERAL_INSUFFICIENT_FUNDS
+          title: Code
+          description: The type of the model
+        category:
+          type: string
+          const: REVERT
+          title: Category
+          default: REVERT
+        account_address:
+          type: string
+          title: Account Address
+          description: The address of the account
+        current_balance:
+          type: string
+          title: Current Balance
+          description: The current balance of the account
+        required_balance:
+          type: string
+          title: Required Balance
+          description: The required balance of the account
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__response__NativeAsset'
+          - $ref: '#/components/schemas/routers__tron__response__ERC20Asset'
+          - $ref: '#/components/schemas/routers__tron__response__ERC721Asset'
+          - $ref: '#/components/schemas/routers__tron__response__ERC1155Asset'
+          title: Asset
+          description: The asset that the account does not have enough balance for
+      type: object
+      required:
+      - code
+      - account_address
+      - asset
+      title: GeneralInsufficientFundsErrorDetails
+    routers__tron__response__ERC20ExposureTrace:
+      properties:
+        trace_type:
+          type: string
+          enum:
+          - ExposureTrace
+          title: Trace Type
+          description: type of the trace
+        owner:
+          type: string
+          title: Owner
+          description: The owner of the assets
+        spender:
+          type: string
+          title: Spender
+          description: The spender of the assets
+        type:
+          type: string
+          enum:
+          - ERC20ExposureTrace
+          title: Type
+          description: The type of the model
+        exposed:
+          $ref: '#/components/schemas/routers__tron__response__FungibleTokenBalance'
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC20TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: Description of the asset in the trace
+      type: object
+      required:
+      - trace_type
+      - owner
+      - spender
+      - type
+      - exposed
+      - asset
+      title: ERC20ExposureTrace
+    routers__tron__token_details__NONERCTokenDetails:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: string represents the name of the asset
+        symbol:
+          type: string
+          title: Symbol
+          description: asset's symbol name
+        address:
+          type: string
+          title: Address
+          description: address of the token
+        logo_url:
+          type: string
+          title: Logo Url
+          description: url of the token logo
+        type:
+          type: string
+          enum:
+          - NONERC
+          title: Type
+          description: asset type.
+      type: object
+      required:
+      - address
+      - type
+      title: NONERCTokenDetails
+    routers__tron__response__GenericErrorDetails:
+      properties:
+        code:
+          type: string
+          title: Code
+          description: The error code
+        category:
+          type: string
+          title: Category
+      type: object
+      required:
+      - code
+      - category
+      title: GenericErrorDetails
+    routers__tron__response__OwnershipChangeManagement:
+      properties:
+        type:
+          type: string
+          enum:
+          - OWNERSHIP_CHANGE
+          title: Type
+          description: The type of the state change
+        before:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__OwnershipChange'
+          title: Before
+          description: The state before the transaction
+        after:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__OwnershipChange'
+          title: After
+          description: The state after the transaction
+      type: object
+      required:
+      - type
+      - before
+      - after
+      title: OwnershipChangeManagement
+    routers__tron__response__NativeAddressAssetBalanceChangeDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - NATIVE
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__NativeAssetDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__NativeDiff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+        balance_changes:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__NativeBalanceChanges'
+          title: Balance Changes
+          description: shows the balance before making the transaction and after
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: NativeAddressAssetBalanceChangeDiff
+    routers__tron__models__MetadataNonDapp:
+      properties:
+        non_dapp:
+          type: boolean
+          enum:
+          - true
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp.
+          default: true
+      type: object
+      title: MetadataNonDapp
+    routers__tron__response__TransactionAction:
+      type: string
+      enum:
+      - mint
+      - stake
+      - swap
+      - native_transfer
+      - token_transfer
+      - approval
+      - set_code_account
+      - proxy_upgrade
+      - ownership_change
+      title: TransactionAction
+      description: Type of action performed in the transaction.
+    routers__tron__response__ERC1155ExposureTrace:
+      properties:
+        trace_type:
+          type: string
+          enum:
+          - ExposureTrace
+          title: Trace Type
+          description: type of the trace
+        owner:
+          type: string
+          title: Owner
+          description: The owner of the assets
+        spender:
+          type: string
+          title: Spender
+          description: The spender of the assets
+        type:
+          type: string
+          enum:
+          - ERC1155ExposureTrace
+          title: Type
+          description: The type of the model
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC1155TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: Description of the asset in the trace
+      type: object
+      required:
+      - trace_type
+      - owner
+      - spender
+      - type
+      - asset
+      title: ERC1155ExposureTrace
+    routers__tron__models__TransactionScanGasEstimation:
+      properties:
+        status:
+          type: string
+          enum:
+          - Success
+          title: Status
+        used:
+          type: string
+          title: Used
+        estimate:
+          type: string
+          title: Estimate
+      type: object
+      required:
+      - status
+      - used
+      - estimate
+      title: TransactionScanGasEstimation
+    routers__tron__response__ERC1155AddressAssetDiff:
+      properties:
+        asset_type:
+          type: string
+          enum:
+          - ERC1155
+          title: Asset Type
+          description: type of the asset for the current diff
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/routers__tron__token_details__ERC1155TokenDetails'
+          - $ref: '#/components/schemas/routers__tron__token_details__NONERCTokenDetails'
+          title: Asset
+          description: description of the asset for the current diff
+        in:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+          type: array
+          title: In
+          description: amount of the asset that was transferred to the address in this transaction
+        out:
+          items:
+            $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+          type: array
+          title: Out
+          description: amount of the asset that was transferred from the address in this transaction
+      type: object
+      required:
+      - asset_type
+      - asset
+      - in
+      - out
+      title: ERC1155AddressAssetDiff
+    routers__tron__models__TransactionScanGasEstimationError:
+      properties:
+        status:
+          type: string
+          enum:
+          - Error
+          title: Status
+        error:
+          type: string
+          title: Error
+      type: object
+      required:
+      - status
+      - error
+      title: TransactionScanGasEstimationError
+    routers__tron__response__ModulesChangeManagement:
+      properties:
+        type:
+          type: string
+          enum:
+          - MODULE_CHANGE
+          title: Type
+          description: The type of the state change
+        before:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ModulesChange'
+          title: Before
+          description: The state before the transaction
+        after:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ModulesChange'
+          title: After
+          description: The state after the transaction
+      type: object
+      required:
+      - type
+      - before
+      - after
+      title: ModulesChangeManagement
+    routers__tron__response__ERC1155BalanceChanges:
+      properties:
+        before:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+          title: Before
+          description: balance of the account before making the transaction
+        after:
+          allOf:
+          - $ref: '#/components/schemas/routers__tron__response__ERC1155Diff'
+          title: After
+          description: balance of the account after making the transaction
+      type: object
+      required:
+      - before
+      - after
+      title: ERC1155BalanceChanges
+    routers__tron__response__AddressDetails:
+      properties:
+        name_tag:
+          type: string
+          title: Name Tag
+          description: known name tag for the address
+        contract_name:
+          type: string
+          title: Contract Name
+          description: contains the contract's name if the address is a verified contract
+        is_eoa:
+          type: boolean
+          title: Is Eoa
+          description: Whether the address is an eoa or a contract
+      type: object
+      title: AddressDetails
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

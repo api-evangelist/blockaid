@@ -1,0 +1,443 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Enrichment API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Enrichment
+paths:
+  /v0/enrichment/account/login:
+    post:
+      tags:
+      - Enrichment
+      summary: Log Account Login
+      description: Logs an account login event.
+      operationId: log-account-login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogAccountLoginRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/enrichment/account/modify:
+    post:
+      tags:
+      - Enrichment
+      summary: Modify Account
+      description: Modifies an account.
+      operationId: modify-account
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - $ref: '#/components/schemas/ModifyWithdrawalAddressRequest'
+              - $ref: '#/components/schemas/ModifyPaymentMethodRequest'
+              title: Request
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/enrichment/report/:
+    post:
+      tags:
+      - Enrichment
+      summary: Report Fraud
+      description: Reports a fraud event.
+      operationId: report-fraud
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnrichmentRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    ModifyPaymentMethodRequest:
+      properties:
+        access_request_type:
+          type: string
+          enum:
+          - ADD_PAYMENT_METHOD
+          title: Access Request Type
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        payment_method:
+          $ref: '#/components/schemas/Payment'
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+      type: object
+      required:
+      - access_request_type
+      - account
+      - payment_method
+      - event_time
+      title: ModifyPaymentMethodRequest
+    EnrichmentRequest:
+      properties:
+        report:
+          $ref: '#/components/schemas/EnrichmentReportAddresses'
+        metadata:
+          $ref: '#/components/schemas/EnrichmentReportMetadata'
+      type: object
+      required:
+      - report
+      - metadata
+      title: EnrichmentRequest
+    PaymentMethod:
+      type: string
+      enum:
+      - credit_card
+      - wire
+      - swift
+      - iban
+      title: PaymentMethod
+      description: Payment method used for billing.
+    routers__exchange_protection__account__models__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+        user_country_code:
+          type: string
+          title: User Country Code
+          default: US
+      type: object
+      required:
+      - account_id
+      title: Account
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    EnrichmentReportAddress:
+      properties:
+        chain:
+          $ref: '#/components/schemas/SupportedChains'
+        address:
+          type: string
+          title: Address
+      type: object
+      required:
+      - chain
+      - address
+      title: EnrichmentReportAddress
+    Payment:
+      properties:
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        currency:
+          type: string
+          title: Currency
+      type: object
+      required:
+      - payment_method
+      - currency
+      title: Payment
+    routers__exchange_protection__account__models__AddressDetails:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          type: string
+          title: Chain
+        asset:
+          type: string
+          title: Asset
+      type: object
+      required:
+      - address
+      - chain
+      - asset
+      title: AddressDetails
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    SupportedChains:
+      type: string
+      enum:
+      - arbitrum
+      - avalanche
+      - base
+      - base-sepolia
+      - bsc
+      - ethereum
+      - ethereum-sepolia
+      - optimism
+      - polygon
+      - zksync
+      - zksync-sepolia
+      - zora
+      - linea
+      - blast
+      - scroll
+      - avalanche-fuji
+      - degen
+      - gnosis
+      - worldchain
+      - soneium-minato
+      - ronin
+      - apechain
+      - berachain
+      - unknown
+      - ink-sepolia
+      - ink
+      - abstract
+      - abstract-testnet
+      - metacade
+      - metacade-testnet
+      - soneium
+      - unichain
+      - lordchain-testnet
+      - lordchain
+      - sei
+      - flow-evm
+      - hyperevm
+      - katana
+      - plume
+      - solana
+      - stellar
+      - bitcoin
+      - xlayer
+      - monad
+      - monad-testnet
+      - tempo
+      - tempo-testnet
+      - kite-ai
+      - kaia
+      - plasma
+      - mantle
+      - robinhood
+      - arc
+      title: SupportedChains
+      description: Supported chain identifiers.
+    LogAccountLoginRequest:
+      properties:
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+      type: object
+      required:
+      - account
+      - event_time
+      title: LogAccountLoginRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EnrichmentReportMetadata:
+      properties:
+        account:
+          $ref: '#/components/schemas/EnrichmentReportAccount'
+      type: object
+      required:
+      - account
+      title: EnrichmentReportMetadata
+    EnrichmentReportSource:
+      type: string
+      enum:
+      - user_report
+      - internal_system_report
+      - manual_report
+      title: EnrichmentReportSource
+      description: Source of an enrichment report.
+    ModifyWithdrawalAddressRequest:
+      properties:
+        access_request_type:
+          type: string
+          enum:
+          - ADD_WITHDRAWAL_ADDRESS
+          title: Access Request Type
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        address_details:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__AddressDetails'
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+      type: object
+      required:
+      - access_request_type
+      - account
+      - address_details
+      - event_time
+      title: ModifyWithdrawalAddressRequest
+    EnrichmentReportAccount:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+        account_creation_timestamp:
+          type: string
+          title: Account Creation Timestamp
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+        user_country_code:
+          type: string
+          title: User Country Code
+      type: object
+      required:
+      - account_id
+      - user_country_code
+      title: EnrichmentReportAccount
+    EnrichmentReportAddresses:
+      properties:
+        source:
+          allOf:
+          - $ref: '#/components/schemas/EnrichmentReportSource'
+          description: The source of the fraud report
+          default: user_report
+        addresses:
+          items:
+            $ref: '#/components/schemas/EnrichmentReportAddress'
+          type: array
+          title: Addresses
+        fraud_urls:
+          items:
+            type: string
+          type: array
+          title: Fraud Urls
+          description: URLs that are associated with the fraud report
+      type: object
+      required:
+      - addresses
+      title: EnrichmentReportAddresses
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

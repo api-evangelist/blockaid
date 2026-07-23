@@ -1,0 +1,123 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Scan Feedback API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Scan Feedback
+paths:
+  /v0/scan/status/:
+    post:
+      tags:
+      - Scan Feedback
+      summary: Scan Status
+      description: Report whether the end-user accepted the Blockaid classification on the entity being scanned.
+      operationId: scan-status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScanStatusRequest'
+            examples:
+              Accepted example:
+                summary: Accepted Example - the end-user accepted Blockaid's malicious warning
+                value:
+                  request_id: 7f959417-76c1-4c4d-89e8-5fdedab76a8d
+                  status: accepted
+              Rejected example:
+                summary: Rejected Example - the end-user rejected Blockaid's malicious warning and decided to proceed anyway
+                value:
+                  request_id: 4d076fe3-1bb7-4939-afc6-b5dc809a7040
+                  status: rejected
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    ScanStatus:
+      type: string
+      enum:
+      - accepted
+      - rejected
+      title: ScanStatus
+      description: Status of a scan-status lookup request.
+    ScanStatusRequest:
+      properties:
+        request_id:
+          type: string
+          title: Request Id
+          description: The x-request-id header returned from the previous Blockaid api request
+        status:
+          $ref: '#/components/schemas/ScanStatus'
+      type: object
+      required:
+      - request_id
+      - status
+      title: ScanStatusRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

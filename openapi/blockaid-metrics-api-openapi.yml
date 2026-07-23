@@ -1,0 +1,838 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Metrics API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Metrics
+paths:
+  /v0/platform/metrics:
+    post:
+      summary: Create Metric
+      deprecated: false
+      description: Create a metric definition that can be used by monitoring rules.
+      tags:
+      - Metrics
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Display name for the metric.
+                data:
+                  $ref: '#/components/schemas/MetricsRequest'
+                  description: Metric definition payload.
+              required:
+              - name
+              - data
+            examples:
+              Create Metric Example:
+                summary: Create metric
+                value:
+                  name: Outbound Transfer Metric
+                  data:
+                    type: transfer
+                    from:
+                      operator: in
+                      target:
+                      - type: asset_id
+                        identifier: asset_123
+                    to:
+                      operator: in
+                      target:
+                      - type: tag
+                        identifier: treasury
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricObject'
+              example:
+                id: met_123
+                name: Outbound Transfer Metric
+                data:
+                  type: transfer
+                  from:
+                    operator: in
+                    target:
+                    - type: asset_id
+                      identifier: asset_123
+                  to:
+                    operator: in
+                    target:
+                    - type: tag
+                      identifier: treasury
+                created_at: '2026-02-11T12:00:00Z'
+                added_by: api
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/metrics/{id}:
+    patch:
+      summary: Update Metric
+      deprecated: false
+      description: Update a metric by ID.
+      tags:
+      - Metrics
+      parameters:
+      - name: id
+        in: path
+        description: The metric's ID.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Updated display name for the metric.
+                data:
+                  $ref: '#/components/schemas/MetricsRequest'
+                  description: Updated metric definition payload.
+            examples:
+              Update Metric Example:
+                summary: Update metric
+                value:
+                  name: Outbound Transfer Metric v2
+                  data:
+                    type: transfer
+                    from:
+                      operator: in
+                      target:
+                      - type: asset_id
+                        identifier: asset_123
+                    to:
+                      operator: in
+                      target:
+                      - type: tag
+                        identifier: treasury
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricObject'
+              example:
+                id: met_123
+                name: Outbound Transfer Metric v2
+                data:
+                  type: transfer
+                  from:
+                    operator: in
+                    target:
+                    - type: asset_id
+                      identifier: asset_123
+                  to:
+                    operator: in
+                    target:
+                    - type: tag
+                      identifier: treasury
+                created_at: '2026-02-11T12:00:00Z'
+                added_by: api
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    get:
+      summary: Get Metric
+      deprecated: false
+      description: Fetch a single metric by ID.
+      tags:
+      - Metrics
+      parameters:
+      - name: id
+        in: path
+        description: The metric's ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricObject'
+              example:
+                id: met_123
+                name: Outbound Transfer Metric
+                data:
+                  type: transfer
+                  from:
+                    operator: in
+                    target:
+                    - type: asset_id
+                      identifier: asset_123
+                  to:
+                    operator: in
+                    target:
+                    - type: tag
+                      identifier: treasury
+                created_at: '2026-02-11T12:00:00Z'
+                added_by: api
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+    delete:
+      summary: Delete Metric
+      deprecated: false
+      description: Remove a metric by ID.
+      tags:
+      - Metrics
+      parameters:
+      - name: id
+        in: path
+        description: The metric's ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+              example: {}
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+  /v0/platform/metrics/search:
+    post:
+      summary: Search Metrics
+      deprecated: false
+      description: Search metric definitions with pagination and sorting controls.
+      tags:
+      - Metrics
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                page_size:
+                  type: integer
+                  description: Number of results returned per page.
+                page:
+                  type: integer
+                  description: Page number to return.
+                sort:
+                  type: array
+                  description: Sorting rules applied to the result set.
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                        description: Field to sort by.
+                        enum:
+                        - id
+                        - created_at
+                      operator:
+                        type: string
+                        description: Sort direction.
+                        enum:
+                        - asc
+                        - desc
+                    required:
+                    - field
+                    - operator
+                filter:
+                  type: object
+                  description: Optional filter criteria.
+                  properties:
+                    name:
+                      type: object
+                      description: Filter by metric name. Exactly one operator must be provided.
+                      properties:
+                        eq:
+                          type: string
+                          description: Exact match.
+                        in:
+                          type: array
+                          items:
+                            type: string
+                          description: Match any value in the list.
+                        contains:
+                          type: string
+                          description: Substring match (case-insensitive).
+                        contains_all:
+                          type: array
+                          items:
+                            type: string
+                          description: Must contain all specified words.
+                    id:
+                      type: object
+                      description: Filter by metric ID. Only eq and in supported.
+                      properties:
+                        eq:
+                          type: string
+                          description: Exact match.
+                        in:
+                          type: array
+                          items:
+                            type: string
+                          description: Match any value in the list.
+              required:
+              - page_size
+              - page
+              - sort
+            examples:
+              Search Metrics Example:
+                summary: Search metrics
+                value:
+                  page_size: 20
+                  page: 1
+                  sort:
+                  - field: created_at
+                    operator: desc
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MetricObject'
+                    description: Metric objects returned for this page.
+                  page:
+                    type: integer
+                    description: Current page number in the response.
+                  total:
+                    type: integer
+                    description: Total number of matching results.
+                  pages:
+                    type: integer
+                    description: Total number of pages available.
+                  size:
+                    type: integer
+                    description: Number of objects returned in this page.
+                required:
+                - items
+                - total
+                - page
+                - pages
+                - size
+              example:
+                items:
+                - id: met_123
+                  name: Outbound Transfer Metric
+                  data:
+                    type: transfer
+                    from:
+                      operator: in
+                      target:
+                      - type: asset_id
+                        identifier: asset_123
+                    to:
+                      operator: in
+                      target:
+                      - type: tag
+                        identifier: treasury
+                  created_at: '2026-02-11T12:00:00Z'
+                  added_by: api
+                page: 1
+                total: 1
+                pages: 1
+                size: 1
+          headers: {}
+      security:
+      - APIKey: []
+      - ClientID: []
+      - JWT: []
+components:
+  schemas:
+    AssetIDTarget:
+      title: Asset ID Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_id
+          description: Type discriminator for this object.
+          enum:
+          - asset_id
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    MetricsRequest:
+      title: Metrics Request
+      description: Union of supported metric definition payloads.
+      anyOf:
+      - $ref: '#/components/schemas/ContractCallMetric'
+      - $ref: '#/components/schemas/ReadObjectMetric'
+      - $ref: '#/components/schemas/APICallMetric'
+      - $ref: '#/components/schemas/TransferMetric'
+      - $ref: '#/components/schemas/ComputedMetric'
+      - $ref: '#/components/schemas/EventMetric'
+      - $ref: '#/components/schemas/SolanaAccountInfoReadMetric'
+      - $ref: '#/components/schemas/SolanaInstructionMetric'
+    AuthorizationHeaderAuthentication:
+      type: object
+      properties:
+        type:
+          type: string
+          const: authorization_header
+          description: Type discriminator for this object.
+        value:
+          type: string
+          description: Comparison value.
+      required:
+      - type
+      - value
+    ContractCallMetric:
+      title: Contract Call Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: contract_call
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        function_name:
+          type: string
+          description: Contract function name to invoke.
+        function_args:
+          type: array
+          items:
+            type: string
+          description: Function arguments to pass.
+        return_field_index:
+          type: integer
+          default: 0
+          description: Index of the returned field to read.
+      required:
+      - type
+      - target
+      - function_name
+    MetricObject:
+      title: Metric Object
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the metric.
+        name:
+          type: string
+          description: Display name of the metric.
+        data:
+          $ref: '#/components/schemas/MetricsResponse'
+          description: Metric definition details.
+        created_at:
+          type: string
+          description: Timestamp for created at.
+        added_by:
+          type: string
+          description: Actor that added by this record.
+      required:
+      - id
+      - name
+      - data
+      - created_at
+      - added_by
+    Authentication:
+      anyOf:
+      - $ref: '#/components/schemas/HMACAuthentication'
+      - $ref: '#/components/schemas/AuthorizationHeaderAuthentication'
+      - $ref: '#/components/schemas/APIKeyAuthorization'
+      - $ref: '#/components/schemas/BasicAuth'
+    BasicAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          const: basic_auth
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - type
+      - username
+      - password
+    TransferMetric:
+      title: Transfer Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: transfer
+          description: Type discriminator for this object.
+        from:
+          type: object
+          properties:
+            operator:
+              type: string
+              enum:
+              - in
+              - not_in
+              description: Comparison operator for from.
+            target:
+              type: array
+              items:
+                anyOf:
+                - $ref: '#/components/schemas/AssetTagTarget'
+                - $ref: '#/components/schemas/AssetIDTarget'
+              description: Target asset or entity selection for this rule or action.
+          required:
+          - operator
+          - target
+          description: From-side transfer filter configuration.
+        to:
+          type: object
+          properties:
+            operator:
+              type: string
+              enum:
+              - in
+              - not_in
+              description: Comparison operator for to.
+            target:
+              type: array
+              items:
+                anyOf:
+                - $ref: '#/components/schemas/AssetTagTarget'
+                - $ref: '#/components/schemas/AssetIDTarget'
+              description: Target asset or entity selection for this rule or action.
+          required:
+          - operator
+          - target
+          description: To-side transfer filter configuration.
+      required:
+      - type
+      - from
+      - to
+    EventMetric:
+      title: Event Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: event_metric
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        event_name:
+          type: string
+          description: Event name to monitor.
+        output_field:
+          type: string
+          description: Field path to read from the response payload.
+        event_filters:
+          type: array
+          items:
+            type: object
+            properties:
+              parameter_name:
+                type: string
+                description: Event parameter name to filter on.
+              parameter_value:
+                anyOf:
+                - type: string
+                - type: integer
+                description: Event parameter value to match.
+            required:
+            - parameter_name
+            - parameter_value
+          description: Filters applied to event parameters.
+      required:
+      - type
+      - target
+      - event_name
+      - output_field
+    APICallMetric:
+      title: API Call Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: api_call
+          description: Type discriminator for this object.
+        url:
+          type: string
+          description: Target URL for the external API call.
+        method:
+          type: string
+          enum:
+          - GET
+          - POST
+          description: HTTP method to use.
+        authentication:
+          $ref: '#/components/schemas/Authentication'
+          description: Authentication configuration.
+        query_params:
+          type: object
+          properties: {}
+          description: Query parameters to include in the request.
+        content_type:
+          type: string
+          enum:
+          - application/json
+          - text/plain
+          description: Content type for the request payload.
+        extra_headers:
+          type: object
+          properties: {}
+          description: Additional headers to include in the request.
+        sample_interval_seconds:
+          type: integer
+          description: Polling interval in seconds.
+        field_path:
+          type: string
+          description: Field path to read from the response payload.
+        body:
+          type: string
+          description: Request body payload.
+      required:
+      - url
+      - content_type
+      - sample_interval_seconds
+      - field_path
+      - type
+      - method
+    HMACAuthentication:
+      type: object
+      properties:
+        type:
+          type: string
+          const: hmac
+          description: Type discriminator for this object.
+        hmac_secret:
+          type: string
+          description: Secret value for hmac secret authentication.
+      required:
+      - type
+      - hmac_secret
+    ComputedMetric:
+      title: Computed Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: computed_metric
+          description: Type discriminator for this object.
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              symbol:
+                type: string
+                description: Short symbol used to reference this metric in formulas.
+              metric_id:
+                type: string
+                description: Identifier for the metric.
+            required:
+            - symbol
+            - metric_id
+          description: Metric definitions used by this configuration.
+        formula:
+          type: string
+          description: Formula expression used to compute this metric.
+      required:
+      - type
+      - metrics
+      - formula
+    SolanaAccountInfoReadMetric:
+      title: Read Data Account Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: solana_account_info_read
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        abi:
+          type: object
+          properties:
+            metadata:
+              type: object
+              properties:
+                offset:
+                  type: integer
+                  description: Byte offset where decoding starts.
+                length:
+                  type: integer
+                  description: Number of bytes to decode from offset.
+              required:
+              - offset
+              - length
+              description: Byte-slice bounds used by the decoder.
+            field_path:
+              type: string
+              description: Path to the account-data field to extract (dot-separated).
+          required:
+          - metadata
+          - field_path
+          description: ABI decoding metadata required by the Solana account info reader.
+      required:
+      - type
+      - target
+      - abi
+    APIKeyAuthorization:
+      type: object
+      properties:
+        type:
+          type: string
+          const: api_key
+          description: Type discriminator for this object.
+        header_name:
+          type: string
+          description: Header name used for API key authentication.
+        api_key:
+          type: string
+          description: Secret value for api key authentication.
+      required:
+      - type
+      - header_name
+      - api_key
+    AssetTagTarget:
+      title: Asset Tag Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_tag
+          description: Type discriminator for this object.
+          enum:
+          - asset_tag
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    SolanaInstructionMetric:
+      title: Instruction Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: solana_instruction
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        instruction_name:
+          type: string
+          description: Instruction name to aggregate.
+        output_field:
+          type: string
+          description: Instruction parameter or path whose value the metric reads.
+        instruction_filters:
+          type: array
+          items:
+            type: object
+            properties:
+              parameter_name:
+                type: string
+                description: Instruction parameter name to filter on.
+              parameter_value:
+                type: string
+                description: Instruction parameter value to match.
+            required:
+            - parameter_name
+            - parameter_value
+          description: Filters applied to instruction parameters — only matching instructions update the metric.
+      required:
+      - type
+      - target
+      - instruction_name
+      - output_field
+    ReadObjectMetric:
+      title: Read Object Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: read_object
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        field_path:
+          type: string
+          description: Path to the field that should be extracted.
+      required:
+      - type
+      - target
+      - field_path
+    MetricsResponse:
+      title: Metrics Response
+      description: Union of supported metric definitions returned by the API.
+      anyOf:
+      - $ref: '#/components/schemas/ContractCallMetric'
+      - $ref: '#/components/schemas/ReadObjectMetric'
+      - $ref: '#/components/schemas/APICallMetric'
+      - $ref: '#/components/schemas/TransferMetric'
+      - $ref: '#/components/schemas/ComputedMetric'
+      - $ref: '#/components/schemas/EventMetric'
+      - $ref: '#/components/schemas/SolanaAccountInfoReadMetric'
+      - $ref: '#/components/schemas/SolanaInstructionMetric'
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.

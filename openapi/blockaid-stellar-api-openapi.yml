@@ -1,0 +1,1134 @@
+openapi: 3.1.0
+info:
+  title: Blockaid Asset Management Stellar API
+  description: Blockaid Risk Score API
+  termsOfService: https://www.blockaid.io/legal/terms-of-use
+  license:
+    name: Proprietary
+    url: https://www.blockaid.io/legal
+  version: 1.0.0
+servers:
+- url: https://api.blockaid.io
+  description: Production server
+- url: https://client.blockaid.io
+  description: Clients server
+tags:
+- name: Stellar
+paths:
+  /v0/stellar/transaction/scan:
+    post:
+      tags:
+      - Stellar
+      summary: Scan Transaction
+      description: Gets a transaction and returns a full simulation indicating what will happen in the transaction together with a recommended action and some textual reasons of why the transaction was flagged that way.
+      operationId: stellar_single_transaction_scan_transaction_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StellarTransactionScanRequest'
+            examples:
+              Transfer 1 XLM to another account:
+                summary: Transfer 1 XLM to another account
+                value:
+                  chain: pubnet
+                  options:
+                  - validation
+                  - simulation
+                  account_address: GDPMFLKUGASUTWBN2XGYYKD27QGHCYH4BUFUTER4L23INYQ4JHDWFOIE
+                  transaction: AAAAAgAAAADewq1UMCVJ2C3VzYwoevwMcWD8DQtJkjxetobiHEnHYgAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAQAAAAEAAAAA3sKtVDAlSdgt1c2MKHr8DHFg/A0LSZI8XraG4hxJx2IAAAABAAAAACI40RTBOFEE7uT5mZkoq30mbvxLPJpMUm9cIFHgK9SRAAAAAAAAAAAAmJaAAAAAAAAAAAA=
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              Buy of 5 yXLM for 5 XLM:
+                summary: Buy of 5 yXLM for 5 XLM
+                value:
+                  chain: pubnet
+                  options:
+                  - validation
+                  - simulation
+                  account_address: GARDRUIUYE4FCBHO4T4ZTGJIVN6SM3X4JM6JUTCSN5OCAUPAFPKJDB7T
+                  transaction: AAAAAgAAAAAiONEUwThRBO7k+ZmZKKt9Jm78SzyaTFJvXCBR4CvUkQAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAQAAAAAAAAAMAAAAAAAAAAF5WExNAAAAACI213D+DT4BUhl11c96xIQrcJXWsanXaNPppjLpmQa+AAAAAAL68IAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAA=
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+              Transfer 1 XLM, Then 100 XLM; This example should revert:
+                summary: Transfer 1 XLM, Then 100 XLM; This example should revert
+                value:
+                  chain: pubnet
+                  options:
+                  - validation
+                  - simulation
+                  account_address: GDPMFLKUGASUTWBN2XGYYKD27QGHCYH4BUFUTER4L23INYQ4JHDWFOIE
+                  transaction: AAAAAgAAAADewq1UMCVJ2C3VzYwoevwMcWD8DQtJkjxetobiHEnHYgAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAEAAAAA3sKtVDAlSdgt1c2MKHr8DHFg/A0LSZI8XraG4hxJx2IAAAABAAAAACI40RTBOFEE7uT5mZkoq30mbvxLPJpMUm9cIFHgK9SRAAAAAAAAAAAAmJaAAAAAAQAAAADewq1UMCVJ2C3VzYwoevwMcWD8DQtJkjxetobiHEnHYgAAAAEAAAAAIjjRFME4UQTu5PmZmSirfSZu/Es8mkxSb1wgUeAr1JEAAAAAAAAAADuaygAAAAAAAAAAAA==
+                  metadata:
+                    type: wallet
+                    url: https://example.com
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StellarTransactionScanResponse'
+                docs_api_name: TransactionScanResponse
+                title: Response Schema
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StellarHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/stellar/transaction/report:
+    post:
+      tags:
+      - Stellar
+      summary: Report Transaction
+      operationId: stellar_report_transaction_transaction_report_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StellarReportTransactionRequest'
+              docs_api_name: ReportTransactionRequest
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: integer
+                title: Response Report Transaction Transaction Report Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StellarHTTPValidationError'
+      deprecated: true
+      security:
+      - APIKey: []
+      - ClientID: []
+  /v0/stellar/address/scan:
+    post:
+      tags:
+      - Stellar
+      summary: Scan Address
+      description: Get a full security assessment indicating weather or not this address is malicious as well as textual reasons of why the address was flagged that way.
+      operationId: stellar_scan_address_address_scan_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StellarAddressScanRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StellarAddressFeatures'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StellarHTTPValidationError'
+      deprecated: false
+      security:
+      - APIKey: []
+      - ClientID: []
+components:
+  schemas:
+    StellarNativeAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StellarNativeAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/StellarAssetTransferDetailsSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/StellarAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[NativeAssetDetailsSchema, AssetTransferDetailsSchema]
+    StellarTransactionScanResponse:
+      properties:
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/StellarSimulationResult'
+          - $ref: '#/components/schemas/StellarSimulationErrorSchema'
+          title: Simulation
+          description: Simulation result; Only present if simulation option is included in the request
+          nullable: true
+        validation:
+          $ref: '#/components/schemas/StellarValidationResponse'
+          description: Validation result; Only present if validation option is included in the request
+          docs_api_name: ValidationResponse
+          nullable: true
+          title: Validation
+      type: object
+      title: Response
+    StellarNativeAssetExposure:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StellarNativeAssetDetailsSchema'
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/StellarSingleAssetExposureSchema'
+          type: object
+          title: Spenders
+          description: Mapping between the spender address and the exposure of the asset
+      type: object
+      required:
+      - asset
+      title: AddressAssetExposureSchemaType[Annotated[Union[MuxedAccount, ContractAddress], SkipValidation, PlainSerializer, GetPydanticSchema], NativeAssetDetailsSchema, SingleAssetExposureSchema]
+    StellarTransactionScanRequest:
+      properties:
+        chain:
+          $ref: '#/components/schemas/StellarChain'
+          description: A CAIP-2 chain ID or a Stellar network name
+        options:
+          items:
+            $ref: '#/components/schemas/StellarOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: 'List of options to include in the response
+
+            - `Options.validation`: Include Options.validation output in the response
+
+
+            - `Options.simulation`: Include Options.simulation output in the response
+
+            '
+          default:
+          - validation
+          - simulation
+        account_address:
+          type: string
+          title: Account Address
+        transaction:
+          type: string
+          title: Transaction
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/StellarWalletRequestMetadata'
+          - $ref: '#/components/schemas/StellarInAppRequestMetadata'
+          title: Metadata
+          description: Metadata
+        transaction_hints:
+          $ref: '#/components/schemas/TransactionHints'
+          title: Transaction Hints
+          description: Optional customer-supplied hints about transaction intent that cannot be inferred from on-chain simulation.
+      type: object
+      required:
+      - chain
+      - account_address
+      - transaction
+      - metadata
+      title: Request
+    StellarValidationFeatureResult:
+      properties:
+        type:
+          $ref: '#/components/schemas/StellarInternalValidationFeatureType'
+        feature_id:
+          type: string
+          title: Feature Id
+        description:
+          type: string
+          title: Description
+        address:
+          type: string
+          title: Address
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      title: ValidationFeature
+    StellarAddressDetailsBaseSchema:
+      properties:
+        account_address:
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+      type: object
+      required:
+      - account_address
+      title: Address Details
+    StellarValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    StellarAddressScanRequest:
+      properties:
+        address:
+          type: string
+          title: Address
+      type: object
+      required:
+      - address
+      title: AddressScanRequest
+    StellarChain:
+      type: string
+      enum:
+      - pubnet
+      - futurenet
+      - testnet
+      title: Chain
+    StellarContractAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StellarAssetContractDetailsSchema'
+        in:
+          $ref: '#/components/schemas/StellarAssetTransferDetailsSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/StellarAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[AssetContractDetailsSchema, AssetTransferDetailsSchema]
+    StellarWalletRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: wallet
+          title: Type
+          description: Metadata for wallet requests
+        url:
+          type: string
+          title: Url
+          description: URL of the dApp originating the transaction
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: false
+      type: object
+      required:
+      - type
+      - url
+      title: Wallet Request Metadata
+    StellarValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: ValidationFeatureType
+    StellarHTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/StellarValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    StellarOptions:
+      type: string
+      enum:
+      - validation
+      - simulation
+      title: Options
+    StellarLegacyAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StellarLegacyAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/StellarAssetTransferDetailsSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/StellarAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[LegacyAssetDetailsSchema, AssetTransferDetailsSchema]
+    StellarLegacyAssetDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: ASSET
+          title: Type
+          description: Type of the asset (`ASSET`)
+          default: ASSET
+        code:
+          type: string
+          title: Code
+          description: Asset code
+        issuer:
+          type: string
+          title: Issuer
+          description: Asset issuer address
+        org_name:
+          type: string
+          title: Org Name
+          description: Organization name
+        org_url:
+          type: string
+          title: Org Url
+          description: Organization URL
+      type: object
+      required:
+      - code
+      - issuer
+      - org_name
+      - org_url
+      title: Legacy Asset Details
+    CrossChainBridgeFungibleAsset:
+      type: object
+      required:
+      - type
+      - address
+      properties:
+        type:
+          type: string
+          const: FUNGIBLE
+          title: Type
+          description: Type of the asset (`FUNGIBLE`)
+          default: FUNGIBLE
+        address:
+          type: string
+          description: Token contract address on the destination chain.
+        raw_value:
+          type: string
+          description: Amount to be received in the asset's smallest unit (before decimal division), e.g. base units for ERC-20 tokens.
+      title: CrossChainBridgeFungibleAsset
+    TransactionScanSupportedChains:
+      type: string
+      enum:
+      - arbitrum
+      - avalanche
+      - base
+      - base-sepolia
+      - lordchain
+      - lordchain-testnet
+      - metacade
+      - metacade-testnet
+      - bsc
+      - ethereum
+      - optimism
+      - polygon
+      - zksync
+      - zksync-sepolia
+      - zora
+      - linea
+      - blast
+      - scroll
+      - ethereum-sepolia
+      - degen
+      - avalanche-fuji
+      - gnosis
+      - worldchain
+      - soneium-minato
+      - ronin
+      - apechain
+      - berachain
+      - berachain-bartio
+      - ink
+      - ink-sepolia
+      - abstract
+      - abstract-testnet
+      - soneium
+      - unichain
+      - sei
+      - flow-evm
+      - hyperevm
+      - megaeth
+      - katana
+      - plume
+      - xlayer
+      - monad
+      - monad-testnet
+      - tempo
+      - tempo-testnet
+      - kite-ai
+      - kaia
+      - plasma
+      - mantle
+      - robinhood
+      - arc
+      title: TransactionScanSupportedChains
+      description: The chain name
+    StellarAppealRequestId:
+      properties:
+        type:
+          type: string
+          const: request_id
+          title: Type
+          default: request_id
+        id:
+          type: string
+          title: Id
+      type: object
+      required:
+      - id
+      title: AppealRequestId
+    StellarAssetTransferDetailsSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        value:
+          type: number
+          title: Value
+          description: Value of the transfer
+        raw_value:
+          type: integer
+          title: Raw Value
+          description: Raw value of the transfer
+      type: object
+      required:
+      - value
+      - raw_value
+      title: Asset Transfer Details
+    StellarAppealTypes:
+      type: string
+      enum:
+      - should_be_malicious
+      - should_be_benign
+      - wrong_simulation_result
+      title: AppealTypes
+    GenericTransactionHint:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          title: Type
+          description: Hint type identifier for unrecognized or future hint types.
+      title: GenericTransactionHint
+      description: Fallback for unrecognized or future hint types. Accepts any hint with a `type` field.
+    StellarAccountSummary:
+      properties:
+        account_assets_diffs:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/StellarLegacyAssetDiff'
+              docs_api_name: LegacyAssetDiff
+              title: Legacy Asset Diff
+            - $ref: '#/components/schemas/StellarNativeAssetDiff'
+              docs_api_name: NativeAssetDiff
+              title: Native Asset Diff
+            - $ref: '#/components/schemas/StellarContractAssetDiff'
+              docs_api_name: ContractAssetDiff
+              title: Contract-backed Asset Diff
+          type: array
+          title: Account Assets Diffs
+          description: Assets diffs of the requested account address
+        account_exposures:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/StellarLegacyAssetExposure'
+              docs_api_name: LegacyAssetExposure
+              title: Legacy Asset Exposure
+            - $ref: '#/components/schemas/StellarNativeAssetExposure'
+              docs_api_name: NativeAssetExposure
+              title: Native Asset Exposure
+          type: array
+          title: Account Exposures
+          description: Exposures made by the requested account address
+        account_ownerships_diff:
+          items:
+            $ref: '#/components/schemas/StellarAccountSetOptionsOwnershipDiffSchema'
+          type: array
+          title: Account Ownership Diffs
+          description: Ownership diffs of the requested account address
+        total_usd_diff:
+          $ref: '#/components/schemas/StellarTotalUsdDiffSchema'
+          description: Total USD diff for the requested account address
+        total_usd_exposure:
+          additionalProperties:
+            type: number
+          type: object
+          title: Total USD Exposure
+          description: Total USD exposure for each of the spender addresses during the transaction
+      type: object
+      required:
+      - account_exposures
+      - account_ownerships_diff
+      - total_usd_diff
+      title: Account Summary
+    CrossChainBridgeHint:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          const: cross_chain_bridge
+          title: Type
+          description: Hint type discriminator (`cross_chain_bridge`).
+          default: cross_chain_bridge
+        destination_address:
+          type: string
+          description: The intended recipient address on the destination chain. Required when the bridge protocol does not emit this on-chain (e.g. Relay, some Across deposit routes).
+        destination_chain:
+          anyOf:
+          - $ref: '#/components/schemas/TransactionScanSupportedChains'
+          - type: string
+          description: The destination chain for the bridged assets.
+        destination_asset:
+          $ref: '#/components/schemas/CrossChainBridgeAsset'
+          description: Details of the asset the recipient will receive on the destination chain. May differ from the source asset (e.g. wrapped vs. native, canonical vs. bridged token).
+      title: CrossChainBridgeHint
+      description: Customer-supplied context for a cross-chain bridge deposit where the protocol does not emit the destination on-chain.
+    StellarSimulationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        assets_diffs:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/StellarLegacyAssetDiff'
+                docs_api_name: LegacyAssetDiff
+                title: Legacy Asset Diff
+              - $ref: '#/components/schemas/StellarNativeAssetDiff'
+                docs_api_name: NativeAssetDiff
+                title: Native Asset Diff
+              - $ref: '#/components/schemas/StellarContractAssetDiff'
+                docs_api_name: ContractAssetDiff
+                title: Contract-backed Asset Diff
+            type: array
+            description: Assets diff of an account address
+          type: object
+          title: Assets Diffs
+          description: Mapping between the address of an account to the assets diff during the transaction
+        exposures:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/StellarLegacyAssetExposure'
+                docs_api_name: LegacyAssetExposure
+                title: Legacy Asset Exposure
+              - $ref: '#/components/schemas/StellarNativeAssetExposure'
+                docs_api_name: NativeAssetExposure
+                title: Native Asset Exposure
+            type: array
+          type: object
+          title: Exposures
+          description: Mapping between the address of an account to the exposure of the assets during the transaction
+        assets_ownership_diff:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/StellarAccountSetOptionsOwnershipDiffSchema'
+            type: array
+          type: object
+          title: Ownership Diffs
+          description: Ownership diffs of the account addresses
+        address_details:
+          items:
+            $ref: '#/components/schemas/StellarAddressDetailsBaseSchema'
+          type: array
+          title: Address Details
+          description: Details of addresses involved in the transaction
+        account_summary:
+          $ref: '#/components/schemas/StellarAccountSummary'
+          description: Summary of the actions and asset transfers that were made by the requested account address
+          docs_api_name: AccountSummary
+      type: object
+      required:
+      - status
+      - assets_ownership_diff
+      - account_summary
+      title: Simulation Result
+    StellarValidationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Validation Error
+    StellarInternalValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: InternalValidationFeatureType
+    StellarLegacyAssetExposure:
+      properties:
+        asset:
+          $ref: '#/components/schemas/StellarLegacyAssetDetailsSchema'
+        spenders:
+          additionalProperties:
+            $ref: '#/components/schemas/StellarSingleAssetExposureSchema'
+          type: object
+          title: Spenders
+          description: Mapping between the spender address and the exposure of the asset
+      type: object
+      required:
+      - asset
+      title: AddressAssetExposureSchemaType[Annotated[Union[MuxedAccount, ContractAddress], SkipValidation, PlainSerializer, GetPydanticSchema], LegacyAssetDetailsSchema, SingleAssetExposureSchema]
+    StellarAppealTransactionDataReport:
+      properties:
+        type:
+          type: string
+          const: params
+          title: Type
+          default: params
+        params:
+          $ref: '#/components/schemas/StellarTransactionScanRequest'
+          docs_api_name: TransactionScanRequest
+          title: Single Transaction Request
+      type: object
+      required:
+      - params
+      title: Appeal Transaction Data Report
+    StellarAssetContractDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: CONTRACT
+          title: Type
+          description: Type of the asset (`CONTRACT`)
+          default: CONTRACT
+        address:
+          type: string
+          title: Address
+          description: Address of the asset's contract
+        name:
+          type: string
+          title: Name
+          description: Asset code
+        symbol:
+          type: string
+          title: Symbol
+          description: Asset symbol
+      type: object
+      required:
+      - address
+      - name
+      - symbol
+      title: Contract-backed Asset Details
+    StellarSingleAssetExposureSchema:
+      properties:
+        exposure:
+          items:
+            $ref: '#/components/schemas/StellarERC20DiffSchema'
+          type: array
+          title: Exposure
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the exposure
+          nullable: true
+        approval:
+          type: number
+          title: Approval
+          description: Approval value of the ERC20 token
+        expiration:
+          type: string
+          format: date-time
+          title: Expiration
+          description: Expiration date of the approval
+          nullable: true
+      type: object
+      required:
+      - exposure
+      - approval
+      title: Asset Exposure
+    StellarSimulationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Simulation Error
+    StellarInAppRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: in_app
+          title: Type
+          description: Metadata for in-app requests
+          default: in_app
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: true
+      type: object
+      title: In-App Request Metadata
+    StellarReportTransactionRequest:
+      properties:
+        event:
+          $ref: '#/components/schemas/StellarAppealTypes'
+        report:
+          anyOf:
+          - $ref: '#/components/schemas/StellarAppealRequestId'
+          - $ref: '#/components/schemas/StellarAppealTransactionDataReport'
+            docs_api_name: AppealTransactionDataReport
+          title: Report
+        details:
+          type: string
+          title: Details
+      type: object
+      required:
+      - event
+      - report
+      - details
+      title: 'AppealRequest[Annotated[RequestSchemaType[Annotated[Chain, WrapValidator, FieldInfo(annotation=NoneType, required=True, title=''Chain'', description=''A CAIP-2 chain ID or a Stellar network name'')], Annotated[MuxedAccount, SkipValidation, PlainSerializer, GetPydanticSchema], Annotated[TransactionEnvelope, PlainSerializer, GetPydanticSchema], Annotated[set[Options], FieldInfo(annotation=NoneType, required=False, default={<Options.validation: ''validation''>, <Options.simulation: ''simulation''>}, title=''Options'', description=''List of options to include in the response\n- `Options.validation`: Include Options.validation output in the response\n\n- `Options.simulation`: Include Options.simulation output in the response\n'', metadata=[MinLen(min_length=1)])]], FieldInfo(annotation=NoneType, required=True, title=''Single Transaction Request'', json_schema_extra={''docs_api_name'': ''TransactionScanRequest''})]]'
+    CrossChainBridgeAsset:
+      oneOf:
+      - $ref: '#/components/schemas/CrossChainBridgeNativeAsset'
+      - $ref: '#/components/schemas/CrossChainBridgeFungibleAsset'
+      - $ref: '#/components/schemas/CrossChainBridgeNonFungibleAsset'
+      discriminator:
+        propertyName: type
+        mapping:
+          NATIVE: '#/components/schemas/CrossChainBridgeNativeAsset'
+          FUNGIBLE: '#/components/schemas/CrossChainBridgeFungibleAsset'
+          NON_FUNGIBLE: '#/components/schemas/CrossChainBridgeNonFungibleAsset'
+      title: CrossChainBridgeAsset
+      description: The asset the recipient will receive on the destination chain.
+    StellarValidationFeature:
+      properties:
+        type:
+          $ref: '#/components/schemas/StellarValidationFeatureType'
+          description: Feature Classification
+          title: type
+        feature_id:
+          type: string
+          title: feature_id
+          description: ''
+        description:
+          type: string
+          title: Description
+          description: Textual description
+        address:
+          type: string
+          title: Address
+          description: Address the feature refers to
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      title: ValidationFeatureSchemaType[Annotated[Union[MuxedAccount, ContractAddress], SkipValidation, PlainSerializer, GetPydanticSchema]]
+    StellarTotalUsdDiffSchema:
+      properties:
+        in:
+          type: number
+          title: In
+          description: Total incoming USD transfers
+        out:
+          type: number
+          title: Out
+          description: Total outgoing USD transfers
+        total:
+          type: number
+          title: Total
+          description: Total USD transfers
+      type: object
+      required:
+      - in
+      - out
+      title: Total USD Diff
+    CrossChainBridgeNonFungibleAsset:
+      type: object
+      required:
+      - type
+      - address
+      - token_id
+      properties:
+        type:
+          type: string
+          const: NON_FUNGIBLE
+          title: Type
+          description: Type of the asset (`NON_FUNGIBLE`)
+          default: NON_FUNGIBLE
+        address:
+          type: string
+          description: NFT collection contract address on the destination chain.
+        token_id:
+          type: string
+          description: Token ID of the specific NFT being bridged.
+      title: CrossChainBridgeNonFungibleAsset
+    StellarNativeAssetDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: NATIVE
+          title: Type
+          description: Type of the asset (`NATIVE`)
+          default: NATIVE
+        code:
+          type: string
+          const: XLM
+          title: Code
+          description: Asset code
+          default: XLM
+      type: object
+      title: Native Asset Details
+    StellarERC20DiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        value:
+          type: string
+          title: Value
+          description: Value of the transfer
+        raw_value:
+          type: integer
+          title: Raw Value
+          description: Raw value of the transfer
+      type: object
+      required:
+      - value
+      - raw_value
+      title: ERC20 Asset Transfer Details
+    StellarAddressFeatures:
+      properties:
+        result_type:
+          type: string
+          title: Result Type
+        address:
+          type: string
+          title: Address
+        chain:
+          type: string
+          title: Chain
+        features:
+          items:
+            $ref: '#/components/schemas/StellarValidationFeatureResult'
+            docs_api_name: ValidationFeatureResult
+            title: Validation Feature
+          type: array
+          title: Features
+      type: object
+      required:
+      - result_type
+      - address
+      - chain
+      - features
+      title: AddressFeatures
+    TransactionHint:
+      oneOf:
+      - $ref: '#/components/schemas/CrossChainBridgeHint'
+      - $ref: '#/components/schemas/GenericTransactionHint'
+      discriminator:
+        propertyName: type
+        mapping:
+          cross_chain_bridge: '#/components/schemas/CrossChainBridgeHint'
+      title: TransactionHint
+      description: A single customer-supplied hint about transaction intent. The `type` field identifies which hint variant this is.
+    StellarAccountSetOptionsOwnershipDiffSchema:
+      properties:
+        type:
+          type: string
+          const: SET_OPTIONS
+          title: Type
+          default: SET_OPTIONS
+        pre_signers:
+          items:
+            type: string
+          type: array
+          title: Pre Signers
+          description: List of public keys that can sign on behalf of the account pre-transaction
+        post_signers:
+          items:
+            type: string
+          type: array
+          title: Post Signers
+          description: List of public keys that can sign on behalf of the account post-transaction
+      type: object
+      required:
+      - pre_signers
+      - post_signers
+      title: Account Ownership Diff
+    CrossChainBridgeNativeAsset:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          const: NATIVE
+          title: Type
+          description: Type of the asset (`NATIVE`)
+          default: NATIVE
+        raw_value:
+          type: string
+          description: Amount to be received in the asset's smallest unit (before decimal division), e.g. wei for ETH.
+      title: CrossChainBridgeNativeAsset
+    StellarVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      title: Verdict
+    TransactionHints:
+      type: array
+      items:
+        $ref: '#/components/schemas/TransactionHint'
+      title: TransactionHints
+      description: Customer-supplied hints about transaction intent that cannot be derived from on-chain simulation alone. Each element is a typed hint identified by its `type` field.
+    StellarValidationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        result_type:
+          $ref: '#/components/schemas/StellarVerdict'
+          description: Verdict of the validation
+          title: Result Verdict
+        description:
+          type: string
+          title: Description
+          description: A textual description about the validation result
+        reason:
+          type: string
+          title: Reason
+          description: A textual description about the reasons the transaction was flagged with result_type
+        classification:
+          type: string
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+        features:
+          items:
+            $ref: '#/components/schemas/StellarValidationFeature'
+            docs_api_name: ValidationFeature
+            title: Feature
+          type: array
+          title: Features
+      type: object
+      required:
+      - status
+      - result_type
+      - description
+      - reason
+      - classification
+      - features
+      title: Validation Result
+    StellarValidationResponse:
+      anyOf:
+      - $ref: '#/components/schemas/StellarValidationResult'
+        docs_api_name: ValidationResult
+        title: Validation Successful Result
+      - $ref: '#/components/schemas/StellarValidationErrorSchema'
+      title: ValidationResponseSchemaType[Annotated[Union[MuxedAccount, ContractAddress], SkipValidation, PlainSerializer, GetPydanticSchema]]
+  securitySchemes:
+    APIKey:
+      type: apiKey
+      name: X-API-Key
+      in: header
+    ClientID:
+      type: apiKey
+      name: X-CLIENT-ID
+      in: header
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer authentication header of the form `Bearer <token>`, where `<token>` is your auth token. See [API Authentication](/docs/api-reference/before-you-begin/api-authentication) for how to retrieve it.
