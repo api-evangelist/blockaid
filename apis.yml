@@ -1,8 +1,28 @@
 aid: blockaid
 name: Blockaid
-description: 'Blockaid is a company surfaced as a portfolio company of greylock, gv, ribbit-capital and
-  added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead
-  awaiting the enrichment pipeline.'
+description: >-
+  Blockaid is a web3 security platform that detects and prevents scams, fraud,
+  financial risk, and smart-contract exploits in real time. Its API scans
+  transactions, addresses, tokens, dApp sites, and signed messages across EVM
+  chains, Solana, Bitcoin, Stellar, Sui, Starknet, Tron, and Hedera, returning a
+  risk verdict that wallets, exchanges, and marketplaces (MetaMask, Coinbase,
+  Uniswap, OpenSea) use to block malicious activity before a user signs.
+  Products include End User Protection, Onchain Monitoring, Crypto Fraud
+  Prevention, the Cosigner policy engine, and compliance Risk Exposure. Backed by
+  Greylock, GV, and Ribbit Capital.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://blockaid.io/images/logos/blockaid.svg
 url: https://raw.githubusercontent.com/api-evangelist/blockaid/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,15 +30,348 @@ x-backed-by:
 - greylock
 - gv
 - ribbit-capital
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-2026-07-18
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
 - Fintech
-apis: []
+- Web3 Security
+- Blockchain
+- Crypto
+- Fraud Prevention
+- Transaction Scanning
+- Wallet Security
+- Compliance
+- Threat Detection
+apis:
+- aid: blockaid:blockaid-asset-management-api
+  name: Blockaid Asset Management API
+  description: The Asset Management API from Blockaid — 6 operation(s) for asset management.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Asset Management
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-asset-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-audit-logs-api
+  name: Blockaid Audit Logs API
+  description: The Audit Logs API from Blockaid — 1 operation(s) for audit logs.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-audit-logs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-bitcoin-api
+  name: Blockaid Bitcoin API
+  description: The Bitcoin API from Blockaid — 3 operation(s) for bitcoin.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Bitcoin
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-bitcoin-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-chain-agnostic-api
+  name: Blockaid Chain Agnostic API
+  description: The Chain Agnostic API from Blockaid — 2 operation(s) for chain agnostic.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Chain Agnostic
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-chain-agnostic-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-cosigner-api
+  name: Blockaid cosigner API
+  description: The cosigner API from Blockaid — 6 operation(s) for cosigner.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - cosigner
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-cosigner-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-crypto-fraud-prevention-api
+  name: Blockaid Crypto Fraud Prevention API
+  description: >-
+    The Crypto Fraud Prevention API from Blockaid — 1 operation(s) for crypto fraud prevention.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Crypto Fraud Prevention
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-crypto-fraud-prevention-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-enrichment-api
+  name: Blockaid Enrichment API
+  description: The Enrichment API from Blockaid — 3 operation(s) for enrichment.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Enrichment
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-enrichment-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-evm-api
+  name: Blockaid EVM API
+  description: The EVM API from Blockaid — 14 operation(s) for evm.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - EVM
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-evm-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-external-api-integrations-api
+  name: Blockaid external api integrations API
+  description: >-
+    The external api integrations API from Blockaid — 2 operation(s) for external api integrations.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - external api integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-external-api-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-external-api
+  name: Blockaid external API
+  description: The external API from Blockaid — 1 operation(s) for external.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - external
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-external-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-hedera-api
+  name: Blockaid Hedera API
+  description: The Hedera API from Blockaid — 2 operation(s) for hedera.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Hedera
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-hedera-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-metrics-api
+  name: Blockaid Metrics API
+  description: The Metrics API from Blockaid — 3 operation(s) for metrics.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-metrics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-monitors-api
+  name: Blockaid Monitors API
+  description: The Monitors API from Blockaid — 3 operation(s) for monitors.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Monitors
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-monitors-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-organization-risk-config-api
+  name: Blockaid Organization Risk Config API
+  description: >-
+    The Organization Risk Config API from Blockaid — 1 operation(s) for organization risk config.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Organization Risk Config
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-organization-risk-config-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-report-api
+  name: Blockaid Report API
+  description: The Report API from Blockaid — 3 operation(s) for report.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Report
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-report-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-scan-feedback-api
+  name: Blockaid Scan Feedback API
+  description: The Scan Feedback API from Blockaid — 1 operation(s) for scan feedback.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Scan Feedback
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-scan-feedback-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-site-api
+  name: Blockaid Site API
+  description: The Site API from Blockaid — 2 operation(s) for site.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Site
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-site-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-solana-api
+  name: Blockaid Solana API
+  description: The Solana API from Blockaid — 3 operation(s) for solana.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Solana
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-solana-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-starknet-api
+  name: Blockaid Starknet API
+  description: The Starknet API from Blockaid — 2 operation(s) for starknet.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Starknet
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-starknet-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-stellar-api
+  name: Blockaid Stellar API
+  description: The Stellar API from Blockaid — 3 operation(s) for stellar.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Stellar
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-stellar-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-sui-api
+  name: Blockaid Sui API
+  description: The Sui API from Blockaid — 3 operation(s) for sui.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Sui
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-sui-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-token-api
+  name: Blockaid Token API
+  description: The Token API from Blockaid — 10 operation(s) for token.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Token
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
+- aid: blockaid:blockaid-tron-api
+  name: Blockaid Tron API
+  description: The Tron API from Blockaid — 2 operation(s) for tron.
+  humanURL: https://docs.blockaid.io/docs/introduction
+  baseURL: https://api.blockaid.io
+  tags:
+  - Tron
+  properties:
+  - type: OpenAPI
+    url: openapi/blockaid-tron-api-openapi.yml
+  - type: Documentation
+    url: https://docs.blockaid.io/docs/introduction
+  - type: APIReference
+    url: https://docs.blockaid.io/reference/openapi-schema
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -27,3 +380,56 @@ maintainers:
 common:
 - type: Website
   url: https://blockaid.io
+- type: Documentation
+  url: https://docs.blockaid.io/docs/introduction
+- type: APIReference
+  url: https://docs.blockaid.io/reference/openapi-schema
+- type: OpenAPI
+  url: openapi/blockaid-openapi-original.yml
+- type: Blog
+  url: https://blockaid.io/blog
+- type: Support
+  url: https://blockaid.io/contact
+- type: GitHubOrganization
+  url: https://github.com/blockaid-official
+- type: StatusPage
+  url: https://status.blockaid.io
+- type: TermsOfService
+  url: https://www.blockaid.io/legal/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.blockaid.io/legal/privacy-policy
+- type: Authentication
+  url: authentication/blockaid-authentication.yml
+- type: AgenticAccess
+  url: agentic-access/blockaid-agentic-access.yml
+- type: DomainSecurity
+  url: security/blockaid-domain-security.yml
+- type: Packages
+  url: packages/blockaid-packages.yml
+- type: SDKs
+  url: packages/blockaid-packages.yml
+- type: MCPServer
+  url: mcp/blockaid-mcp.yml
+- type: LLMsTxt
+  url: llms/blockaid-llms.txt
+- type: Overlay
+  url: overlays/blockaid-openapi-overlay.yaml
+- type: Conformance
+  url: conformance/blockaid-conformance.yml
+- type: ErrorCatalog
+  url: errors/blockaid-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/blockaid-lifecycle.yml
+- type: Conventions
+  url: conventions/blockaid-conventions.yml
+- type: DataModel
+  url: data-model/blockaid-data-model.yml
+- type: Webhooks
+  url: asyncapi/blockaid-token-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

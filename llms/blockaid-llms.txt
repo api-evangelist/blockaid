@@ -1,0 +1,35 @@
+# Blockaid
+
+> Blockaid is a web3 security platform that detects and responds to scams, fraud, financial risk, and smart-contract exploits in real time. Its API scans transactions, addresses, tokens, dApp sites, and messages across EVM chains, Solana, Bitcoin, Stellar, Sui, Starknet, Tron, and Hedera, returning a risk verdict that wallets, exchanges, and marketplaces (MetaMask, Coinbase, Uniswap, OpenSea) use to block malicious activity before it happens.
+
+## APIs
+
+- [Blockaid API (production)](https://api.blockaid.io): OpenAPI 3.1, 93 operations, X-API-Key header auth.
+- [Documentation](https://docs.blockaid.io/docs/introduction)
+- [API Reference](https://docs.blockaid.io/reference/openapi-schema)
+
+## Specs
+
+- [Blockaid OpenAPI](https://raw.githubusercontent.com/api-evangelist/blockaid/refs/heads/main/openapi/blockaid-openapi-original.yml)
+
+## Core scanning surface
+
+- EVM: transaction, transaction-bulk, transaction-raw, json-rpc, user-operation, post-transaction, address, address-bulk scans
+- Solana / Bitcoin / Stellar / Sui / Starknet / Tron / Hedera: transaction and address scans
+- Chain-agnostic transaction scan
+- Site (dApp URL) scan and report
+- Token scan, token-bulk scan, token snapshots, recent rug-pull risks, token webhooks
+- Address risk-exposure (compliance), enrichment / crypto fraud prevention
+- Cosigner policy engine, platform assets, monitors, metrics, audit logs
+
+## SDKs
+
+- [TypeScript / Node (@blockaid/client)](https://www.npmjs.com/package/@blockaid/client)
+- [Go (blockaid-client-go)](https://pkg.go.dev/github.com/blockaid-official/blockaid-client-go)
+
+## Operations
+
+- [Status page](https://status.blockaid.io)
+- [Blog](https://blockaid.io/blog)
+- [Terms of Use](https://www.blockaid.io/legal/terms-of-use)
+- [Privacy Policy](https://www.blockaid.io/legal/privacy-policy)

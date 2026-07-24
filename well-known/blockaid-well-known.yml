@@ -1,0 +1,25 @@
+generated: '2026-07-18'
+method: searched
+source: live probes of Blockaid API + website hosts
+notes: >-
+  No .well-known discovery documents are published. api.blockaid.io returns 404
+  for all probed paths; client.blockaid.io requires authentication (401) at the
+  edge; blockaid.io publishes no security.txt. Absence is recorded as valid data.
+hosts:
+  - host: https://api.blockaid.io
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://client.blockaid.io
+    documents:
+      - {path: /.well-known/security.txt, status: 401}
+      - {path: /.well-known/openid-configuration, status: 401}
+      - {path: /.well-known/oauth-authorization-server, status: 401}
+      - {path: /.well-known/api-catalog, status: 401}
+      - {path: /.well-known/ai-plugin.json, status: 401}
+  - host: https://blockaid.io
+    documents:
+      - {path: /.well-known/security.txt, status: 404}

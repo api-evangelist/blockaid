@@ -1,0 +1,55 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/blockaid-openapi-original.yml
+notes: >-
+  Derived from Blockaid platform (management) operations and their path/id
+  parameters. The scan/report operations are stateless request/response
+  evaluations and are not modeled as persisted entities.
+entities:
+  - name: Cosigner
+    id_param: id
+    paths: ["/v0/platform/cosigners", "/v0/platform/cosigners/{id}"]
+    description: A wallet cosigning policy engine instance.
+  - name: CosignerPolicy
+    paths: ["/v0/platform/cosigners/{id}/policies/"]
+    description: Policy set attached to a cosigner.
+  - name: Asset
+    id_param: identifier
+    paths: ["/v0/platform/assets/", "/v0/platform/assets/{identifier}"]
+    description: A tracked address, domain, or token asset (allow/deny lists).
+  - name: Monitor
+    id_param: id
+    paths: ["/v0/platform/monitors/", "/v0/platform/monitors/{id}"]
+    description: An onchain monitoring rule.
+  - name: Metric
+    id_param: id
+    paths: ["/v0/platform/metrics/", "/v0/platform/metrics/{id}"]
+    description: A metric definition for monitoring dashboards.
+  - name: TokenWebhook
+    id_param: chain
+    paths: ["/v0/token/hooks/{chain}"]
+    description: Per-chain token risk webhook subscription.
+  - name: Integration
+    id_param: integration_instance_id
+    paths: ["/v0/platform/integrations/search", "/v0/platform/integrations/{integration_instance_id}/resources"]
+    description: External API integration instance.
+  - name: RiskExposureConfiguration
+    paths: ["/v0/platform/organization/configuration/risk-exposure"]
+    description: Organization-level compliance risk verdict thresholds.
+  - name: BulkExportJob
+    id_param: job_id
+    paths: ["/v0/token/bulk-export/jobs", "/v0/token/bulk-export/jobs/{job_id}"]
+    description: Async token bulk-export job.
+relationships:
+  - from: CosignerPolicy
+    to: Cosigner
+    kind: belongs_to
+    via: id
+  - from: TokenWebhook
+    to: Organization
+    kind: belongs_to
+    via: api_key
+  - from: RiskExposureConfiguration
+    to: Organization
+    kind: has_one
+    via: organization

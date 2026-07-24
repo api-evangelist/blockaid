@@ -1,0 +1,32 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/blockaid-openapi-original.yml
+standards:
+  - id: openapi-3.1
+    conforms: true
+    evidence: Spec is OpenAPI 3.1.0 with 93 documented operations across 1128 schemas.
+  - id: api-key-auth
+    conforms: true
+    evidence: securitySchemes define X-API-Key (APIKey) and X-CLIENT-ID (ClientID) header keys.
+  - id: jwt-bearer
+    conforms: true
+    evidence: securitySchemes define a JWT http bearer scheme (bearerFormat JWT).
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 security scheme is declared.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use application/json, not application/problem+json.
+  - id: json-api
+    conforms: false
+  - id: pagination
+    conforms: true
+    evidence: Search endpoints accept page/page_size; snapshot/list endpoints expose cursor/next_page.
+  - id: webhooks
+    conforms: true
+    evidence: Token webhook subscription management under /v0/token/hooks/{chain}.
+  - id: request-id-tracing
+    conforms: true
+    evidence: Responses carry an x-request-id correlation header.

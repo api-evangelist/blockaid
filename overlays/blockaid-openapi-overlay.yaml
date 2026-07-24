@@ -1,0 +1,22 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Blockaid API
+  version: 1.0.0
+extends: openapi/blockaid-openapi-original.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: blockaid
+      x-apievangelist-category: web3-security
+      x-apievangelist-auth: api-key-header
+      x-apievangelist-status-page: https://status.blockaid.io
+  - target: $.info
+    update:
+      x-apievangelist-artifacts:
+        authentication: authentication/blockaid-authentication.yml
+        conventions: conventions/blockaid-conventions.yml
+        errors: errors/blockaid-problem-types.yml
+        lifecycle: lifecycle/blockaid-lifecycle.yml
+        packages: packages/blockaid-packages.yml
+        webhooks: asyncapi/blockaid-token-webhooks.yml
+        data_model: data-model/blockaid-data-model.yml

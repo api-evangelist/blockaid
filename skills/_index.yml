@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/blockaid-openapi-original.yml
+skills:
+  - file: blockaid-scan-evm-transaction.md
+    name: Scan an EVM transaction before signing
+    api: openapi/blockaid-openapi-original.yml
+    operations: [scan-transaction, scan-json-rpc, scan-user-operations]
+  - file: blockaid-screen-site-and-token.md
+    name: Screen a dApp site and token before interacting
+    api: openapi/blockaid-openapi-original.yml
+    operations: [scan-site, scan-token, scan-token-bulk]
+  - file: blockaid-address-risk-screening.md
+    name: Screen an address for risk and compliance exposure
+    api: openapi/blockaid-openapi-original.yml
+    operations: [scan-address, address-risk-exposure, scan-address-bulk]

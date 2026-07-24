@@ -1,0 +1,21 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/blockaid-official
+packages:
+  - language: javascript
+    registry: npm
+    name: "@blockaid/client"
+    url: https://www.npmjs.com/package/@blockaid/client
+    install: npm install @blockaid/client
+    version: 1.5.0
+    repository: https://github.com/blockaid-official/blockaid-client-node
+    description: The official TypeScript library for the Blockaid API (Stainless-generated).
+    official: true
+  - language: go
+    registry: pkg.go.dev
+    name: github.com/blockaid-official/blockaid-client-go
+    url: https://pkg.go.dev/github.com/blockaid-official/blockaid-client-go
+    install: go get github.com/blockaid-official/blockaid-client-go
+    repository: https://github.com/blockaid-official/blockaid-client-go
+    description: The official Go library for the Blockaid API (Stainless-generated).
+    official: true

@@ -1,0 +1,38 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/blockaid-openapi-original.yml
+authentication:
+  style: api-key-header
+  schemes:
+    - X-API-Key (primary)
+    - X-CLIENT-ID
+    - Authorization Bearer <JWT>
+  ref: authentication/blockaid-authentication.yml
+idempotency:
+  supported: false
+  notes: No Idempotency-Key header is documented in the spec. Scan operations are
+    read-oriented (POST-with-body evaluations) and naturally repeatable.
+pagination:
+  style: page-number
+  request_params: [page, page_size, sort]
+  cursor_endpoints: [/v0/token/snapshot/full, /v0/token/snapshot/diff]
+  response_fields: [next_page]
+request_tracing:
+  header: x-request-id
+  notes: Correlation id returned on responses.
+versioning:
+  style: uri-path
+  current: v0
+  ref: lifecycle/blockaid-lifecycle.yml
+error_envelope:
+  shapes:
+    - '{ detail: [ { loc, msg, type } ] }  (422 validation)'
+    - '{ status, error, error_details, description }  (scan/simulation)'
+    - '{ error_code, description, identifier }  (asset CRUD)'
+  ref: errors/blockaid-problem-types.yml
+rate_limiting:
+  signaled: false
+  notes: No X-RateLimit-* or Retry-After headers documented in the spec; limits are plan-based.
+webhooks:
+  supported: true
+  ref: asyncapi/blockaid-token-webhooks.yml

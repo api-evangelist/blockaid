@@ -1,0 +1,26 @@
+generated: '2026-07-18'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: blockaid.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 28 18:35:38 2026 GMT
+  hsts: false
+- host: api.blockaid.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  1 14:11:32 2026 GMT
+  hsts: null
+- host: client.blockaid.io
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep  9 21:03:31 2026 GMT
+  hsts: null
+domains:
+- domain: blockaid.io
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine

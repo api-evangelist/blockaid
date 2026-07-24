@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/blockaid-openapi-original.yml
+spec_type: Webhooks
+notes: >-
+  Blockaid publishes no AsyncAPI document. It does expose a webhook subscription
+  management surface for token monitoring: consumers register a per-chain hook URL
+  to receive token risk updates. This captures that webhook catalog (type: Webhooks).
+management_operations:
+  - method: POST
+    path: /v0/token/hooks/{chain}
+    operationId: create-hook
+    summary: Create a token webhook subscription for a chain.
+  - method: GET
+    path: /v0/token/hooks/{chain}
+    operationId: get-hook
+    summary: Retrieve the token webhook subscription for a chain.
+  - method: GET
+    path: /v0/token/hooks/
+    operationId: list-hooks
+    summary: List all token webhook subscriptions.
+  - method: DELETE
+    path: /v0/token/hooks/{chain}
+    operationId: delete-hook
+    summary: Delete a token webhook subscription for a chain.
+events:
+  - name: token.risk.update
+    description: >-
+      Delivered to the registered hook URL when a monitored token's risk
+      assessment changes. Payload shape mirrors the token scan response.
+    delivery: http-post

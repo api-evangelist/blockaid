@@ -1,0 +1,47 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/blockaid-openapi-original.yml
+format: custom-json
+notes: >-
+  Blockaid does not use RFC 9457 application/problem+json. Errors are returned as
+  application/json. Two envelope shapes are used: (1) a FastAPI validation envelope
+  { detail: [ { loc, msg, type } ] } for 422; (2) a scan/simulation envelope
+  { status, error, error_details, description } on scan operations; and resource
+  CRUD returns { error_code, description, identifier } (assets) or { detail }.
+envelopes:
+  - name: validation
+    example: '{ "detail": [ { "loc": ["body","field"], "msg": "field required", "type": "value_error.missing" } ] }'
+    schema: HTTPValidationError
+  - name: scan_error
+    example: '{ "status": "Error", "error": "...", "error_details": { "code": "...", "category": "..." }, "description": "..." }'
+    schema: TransactionSimulationError / TransactionValidationError
+  - name: asset_error
+    example: '{ "error_code": "...", "description": "...", "identifier": "..." }'
+    schema: AssetErrorResponse
+problems:
+  - status: 400
+    title: Bad Request
+    description: Malformed request, unreachable host, or out-of-range configuration value.
+    remediation: Validate the request payload and configuration bounds before retrying.
+    source_operations:
+      - openapi/blockaid-openapi-original.yml#create-asset
+      - openapi/blockaid-openapi-original.yml#create-hook
+  - status: 404
+    title: Not Found
+    description: Referenced resource (asset, cosigner, export job, hook) does not exist.
+    remediation: Confirm the resource identifier; it may have been deleted.
+    source_operations:
+      - openapi/blockaid-openapi-original.yml#get-asset
+      - openapi/blockaid-openapi-original.yml#get-bulk-export-job-status
+  - status: 409
+    title: Conflict
+    description: Resource already exists (e.g. creating an asset that is already tracked).
+    remediation: Fetch or update the existing resource instead of creating a duplicate.
+    source_operations:
+      - openapi/blockaid-openapi-original.yml#create-asset
+  - status: 422
+    title: Unprocessable Entity
+    description: Request validation failed; one or more body/query fields are missing or invalid.
+    remediation: Inspect the detail[] array for the offending field location and message.
+    source_operations:
+      - openapi/blockaid-openapi-original.yml#search_integrations_v0_platform_integrations_search_post
