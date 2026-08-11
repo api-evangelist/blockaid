@@ -385,7 +385,7 @@ common:
 - type: APIReference
   url: https://docs.blockaid.io/reference/openapi-schema
 - type: OpenAPI
-  url: openapi/blockaid-openapi-original.yml
+  url: openapi/_original/blockaid-openapi-original.yml
 - type: Blog
   url: https://blockaid.io/blog
 - type: Support
