@@ -1,0 +1,548 @@
+{
+  "item": [
+    {
+      "id": "d3f1987d-60c5-4e5a-8722-4d8bcf6add2a",
+      "name": "Report",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5feaf280-67ec-4a69-bd5d-70191bfd6de4",
+          "name": "Report",
+          "request": {
+            "name": "Report",
+            "description": {
+              "content": "Report a misclassification of any entity (transaction, address, site, token, etc.) using a request ID from a previous scan.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "scan",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"request_id\": \"<string>\",\n  \"details\": \"<string>\",\n  \"metadata\": {\n    \"domain\": \"<string>\",\n    \"non_dapp\": \"<boolean>\",\n    \"account\": {\n      \"account_id\": \"<string>\",\n      \"account_creation_timestamp\": \"<dateTime>\",\n      \"user_age\": \"<integer>\",\n      \"user_country_code\": \"<string>\",\n      \"account_addresses\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"connection\": {\n      \"ip_address\": \"<ipvanyaddress>\",\n      \"user_agent\": \"<string>\",\n      \"origin\": \"<uri>\",\n      \"walletconnect_name\": \"<string>\",\n      \"walletconnect_description\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7251bca7-f5fd-469c-bfad-a58cc81fb8f3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "scan",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"FALSE_POSITIVE\",\n  \"request_id\": \"11111111-1111-1111-1111-111111111111\",\n  \"details\": \"Details about the report\",\n  \"metadata\": {\n    \"domain\": \"https://app.uniswap.org\",\n    \"account\": {\n      \"account_id\": \"user-abc-123\",\n      \"account_creation_timestamp\": \"2023-01-15T00:00:00Z\",\n      \"user_age\": 30,\n      \"user_country_code\": \"US\"\n    },\n    \"connection\": {\n      \"ip_address\": \"192.168.1.1\",\n      \"user_agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d6f2682-d936-4311-a0c0-e86ae921283f",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "scan",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"FALSE_POSITIVE\",\n  \"request_id\": \"11111111-1111-1111-1111-111111111111\",\n  \"details\": \"Details about the report\",\n  \"metadata\": {\n    \"domain\": \"https://app.uniswap.org\",\n    \"account\": {\n      \"account_id\": \"user-abc-123\",\n      \"account_creation_timestamp\": \"2023-01-15T00:00:00Z\",\n      \"user_age\": 30,\n      \"user_country_code\": \"US\"\n    },\n    \"connection\": {\n      \"ip_address\": \"192.168.1.1\",\n      \"user_agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e10cfad-b5d7-419f-9bdc-281cfc360628",
+          "name": "Report transaction",
+          "request": {
+            "name": "Report transaction",
+            "description": {
+              "content": "Report a transaction",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tx",
+                "v0",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jsonRpcMethod\": \"<string>\",\n  \"jsonRpcParams\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"blockNumber\": \"<string>\",\n  \"classification\": \"<string>\",\n  \"resultType\": \"<string>\",\n  \"features\": \"<string>\",\n  \"details\": \"<string>\",\n  \"reporter\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8257e8d3-30ad-4170-bc40-c71cda87674a",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tx",
+                    "v0",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"example.org\",\n  \"jsonRpcMethod\": \"SetApprovalForAll\",\n  \"jsonRpcParams\": \"{\\\"from\\\": \\\"0x0000000000000000000000000000000000000000\\\", \\\"to\\\": \\\"0x0000000000000000000000000000000000000000\\\", \\\"value\\\": \\\"0x0\\\"}\",\n  \"chain\": \"ethereum\",\n  \"blockNumber\": \"19624900\",\n  \"classification\": \"approval_farming\",\n  \"resultType\": \"Malicious\",\n  \"features\": \"[\\\"The contract 0x0000000000000000000000000000000000000000 involved in the transaction is unverified\\\"]\",\n  \"details\": \"This transaction is incorrect because of ...\",\n  \"reporter\": \"my_name@example.org\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1756103-b114-4568-acac-649b1621b7c4",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tx",
+                    "v0",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"example.org\",\n  \"jsonRpcMethod\": \"SetApprovalForAll\",\n  \"jsonRpcParams\": \"{\\\"from\\\": \\\"0x0000000000000000000000000000000000000000\\\", \\\"to\\\": \\\"0x0000000000000000000000000000000000000000\\\", \\\"value\\\": \\\"0x0\\\"}\",\n  \"chain\": \"ethereum\",\n  \"blockNumber\": \"19624900\",\n  \"classification\": \"approval_farming\",\n  \"resultType\": \"Malicious\",\n  \"features\": \"[\\\"The contract 0x0000000000000000000000000000000000000000 involved in the transaction is unverified\\\"]\",\n  \"details\": \"This transaction is incorrect because of ...\",\n  \"reporter\": \"my_name@example.org\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a423485-bf5e-4615-acbd-6e9b0700e1c4",
+          "name": "Report site",
+          "request": {
+            "name": "Report site",
+            "description": {
+              "content": "Report a misclassification of a site.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "dapp",
+                "v1",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\",\n  \"classification\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d1354b4-6757-435d-af61-4eabfa0267bf",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dapp",
+                    "v1",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"www.malicious-example.com\",\n  \"classification\": \"Malicious\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "60fa424d-e6f1-4335-82a4-63f21987701c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "dapp",
+                    "v1",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"www.malicious-example.com\",\n  \"classification\": \"Malicious\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6ea7f268-2d4b-4bbd-8cbf-d3e304b992f9",
+    "name": "Blockaid Asset Management Report API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

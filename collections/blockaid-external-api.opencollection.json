@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management external API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "external",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Evaluate Solana Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/:id/solana/evaluate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Cosigner ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Test your cosigner policies against Solana transactions. You can simulate a transaction before it is sent, look up past transactions by signature, or evaluate everything that happened in a given time range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

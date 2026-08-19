@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management Chain Agnostic API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Chain Agnostic",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Address Risk Exposure",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/address/risk-exposure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets an address and returns risk exposure data."
+        },
+        {
+          "info": {
+            "name": "Report Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/address/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Report a misclassification of an address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,204 @@
+{
+  "item": [
+    {
+      "id": "2c846058-213f-4cee-873d-9f55ea92b441",
+      "name": "Crypto Fraud Prevention",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "65675a13-5f7d-40e8-a84b-f87b604f256e",
+          "name": "Scan Transaction",
+          "request": {
+            "name": "Scan Transaction",
+            "description": {
+              "content": "Gets a transaction and returns a full security assessment indicating whether or not the transaction is malicious, along with textual reasons explaining why it was flagged as such.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "transaction",
+                "scan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"options\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"data\": {\n    \"chain\": \"<string>\",\n    \"to\": \"<string>\",\n    \"amount\": \"<number>\",\n    \"asset\": {\n      \"address\": \"<string>\"\n    },\n    \"transaction_action\": \"<string>\",\n    \"from\": \"<string>\"\n  },\n  \"metadata\": {\n    \"domain\": \"<string>\",\n    \"non_dapp\": \"<boolean>\",\n    \"account\": {\n      \"account_id\": \"<string>\",\n      \"account_creation_timestamp\": \"<dateTime>\",\n      \"user_age\": \"<integer>\",\n      \"user_country_code\": \"<string>\",\n      \"account_addresses\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"connection\": {\n      \"ip_address\": \"<ipvanyaddress>\",\n      \"user_agent\": \"<string>\",\n      \"origin\": \"<uri>\",\n      \"walletconnect_name\": \"<string>\",\n      \"walletconnect_description\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48dd7416-0353-4a28-9cdf-b55c292e88d3",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "transaction",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"options\": [\n    \"validation\"\n  ],\n  \"data\": {\n    \"chain\": \"bitcoin\",\n    \"transaction_action\": \"withdrawal\",\n    \"asset\": {\n      \"symbol\": \"BTC\"\n    },\n    \"to\": \"bc1qanrfutwqh854g74lqrygr55jkgf99em4lpfm80\",\n    \"amount\": 1\n  },\n  \"metadata\": {\n    \"account\": {\n      \"account_id\": \"1\"\n    },\n    \"connection\": {\n      \"user_agent\": \"1\",\n      \"ip_address\": \"1.1.1.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation\": {\n    \"status\": \"Success\",\n    \"result_type\": \"High-Risk\",\n    \"classification\": \"string\",\n    \"description\": \"string\"\n  },\n  \"platform_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b275a1b9-d90c-4161-aaa8-7e40bd3a569e",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "transaction",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"options\": [\n    \"validation\"\n  ],\n  \"data\": {\n    \"chain\": \"bitcoin\",\n    \"transaction_action\": \"withdrawal\",\n    \"asset\": {\n      \"symbol\": \"BTC\"\n    },\n    \"to\": \"bc1qanrfutwqh854g74lqrygr55jkgf99em4lpfm80\",\n    \"amount\": 1\n  },\n  \"metadata\": {\n    \"account\": {\n      \"account_id\": \"1\"\n    },\n    \"connection\": {\n      \"user_agent\": \"1\",\n      \"ip_address\": \"1.1.1.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4344748c-9976-46ad-a09a-e9c266bfbdd0",
+    "name": "Blockaid Asset Management Crypto Fraud Prevention API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

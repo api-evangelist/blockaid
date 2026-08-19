@@ -1,0 +1,376 @@
+{
+  "item": [
+    {
+      "id": "4b2eb24d-00f7-4179-87b3-e64e28565027",
+      "name": "Chain Agnostic",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2fc3bcc3-34e6-4561-8a4c-5f1cca6f53ac",
+          "name": "Address Risk Exposure",
+          "request": {
+            "name": "Address Risk Exposure",
+            "description": {
+              "content": "Gets an address and returns risk exposure data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "address",
+                "risk-exposure"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"metadata\": {\n    \"domain\": \"<string>\",\n    \"non_dapp\": \"<boolean>\",\n    \"account\": {\n      \"account_id\": \"<string>\",\n      \"account_creation_timestamp\": \"<dateTime>\",\n      \"user_age\": \"<integer>\",\n      \"user_country_code\": \"<string>\",\n      \"account_addresses\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"connection\": {\n      \"ip_address\": \"<ipvanyaddress>\",\n      \"user_agent\": \"<string>\",\n      \"origin\": \"<uri>\",\n      \"walletconnect_name\": \"<string>\",\n      \"walletconnect_description\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af95a4d4-2a78-4c6d-8dd5-7a89deb622c4",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "address",
+                    "risk-exposure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"address\": \"0x946D45c866AFD5b8F436d40E551D8E50A5B84230\",\n  \"metadata\": {\n    \"account\": {\n      \"account_id\": \"user-123\"\n    },\n    \"connection\": {\n      \"user_agent\": \"Mozilla/5.0\",\n      \"ip_address\": \"1.1.1.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"address\": \"0x946D45c866AFD5b8F436d40E551D8E50A5B84230\",\n  \"blocklist\": true,\n  \"name\": null,\n  \"risk_summary\": {\n    \"risk_level\": \"Malicious\",\n    \"total_usd\": 150000,\n    \"total_malicious_exposure\": 120000\n  },\n  \"exposures\": [\n    {\n      \"category\": \"stolen_funds\",\n      \"amount_usd\": 80000,\n      \"percentage\": 53.3,\n      \"risk_level\": \"Malicious\"\n    },\n    {\n      \"category\": \"mining_pool_miner\",\n      \"amount_usd\": 40000,\n      \"percentage\": 26.7,\n      \"risk_level\": \"Warning\"\n    },\n    {\n      \"category\": \"uncategorized_entity\",\n      \"amount_usd\": 30000,\n      \"percentage\": 20,\n      \"risk_level\": \"Benign\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffa92277-31da-47aa-aeb3-26a54840e513",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "address",
+                    "risk-exposure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"address\": \"0x946D45c866AFD5b8F436d40E551D8E50A5B84230\",\n  \"metadata\": {\n    \"account\": {\n      \"account_id\": \"user-123\"\n    },\n    \"connection\": {\n      \"user_agent\": \"Mozilla/5.0\",\n      \"ip_address\": \"1.1.1.1\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb29bc8b-2590-484f-ad13-ae4514858b4d",
+          "name": "Report Address",
+          "request": {
+            "name": "Report Address",
+            "description": {
+              "content": "Report a misclassification of an address",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "address",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"report\": {\n    \"type\": \"<string>\",\n    \"params\": {\n      \"address\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"chain\": \"<string>\"\n    }\n  },\n  \"details\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4fbeb756-d701-42cc-93aa-89839698ea20",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "address",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"FALSE_NEGATIVE\",\n  \"report\": {\n    \"type\": \"request_id\",\n    \"request_id\": \"11111111-1111-1111-1111-111111111111\"\n  },\n  \"details\": \"Details about the report\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b2876f1-7680-44ab-a8ff-8218e839d70c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "address",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"FALSE_NEGATIVE\",\n  \"report\": {\n    \"type\": \"request_id\",\n    \"request_id\": \"11111111-1111-1111-1111-111111111111\"\n  },\n  \"details\": \"Details about the report\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "802f1c73-b8b2-4813-b266-7ab1a3280ce1",
+    "name": "Blockaid Asset Management Chain Agnostic API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management Tron API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tron",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scan Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/tron/transaction/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for a Tron transaction."
+        },
+        {
+          "info": {
+            "name": "Scan Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/tron/address/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for a Tron address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

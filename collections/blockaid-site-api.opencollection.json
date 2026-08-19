@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management Site API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Site",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scan Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/site/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Scan Site"
+        },
+        {
+          "info": {
+            "name": "Report Site",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/site/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Report a misclassification of a site."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

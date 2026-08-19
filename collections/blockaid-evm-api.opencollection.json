@@ -1,0 +1,312 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management EVM API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EVM",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scan JSON-RPC",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/json-rpc/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for a JSON-RPC request."
+        },
+        {
+          "info": {
+            "name": "Scan Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/transaction/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for a transaction."
+        },
+        {
+          "info": {
+            "name": "Report Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/transaction/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Report a misclassification of a transaction."
+        },
+        {
+          "info": {
+            "name": "Scan Bulk of Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/transaction-bulk/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for a bulk of transactions."
+        },
+        {
+          "info": {
+            "name": "Scan Raw Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/transaction-raw/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for a raw transaction."
+        },
+        {
+          "info": {
+            "name": "Scan User Operation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/user-operation/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for a user operation."
+        },
+        {
+          "info": {
+            "name": "Scan Post-Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/post-transaction/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Scan a transaction that was already executed on chain, returns validation with features indicating address poisoning entites and malicious operators."
+        },
+        {
+          "info": {
+            "name": "Report Post Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/post-transaction/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Report a misclassification of an EVM post transaction."
+        },
+        {
+          "info": {
+            "name": "Scan Bulk of Post-Transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/post-transaction-bulk/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Scan transactions that were already executed on chain, returns validation with features indicating address poisoning entites and malicious operators."
+        },
+        {
+          "info": {
+            "name": "Scan Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/address/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get a risk recommendation with plain-language reasons for an address."
+        },
+        {
+          "info": {
+            "name": "Report EVM Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/address/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Report a misclassification of an EVM address."
+        },
+        {
+          "info": {
+            "name": "List approvals with enrichments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/address/approvals",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns wallet approvals and enrichments based on chain/address. The number of spenders returned per owner is limited to 1000."
+        },
+        {
+          "info": {
+            "name": "Scan Bulk of Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/address-bulk/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets a list of addresses and returns a security assessment of each address."
+        },
+        {
+          "info": {
+            "name": "Scan Bulk of Addresses extended",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/evm/address-bulk/scan-extended",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets a list of addresses and returns a security assessment with the feature information of each address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

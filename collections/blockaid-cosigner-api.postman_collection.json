@@ -1,0 +1,1669 @@
+{
+  "item": [
+    {
+      "id": "65bbda7f-86ea-418d-a23f-a7920a1219a1",
+      "name": "cosigner",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "74eb181b-f23f-4f1d-be85-b3692e1e6ec2",
+          "name": "Get Cosigner Policies Route",
+          "request": {
+            "name": "Get Cosigner Policies Route",
+            "description": {
+              "content": "Get all policies for a cosigner by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                ":id",
+                "policies",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Cosigner ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b54b5e34-e8fb-49af-99aa-c9b7d6f75ca0",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id",
+                    "policies",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Cosigner ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policies\": {\n    \"evm\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"solana\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"bitcoin\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sui\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"other\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1e69d7d3-263d-431f-88c1-8f4bf5c5496f",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id",
+                    "policies",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Cosigner ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07032bae-8ca5-47df-97b0-1ad25fcba275",
+          "name": "Set Cosigner Policies Route",
+          "request": {
+            "name": "Set Cosigner Policies Route",
+            "description": {
+              "content": "Set policies for a cosigner by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                ":id",
+                "policies",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Cosigner ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"policies\": {\n    \"evm\": [\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"solana\": [\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"bitcoin\": [\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sui\": [\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"other\": [\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": \"<string>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"action\": \"<string>\",\n        \"policy\": {\n          \"type\": \"<string>\"\n        }\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6e1df27c-021d-4243-8f32-c307170c8f3e",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id",
+                    "policies",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Cosigner ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policies\": {\n    \"evm\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"solana\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"bitcoin\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sui\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"other\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policies\": {\n    \"evm\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"solana\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"bitcoin\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sui\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"other\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25ecdbaa-7ea2-4817-95a2-0f5d1614f0db",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id",
+                    "policies",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Cosigner ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"policies\": {\n    \"evm\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"solana\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"target\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"bitcoin\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"sui\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"rules\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    ],\n    \"other\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"approve\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"reject\",\n        \"policy\": {\n          \"type\": \"unsupported_chain\"\n        }\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f51d31d-70fe-4aa1-b8a2-3f63c1c38715",
+          "name": "Create a new Cosigner",
+          "request": {
+            "name": "Create a new Cosigner",
+            "description": {
+              "content": "Create a cosigner and determine what it does on proposal, approval, and rejection.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            \"<integer>\",\n            \"<integer>\"\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ],\n  \"name\": \"<string>\",\n  \"data\": {\n    \"type\": \"<string>\",\n    \"unsupported_chain_behavior\": \"<string>\",\n    \"security_policy\": \"<string>\",\n    \"integration_instance_id\": \"<string>\",\n    \"scope\": \"<string>\",\n    \"involvement_level\": \"<string>\",\n    \"vault_ids\": [\n      \"<string>\"\n    ],\n    \"chains\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"malicious_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a697da08-c435-447c-b55a-e771a33df7fb",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4068,\n            2885\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4660,\n            5849\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            754,\n            7025\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"name\": \"<string>\",\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"unsupported_chain_behavior\": \"pending\",\n    \"security_policy\": \"blockaid_ootb_policy\",\n    \"integration_instance_id\": \"string\",\n    \"scope\": \"specific_vaults\",\n    \"involvement_level\": \"active_approval\",\n    \"vault_ids\": [\n      \"string\"\n    ],\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            6371,\n            8527\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4939,\n            8959\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            8127,\n            2384\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"status\": \"ok\",\n  \"created_at\": \"1976-03-21T18:14:37.099Z\",\n  \"updated_at\": \"2005-07-21T00:02:19.127Z\",\n  \"updated_by\": \"string\",\n  \"created_by\": \"string\",\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"unsupported_chain_behavior\": \"reject\",\n    \"security_policy\": \"advanced_control_policy\",\n    \"integration_instance_id\": \"string\",\n    \"involvement_level\": \"reporting_only\",\n    \"vaults\": [\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"scope\": \"specific_vaults\",\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"error\": \"string\",\n  \"selected_chains\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad4d0f03-5eeb-41f1-8a24-e4bd21c39d15",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4068,\n            2885\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4660,\n            5849\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            754,\n            7025\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"name\": \"<string>\",\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"unsupported_chain_behavior\": \"pending\",\n    \"security_policy\": \"blockaid_ootb_policy\",\n    \"integration_instance_id\": \"string\",\n    \"scope\": \"specific_vaults\",\n    \"involvement_level\": \"active_approval\",\n    \"vault_ids\": [\n      \"string\"\n    ],\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aa0c5d92-7cf6-4731-bf42-8fcea37f4467",
+          "name": "Get Cosigners Paginated Route",
+          "request": {
+            "name": "Get Cosigners Paginated Route",
+            "description": {
+              "content": "Returns a paginated list of Cosigners based on the provided search criteria.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": 1,\n  \"page_size\": 50,\n  \"sort\": [\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cf3fad5f-b63b-4a18-900a-50b342f331c5",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"page_size\": 50,\n  \"sort\": [\n    {\n      \"field\": \"id\",\n      \"operator\": \"desc\"\n    },\n    {\n      \"field\": \"id\",\n      \"operator\": \"desc\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"proposal_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": \"string\"\n        }\n      ],\n      \"rejection_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": \"string\"\n        }\n      ],\n      \"approval_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": \"string\"\n        }\n      ],\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"ok\",\n      \"created_at\": \"1955-05-05T23:57:33.379Z\",\n      \"updated_at\": \"1950-11-18T18:12:41.214Z\",\n      \"updated_by\": \"string\",\n      \"created_by\": \"string\",\n      \"data\": {\n        \"type\": \"fireblocks\",\n        \"unsupported_chain_behavior\": \"approve\",\n        \"security_policy\": \"blockaid_ootb_policy\",\n        \"integration_instance_id\": \"string\",\n        \"involvement_level\": \"reporting_only\",\n        \"vaults\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"scope\": \"specific_vaults\",\n        \"chains\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"malicious_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"error\": \"string\",\n      \"selected_chains\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"proposal_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": \"string\"\n        }\n      ],\n      \"rejection_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": \"string\"\n        }\n      ],\n      \"approval_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": \"string\"\n        }\n      ],\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"error\",\n      \"created_at\": \"1983-04-01T02:38:29.742Z\",\n      \"updated_at\": \"1961-02-04T17:10:14.818Z\",\n      \"updated_by\": \"string\",\n      \"created_by\": \"string\",\n      \"data\": {\n        \"type\": \"fireblocks\",\n        \"unsupported_chain_behavior\": \"reject\",\n        \"security_policy\": \"blockaid_ootb_policy\",\n        \"integration_instance_id\": \"string\",\n        \"involvement_level\": \"active_approval\",\n        \"vaults\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"scope\": \"specific_vaults\",\n        \"chains\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"malicious_actions\": [\n        {\n          \"type\": \"telegram\",\n          \"chats\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"message_format\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"error\": \"string\",\n      \"selected_chains\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"total\": 4058,\n  \"page\": 1884,\n  \"size\": 6505,\n  \"status_summary\": {\n    \"ok\": 1725,\n    \"pending\": 1596,\n    \"error\": 4312\n  },\n  \"pages\": 8577\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc4c39e4-637f-4326-a1d0-6843ccbbbcce",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page\": 1,\n  \"page_size\": 50,\n  \"sort\": [\n    {\n      \"field\": \"id\",\n      \"operator\": \"desc\"\n    },\n    {\n      \"field\": \"id\",\n      \"operator\": \"desc\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8529457-5a95-4da1-9e37-dc2b5baf4ee4",
+          "name": "Get Cosigner By Name",
+          "request": {
+            "name": "Get Cosigner By Name",
+            "description": {
+              "content": "Fetch a cosigner by name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                "by-name",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f4c63a85-b749-4a6a-9a30-e8bd356f8a45",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    "by-name",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            6371,\n            8527\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4939,\n            8959\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            8127,\n            2384\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"status\": \"ok\",\n  \"created_at\": \"1976-03-21T18:14:37.099Z\",\n  \"updated_at\": \"2005-07-21T00:02:19.127Z\",\n  \"updated_by\": \"string\",\n  \"created_by\": \"string\",\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"unsupported_chain_behavior\": \"reject\",\n    \"security_policy\": \"advanced_control_policy\",\n    \"integration_instance_id\": \"string\",\n    \"involvement_level\": \"reporting_only\",\n    \"vaults\": [\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"scope\": \"specific_vaults\",\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"error\": \"string\",\n  \"selected_chains\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "324f9adc-419c-46dd-91a0-6e8c07a49bc3",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    "by-name",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0bc1ae31-5e4b-4d3b-b1d5-f3a06235c659",
+          "name": "Get Cosigner External Route",
+          "request": {
+            "name": "Get Cosigner External Route",
+            "description": {
+              "content": "Fetch a cosigner by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "17f56d82-a191-4535-9212-84d0be773483",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            6371,\n            8527\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4939,\n            8959\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            8127,\n            2384\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"status\": \"ok\",\n  \"created_at\": \"1976-03-21T18:14:37.099Z\",\n  \"updated_at\": \"2005-07-21T00:02:19.127Z\",\n  \"updated_by\": \"string\",\n  \"created_by\": \"string\",\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"unsupported_chain_behavior\": \"reject\",\n    \"security_policy\": \"advanced_control_policy\",\n    \"integration_instance_id\": \"string\",\n    \"involvement_level\": \"reporting_only\",\n    \"vaults\": [\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"scope\": \"specific_vaults\",\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"error\": \"string\",\n  \"selected_chains\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0c8d5fe-6cec-4605-952f-73ee3281de98",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dd491c11-8835-4ce3-b8c3-2f4902b1b52d",
+          "name": "Delete Cosigner External Route",
+          "request": {
+            "name": "Delete Cosigner External Route",
+            "description": {
+              "content": "Remove a cosigner by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "695ecfa0-afaa-4b8e-b5df-afcd4d739677",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b885dd65-758c-45bd-8a3e-e3e1d6850a7b",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "317a9978-272f-48a7-87bf-e0f1e06b73a4",
+          "name": "Update Cosigner External Route",
+          "request": {
+            "name": "Update Cosigner External Route",
+            "description": {
+              "content": "Update a cosigner by ID; the fields you send replace the existing ones.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"type\": \"<string>\",\n    \"vault_ids\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chains\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"involvement_level\": \"<string>\",\n    \"security_policy\": \"<string>\",\n    \"unsupported_chain_behavior\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ],\n  \"malicious_actions\": [\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"chats\": [\n        {\n          \"chat_id\": \"<string>\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d625ec4-d189-4055-a19d-6d55731e9374",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"vault_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"involvement_level\": \"active_approval\",\n    \"security_policy\": \"advanced_control_policy\",\n    \"unsupported_chain_behavior\": \"reject\"\n  },\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            6371,\n            8527\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            4939,\n            8959\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            8127,\n            2384\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"status\": \"ok\",\n  \"created_at\": \"1976-03-21T18:14:37.099Z\",\n  \"updated_at\": \"2005-07-21T00:02:19.127Z\",\n  \"updated_by\": \"string\",\n  \"created_by\": \"string\",\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"unsupported_chain_behavior\": \"reject\",\n    \"security_policy\": \"advanced_control_policy\",\n    \"integration_instance_id\": \"string\",\n    \"involvement_level\": \"reporting_only\",\n    \"vaults\": [\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      },\n      {\n        \"vault_id\": \"string\",\n        \"name\": \"string\",\n        \"addresses\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      }\n    ],\n    \"scope\": \"specific_vaults\",\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"error\": \"string\",\n  \"selected_chains\": [\n    \"string\",\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f10035d3-c5b9-400f-b586-d1dd26072274",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"data\": {\n    \"type\": \"fireblocks\",\n    \"vault_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"chains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"involvement_level\": \"active_approval\",\n    \"security_policy\": \"advanced_control_policy\",\n    \"unsupported_chain_behavior\": \"reject\"\n  },\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"proposal_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"rejection_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"approval_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ],\n  \"malicious_actions\": [\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    },\n    {\n      \"type\": \"telegram\",\n      \"chats\": [\n        {\n          \"chat_id\": \"string\",\n          \"topic_ids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"message_format\": \"string\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a85bdc45-0494-43c6-954b-5bfa93ea8f82",
+          "name": "Evaluate EVM Transaction",
+          "request": {
+            "name": "Evaluate EVM Transaction",
+            "description": {
+              "content": "Run policy evaluation against an EVM transaction for the given cosigner. Returns the policy decision and per-policy trace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "cosigners",
+                ":id",
+                "evm",
+                "evaluate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Cosigner ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"evaluation_type\": \"<string>\",\n  \"chain\": \"<string>\",\n  \"account_address\": \"<string>\",\n  \"data\": {\n    \"from\": \"<string>\",\n    \"to\": \"<string>\",\n    \"value\": \"<string>\",\n    \"data\": \"<string>\",\n    \"type\": \"transaction\"\n  },\n  \"inline_policies\": [\n    {\n      \"name\": \"<string>\",\n      \"action\": \"<string>\",\n      \"policy\": \"<object>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"action\": \"<string>\",\n      \"policy\": \"<object>\"\n    }\n  ],\n  \"metadata\": \"<object>\",\n  \"options\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "97a8d948-e21b-48cb-a6ab-48f69d5fc9f0",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id",
+                    "evm",
+                    "evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Cosigner ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"evaluation_type\": \"simulate\",\n  \"chain\": \"ethereum\",\n  \"account_address\": \"0x1234\",\n  \"data\": {\n    \"from\": \"0x1234\",\n    \"to\": \"0x1E0049783F008A0085193E00003D00cd54003c71\",\n    \"value\": \"0x0\",\n    \"data\": \"0xa22cb465\"\n  },\n  \"metadata\": {\n    \"domain\": \"https://app.safe.global\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"policies\": {\n    \"decision\": \"pending\",\n    \"trace\": [\n      {\n        \"name\": \"string\",\n        \"action\": \"string\",\n        \"type\": \"string\",\n        \"result\": \"not_matched\"\n      },\n      {\n        \"name\": \"string\",\n        \"action\": \"string\",\n        \"type\": \"string\",\n        \"result\": \"matched\"\n      }\n    ],\n    \"reason\": \"string\",\n    \"matched_policy\": {\n      \"name\": \"string\",\n      \"action\": \"string\",\n      \"type\": \"string\"\n    },\n    \"should_handle_pending_tx\": true\n  },\n  \"scan_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "aefdae28-ce2e-4e9c-8e4d-f973291c5be8",
+              "name": "Cosigner not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id",
+                    "evm",
+                    "evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Cosigner ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"evaluation_type\": \"simulate\",\n  \"chain\": \"ethereum\",\n  \"account_address\": \"0x1234\",\n  \"data\": {\n    \"from\": \"0x1234\",\n    \"to\": \"0x1E0049783F008A0085193E00003D00cd54003c71\",\n    \"value\": \"0x0\",\n    \"data\": \"0xa22cb465\"\n  },\n  \"metadata\": {\n    \"domain\": \"https://app.safe.global\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "90416aa9-deb8-4c42-bdec-a44317ee258b",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "cosigners",
+                    ":id",
+                    "evm",
+                    "evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Cosigner ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"evaluation_type\": \"simulate\",\n  \"chain\": \"ethereum\",\n  \"account_address\": \"0x1234\",\n  \"data\": {\n    \"from\": \"0x1234\",\n    \"to\": \"0x1E0049783F008A0085193E00003D00cd54003c71\",\n    \"value\": \"0x0\",\n    \"data\": \"0xa22cb465\"\n  },\n  \"metadata\": {\n    \"domain\": \"https://app.safe.global\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ff1b1b4b-fd5d-421c-a12a-7bf1bde7d316",
+    "name": "Blockaid Asset Management cosigner API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2393 @@
+{
+  "item": [
+    {
+      "id": "07fb229d-a058-461e-842f-ef8da8eb4c41",
+      "name": "Token",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4b98d7c0-3251-47ad-85c9-fe801e1cbf72",
+          "name": "Scan Token",
+          "request": {
+            "name": "Scan Token",
+            "description": {
+              "content": "Gets a token address and scan the token to identify any indication of malicious behavior",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "scan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain\": \"<string>\",\n  \"address\": \"<string>\",\n  \"metadata\": {},\n  \"token_id\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4d0bf97f-f0b4-4799-bb6a-0a72725c0cb4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"address\": \"0x66587563e933bbf3974b89156b47bb82b921eb35\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_type\": \"Malicious\",\n  \"malicious_score\": \"string\",\n  \"attack_types\": {\n    \"key_0\": {\n      \"score\": \"string\",\n      \"threshold\": \"1.0\",\n      \"features\": {}\n    }\n  },\n  \"chain\": \"abstract\",\n  \"address\": \"string\",\n  \"metadata\": {\n    \"type\": \"string\",\n    \"name\": \"string\",\n    \"symbol\": \"string\",\n    \"decimals\": 5211,\n    \"image_url\": \"string\",\n    \"description\": \"string\",\n    \"deployer\": \"string\",\n    \"deployer_balance\": {\n      \"amount\": 7132.053187811561,\n      \"amount_wei\": \"string\"\n    },\n    \"contract_balance\": {\n      \"amount\": 3528.5616358018056,\n      \"amount_wei\": \"string\"\n    },\n    \"owner_balance\": {\n      \"amount\": 7694.33571620481,\n      \"amount_wei\": \"string\"\n    },\n    \"owner\": \"string\",\n    \"creation_timestamp\": \"string\",\n    \"external_links\": {},\n    \"urls\": [\n      \"string\",\n      \"string\"\n    ],\n    \"malicious_urls\": [\n      \"string\",\n      \"string\"\n    ],\n    \"token_creation_initiator\": \"string\",\n    \"impersonation_targets\": [\n      {\n        \"chain\": \"string\",\n        \"address\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"source\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      },\n      {\n        \"chain\": \"string\",\n        \"address\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"source\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      }\n    ],\n    \"mint_authority\": \"string\",\n    \"update_authority\": \"string\",\n    \"freeze_authority\": \"string\",\n    \"permanent_delegate\": \"string\"\n  },\n  \"fees\": {\n    \"transfer\": 8070.69929956673,\n    \"transfer_fee_max_amount\": 8754,\n    \"buy\": 2498.2685339556765,\n    \"sell\": 2849.1701033986105\n  },\n  \"trading_limits\": {\n    \"max_buy\": {\n      \"amount\": 6072.725957338744,\n      \"amount_wei\": \"string\"\n    },\n    \"max_sell\": {\n      \"amount\": 8469.561881260885,\n      \"amount_wei\": \"string\"\n    },\n    \"max_holding\": {\n      \"amount\": 3412.881713142363,\n      \"amount_wei\": \"string\"\n    },\n    \"sell_limit_per_block\": {\n      \"amount\": 4662.69758300636,\n      \"amount_wei\": \"string\"\n    }\n  },\n  \"financial_stats\": {\n    \"supply\": 8456,\n    \"holders_count\": 4026,\n    \"usd_price_per_unit\": 8249.993362371517,\n    \"burned_liquidity_percentage\": 2305.1335803749253,\n    \"locked_liquidity_percentage\": 2937.1510536232427,\n    \"total_reserve_in_usd\": 7683.273898691989,\n    \"dev_holding_percentage\": 8942.542315552206,\n    \"initial_snipers_holding_percentage\": 3179.793127781566,\n    \"snipers_holding_percentage\": 9602.54314892835,\n    \"bundlers_holding_percentage\": 6286.230130996475,\n    \"insiders_holding_percentage\": 8151.123581067126,\n    \"markets\": [\n      {\n        \"market_type\": \"UNKNOWN\",\n        \"market_name\": \"string\",\n        \"pair_name\": \"string\",\n        \"address\": \"string\",\n        \"base_token\": \"string\",\n        \"quote_token\": \"string\",\n        \"reserve_in_usd\": 2896.8194531918934\n      },\n      {\n        \"market_type\": \"UNKNOWN\",\n        \"market_name\": \"string\",\n        \"pair_name\": \"string\",\n        \"address\": \"string\",\n        \"base_token\": \"string\",\n        \"quote_token\": \"string\",\n        \"reserve_in_usd\": 6331.272512599057\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c08a3f6-10c0-48ab-8cb0-0c25b58870b4",
+              "name": "Token scan result is not available. This can occur when:\n1. The token scan result is not yet available — try again later\n2. The address is not a token\n3. For cache-only requests: the token has never been scanned (cache miss); a backend rescan is triggered — retry later or wait for webhook updates.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"address\": \"0x66587563e933bbf3974b89156b47bb82b921eb35\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Token scan is not available yet. Please try again later.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74f8e635-7733-40fb-b185-1b9f46b01a79",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"address\": \"0x66587563e933bbf3974b89156b47bb82b921eb35\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cbd9e102-a56a-4918-ad69-a671fea66320",
+          "name": "Report Token",
+          "request": {
+            "name": "Report Token",
+            "description": {
+              "content": "Report for misclassification of a token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"report\": {\n    \"type\": \"<string>\",\n    \"params\": {\n      \"address\": \"<string>\",\n      \"chain\": \"<string>\"\n    }\n  },\n  \"details\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d0ed6c17-038f-49eb-9e31-1c67beb24486",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"FALSE_POSITIVE\",\n  \"report\": {\n    \"type\": \"request_id\",\n    \"request_id\": \"11111111-1111-1111-1111-111111111111\"\n  },\n  \"details\": \"Details about the report\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f7d935e8-0092-42c0-a041-1a1ed570f57a",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"FALSE_POSITIVE\",\n  \"report\": {\n    \"type\": \"request_id\",\n    \"request_id\": \"11111111-1111-1111-1111-111111111111\"\n  },\n  \"details\": \"Details about the report\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e518266-8f6f-467c-a204-d4e946bd0664",
+          "name": "Scan Token Bulk",
+          "request": {
+            "name": "Scan Token Bulk",
+            "description": {
+              "content": "Gets a list of token addresses and scan the tokens to identify any indication of malicious behaviour",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token-bulk",
+                "scan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain\": \"<string>\",\n  \"tokens\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"metadata\": {}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "664fed3d-52b3-4f87-9bf0-31bc2c5cc236",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token-bulk",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"tokens\": [\n    \"0x66587563e933bbf3974b89156b47bb82b921eb35\",\n    \"0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": {\n    \"key_0\": {\n      \"result_type\": \"Benign\",\n      \"malicious_score\": \"string\",\n      \"attack_types\": {\n        \"key_0\": {\n          \"score\": \"string\",\n          \"threshold\": \"1.0\",\n          \"features\": {}\n        },\n        \"key_1\": {\n          \"score\": \"string\",\n          \"threshold\": \"1.0\",\n          \"features\": {}\n        }\n      },\n      \"chain\": \"bsc\",\n      \"address\": \"string\",\n      \"metadata\": {\n        \"type\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"decimals\": 2168,\n        \"image_url\": \"string\",\n        \"description\": \"string\",\n        \"deployer\": \"string\",\n        \"deployer_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"contract_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner\": \"string\",\n        \"creation_timestamp\": \"string\",\n        \"external_links\": {},\n        \"urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"malicious_urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_creation_initiator\": \"string\",\n        \"impersonation_targets\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"mint_authority\": \"string\",\n        \"update_authority\": \"string\",\n        \"freeze_authority\": \"string\",\n        \"permanent_delegate\": \"string\"\n      },\n      \"fees\": {\n        \"transfer\": 5656.66184190115,\n        \"transfer_fee_max_amount\": 8685,\n        \"buy\": 4957.083105354241,\n        \"sell\": 7726.120850961512\n      },\n      \"trading_limits\": {\n        \"max_buy\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_sell\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_holding\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"sell_limit_per_block\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"financial_stats\": {\n        \"supply\": 9566,\n        \"holders_count\": 716,\n        \"usd_price_per_unit\": 391.7759071691229,\n        \"burned_liquidity_percentage\": 4556.4750374270525,\n        \"locked_liquidity_percentage\": 111.65036412912666,\n        \"total_reserve_in_usd\": 2633.0608561188105,\n        \"dev_holding_percentage\": 9302.073822649627,\n        \"initial_snipers_holding_percentage\": 6565.980417353981,\n        \"snipers_holding_percentage\": 3984.8044962441286,\n        \"bundlers_holding_percentage\": 8658.722198733689,\n        \"insiders_holding_percentage\": 4830.516073917177,\n        \"markets\": [\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 9826.811961351814\n          },\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 4632.006266954367\n          }\n        ]\n      }\n    }\n  },\n  \"errors\": {\n    \"key_0\": {\n      \"message\": \"PENDING_SCAN_RESULT\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89fb05f6-4a5c-49a3-a1cc-f6210670ab6d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token-bulk",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"tokens\": [\n    \"0x66587563e933bbf3974b89156b47bb82b921eb35\",\n    \"0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb7a5276-f153-471d-a183-3926c8db3305",
+          "name": "Full Snapshot",
+          "request": {
+            "name": "Full Snapshot",
+            "description": {
+              "content": "This endpoint provides a state snapshot of all token scans, allowing you to synchronize with the latest state\n\nSpecify your preferred page size to manage response size.\nUse the provided cursor to navigate through the pages.\nThe cursor value will be null on the final page, indicating there are no more results to fetch.\n\nTo retrieve the complete data set, iterate through all pages using the cursors provided in the response",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "snapshot",
+                "full"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chain",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor to start from, if not provided, the first page will be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "Number of tokens to return in a page"
+                },
+                {
+                  "disabled": false,
+                  "key": "token_type",
+                  "value": "<string>",
+                  "description": "Filter tokens by type. Allowed values are \"Fungible\" or \"NonFungible\". If not provided, all types will be included."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "940a97b6-62ef-4a54-b8c6-dec4dc718391",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "snapshot",
+                    "full"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "starknet"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "token_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"result_type\": \"Benign\",\n      \"malicious_score\": \"string\",\n      \"attack_types\": {\n        \"key_0\": {\n          \"score\": \"string\",\n          \"threshold\": \"1.0\",\n          \"features\": {}\n        }\n      },\n      \"chain\": \"abstract\",\n      \"address\": \"string\",\n      \"metadata\": {\n        \"type\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"decimals\": 4326,\n        \"image_url\": \"string\",\n        \"description\": \"string\",\n        \"deployer\": \"string\",\n        \"deployer_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"contract_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner\": \"string\",\n        \"creation_timestamp\": \"string\",\n        \"external_links\": {},\n        \"urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"malicious_urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_creation_initiator\": \"string\",\n        \"impersonation_targets\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"mint_authority\": \"string\",\n        \"update_authority\": \"string\",\n        \"freeze_authority\": \"string\",\n        \"permanent_delegate\": \"string\"\n      },\n      \"fees\": {\n        \"transfer\": 2413.1965814818923,\n        \"transfer_fee_max_amount\": 589,\n        \"buy\": 707.9133164901175,\n        \"sell\": 9953.350517250734\n      },\n      \"trading_limits\": {\n        \"max_buy\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_sell\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_holding\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"sell_limit_per_block\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"financial_stats\": {\n        \"supply\": 1630,\n        \"holders_count\": 171,\n        \"usd_price_per_unit\": 9673.781668461674,\n        \"burned_liquidity_percentage\": 94.19223483411288,\n        \"locked_liquidity_percentage\": 506.6550183003804,\n        \"total_reserve_in_usd\": 4226.981831063796,\n        \"dev_holding_percentage\": 8303.22025082623,\n        \"initial_snipers_holding_percentage\": 9316.583409926667,\n        \"snipers_holding_percentage\": 7641.508377392818,\n        \"bundlers_holding_percentage\": 6062.268787493696,\n        \"insiders_holding_percentage\": 3501.2392945484085,\n        \"markets\": [\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 4879.616070672167\n          },\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 6262.479002051297\n          }\n        ]\n      }\n    },\n    {\n      \"result_type\": \"Benign\",\n      \"malicious_score\": \"string\",\n      \"attack_types\": {\n        \"key_0\": {\n          \"score\": \"string\",\n          \"threshold\": \"1.0\",\n          \"features\": {}\n        }\n      },\n      \"chain\": \"megaeth\",\n      \"address\": \"string\",\n      \"metadata\": {\n        \"type\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"decimals\": 3910,\n        \"image_url\": \"string\",\n        \"description\": \"string\",\n        \"deployer\": \"string\",\n        \"deployer_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"contract_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner\": \"string\",\n        \"creation_timestamp\": \"string\",\n        \"external_links\": {},\n        \"urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"malicious_urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_creation_initiator\": \"string\",\n        \"impersonation_targets\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"mint_authority\": \"string\",\n        \"update_authority\": \"string\",\n        \"freeze_authority\": \"string\",\n        \"permanent_delegate\": \"string\"\n      },\n      \"fees\": {\n        \"transfer\": 9885.985088175838,\n        \"transfer_fee_max_amount\": 9191,\n        \"buy\": 813.6280628686499,\n        \"sell\": 2013.9564467952587\n      },\n      \"trading_limits\": {\n        \"max_buy\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_sell\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_holding\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"sell_limit_per_block\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"financial_stats\": {\n        \"supply\": 983,\n        \"holders_count\": 5744,\n        \"usd_price_per_unit\": 1825.8573821031832,\n        \"burned_liquidity_percentage\": 5797.557821722808,\n        \"locked_liquidity_percentage\": 4122.94446292105,\n        \"total_reserve_in_usd\": 3699.6604243120823,\n        \"dev_holding_percentage\": 342.20963734880485,\n        \"initial_snipers_holding_percentage\": 1548.2012861865535,\n        \"snipers_holding_percentage\": 8968.724782124147,\n        \"bundlers_holding_percentage\": 546.4661685632655,\n        \"insiders_holding_percentage\": 8860.266694025091,\n        \"markets\": [\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 3642.3395545669123\n          },\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 686.3402330521151\n          }\n        ]\n      }\n    }\n  ],\n  \"current_page\": \"string\",\n  \"previous_page\": \"string\",\n  \"next_page\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88ff2c68-2308-4691-b56b-29140a55798c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "snapshot",
+                    "full"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "starknet"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    },
+                    {
+                      "key": "token_type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "000164ec-b0f1-4bf6-b57b-ab3a9928d239",
+          "name": "Diff Snapshot",
+          "request": {
+            "name": "Diff Snapshot",
+            "description": {
+              "content": "Retrieve tokens that experienced a state change within the specified timeframe\n\nSpecify your preferred page size to manage response size.\nSpecify the time frame in minutes.\nit is recommended to use timeframes shorter than 30 minutes\n\nUse the provided cursor to navigate through the pages.\nThe cursor value will be null on the final page, indicating there are no more results to fetch.\nTo retrieve the complete data set, iterate through all pages using the cursors provided in the response",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "snapshot",
+                "diff"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chain",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "timeframe",
+                  "value": "10",
+                  "description": "Timeframe in minutes"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Cursor to start from, if not provided, the first page will be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "50",
+                  "description": "Number of tokens to return in a page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2c838e1c-9bea-466a-a69e-c8a1010f82d4",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "snapshot",
+                    "diff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "starknet"
+                    },
+                    {
+                      "key": "timeframe",
+                      "value": "10"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"result_type\": \"Benign\",\n      \"malicious_score\": \"string\",\n      \"attack_types\": {\n        \"key_0\": {\n          \"score\": \"string\",\n          \"threshold\": \"1.0\",\n          \"features\": {}\n        }\n      },\n      \"chain\": \"abstract\",\n      \"address\": \"string\",\n      \"metadata\": {\n        \"type\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"decimals\": 4326,\n        \"image_url\": \"string\",\n        \"description\": \"string\",\n        \"deployer\": \"string\",\n        \"deployer_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"contract_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner\": \"string\",\n        \"creation_timestamp\": \"string\",\n        \"external_links\": {},\n        \"urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"malicious_urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_creation_initiator\": \"string\",\n        \"impersonation_targets\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"mint_authority\": \"string\",\n        \"update_authority\": \"string\",\n        \"freeze_authority\": \"string\",\n        \"permanent_delegate\": \"string\"\n      },\n      \"fees\": {\n        \"transfer\": 2413.1965814818923,\n        \"transfer_fee_max_amount\": 589,\n        \"buy\": 707.9133164901175,\n        \"sell\": 9953.350517250734\n      },\n      \"trading_limits\": {\n        \"max_buy\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_sell\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_holding\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"sell_limit_per_block\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"financial_stats\": {\n        \"supply\": 1630,\n        \"holders_count\": 171,\n        \"usd_price_per_unit\": 9673.781668461674,\n        \"burned_liquidity_percentage\": 94.19223483411288,\n        \"locked_liquidity_percentage\": 506.6550183003804,\n        \"total_reserve_in_usd\": 4226.981831063796,\n        \"dev_holding_percentage\": 8303.22025082623,\n        \"initial_snipers_holding_percentage\": 9316.583409926667,\n        \"snipers_holding_percentage\": 7641.508377392818,\n        \"bundlers_holding_percentage\": 6062.268787493696,\n        \"insiders_holding_percentage\": 3501.2392945484085,\n        \"markets\": [\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 4879.616070672167\n          },\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 6262.479002051297\n          }\n        ]\n      }\n    },\n    {\n      \"result_type\": \"Benign\",\n      \"malicious_score\": \"string\",\n      \"attack_types\": {\n        \"key_0\": {\n          \"score\": \"string\",\n          \"threshold\": \"1.0\",\n          \"features\": {}\n        }\n      },\n      \"chain\": \"megaeth\",\n      \"address\": \"string\",\n      \"metadata\": {\n        \"type\": \"string\",\n        \"name\": \"string\",\n        \"symbol\": \"string\",\n        \"decimals\": 3910,\n        \"image_url\": \"string\",\n        \"description\": \"string\",\n        \"deployer\": \"string\",\n        \"deployer_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"contract_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner_balance\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"owner\": \"string\",\n        \"creation_timestamp\": \"string\",\n        \"external_links\": {},\n        \"urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"malicious_urls\": [\n          \"string\",\n          \"string\"\n        ],\n        \"token_creation_initiator\": \"string\",\n        \"impersonation_targets\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"mint_authority\": \"string\",\n        \"update_authority\": \"string\",\n        \"freeze_authority\": \"string\",\n        \"permanent_delegate\": \"string\"\n      },\n      \"fees\": {\n        \"transfer\": 9885.985088175838,\n        \"transfer_fee_max_amount\": 9191,\n        \"buy\": 813.6280628686499,\n        \"sell\": 2013.9564467952587\n      },\n      \"trading_limits\": {\n        \"max_buy\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_sell\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"max_holding\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"sell_limit_per_block\": {\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount_wei\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      },\n      \"financial_stats\": {\n        \"supply\": 983,\n        \"holders_count\": 5744,\n        \"usd_price_per_unit\": 1825.8573821031832,\n        \"burned_liquidity_percentage\": 5797.557821722808,\n        \"locked_liquidity_percentage\": 4122.94446292105,\n        \"total_reserve_in_usd\": 3699.6604243120823,\n        \"dev_holding_percentage\": 342.20963734880485,\n        \"initial_snipers_holding_percentage\": 1548.2012861865535,\n        \"snipers_holding_percentage\": 8968.724782124147,\n        \"bundlers_holding_percentage\": 546.4661685632655,\n        \"insiders_holding_percentage\": 8860.266694025091,\n        \"markets\": [\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 3642.3395545669123\n          },\n          {\n            \"market_type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"market_name\": \"string\",\n            \"pair_name\": \"string\",\n            \"address\": \"string\",\n            \"base_token\": \"string\",\n            \"quote_token\": \"string\",\n            \"reserve_in_usd\": 686.3402330521151\n          }\n        ]\n      }\n    }\n  ],\n  \"current_page\": \"string\",\n  \"previous_page\": \"string\",\n  \"next_page\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e20c3f6e-b9cc-43fc-98c8-f2255942d1fd",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "snapshot",
+                    "diff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "starknet"
+                    },
+                    {
+                      "key": "timeframe",
+                      "value": "10"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "size",
+                      "value": "50"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6088d04a-8994-4faf-9601-373e9932168d",
+          "name": "Get a webhook",
+          "request": {
+            "name": "Get a webhook",
+            "description": {
+              "content": "Get information about an existing webhook for a given chain",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "hooks",
+                ":chain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c20bc849-2d8f-40a8-968d-38512a56da47",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"http://LBLLNmKW.jgPCiPOxWMa79yFBFpXJ3ZkUqECOmW+LfIgCiG\",\n  \"chain\": \"unichain\",\n  \"active\": true,\n  \"created_at\": \"1994-07-18T16:22:50.968Z\",\n  \"updated_at\": \"1951-03-25T22:40:49.439Z\",\n  \"shared_secret_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "510990ba-cec5-47c7-a689-0b465725094f",
+              "name": "Hook not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54c8ff53-9aec-4aab-bd42-81f1246364c1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6dc927f-c12e-471d-80d6-29051982ecf9",
+          "name": "Create a new webhook",
+          "request": {
+            "name": "Create a new webhook",
+            "description": {
+              "content": "Creates a webhook subscription for a chain to receive real-time token scan updates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "hooks",
+                ":chain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<uri>\",\n  \"shared_secret_key\": \"<string>\",\n  \"filter\": {\n    \"token_addresses\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"filter_type\": \"token_address\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8967cc34-7dd5-48a8-a8f3-daf9f9512f9b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://example.com/\",\n  \"shared_secret_key\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"filter\": {\n    \"filter_type\": \"token_address\",\n    \"token_addresses\": [\n      \"0x1234567890abcdef1234567890abcdef12345678\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"http://LBLLNmKW.jgPCiPOxWMa79yFBFpXJ3ZkUqECOmW+LfIgCiG\",\n  \"chain\": \"unichain\",\n  \"active\": true,\n  \"created_at\": \"1994-07-18T16:22:50.968Z\",\n  \"updated_at\": \"1951-03-25T22:40:49.439Z\",\n  \"shared_secret_key\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55641a9c-036c-4034-a2f0-c56cbdf6e365",
+              "name": "Host not reachable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://example.com/\",\n  \"shared_secret_key\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"filter\": {\n    \"filter_type\": \"token_address\",\n    \"token_addresses\": [\n      \"0x1234567890abcdef1234567890abcdef12345678\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f3720bd-fc86-429a-a66f-dc6bfc9c857f",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"https://example.com/\",\n  \"shared_secret_key\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"filter\": {\n    \"filter_type\": \"token_address\",\n    \"token_addresses\": [\n      \"0x1234567890abcdef1234567890abcdef12345678\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab0efa69-3768-4a99-a4dd-8dc56d702daa",
+          "name": "Delete a webhook",
+          "request": {
+            "name": "Delete a webhook",
+            "description": {
+              "content": "Deletes the webhook subscription for a chain and stops further token scan updates.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "hooks",
+                ":chain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0249e05f-7c96-4826-ac8a-6774a9d76d41",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9e646476-e8ae-4e37-8e60-9e3fba332c20",
+              "name": "Hook not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a1663e5-2bb0-4f1a-9510-50cf01830f0c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ":chain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7d6e939d-679a-4522-aeb2-065da85488c5",
+          "name": "List all webhooks",
+          "request": {
+            "name": "List all webhooks",
+            "description": {
+              "content": "List all active webhook subscriptions across all chains",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "hooks",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "85e13a8e-a9ce-424a-b088-071fc284bc50",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "hooks",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"url\": \"http://UrXbVwfgiSDWRGaatErryfmuxWGJQGfrs.djmvh+VV1vmaaHSyAjCHz,z0Z\",\n    \"chain\": \"megaeth\",\n    \"active\": false,\n    \"created_at\": \"1986-12-25T17:08:39.917Z\",\n    \"updated_at\": \"2013-11-27T19:46:02.874Z\",\n    \"shared_secret_key\": \"string\"\n  },\n  {\n    \"url\": \"http://dsvAgwoQFmEjIuGbtYthDUGH.qeL-vrz\",\n    \"chain\": \"ethereum\",\n    \"active\": true,\n    \"created_at\": \"1964-06-20T07:53:40.572Z\",\n    \"updated_at\": \"1961-01-21T13:14:31.047Z\",\n    \"shared_secret_key\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e73d72dc-dec7-4cf2-8328-2f448f900444",
+          "name": "Create Export Job",
+          "request": {
+            "name": "Create Export Job",
+            "description": {
+              "content": "Creates an asynchronous job to export token scan data for a chain in the requested format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "bulk-export",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain\": \"<string>\",\n  \"format\": \"<string>\",\n  \"token_type\": \"<string>\",\n  \"sync_start_time\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7dfbe8b8-eced-47f5-988e-ed58634eb726",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "bulk-export",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"token_type\": \"fungible\",\n  \"format\": \"jsonl_gzip\",\n  \"sync_start_time\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"job_id\": \"string\",\n  \"status\": \"failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e80dc56-544b-4c11-81c9-5d1343ca3af1",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "bulk-export",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"ethereum\",\n  \"token_type\": \"fungible\",\n  \"format\": \"jsonl_gzip\",\n  \"sync_start_time\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6fa5a07-9b49-4023-b22a-1ffd8ab1c6c5",
+          "name": "Get Job Status",
+          "request": {
+            "name": "Get Job Status",
+            "description": {
+              "content": "Retrieves the current status of the job and download URLs when status is `succeeded`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "bulk-export",
+                "jobs",
+                ":job_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "job_id",
+                  "description": "(Required) The ID of an export job you already created."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "95f3b422-dd61-48dd-8717-ccf0bdbb7f33",
+              "name": "Job status retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "bulk-export",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The ID of an export job you already created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"running\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9825dc8-7534-4c45-a0ea-b59235f9ac99",
+              "name": "Job not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "bulk-export",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The ID of an export job you already created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b3c8746-043c-40da-94ee-770963d3ed6b",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "bulk-export",
+                    "jobs",
+                    ":job_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "job_id",
+                      "description": "(Required) The ID of an export job you already created."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bfbc6548-3b55-4790-84f2-8e9e5107426c",
+          "name": "Get Recent Rugpull Risks",
+          "request": {
+            "name": "Get Recent Rugpull Risks",
+            "description": {
+              "content": "Returns recently detected pre-dump rugpull-risk token addresses for the requested chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "token",
+                "recent-rugpull-risks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "chain",
+                  "value": "<string>",
+                  "description": "(Required) Which chain to look at for recent rugpull tokens."
+                },
+                {
+                  "disabled": false,
+                  "key": "results_limit",
+                  "value": "5",
+                  "description": "Maximum number of token addresses to return (between 1 and 20)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5ed0b053-8293-4cd1-aaad-8fcfa20f4177",
+              "name": "List of token addresses identified as recent rugpull risks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "recent-rugpull-risks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "results_limit",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"0xfb7e4d31e5882826fcca1bf0197ed3c0d91eb3b1\",\n  \"0x34b8a376c4547348acc700b751031fed76ed7de9\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0297bb1d-f5aa-437a-b3b9-6359aa0da3d9",
+              "name": "Validation Error - Invalid chain or parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "token",
+                    "recent-rugpull-risks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "chain",
+                      "value": "polygon"
+                    },
+                    {
+                      "key": "results_limit",
+                      "value": "5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b05ee5bc-58a2-4e72-bfd0-72bec2f08ac6",
+    "name": "Blockaid Asset Management Token API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

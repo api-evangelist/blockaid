@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management Bitcoin API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Bitcoin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Scan Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/bitcoin/transaction-raw/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Scan a raw Bitcoin transaction for security risks before signing. Returns a validation verdict (Benign, Warning, or Malicious) and, when requested, a simulation of asset changes."
+        },
+        {
+          "info": {
+            "name": "Report Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/bitcoin/transaction/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Submit an appeal or false-positive report for a Bitcoin transaction scan. Use when you believe a scan result was incorrect (e.g. should_be_benign, should_be_malicious, wrong_simulation_result)."
+        },
+        {
+          "info": {
+            "name": "Scan Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/bitcoin/address/scan",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets an address and returns a full security assessment indicating whether or not this address is malicious as well as textual reasons of why the address was flagged that way."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

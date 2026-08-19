@@ -1,0 +1,359 @@
+{
+  "item": [
+    {
+      "id": "668789ff-0e21-4558-8c33-fb3d1d42fd6b",
+      "name": "Organization Risk Config",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b3601a6b-785d-44b3-9660-d80f262e6f97",
+          "name": "Get organization risk configuration",
+          "request": {
+            "name": "Get organization risk configuration",
+            "description": {
+              "content": "Returns your organization's current risk exposure settings, including category risk scores and verdict thresholds.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "organization",
+                "configuration",
+                "risk-exposure"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "37508361-a7e3-4293-a852-78dc795f6a55",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "organization",
+                    "configuration",
+                    "risk-exposure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categories\": [\n    {\n      \"category\": \"sanctioned_entity\",\n      \"default_risk_score\": 1,\n      \"override_risk_score\": 0.7\n    },\n    {\n      \"category\": \"stolen_funds\",\n      \"default_risk_score\": 0.9,\n      \"override_risk_score\": null\n    },\n    {\n      \"category\": \"mixer\",\n      \"default_risk_score\": 0.8,\n      \"override_risk_score\": null\n    }\n  ],\n  \"verdicts\": [\n    {\n      \"level\": \"warning\",\n      \"default_threshold\": 0.26,\n      \"override_threshold\": 0.3\n    },\n    {\n      \"level\": \"high_risk\",\n      \"default_threshold\": 0.51,\n      \"override_threshold\": 0.6\n    },\n    {\n      \"level\": \"malicious\",\n      \"default_threshold\": 0.76,\n      \"override_threshold\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "74c9c50e-e2c0-482f-a236-f754f173d427",
+          "name": "Update organization risk configuration",
+          "request": {
+            "name": "Update organization risk configuration",
+            "description": {
+              "content": "Update your organization's risk exposure settings. Pass a category name or verdict level with a new value to override the platform default, or pass null to revert to the default. Any key you omit stays unchanged.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "organization",
+                "configuration",
+                "risk-exposure"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category_overrides\": {\n    \"key_0\": \"<number>\"\n  },\n  \"verdict_overrides\": {\n    \"warning\": \"<number>\",\n    \"high_risk\": \"<number>\",\n    \"malicious\": \"<number>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a161e9a3-6bb9-4c19-8d88-016ca4505ddf",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "organization",
+                    "configuration",
+                    "risk-exposure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_overrides\": {\n    \"sanctioned_entity\": 0.7,\n    \"stolen_funds\": 0.5\n  },\n  \"verdict_overrides\": {\n    \"warning\": 0.3,\n    \"high_risk\": 0.6,\n    \"malicious\": null\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categories\": [\n    {\n      \"category\": \"sanctioned_entity\",\n      \"default_risk_score\": 1,\n      \"override_risk_score\": null\n    },\n    {\n      \"category\": \"stolen_funds\",\n      \"default_risk_score\": 0.9,\n      \"override_risk_score\": 0.7\n    },\n    {\n      \"category\": \"mixer\",\n      \"default_risk_score\": 0.8,\n      \"override_risk_score\": null\n    }\n  ],\n  \"verdicts\": [\n    {\n      \"level\": \"warning\",\n      \"default_threshold\": 0.26,\n      \"override_threshold\": 0.3\n    },\n    {\n      \"level\": \"high_risk\",\n      \"default_threshold\": 0.51,\n      \"override_threshold\": 0.6\n    },\n    {\n      \"level\": \"malicious\",\n      \"default_threshold\": 0.76,\n      \"override_threshold\": null\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d4448f46-543d-4389-8405-88396779fba7",
+              "name": "Returned when a value is out of the [0, 1] range or the resulting verdict thresholds are not strictly increasing (warning < high_risk < malicious).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "organization",
+                    "configuration",
+                    "risk-exposure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_overrides\": {\n    \"sanctioned_entity\": 0.7,\n    \"stolen_funds\": 0.5\n  },\n  \"verdict_overrides\": {\n    \"warning\": 0.3,\n    \"high_risk\": 0.6,\n    \"malicious\": null\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "071d7b62-73d7-451f-8ff7-ac38655a06f5",
+              "name": "Returned when an unknown category name is provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "organization",
+                    "configuration",
+                    "risk-exposure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category_overrides\": {\n    \"sanctioned_entity\": 0.7,\n    \"stolen_funds\": 0.5\n  },\n  \"verdict_overrides\": {\n    \"warning\": 0.3,\n    \"high_risk\": 0.6,\n    \"malicious\": null\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8e49f4eb-52b9-48fa-a46f-9cf9edda37e4",
+    "name": "Blockaid Asset Management Organization Risk Config API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

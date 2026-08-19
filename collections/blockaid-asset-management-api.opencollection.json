@@ -1,0 +1,376 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Asset Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/platform/assets/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create an asset for the given address or domain. The new asset will be onboarded to the platform's inventory and monitored according to your monitoring policy."
+        },
+        {
+          "info": {
+            "name": "Get Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/assets/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41",
+                "type": "path",
+                "description": "The contract address or domain that identifies this asset."
+              },
+              {
+                "name": "runtime",
+                "value": "evm",
+                "type": "query",
+                "description": "The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset."
+              },
+              {
+                "name": "chain_name",
+                "value": "bsc",
+                "type": "query",
+                "description": "Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve details for an asset in your inventory by its identifier, runtime, and chain."
+        },
+        {
+          "info": {
+            "name": "Update an Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.blockaid.io/v0/platform/assets/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41",
+                "type": "path",
+                "description": "The contract address or domain that identifies this asset."
+              },
+              {
+                "name": "runtime",
+                "value": "evm",
+                "type": "query",
+                "description": "The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset."
+              },
+              {
+                "name": "chain_name",
+                "value": "bsc",
+                "type": "query",
+                "description": "Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update an existing asset in your inventory (e.g. alias, tags) by its identifier, runtime, and chain."
+        },
+        {
+          "info": {
+            "name": "Delete Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.blockaid.io/v0/platform/assets/:identifier",
+            "params": [
+              {
+                "name": "identifier",
+                "value": "0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41",
+                "type": "path",
+                "description": "The contract address or domain that identifies this asset."
+              },
+              {
+                "name": "runtime",
+                "value": "evm",
+                "type": "query",
+                "description": "The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset."
+              },
+              {
+                "name": "chain_name",
+                "value": "bsc",
+                "type": "query",
+                "description": "Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove an asset from your inventory by its identifier, runtime, and chain. The asset is removed from monitoring and related detection rules."
+        },
+        {
+          "info": {
+            "name": "Search Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/platform/assets/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Search and filter platform assets (addresses/domains) using structured filters, pagination, and sorting."
+        },
+        {
+          "info": {
+            "name": "Get Address Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/assets/addresses/:chain_name/:address",
+            "params": [
+              {
+                "name": "chain_name",
+                "value": "",
+                "type": "path",
+                "description": "Which chain this address asset is on."
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "The contract or wallet address for this asset."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get asset details for a given identifier and chain."
+        },
+        {
+          "info": {
+            "name": "Update Address Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.blockaid.io/v0/platform/assets/addresses/:chain_name/:address",
+            "params": [
+              {
+                "name": "chain_name",
+                "value": "",
+                "type": "path",
+                "description": "Which chain this address asset is on."
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "The contract or wallet address for this asset."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update asset details for a given identifier."
+        },
+        {
+          "info": {
+            "name": "Delete Address Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.blockaid.io/v0/platform/assets/addresses/:chain_name/:address",
+            "params": [
+              {
+                "name": "chain_name",
+                "value": "",
+                "type": "path",
+                "description": "Which chain this address asset is on."
+              },
+              {
+                "name": "address",
+                "value": "",
+                "type": "path",
+                "description": "The contract or wallet address for this asset."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete an asset for a given identifier and chain. The asset will be removed from the inventory and related detection rules, specifically targeting this asset."
+        },
+        {
+          "info": {
+            "name": "Get Domain Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/assets/domains/:domain",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain name for this asset."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get asset details for a given identifier and chain."
+        },
+        {
+          "info": {
+            "name": "Update Domain Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.blockaid.io/v0/platform/assets/domains/:domain",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain name for this asset."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update asset details for a given identifier."
+        },
+        {
+          "info": {
+            "name": "Delete Domain Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.blockaid.io/v0/platform/assets/domains/:domain",
+            "params": [
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain name for this asset."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Delete an asset for a given identifier and chain. The asset will be removed from the inventory and related detection rules, specifically targeting this asset."
+        },
+        {
+          "info": {
+            "name": "Get Asset by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/assets/:asset_id",
+            "params": [
+              {
+                "name": "asset_id",
+                "value": "ad5fe269-447d-4990-9231-8f9192421d49",
+                "type": "path",
+                "description": "The unique platform asset ID."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieve an asset by its unique platform asset ID (UUID format)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

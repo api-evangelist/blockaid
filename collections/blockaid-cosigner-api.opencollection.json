@@ -1,0 +1,231 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management cosigner API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cosigner",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Cosigner Policies Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/:id/policies/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Cosigner ID"
+              }
+            ]
+          },
+          "docs": "Get all policies for a cosigner by ID."
+        },
+        {
+          "info": {
+            "name": "Set Cosigner Policies Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/:id/policies/",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Cosigner ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set policies for a cosigner by ID."
+        },
+        {
+          "info": {
+            "name": "Create a new Cosigner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/platform/cosigners",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Create a cosigner and determine what it does on proposal, approval, and rejection."
+        },
+        {
+          "info": {
+            "name": "Get Cosigners Paginated Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of Cosigners based on the provided search criteria."
+        },
+        {
+          "info": {
+            "name": "Get Cosigner By Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/by-name/:name",
+            "params": [
+              {
+                "name": "name",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Fetch a cosigner by name."
+        },
+        {
+          "info": {
+            "name": "Get Cosigner External Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Fetch a cosigner by ID."
+        },
+        {
+          "info": {
+            "name": "Update Cosigner External Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update a cosigner by ID; the fields you send replace the existing ones."
+        },
+        {
+          "info": {
+            "name": "Delete Cosigner External Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Remove a cosigner by ID."
+        },
+        {
+          "info": {
+            "name": "Evaluate EVM Transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.blockaid.io/v0/platform/cosigners/:id/evm/evaluate",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Cosigner ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Run policy evaluation against an EVM transaction for the given cosigner. Returns the policy decision and per-policy trace."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

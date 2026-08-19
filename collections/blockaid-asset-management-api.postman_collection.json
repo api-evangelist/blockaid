@@ -1,0 +1,2972 @@
+{
+  "item": [
+    {
+      "id": "cc6e86c2-4744-4517-a96c-7275570fceb2",
+      "name": "Asset Management",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fde5dc7f-8810-4f66-a500-03f01a4dcd4a",
+          "name": "Create Asset",
+          "request": {
+            "name": "Create Asset",
+            "description": {
+              "content": "Create an asset for the given address or domain. The new asset will be onboarded to the platform's inventory and monitored according to your monitoring policy.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"<string>\",\n  \"chain_name\": \"<string>\",\n  \"identifier_type\": \"address\",\n  \"alias\": \"<string>\",\n  \"runtime\": \"<string>\",\n  \"contract_interface\": [\n    {\n      \"address\": \"<string>\",\n      \"abi_json\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"stateMutability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"inputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"outputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"constant\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"payable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"stateMutability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"inputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"outputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"constant\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"payable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    {\n      \"address\": \"<string>\",\n      \"abi_json\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"stateMutability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"inputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"outputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"constant\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"payable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"stateMutability\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"inputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"outputs\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"constant\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"payable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94b32c90-ed8b-4b55-b71b-72342924522b",
+              "name": "Asset created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_type\": \"address\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"alias\": \"Bedrock\",\n  \"runtime\": \"evm\",\n  \"chain_name\": \"bsc\",\n  \"contract_interface\": [\n    {\n      \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n      \"abi_json\": [\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultAdmin\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"minter\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultFreezeToRecipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"constructor\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Approval\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"previousAdminRole\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"newAdminRole\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"RoleAdminChanged\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleGranted\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleRevoked\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Transfer\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersFrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersUnfrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"DEFAULT_ADMIN_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"FREEZER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"MINTER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"allowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"approve\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"balanceOf\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"recipients\",\n              \"type\": \"address[]\"\n            },\n            {\n              \"internalType\": \"uint256[]\",\n              \"name\": \"amounts\",\n              \"type\": \"uint256[]\"\n            }\n          ],\n          \"name\": \"batchTransfer\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burn\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burnFrom\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"decimals\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint8\",\n              \"name\": \"\",\n              \"type\": \"uint8\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"subtractedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"decreaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"freezeToRecipient\",\n          \"outputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"freezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"frozenUsers\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"getRoleAdmin\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"grantRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"hasRole\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"addedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"increaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"mint\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"name\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"renounceRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"revokeRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"recipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"setFreezeToRecipient\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes4\",\n              \"name\": \"interfaceId\",\n              \"type\": \"bytes4\"\n            }\n          ],\n          \"name\": \"supportsInterface\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"symbol\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"totalSupply\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transfer\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transferFrom\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"unfreezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n    \"identifier_type\": \"address\",\n    \"alias\": \"Bedrock\",\n    \"tags\": [\n      \"example\"\n    ],\n    \"added_by\": \"user@example.com\",\n    \"created_at\": \"2025-01-15T12:00:00Z\",\n    \"address_details\": {\n      \"chain\": \"bsc\",\n      \"runtime\": \"evm\",\n      \"properties\": [],\n      \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd0144d2-fc4e-4ab3-9c03-b9d802985972",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_type\": \"address\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"alias\": \"Bedrock\",\n  \"runtime\": \"evm\",\n  \"chain_name\": \"bsc\",\n  \"contract_interface\": [\n    {\n      \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n      \"abi_json\": [\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultAdmin\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"minter\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultFreezeToRecipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"constructor\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Approval\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"previousAdminRole\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"newAdminRole\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"RoleAdminChanged\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleGranted\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleRevoked\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Transfer\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersFrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersUnfrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"DEFAULT_ADMIN_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"FREEZER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"MINTER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"allowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"approve\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"balanceOf\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"recipients\",\n              \"type\": \"address[]\"\n            },\n            {\n              \"internalType\": \"uint256[]\",\n              \"name\": \"amounts\",\n              \"type\": \"uint256[]\"\n            }\n          ],\n          \"name\": \"batchTransfer\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burn\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burnFrom\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"decimals\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint8\",\n              \"name\": \"\",\n              \"type\": \"uint8\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"subtractedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"decreaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"freezeToRecipient\",\n          \"outputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"freezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"frozenUsers\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"getRoleAdmin\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"grantRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"hasRole\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"addedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"increaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"mint\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"name\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"renounceRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"revokeRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"recipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"setFreezeToRecipient\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes4\",\n              \"name\": \"interfaceId\",\n              \"type\": \"bytes4\"\n            }\n          ],\n          \"name\": \"supportsInterface\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"symbol\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"totalSupply\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transfer\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transferFrom\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"unfreezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"type_mismatch\",\n  \"description\": \"Only domain and address identifier types are valid.\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63012d5d-5b56-4c21-8076-39e39809f35b",
+              "name": "Asset already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_type\": \"address\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"alias\": \"Bedrock\",\n  \"runtime\": \"evm\",\n  \"chain_name\": \"bsc\",\n  \"contract_interface\": [\n    {\n      \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n      \"abi_json\": [\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultAdmin\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"minter\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultFreezeToRecipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"constructor\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Approval\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"previousAdminRole\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"newAdminRole\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"RoleAdminChanged\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleGranted\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleRevoked\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Transfer\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersFrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersUnfrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"DEFAULT_ADMIN_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"FREEZER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"MINTER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"allowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"approve\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"balanceOf\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"recipients\",\n              \"type\": \"address[]\"\n            },\n            {\n              \"internalType\": \"uint256[]\",\n              \"name\": \"amounts\",\n              \"type\": \"uint256[]\"\n            }\n          ],\n          \"name\": \"batchTransfer\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burn\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burnFrom\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"decimals\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint8\",\n              \"name\": \"\",\n              \"type\": \"uint8\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"subtractedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"decreaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"freezeToRecipient\",\n          \"outputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"freezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"frozenUsers\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"getRoleAdmin\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"grantRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"hasRole\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"addedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"increaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"mint\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"name\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"renounceRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"revokeRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"recipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"setFreezeToRecipient\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes4\",\n              \"name\": \"interfaceId\",\n              \"type\": \"bytes4\"\n            }\n          ],\n          \"name\": \"supportsInterface\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"symbol\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"totalSupply\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transfer\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transferFrom\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"unfreezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": \"Failed to add address because one or more already exists\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e94b901-4ed5-42b5-a672-bd81fc41927a",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier_type\": \"address\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"alias\": \"Bedrock\",\n  \"runtime\": \"evm\",\n  \"chain_name\": \"bsc\",\n  \"contract_interface\": [\n    {\n      \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n      \"abi_json\": [\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultAdmin\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"minter\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"defaultFreezeToRecipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"constructor\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Approval\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"previousAdminRole\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"newAdminRole\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"RoleAdminChanged\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleGranted\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"sender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"RoleRevoked\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": true,\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"indexed\": false,\n              \"internalType\": \"uint256\",\n              \"name\": \"value\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"Transfer\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersFrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"anonymous\": false,\n          \"inputs\": [\n            {\n              \"indexed\": false,\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"UsersUnfrozen\",\n          \"type\": \"event\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"DEFAULT_ADMIN_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"FREEZER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"MINTER_ROLE\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"owner\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"allowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"approve\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"balanceOf\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"recipients\",\n              \"type\": \"address[]\"\n            },\n            {\n              \"internalType\": \"uint256[]\",\n              \"name\": \"amounts\",\n              \"type\": \"uint256[]\"\n            }\n          ],\n          \"name\": \"batchTransfer\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burn\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"burnFrom\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"decimals\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint8\",\n              \"name\": \"\",\n              \"type\": \"uint8\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"subtractedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"decreaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"freezeToRecipient\",\n          \"outputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"freezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"frozenUsers\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"name\": \"getRoleAdmin\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"\",\n              \"type\": \"bytes32\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"grantRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"hasRole\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"spender\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"addedValue\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"increaseAllowance\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"mint\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"name\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"renounceRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes32\",\n              \"name\": \"role\",\n              \"type\": \"bytes32\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"account\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"revokeRole\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"recipient\",\n              \"type\": \"address\"\n            }\n          ],\n          \"name\": \"setFreezeToRecipient\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"bytes4\",\n              \"name\": \"interfaceId\",\n              \"type\": \"bytes4\"\n            }\n          ],\n          \"name\": \"supportsInterface\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"symbol\",\n          \"outputs\": [\n            {\n              \"internalType\": \"string\",\n              \"name\": \"\",\n              \"type\": \"string\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [],\n          \"name\": \"totalSupply\",\n          \"outputs\": [\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"stateMutability\": \"view\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transfer\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address\",\n              \"name\": \"from\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"address\",\n              \"name\": \"to\",\n              \"type\": \"address\"\n            },\n            {\n              \"internalType\": \"uint256\",\n              \"name\": \"amount\",\n              \"type\": \"uint256\"\n            }\n          ],\n          \"name\": \"transferFrom\",\n          \"outputs\": [\n            {\n              \"internalType\": \"bool\",\n              \"name\": \"\",\n              \"type\": \"bool\"\n            }\n          ],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        },\n        {\n          \"inputs\": [\n            {\n              \"internalType\": \"address[]\",\n              \"name\": \"users\",\n              \"type\": \"address[]\"\n            }\n          ],\n          \"name\": \"unfreezeUsers\",\n          \"outputs\": [],\n          \"stateMutability\": \"nonpayable\",\n          \"type\": \"function\"\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"body\",\n        \"identifier\"\n      ],\n      \"msg\": \"field required\",\n      \"type\": \"value_error.missing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ab0976a6-42cf-4f47-80fa-9e3ddeced4dc",
+          "name": "Get Asset",
+          "request": {
+            "name": "Get Asset",
+            "description": {
+              "content": "Retrieve details for an asset in your inventory by its identifier, runtime, and chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "runtime",
+                  "value": "<string>",
+                  "description": "(Required) The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset."
+                },
+                {
+                  "disabled": false,
+                  "key": "chain_name",
+                  "value": "<string>",
+                  "description": "(Required) Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The contract address or domain that identifies this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "294b97eb-d49d-4ec3-9ab2-07bc140f85c3",
+              "name": "Successful response with the asset details (address or domain).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"identifier_type\": \"address\",\n  \"alias\": \"Bedrock\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"added_by\": \"API\",\n  \"created_at\": \"2025-07-14T20:10:58.180233\",\n  \"address_details\": {\n    \"chain\": \"bsc\",\n    \"runtime\": \"evm\",\n    \"properties\": [\n      \"token\",\n      \"address\",\n      \"erc20\",\n      \"contract\"\n    ],\n    \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0592d670-c7d1-40de-b000-9193a9b0bbcd",
+              "name": "No asset exists for the given identifier, runtime, and chain combination.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "39c1a7d7-343c-4d76-b495-af134d864abb",
+              "name": "Request validation failed (e.g. missing or invalid query parameters).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"query\",\n        \"runtime\"\n      ],\n      \"msg\": \"field required\",\n      \"type\": \"value_error.missing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7466016a-c43b-47bf-855c-2b29e7cc1bc8",
+          "name": "Delete Asset",
+          "request": {
+            "name": "Delete Asset",
+            "description": {
+              "content": "Remove an asset from your inventory by its identifier, runtime, and chain. The asset is removed from monitoring and related detection rules.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "runtime",
+                  "value": "<string>",
+                  "description": "(Required) The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset."
+                },
+                {
+                  "disabled": false,
+                  "key": "chain_name",
+                  "value": "<string>",
+                  "description": "(Required) Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The contract address or domain that identifies this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4522a7ca-d7df-4e8f-87a6-ba9b10e02140",
+              "name": "Successful response; the asset has been removed from the inventory.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6bd50e68-c4f2-49e5-b5d5-f2d5f7f98eb0",
+              "name": "No asset exists for the given identifier, runtime, and chain combination.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9ef65c08-9da7-4933-9191-b280f5ca4667",
+              "name": "Request validation failed (e.g. missing or invalid query parameters).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"query\",\n        \"runtime\"\n      ],\n      \"msg\": \"field required\",\n      \"type\": \"value_error.missing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8a66432-8676-429e-b475-c75cfbc57240",
+          "name": "Update an Asset",
+          "request": {
+            "name": "Update an Asset",
+            "description": {
+              "content": "Update an existing asset in your inventory (e.g. alias, tags) by its identifier, runtime, and chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "runtime",
+                  "value": "<string>",
+                  "description": "(Required) The chain type (e.g. evm, solana). Use the same runtime you used when creating the asset."
+                },
+                {
+                  "disabled": false,
+                  "key": "chain_name",
+                  "value": "<string>",
+                  "description": "(Required) Which chain the asset is on (e.g. bsc, ethereum). Use the same chain you used when creating the asset."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) The contract address or domain that identifies this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alias\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "361b5d35-fd69-43cc-9842-81c9d4a44f74",
+              "name": "Successful response with the updated asset details (address or domain).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "08c941c0-b1e0-4505-840b-5cd8cbd22553",
+              "name": "No asset exists for the given identifier, runtime, and chain combination.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd0ab7db-a850-42e7-b282-c8532b86c96f",
+              "name": "Request validation failed (e.g. missing or invalid query or body parameters).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "runtime",
+                      "value": "evm"
+                    },
+                    {
+                      "key": "chain_name",
+                      "value": "bsc"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) The contract address or domain that identifies this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"query\",\n        \"chain_name\"\n      ],\n      \"msg\": \"field required\",\n      \"type\": \"value_error.missing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4c3f5df-4b80-485a-9088-984594c6510f",
+          "name": "Search Assets",
+          "request": {
+            "name": "Search Assets",
+            "description": {
+              "content": "Search and filter platform assets (addresses/domains) using structured filters, pagination, and sorting.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sort\": [\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    }\n  ],\n  \"filter\": {\n    \"identifier_type\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chain\": {\n      \"eq\": \"<string>\"\n    },\n    \"tags\": {\n      \"eq\": \"<string>\"\n    },\n    \"name\": {\n      \"eq\": \"<string>\"\n    }\n  },\n  \"page_size\": 50,\n  \"page\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5c84cd1-2da8-432b-8af6-7cc9124ccc9e",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"filter\": {\n    \"identifier_type\": [\n      \"address\"\n    ],\n    \"chain\": {\n      \"eq\": \"ethereum\"\n    }\n  },\n  \"page_size\": 25,\n  \"page\": 1,\n  \"sort\": [\n    {\n      \"field\": \"created_at\",\n      \"operator\": \"desc\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total\": 1,\n  \"page\": 1,\n  \"pages\": 1,\n  \"size\": 1,\n  \"items\": [\n    {\n      \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n      \"identifier_type\": \"address\",\n      \"alias\": \"Bedrock\",\n      \"tags\": [\n        \"example\"\n      ],\n      \"added_by\": \"API\",\n      \"created_at\": \"2025-07-14T20:10:58.180233\",\n      \"address_details\": {\n        \"chain\": \"ethereum\",\n        \"runtime\": \"evm\",\n        \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "89701a75-8d36-4654-9b64-bf98f3b45cbc",
+          "name": "Get Address Asset",
+          "request": {
+            "name": "Get Address Asset",
+            "description": {
+              "content": "Get asset details for a given identifier and chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                "addresses",
+                ":chain_name",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain_name",
+                  "description": "(Required) Which chain this address asset is on."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) The contract or wallet address for this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b397da23-94ed-4f49-b121-d7839168d9c1",
+              "name": "Asset retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"identifier_type\": \"address\",\n  \"alias\": \"Bedrock\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"added_by\": \"API\",\n  \"created_at\": \"2025-07-14T20:10:58.180233\",\n  \"address_details\": {\n    \"chain\": \"bsc\",\n    \"runtime\": \"evm\",\n    \"properties\": [\n      \"token\",\n      \"address\",\n      \"erc20\",\n      \"contract\"\n    ],\n    \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2d0e398-1bd2-4637-86ab-754a495f4ec4",
+              "name": "Asset not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d56d9c2-0edd-4f0c-be62-631fb2ada00b",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"path\",\n        \"identifier\"\n      ],\n      \"msg\": \"value is not valid\",\n      \"type\": \"value_error\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dbb2e73e-a8b4-4f51-85b8-cb74f8135594",
+          "name": "Delete Address Asset",
+          "request": {
+            "name": "Delete Address Asset",
+            "description": {
+              "content": "Delete an asset for a given identifier and chain. The asset will be removed from the inventory and related detection rules, specifically targeting this asset.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                "addresses",
+                ":chain_name",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain_name",
+                  "description": "(Required) Which chain this address asset is on."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) The contract or wallet address for this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "76ba3f22-ca6e-4411-beac-384867854c0e",
+              "name": "Asset deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe3de2b6-05ab-474a-b9f6-545e25deb49b",
+              "name": "Asset not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "919436c5-47e3-4410-ace5-8d90fb10ce1d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"path\",\n        \"identifier\"\n      ],\n      \"msg\": \"value is not valid\",\n      \"type\": \"value_error\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70fc3793-6f13-4c1b-9880-938e25a484bb",
+          "name": "Update Address Asset",
+          "request": {
+            "name": "Update Address Asset",
+            "description": {
+              "content": "Update asset details for a given identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                "addresses",
+                ":chain_name",
+                ":address"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "chain_name",
+                  "description": "(Required) Which chain this address asset is on."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "address",
+                  "description": "(Required) The contract or wallet address for this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alias\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bfef15bd-3dff-469c-8451-8d1c02d18d42",
+              "name": "Asset updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"identifier_type\": \"address\",\n  \"alias\": \"Bedrock\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"added_by\": \"API\",\n  \"created_at\": \"2025-07-14T20:10:58.180233\",\n  \"address_details\": {\n    \"chain\": \"bsc\",\n    \"runtime\": \"evm\",\n    \"properties\": [\n      \"token\",\n      \"address\",\n      \"erc20\",\n      \"contract\"\n    ],\n    \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cec1e62-e21d-4103-b937-27521aac047c",
+              "name": "Asset not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57314ea8-3a49-439e-8ec1-5647bf4ee4cc",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "addresses",
+                    ":chain_name",
+                    ":address"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "chain_name",
+                      "description": "(Required) Which chain this address asset is on."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "address",
+                      "description": "(Required) The contract or wallet address for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"path\",\n        \"identifier\"\n      ],\n      \"msg\": \"value is not valid\",\n      \"type\": \"value_error\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63eadcf9-1290-4caa-9543-f6617f22a531",
+          "name": "Get Domain Asset",
+          "request": {
+            "name": "Get Domain Asset",
+            "description": {
+              "content": "Get asset details for a given identifier and chain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                "domains",
+                ":domain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domain",
+                  "description": "(Required) The domain name for this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ca05a1a2-a40c-4140-9a14-ba116c3db0d5",
+              "name": "Asset retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"identifier_type\": \"address\",\n  \"alias\": \"Bedrock\",\n  \"tags\": [\n    \"example\"\n  ],\n  \"added_by\": \"API\",\n  \"created_at\": \"2025-07-14T20:10:58.180233\",\n  \"address_details\": {\n    \"chain\": \"bsc\",\n    \"runtime\": \"evm\",\n    \"properties\": [\n      \"token\",\n      \"address\",\n      \"erc20\",\n      \"contract\"\n    ],\n    \"address\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "708be8fe-c3d6-4f20-8a49-93129cbe7293",
+              "name": "Asset not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb5fc9de-f72c-48c6-8578-4279fc94ea2b",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"path\",\n        \"identifier\"\n      ],\n      \"msg\": \"value is not valid\",\n      \"type\": \"value_error\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfc268f8-8e5f-4ff6-8d8b-9c83471a6cf0",
+          "name": "Delete Domain Asset",
+          "request": {
+            "name": "Delete Domain Asset",
+            "description": {
+              "content": "Delete an asset for a given identifier and chain. The asset will be removed from the inventory and related detection rules, specifically targeting this asset.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                "domains",
+                ":domain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domain",
+                  "description": "(Required) The domain name for this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c1055d4c-aab3-4693-ba37-446e9c087dfa",
+              "name": "Asset deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a71e3f3d-1f55-4b3c-8330-c3850dce0109",
+              "name": "Asset not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b521fb28-e2d4-4bcf-87a1-40c9dd54dc3c",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"path\",\n        \"identifier\"\n      ],\n      \"msg\": \"value is not valid\",\n      \"type\": \"value_error\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "01cd346d-9d27-4da5-8da1-65766fc55eba",
+          "name": "Update Domain Asset",
+          "request": {
+            "name": "Update Domain Asset",
+            "description": {
+              "content": "Update asset details for a given identifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                "domains",
+                ":domain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domain",
+                  "description": "(Required) The domain name for this asset."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alias\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5e30590-16e1-4859-a857-7a547eba01a0",
+              "name": "Asset updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"bedrock.app\",\n  \"identifier_type\": \"domain\",\n  \"alias\": \"Bedrock Domain\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"added_by\": \"API\",\n  \"created_at\": \"2025-07-14T20:10:58.180233\",\n  \"domain_details\": {\n    \"domain\": \"bedrock.app\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14a0dff0-524f-4bee-b5f0-cab7817a706e",
+              "name": "Asset not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"not_found\",\n  \"description\": \"Asset not found\",\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5da09b36-ffd5-438e-81da-53d9439973f2",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    "domains",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain name for this asset."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identifier\": \"0xFf7d6A96ae471BbCD7713aF9CB1fEeB16cf56B41\",\n  \"tags\": [\n    \"example\",\n    \"new_tag\"\n  ],\n  \"chain_name\": \"bsc\",\n  \"runtime\": \"evm\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"path\",\n        \"identifier\"\n      ],\n      \"msg\": \"value is not valid\",\n      \"type\": \"value_error\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dab6ff22-86f5-43d7-a105-9fa46ac57f9d",
+          "name": "Get Asset by ID",
+          "request": {
+            "name": "Get Asset by ID",
+            "description": {
+              "content": "Retrieve an asset by its unique platform asset ID (UUID format).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "assets",
+                ":asset_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "asset_id",
+                  "description": "(Required) The unique platform asset ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ed6b66a4-9f94-448a-bbe1-55844de55f03",
+              "name": "Successful response with the asset details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":asset_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "asset_id",
+                      "description": "(Required) The unique platform asset ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"identifier\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"added_by\": \"string\",\n  \"created_at\": \"2007-07-14T16:18:47.143Z\",\n  \"address_details\": {\n    \"chain\": \"string\",\n    \"runtime\": \"evm\",\n    \"properties\": [\n      \"string\",\n      \"string\"\n    ],\n    \"address\": \"string\"\n  },\n  \"identifier_type\": \"address\",\n  \"asset_id\": \"string\",\n  \"alias\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7564d35a-47e7-41b6-bf6b-4c968db39cb9",
+              "name": "No asset exists for the given asset ID.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "assets",
+                    ":asset_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "asset_id",
+                      "description": "(Required) The unique platform asset ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error_code\": \"missing_abi\",\n  \"description\": \"string\",\n  \"identifier\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bc19f44b-b9e7-40c9-b466-1653527af6b0",
+    "name": "Blockaid Asset Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

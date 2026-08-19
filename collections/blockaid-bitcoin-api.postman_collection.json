@@ -1,0 +1,557 @@
+{
+  "item": [
+    {
+      "id": "4356804b-668c-425b-8902-8d31c029f1a5",
+      "name": "Bitcoin",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2caa97c3-e406-469c-a305-efde93e002d0",
+          "name": "Scan Transaction",
+          "request": {
+            "name": "Scan Transaction",
+            "description": {
+              "content": "Scan a raw Bitcoin transaction for security risks before signing. Returns a validation verdict (Benign, Warning, or Malicious) and, when requested, a simulation of asset changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "bitcoin",
+                "transaction-raw",
+                "scan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chain\": \"<string>\",\n  \"account_address\": \"<string>\",\n  \"transaction\": \"<string>\",\n  \"metadata\": {\n    \"type\": \"<string>\",\n    \"url\": \"<string>\",\n    \"account\": {\n      \"account_id\": \"<string>\",\n      \"account_creation_timestamp\": \"<dateTime>\",\n      \"user_age\": \"<integer>\",\n      \"user_country_code\": \"<string>\",\n      \"account_addresses\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"connection\": {\n      \"ip_address\": \"<ipvanyaddress>\",\n      \"user_agent\": \"<string>\",\n      \"origin\": \"<uri>\",\n      \"walletconnect_name\": \"<string>\",\n      \"walletconnect_description\": \"<string>\"\n    },\n    \"non_dapp\": \"<boolean>\"\n  },\n  \"options\": [\n    \"validation\",\n    \"simulation\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b92fe19f-d6e8-483f-a283-9b4329411ba8",
+              "name": "Successful response with validation verdict and, if requested, simulation of asset changes.\n\nFor more information about responses, see the [full response reference](/api-reference/end-user-protection/transaction-scanning/bitcoin/bitcoin-transaction-scanning-response-reference).\n\nNote: HTTP 200 indicates the request was processed. Always check `validation.status` and `simulation.status` (when present), which may be `Error` with an `error` message (e.g. simulation failing due to invalid UTXOs).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "bitcoin",
+                    "transaction-raw",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"bitcoin\",\n  \"account_address\": \"<string>\",\n  \"transaction\": \"<string>\",\n  \"metadata\": {\n    \"type\": \"string\",\n    \"url\": \"string\",\n    \"account\": {\n      \"account_id\": \"string\",\n      \"account_creation_timestamp\": \"1971-08-02T09:40:35.704Z\",\n      \"user_age\": 3984,\n      \"user_country_code\": \"string\",\n      \"account_addresses\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"connection\": {\n      \"ip_address\": \"string\",\n      \"user_agent\": \"string\",\n      \"origin\": \"http://WDOF.sxcC8XvcolFEaWrR4yo1Sn+Lf586dnHQXcne85YxYSq2cJl0\",\n      \"walletconnect_name\": \"string\",\n      \"walletconnect_description\": \"string\"\n    },\n    \"non_dapp\": true\n  },\n  \"options\": [\n    \"validation\",\n    \"simulation\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"validation\": {\n    \"status\": \"Success\",\n    \"result_type\": \"Benign\",\n    \"description\": \"Transaction appears safe\",\n    \"reason\": \"No malicious patterns detected\",\n    \"classification\": \"Safe to sign\",\n    \"features\": []\n  },\n  \"simulation\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d34a8508-bc54-4c8d-b4a0-ebc8a3a7cec7",
+              "name": "Request validation failed (e.g. missing or invalid request body fields).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "bitcoin",
+                    "transaction-raw",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"bitcoin\",\n  \"account_address\": \"<string>\",\n  \"transaction\": \"<string>\",\n  \"metadata\": {\n    \"type\": \"string\",\n    \"url\": \"string\",\n    \"account\": {\n      \"account_id\": \"string\",\n      \"account_creation_timestamp\": \"1971-08-02T09:40:35.704Z\",\n      \"user_age\": 3984,\n      \"user_country_code\": \"string\",\n      \"account_addresses\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"connection\": {\n      \"ip_address\": \"string\",\n      \"user_agent\": \"string\",\n      \"origin\": \"http://WDOF.sxcC8XvcolFEaWrR4yo1Sn+Lf586dnHQXcne85YxYSq2cJl0\",\n      \"walletconnect_name\": \"string\",\n      \"walletconnect_description\": \"string\"\n    },\n    \"non_dapp\": true\n  },\n  \"options\": [\n    \"validation\",\n    \"simulation\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"body\",\n        \"transaction\"\n      ],\n      \"msg\": \"field required\",\n      \"type\": \"value_error.missing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c4808a2-60bf-4d78-acb5-f88ea4c44654",
+          "name": "Report Transaction",
+          "request": {
+            "name": "Report Transaction",
+            "description": {
+              "content": "Submit an appeal or false-positive report for a Bitcoin transaction scan. Use when you believe a scan result was incorrect (e.g. should_be_benign, should_be_malicious, wrong_simulation_result).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "bitcoin",
+                "transaction",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"report\": {\n    \"id\": \"<string>\",\n    \"type\": \"request_id\"\n  },\n  \"details\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3a3ecdf5-2325-447d-a2e6-e87da43a36b5",
+              "name": "Report accepted; response body is the HTTP status code (e.g. 201).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "bitcoin",
+                    "transaction",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"should_be_malicious\",\n  \"report\": {\n    \"id\": \"string\",\n    \"type\": \"request_id\"\n  },\n  \"details\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "201",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22929ef8-9fa8-42f9-b0c3-6f163259fcdf",
+              "name": "Request validation failed (e.g. missing or invalid request body fields).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "bitcoin",
+                    "transaction",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"should_be_malicious\",\n  \"report\": {\n    \"id\": \"string\",\n    \"type\": \"request_id\"\n  },\n  \"details\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"body\",\n        \"details\"\n      ],\n      \"msg\": \"field required\",\n      \"type\": \"value_error.missing\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9891b41-d2dd-4c0a-b479-f25228a8c419",
+          "name": "Scan Address",
+          "request": {
+            "name": "Scan Address",
+            "description": {
+              "content": "Gets an address and returns a full security assessment indicating whether or not this address is malicious as well as textual reasons of why the address was flagged that way.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "bitcoin",
+                "address",
+                "scan"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"<string>\",\n  \"chain\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6d3dff92-bb47-4895-a7eb-05c186d60271",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "bitcoin",
+                    "address",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"bitcoin\",\n  \"address\": \"bc1qqks2h7dwrhgxvdcm56dvqaymhey3gd0pt9w0ne\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result_type\": \"Malicious\",\n  \"features\": [\n    {\n      \"type\": \"Malicious\",\n      \"feature_id\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"type\": \"Warning\",\n      \"feature_id\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26b04d0c-4c81-4552-844c-b4b163c47b63",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "bitcoin",
+                    "address",
+                    "scan"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"chain\": \"bitcoin\",\n  \"address\": \"bc1qqks2h7dwrhgxvdcm56dvqaymhey3gd0pt9w0ne\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "16114001-c6bb-401e-bcf4-b30aa5147c02",
+    "name": "Blockaid Asset Management Bitcoin API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

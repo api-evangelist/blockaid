@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Blockaid Asset Management Organization Risk Config API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organization Risk Config",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get organization risk configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.blockaid.io/v0/platform/organization/configuration/risk-exposure",
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns your organization's current risk exposure settings, including category risk scores and verdict thresholds."
+        },
+        {
+          "info": {
+            "name": "Update organization risk configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.blockaid.io/v0/platform/organization/configuration/risk-exposure",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-API-Key",
+              "value": "{{X-API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Update your organization's risk exposure settings. Pass a category name or verdict level with a new value to override the platform default, or pass null to revert to the default. Any key you omit stays unchanged."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

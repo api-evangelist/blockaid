@@ -1,0 +1,557 @@
+{
+  "item": [
+    {
+      "id": "007eda48-a3f6-41dd-8027-2357136b6d00",
+      "name": "Enrichment",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5dda56db-26a5-490a-a722-451c7c27e000",
+          "name": "Log Account Login",
+          "request": {
+            "name": "Log Account Login",
+            "description": {
+              "content": "Logs an account login event.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "enrichment",
+                "account",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account\": {\n    \"account_id\": \"<string>\",\n    \"account_creation_timestamp\": \"<dateTime>\",\n    \"user_age\": \"<integer>\",\n    \"user_country_code\": \"US\"\n  },\n  \"event_time\": \"<dateTime>\",\n  \"connection\": {\n    \"ip_address\": \"<ipvanyaddress>\",\n    \"user_agent\": \"<string>\",\n    \"origin\": \"<uri>\",\n    \"walletconnect_name\": \"<string>\",\n    \"walletconnect_description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "351e9e43-2f60-4355-9c38-6bde8c4d9f30",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "enrichment",
+                    "account",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account\": {\n    \"account_id\": \"string\",\n    \"account_creation_timestamp\": \"1954-03-23T05:13:00.014Z\",\n    \"user_age\": 2936,\n    \"user_country_code\": \"US\"\n  },\n  \"event_time\": \"<dateTime>\",\n  \"connection\": {\n    \"ip_address\": \"string\",\n    \"user_agent\": \"string\",\n    \"origin\": \"https://JGqQFCyFDMNqROtPEueUvfUTdiQjALU.ghja-canF-OEgKKD8mZkD603MXF1yyo\",\n    \"walletconnect_name\": \"string\",\n    \"walletconnect_description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98746b4e-fae7-4cbb-84e0-cf0a389f8c9d",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "enrichment",
+                    "account",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account\": {\n    \"account_id\": \"string\",\n    \"account_creation_timestamp\": \"1954-03-23T05:13:00.014Z\",\n    \"user_age\": 2936,\n    \"user_country_code\": \"US\"\n  },\n  \"event_time\": \"<dateTime>\",\n  \"connection\": {\n    \"ip_address\": \"string\",\n    \"user_agent\": \"string\",\n    \"origin\": \"https://JGqQFCyFDMNqROtPEueUvfUTdiQjALU.ghja-canF-OEgKKD8mZkD603MXF1yyo\",\n    \"walletconnect_name\": \"string\",\n    \"walletconnect_description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "972e869a-72ae-4575-b3cb-035788eb5e9f",
+          "name": "Modify Account",
+          "request": {
+            "name": "Modify Account",
+            "description": {
+              "content": "Modifies an account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "enrichment",
+                "account",
+                "modify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"access_request_type\": \"<string>\",\n  \"account\": {\n    \"account_id\": \"<string>\",\n    \"account_creation_timestamp\": \"<dateTime>\",\n    \"user_age\": \"<integer>\",\n    \"user_country_code\": \"US\"\n  },\n  \"address_details\": {\n    \"address\": \"<string>\",\n    \"chain\": \"<string>\",\n    \"asset\": \"<string>\"\n  },\n  \"event_time\": \"<dateTime>\",\n  \"connection\": {\n    \"ip_address\": \"<ipvanyaddress>\",\n    \"user_agent\": \"<string>\",\n    \"origin\": \"<uri>\",\n    \"walletconnect_name\": \"<string>\",\n    \"walletconnect_description\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d2701112-e63e-45cf-be22-31d123832369",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "enrichment",
+                    "account",
+                    "modify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_request_type\": \"ADD_WITHDRAWAL_ADDRESS\",\n  \"account\": {\n    \"account_id\": \"string\",\n    \"account_creation_timestamp\": \"1968-12-26T18:51:32.878Z\",\n    \"user_age\": 1311,\n    \"user_country_code\": \"US\"\n  },\n  \"address_details\": {\n    \"address\": \"string\",\n    \"chain\": \"string\",\n    \"asset\": \"string\"\n  },\n  \"event_time\": \"2001-09-26T06:01:47.556Z\",\n  \"connection\": {\n    \"ip_address\": \"string\",\n    \"user_agent\": \"string\",\n    \"origin\": \"https://ZtOtJSTrDyyvGKrrzreElzY.rzhkQyrrp86EAfaGohBxvn963OJSh4aniVFZXHmSJ2MHD-bPblN,hbUm8BwgomDj\",\n    \"walletconnect_name\": \"string\",\n    \"walletconnect_description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf9d4631-8157-4fe5-b700-66ff6bc7d4c6",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "enrichment",
+                    "account",
+                    "modify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"access_request_type\": \"ADD_WITHDRAWAL_ADDRESS\",\n  \"account\": {\n    \"account_id\": \"string\",\n    \"account_creation_timestamp\": \"1968-12-26T18:51:32.878Z\",\n    \"user_age\": 1311,\n    \"user_country_code\": \"US\"\n  },\n  \"address_details\": {\n    \"address\": \"string\",\n    \"chain\": \"string\",\n    \"asset\": \"string\"\n  },\n  \"event_time\": \"2001-09-26T06:01:47.556Z\",\n  \"connection\": {\n    \"ip_address\": \"string\",\n    \"user_agent\": \"string\",\n    \"origin\": \"https://ZtOtJSTrDyyvGKrrzreElzY.rzhkQyrrp86EAfaGohBxvn963OJSh4aniVFZXHmSJ2MHD-bPblN,hbUm8BwgomDj\",\n    \"walletconnect_name\": \"string\",\n    \"walletconnect_description\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b945482-0cc6-4afd-85f4-6b1a5612009e",
+          "name": "Report Fraud",
+          "request": {
+            "name": "Report Fraud",
+            "description": {
+              "content": "Reports a fraud event.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "enrichment",
+                "report",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"report\": {\n    \"addresses\": [\n      {\n        \"chain\": \"<string>\",\n        \"address\": \"<string>\"\n      },\n      {\n        \"chain\": \"<string>\",\n        \"address\": \"<string>\"\n      }\n    ],\n    \"source\": \"user_report\",\n    \"fraud_urls\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"metadata\": {\n    \"account\": {\n      \"account_id\": \"<string>\",\n      \"user_country_code\": \"<string>\",\n      \"account_creation_timestamp\": \"<string>\",\n      \"user_age\": \"<integer>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8f6d9a3e-7ca2-496c-96cb-2ead5623eb73",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "enrichment",
+                    "report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"report\": {\n    \"addresses\": [\n      {\n        \"chain\": \"unichain\",\n        \"address\": \"string\"\n      },\n      {\n        \"chain\": \"worldchain\",\n        \"address\": \"string\"\n      }\n    ],\n    \"source\": \"user_report\",\n    \"fraud_urls\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"metadata\": {\n    \"account\": {\n      \"account_id\": \"string\",\n      \"user_country_code\": \"string\",\n      \"account_creation_timestamp\": \"string\",\n      \"user_age\": 2234\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "779d50fe-2901-4f0d-bc8f-8ee0e3cdf801",
+              "name": "Validation Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "enrichment",
+                    "report",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"report\": {\n    \"addresses\": [\n      {\n        \"chain\": \"unichain\",\n        \"address\": \"string\"\n      },\n      {\n        \"chain\": \"worldchain\",\n        \"address\": \"string\"\n      }\n    ],\n    \"source\": \"user_report\",\n    \"fraud_urls\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"metadata\": {\n    \"account\": {\n      \"account_id\": \"string\",\n      \"user_country_code\": \"string\",\n      \"account_creation_timestamp\": \"string\",\n      \"user_age\": 2234\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"detail\": [\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    },\n    {\n      \"loc\": [\n        \"string\",\n        \"string\"\n      ],\n      \"msg\": \"string\",\n      \"type\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b60bf673-88f2-435f-92b7-cc221781e44f",
+    "name": "Blockaid Asset Management Enrichment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

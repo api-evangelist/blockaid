@@ -1,0 +1,152 @@
+{
+  "item": [
+    {
+      "id": "73a0e5ed-1a22-42ae-b03a-996bf5d33be0",
+      "name": "Audit Logs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b163d7f0-0fac-4205-a686-1ffdf73c6c11",
+          "name": "Search Audit Logs",
+          "request": {
+            "name": "Search Audit Logs",
+            "description": {
+              "content": "Returns audit events for the organization. Dates are interpreted in UTC. Request/response enums are aligned so values returned can be reused as filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "audit-logs",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"start_date\": \"<dateTime>\",\n  \"end_date\": \"<dateTime>\",\n  \"sort\": \"desc\",\n  \"actor_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actor_names\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"entity_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"entity_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"chains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"search_text\": \"<string>\",\n  \"page\": 1,\n  \"page_size\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1bfb1ff3-352f-4c04-acc0-9465bc09188c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "audit-logs",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"start_date\": \"2024-01-01T00:00:00Z\",\n  \"end_date\": \"2024-01-31T23:59:59Z\",\n  \"sort\": \"desc\",\n  \"actor_types\": [\n    \"user\"\n  ],\n  \"actions\": [\n    \"create\",\n    \"edit\"\n  ],\n  \"entity_types\": [\n    \"monitor\",\n    \"asset\"\n  ],\n  \"page\": 1,\n  \"page_size\": 100,\n  \"timezone\": \"Asia/Jerusalem\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"al_abc123\",\n      \"actor\": \"user@example.com\",\n      \"entity_id\": \"mon_456\",\n      \"chain\": null,\n      \"summary\": \"Monitor created\",\n      \"timestamp\": \"2024-01-15T10:30:00Z\",\n      \"actor_type\": \"user\",\n      \"action\": \"create\",\n      \"entity_type\": \"monitor\"\n    }\n  ],\n  \"total\": 1,\n  \"page\": 1,\n  \"pages\": 1,\n  \"size\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "70bf1654-57ec-4b90-8575-9da5e13f7b2e",
+    "name": "Blockaid Asset Management Audit Logs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

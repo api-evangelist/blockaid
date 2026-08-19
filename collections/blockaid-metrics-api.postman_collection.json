@@ -1,0 +1,636 @@
+{
+  "item": [
+    {
+      "id": "eafd7f49-d7ce-4b26-bcd3-febbae97c13b",
+      "name": "Metrics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "161ca173-9889-4a62-807a-32208a312300",
+          "name": "Create Metric",
+          "request": {
+            "name": "Create Metric",
+            "description": {
+              "content": "Create a metric definition that can be used by monitoring rules.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"data\": {\n    \"type\": \"<string>\",\n    \"target\": {\n      \"type\": \"<string>\",\n      \"identifier\": \"<string>\"\n    },\n    \"function_name\": \"<string>\",\n    \"function_args\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"return_field_index\": 0\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aed407cb-a3ce-4744-b30b-338168d0a271",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Outbound Transfer Metric\",\n  \"data\": {\n    \"type\": \"transfer\",\n    \"from\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ]\n    },\n    \"to\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"tag\",\n          \"identifier\": \"treasury\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"met_123\",\n  \"name\": \"Outbound Transfer Metric\",\n  \"data\": {\n    \"type\": \"transfer\",\n    \"from\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ]\n    },\n    \"to\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"tag\",\n          \"identifier\": \"treasury\"\n        }\n      ]\n    }\n  },\n  \"created_at\": \"2026-02-11T12:00:00Z\",\n  \"added_by\": \"api\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21d25b46-fa89-4c21-b301-a9c49a4569e4",
+          "name": "Update Metric",
+          "request": {
+            "name": "Update Metric",
+            "description": {
+              "content": "Update a metric by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "metrics",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The metric's ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"data\": {\n    \"type\": \"<string>\",\n    \"target\": {\n      \"type\": \"<string>\",\n      \"identifier\": \"<string>\"\n    },\n    \"function_name\": \"<string>\",\n    \"function_args\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"return_field_index\": 0\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "47eb4a32-22cf-4c8a-ace5-9f785ad37730",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "metrics",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The metric's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Outbound Transfer Metric v2\",\n  \"data\": {\n    \"type\": \"transfer\",\n    \"from\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ]\n    },\n    \"to\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"tag\",\n          \"identifier\": \"treasury\"\n        }\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"met_123\",\n  \"name\": \"Outbound Transfer Metric v2\",\n  \"data\": {\n    \"type\": \"transfer\",\n    \"from\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ]\n    },\n    \"to\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"tag\",\n          \"identifier\": \"treasury\"\n        }\n      ]\n    }\n  },\n  \"created_at\": \"2026-02-11T12:00:00Z\",\n  \"added_by\": \"api\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8551edd6-21e3-4770-aeb8-227ff507567b",
+          "name": "Get Metric",
+          "request": {
+            "name": "Get Metric",
+            "description": {
+              "content": "Fetch a single metric by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "metrics",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The metric's ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "5dc77936-3efd-4e55-834b-f30ce7c446be",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "metrics",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The metric's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"met_123\",\n  \"name\": \"Outbound Transfer Metric\",\n  \"data\": {\n    \"type\": \"transfer\",\n    \"from\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ]\n    },\n    \"to\": {\n      \"operator\": \"in\",\n      \"target\": [\n        {\n          \"type\": \"tag\",\n          \"identifier\": \"treasury\"\n        }\n      ]\n    }\n  },\n  \"created_at\": \"2026-02-11T12:00:00Z\",\n  \"added_by\": \"api\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "278b9688-50b2-4a6b-9024-352ed1887988",
+          "name": "Delete Metric",
+          "request": {
+            "name": "Delete Metric",
+            "description": {
+              "content": "Remove a metric by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "metrics",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The metric's ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fa18dba4-7e28-4922-9e51-cd0e51a29319",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "metrics",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The metric's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c07c348-37f4-48a7-bb06-13ab67d9c361",
+          "name": "Search Metrics",
+          "request": {
+            "name": "Search Metrics",
+            "description": {
+              "content": "Search metric definitions with pagination and sorting controls.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "metrics",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"sort\": [\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    }\n  ],\n  \"filter\": {\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"contains\": \"<string>\",\n      \"contains_all\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"id\": {\n      \"eq\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6cbd70d0-2012-4664-b4b9-bb3aa322c411",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "metrics",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page_size\": 20,\n  \"page\": 1,\n  \"sort\": [\n    {\n      \"field\": \"created_at\",\n      \"operator\": \"desc\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"met_123\",\n      \"name\": \"Outbound Transfer Metric\",\n      \"data\": {\n        \"type\": \"transfer\",\n        \"from\": {\n          \"operator\": \"in\",\n          \"target\": [\n            {\n              \"type\": \"asset_id\",\n              \"identifier\": \"asset_123\"\n            }\n          ]\n        },\n        \"to\": {\n          \"operator\": \"in\",\n          \"target\": [\n            {\n              \"type\": \"tag\",\n              \"identifier\": \"treasury\"\n            }\n          ]\n        }\n      },\n      \"created_at\": \"2026-02-11T12:00:00Z\",\n      \"added_by\": \"api\"\n    }\n  ],\n  \"page\": 1,\n  \"total\": 1,\n  \"pages\": 1,\n  \"size\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0289235d-f04d-4574-941f-5464b6f1a31b",
+    "name": "Blockaid Asset Management Metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}

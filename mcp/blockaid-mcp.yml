@@ -2,66 +2,70 @@ generated: '2026-07-18'
 method: derived
 status: candidate
 source: openapi/blockaid-openapi-original.yml
-notes: >-
-  No official hosted/remote Blockaid MCP server was found (docs are gated at
-  docs.blockaid.io; no @blockaid or blockaid entry in public MCP registries as of
-  this run). This is a CANDIDATE tool list derived one-tool-per-marquee-operation
-  from the Blockaid OpenAPI, for a potential OpenAPI-to-MCP bridge.
+notes: No official hosted/remote Blockaid MCP server was found (docs are gated at docs.blockaid.io; no
+  @blockaid or blockaid entry in public MCP registries as of this run). This is a CANDIDATE tool list
+  derived one-tool-per-marquee-operation from the Blockaid OpenAPI, for a potential OpenAPI-to-MCP bridge.
 server:
   name: blockaid
   transport: http
 tools:
-  - name: scan_evm_transaction
-    description: Simulate and validate an EVM transaction for malicious or risky behavior.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-transaction
-  - name: scan_evm_transaction_bulk
-    description: Scan a batch of EVM transactions in one request.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-transaction-bulk
-  - name: scan_evm_json_rpc
-    description: Scan a raw EVM JSON-RPC request.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-json-rpc
-  - name: scan_evm_address
-    description: Validate an EVM address for association with malicious activity.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-address
-  - name: scan_evm_user_operation
-    description: Scan an ERC-4337 user operation.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-user-operations
-  - name: scan_solana_message
-    description: Scan a Solana message for risky or malicious behavior.
-    source_operation: openapi/blockaid-openapi-original.yml#solana_scan_message_message_scan_post
-  - name: scan_solana_address
-    description: Validate a Solana address.
-    source_operation: openapi/blockaid-openapi-original.yml#solana_scan_address_address_scan_post
-  - name: scan_bitcoin_transaction
-    description: Scan a raw Bitcoin transaction.
-    source_operation: openapi/blockaid-openapi-original.yml#bitcoin_scan_transaction_v0_transaction_raw_scan_post
-  - name: scan_stellar_transaction
-    description: Scan a Stellar transaction.
-    source_operation: openapi/blockaid-openapi-original.yml#stellar_single_transaction_scan_transaction_scan_post
-  - name: scan_sui_transaction
-    description: Scan a Sui transaction.
-    source_operation: openapi/blockaid-openapi-original.yml#sui_scan_transaction_v0_transaction_scan_post
-  - name: scan_starknet_transaction
-    description: Scan a Starknet transaction.
-    source_operation: openapi/blockaid-openapi-original.yml#starknet_scan_transaction_v0_transaction_scan_post
-  - name: scan_tron_transaction
-    description: Scan a Tron transaction.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-tron-transaction
-  - name: scan_hedera_transaction
-    description: Scan a Hedera transaction.
-    source_operation: openapi/blockaid-openapi-original.yml#hedera_scan_transaction_v0_transaction_scan_post
-  - name: scan_chain_agnostic_transaction
-    description: Scan a transaction without specifying a chain family.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-transaction-chain-agnostic
-  - name: scan_site
-    description: Scan a URL/dApp site for phishing or drainer behavior.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-site
-  - name: scan_token
-    description: Scan a token for rug-pull and financial risk.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-token
-  - name: scan_token_bulk
-    description: Scan a batch of tokens.
-    source_operation: openapi/blockaid-openapi-original.yml#scan-token-bulk
-  - name: address_risk_exposure
-    description: Compute compliance risk exposure for an address.
-    source_operation: openapi/blockaid-openapi-original.yml#address-risk-exposure
+- name: scan_evm_transaction
+  description: Simulate and validate an EVM transaction for malicious or risky behavior.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-transaction
+- name: scan_evm_transaction_bulk
+  description: Scan a batch of EVM transactions in one request.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-transaction-bulk
+- name: scan_evm_json_rpc
+  description: Scan a raw EVM JSON-RPC request.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-json-rpc
+- name: scan_evm_address
+  description: Validate an EVM address for association with malicious activity.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-address
+- name: scan_evm_user_operation
+  description: Scan an ERC-4337 user operation.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-user-operations
+- name: scan_solana_message
+  description: Scan a Solana message for risky or malicious behavior.
+  source_operation: openapi/blockaid-openapi-original.yml#solana_scan_message_message_scan_post
+- name: scan_solana_address
+  description: Validate a Solana address.
+  source_operation: openapi/blockaid-openapi-original.yml#solana_scan_address_address_scan_post
+- name: scan_bitcoin_transaction
+  description: Scan a raw Bitcoin transaction.
+  source_operation: openapi/blockaid-openapi-original.yml#bitcoin_scan_transaction_v0_transaction_raw_scan_post
+- name: scan_stellar_transaction
+  description: Scan a Stellar transaction.
+  source_operation: openapi/blockaid-openapi-original.yml#stellar_single_transaction_scan_transaction_scan_post
+- name: scan_sui_transaction
+  description: Scan a Sui transaction.
+  source_operation: openapi/blockaid-openapi-original.yml#sui_scan_transaction_v0_transaction_scan_post
+- name: scan_starknet_transaction
+  description: Scan a Starknet transaction.
+  source_operation: openapi/blockaid-openapi-original.yml#starknet_scan_transaction_v0_transaction_scan_post
+- name: scan_tron_transaction
+  description: Scan a Tron transaction.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-tron-transaction
+- name: scan_hedera_transaction
+  description: Scan a Hedera transaction.
+  source_operation: openapi/blockaid-openapi-original.yml#hedera_scan_transaction_v0_transaction_scan_post
+- name: scan_chain_agnostic_transaction
+  description: Scan a transaction without specifying a chain family.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-transaction-chain-agnostic
+- name: scan_site
+  description: Scan a URL/dApp site for phishing or drainer behavior.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-site
+- name: scan_token
+  description: Scan a token for rug-pull and financial risk.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-token
+- name: scan_token_bulk
+  description: Scan a batch of tokens.
+  source_operation: openapi/blockaid-openapi-original.yml#scan-token-bulk
+- name: address_risk_exposure
+  description: Compute compliance risk exposure for an address.
+  source_operation: openapi/blockaid-openapi-original.yml#address-risk-exposure
+deployment:
+  mode: none
+  verified: derived
+  tools: 18
+  checked: '2026-08-12'
+  source: catalog MCP census

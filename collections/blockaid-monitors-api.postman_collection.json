@@ -1,0 +1,638 @@
+{
+  "item": [
+    {
+      "id": "3f2c2f21-ce50-4950-86db-c794b9a4a78b",
+      "name": "Monitors",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "77dfceda-9103-4dc3-8867-3222f57eef95",
+          "name": "Create Monitor",
+          "request": {
+            "name": "Create Monitor",
+            "description": {
+              "content": "Create a monitor that tracks configured rules and triggers actions when incidents match.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "monitors",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"monitors\": [\n    {\n      \"type\": \"<string>\",\n      \"target\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"severity\": \"<string>\",\n      \"is_silent\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"target\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"severity\": \"<string>\",\n      \"is_silent\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e42c31ea-c6ac-4019-baad-64981cc887a7",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "monitors",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"High-Risk Activity Monitor\",\n  \"tags\": [\n    \"security\"\n  ],\n  \"actions\": [],\n  \"monitors\": [\n    {\n      \"type\": \"approval_to_multicall_contract\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ],\n      \"severity\": \"high\",\n      \"is_silent\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"mon_123\",\n  \"name\": \"High-Risk Activity Monitor\",\n  \"is_enabled\": true,\n  \"created_by\": \"api\",\n  \"updated_by\": \"api\",\n  \"updated_at\": \"2026-02-11T12:00:00Z\",\n  \"created_at\": \"2026-02-11T12:00:00Z\",\n  \"monitors\": [\n    {\n      \"type\": \"approval_to_multicall_contract\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ],\n      \"severity\": \"high\",\n      \"is_silent\": false\n    }\n  ],\n  \"tags\": [\n    \"security\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "600d41ee-921e-422d-9840-ee57587bb65e",
+          "name": "Get Monitor",
+          "request": {
+            "name": "Get Monitor",
+            "description": {
+              "content": "Fetch a single monitor by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "monitors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The monitor's ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "dc83b481-cfe6-44c1-8aed-31957c9c4620",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The monitor's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"mon_123\",\n  \"name\": \"High-Risk Activity Monitor\",\n  \"is_enabled\": true,\n  \"created_by\": \"api\",\n  \"updated_by\": \"api\",\n  \"updated_at\": \"2026-02-11T12:00:00Z\",\n  \"created_at\": \"2026-02-11T12:00:00Z\",\n  \"monitors\": [\n    {\n      \"type\": \"approval_to_multicall_contract\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ],\n      \"severity\": \"high\",\n      \"is_silent\": false\n    }\n  ],\n  \"tags\": [\n    \"security\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "220ced75-51b1-4460-aaf5-6a575d65e51e",
+          "name": "Update Monitor",
+          "request": {
+            "name": "Update Monitor",
+            "description": {
+              "content": "Change a monitor's name, rules, tags, or actions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "monitors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The monitor's ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"is_enabled\": \"<boolean>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"type\": \"<string>\",\n      \"to\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"severity\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"cc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bcc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"body\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"to\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"severity\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"cc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bcc\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"body\": \"<string>\"\n    }\n  ],\n  \"monitors\": [\n    {\n      \"type\": \"<string>\",\n      \"target\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"severity\": \"<string>\",\n      \"is_silent\": \"<boolean>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"target\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"severity\": \"<string>\",\n      \"is_silent\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e70193a7-fc35-4485-83b8-207db123af4c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The monitor's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"High-Risk Activity Monitor v2\",\n  \"is_enabled\": true,\n  \"tags\": [\n    \"security\",\n    \"critical\"\n  ],\n  \"actions\": [],\n  \"monitors\": [\n    {\n      \"type\": \"approval_to_multicall_contract\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ],\n      \"severity\": \"critical\",\n      \"is_silent\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"mon_123\",\n  \"name\": \"High-Risk Activity Monitor v2\",\n  \"is_enabled\": true,\n  \"created_by\": \"api\",\n  \"updated_by\": \"api\",\n  \"updated_at\": \"2026-02-11T12:30:00Z\",\n  \"created_at\": \"2026-02-11T12:00:00Z\",\n  \"monitors\": [\n    {\n      \"type\": \"approval_to_multicall_contract\",\n      \"target\": [\n        {\n          \"type\": \"asset_id\",\n          \"identifier\": \"asset_123\"\n        }\n      ],\n      \"severity\": \"critical\",\n      \"is_silent\": false\n    }\n  ],\n  \"tags\": [\n    \"security\",\n    \"critical\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64d73e74-3db0-45d5-993c-1c4443efa71e",
+          "name": "Delete Monitor",
+          "request": {
+            "name": "Delete Monitor",
+            "description": {
+              "content": "Remove a monitor by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "monitors",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The monitor's ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b8d1bf18-8a70-4557-b8ef-20c89ef36671",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "monitors",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The monitor's ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6611fca1-6ad0-4117-b20a-9e6831de8de4",
+          "name": "Search Monitors",
+          "request": {
+            "name": "Search Monitors",
+            "description": {
+              "content": "Search monitors with pagination and sorting controls.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "platform",
+                "monitors",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "X-API-Key"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"sort\": [\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"operator\": \"<string>\"\n    }\n  ],\n  \"filter\": {\n    \"name\": {\n      \"eq\": \"<string>\",\n      \"in\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"contains\": \"<string>\",\n      \"contains_all\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8847bbcc-a3e9-48be-9f6d-e572277a6d04",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "platform",
+                    "monitors",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-API-Key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"page_size\": 20,\n  \"page\": 1,\n  \"sort\": [\n    {\n      \"field\": \"created_at\",\n      \"operator\": \"desc\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"id\": \"mon_123\",\n      \"name\": \"High-Risk Activity Monitor\",\n      \"is_enabled\": true,\n      \"created_by\": \"api\",\n      \"updated_by\": \"api\",\n      \"updated_at\": \"2026-02-11T12:00:00Z\",\n      \"created_at\": \"2026-02-11T12:00:00Z\",\n      \"monitors\": [\n        {\n          \"type\": \"approval_to_multicall_contract\",\n          \"target\": [\n            {\n              \"type\": \"asset_id\",\n              \"identifier\": \"asset_123\"\n            }\n          ],\n          \"severity\": \"high\",\n          \"is_silent\": false\n        }\n      ],\n      \"tags\": [\n        \"security\"\n      ]\n    }\n  ],\n  \"total\": 1,\n  \"page\": 1,\n  \"pages\": 1,\n  \"size\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.blockaid.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "36da4e8e-cd9c-4e1f-aabd-4696478ffa2a",
+    "name": "Blockaid Asset Management Monitors API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Blockaid Risk Score API",
+      "type": "text/plain"
+    }
+  }
+}
