@@ -181,6 +181,8 @@ apis:
   humanURL: https://docs.blockaid.io/docs/introduction
   baseURL: https://api.blockaid.io
   tags:
+  - External
+  tags_raw:
   - external
   properties:
   - type: OpenAPI
