@@ -10,6 +10,18 @@ description: >-
   Products include End User Protection, Onchain Monitoring, Crypto Fraud
   Prevention, the Cosigner policy engine, and compliance Risk Exposure. Backed by
   Greylock, GV, and Ribbit Capital.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
