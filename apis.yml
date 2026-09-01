@@ -378,6 +378,8 @@ apis:
   humanURL: https://docs.blockaid.io/docs/introduction
   baseURL: https://api.blockaid.io
   tags:
+  - TRON
+  tags_raw:
   - Tron
   properties:
   - type: OpenAPI
