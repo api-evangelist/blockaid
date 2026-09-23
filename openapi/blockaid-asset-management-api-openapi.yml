@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Blockaid Asset Management API
   description: Blockaid Risk Score API
@@ -1092,6 +1092,8 @@ paths:
       - APIKey: []
       - ClientID: []
       - JWT: []
+      operationId: postV0PlatformAssetsSearch
+      x-operation-id-source: derived
   /v0/platform/assets/addresses/{chain_name}/{address}:
     get:
       summary: Get Address Asset
@@ -1580,6 +1582,52 @@ paths:
       - JWT: []
 components:
   schemas:
+    AddressResponse:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - address
+          title: Identifier Type
+          default: address
+          description: The asset type.
+        identifier:
+          type: string
+          title: Identifier
+          description: The contract or wallet address for this asset.
+        asset_id:
+          type: string
+        alias:
+          type: string
+          title: Alias
+          description: The alias of the asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Tags assigned to this asset.
+        added_by:
+          type: string
+          title: Added By
+          description: The user who added the asset.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The date and time the asset was created.
+        address_details:
+          $ref: '#/components/schemas/BaseAddressDetails'
+      type: object
+      required:
+      - identifier
+      - tags
+      - added_by
+      - created_at
+      - address_details
+      - identifier_type
+      - asset_id
+      title: AddressResponse
     BaseAddressDetails:
       properties:
         chain:
@@ -1607,333 +1655,6 @@ components:
       - properties
       - address
       title: BaseAddressDetails
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    APIFilters:
-      title: API Filters
-      anyOf:
-      - title: Equals Filter
-        description: Filter by exact value match.
-        type: object
-        properties:
-          eq:
-            type: string
-            description: Return only results where the field equals this value.
-        required:
-        - eq
-      - title: In List Filter
-        description: Filter by matching any value in a list.
-        type: object
-        properties:
-          in:
-            type: array
-            items:
-              type: string
-            description: Return only results where the field matches any value in this list.
-        required:
-        - in
-      - title: Contains All Filter
-        description: Filter by requiring all listed values to be present.
-        type: object
-        properties:
-          contains_all:
-            type: array
-            items:
-              type: string
-            description: Return only results where the field contains all values in this list.
-        required:
-        - contains_all
-      - title: Contains Filter
-        description: Filter by substring match.
-        type: object
-        properties:
-          contains:
-            type: string
-            description: Return results where the field contains the given value (substring match).
-        required:
-        - contains
-      description: A filter object that supports common query operators.
-    ABIFallback:
-      properties:
-        type:
-          type: string
-          enum:
-          - fallback
-          title: Type
-        stateMutability:
-          type: string
-          enum:
-          - nonpayable
-          - payable
-          title: Statemutability
-      type: object
-      required:
-      - type
-      title: ABIFallback
-    DomainResponse:
-      properties:
-        identifier_type:
-          type: string
-          enum:
-          - domain
-          title: Identifier Type
-          default: domain
-          description: The asset type.
-        identifier:
-          type: string
-          title: Identifier
-          description: The domain name for this asset.
-        asset_id:
-          type: string
-        alias:
-          type: string
-          title: Alias
-          description: The alias of the asset.
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-          description: Tags assigned to the asset.
-        added_by:
-          type: string
-          title: Added By
-          description: The user who added the asset.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: The date and time the asset was created.
-      type: object
-      required:
-      - identifier
-      - tags
-      - added_by
-      - created_at
-      - identifier_type
-      - asset_id
-      title: DomainResponse
-    ABIFunction:
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-          title: Type
-        name:
-          type: string
-          title: Name
-        inputs:
-          items:
-            $ref: '#/components/schemas/ABIParameter'
-          type: array
-          title: Inputs
-        outputs:
-          items:
-            $ref: '#/components/schemas/ABIParameter'
-          type: array
-          title: Outputs
-        stateMutability:
-          type: string
-          enum:
-          - pure
-          - view
-          - nonpayable
-          - payable
-          title: Statemutability
-        constant:
-          type: boolean
-          title: Constant
-        payable:
-          type: boolean
-          title: Payable
-      type: object
-      required:
-      - type
-      - name
-      - stateMutability
-      title: ABIFunction
-    ABIEvent:
-      properties:
-        type:
-          type: string
-          enum:
-          - event
-          title: Type
-        name:
-          type: string
-          title: Name
-        inputs:
-          items:
-            $ref: '#/components/schemas/ABIParameter'
-          type: array
-          title: Inputs
-        anonymous:
-          type: boolean
-          title: Anonymous
-          default: false
-      type: object
-      required:
-      - type
-      - name
-      title: ABIEvent
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ABIParameter:
-      properties:
-        name:
-          type: string
-          title: Name
-        type:
-          type: string
-          title: Type
-        internalType:
-          type: string
-          title: Internaltype
-        components:
-          items:
-            $ref: '#/components/schemas/ABIParameter'
-          type: array
-          title: Components
-      type: object
-      required:
-      - name
-      - type
-      title: ABIParameter
-    MarketResponse:
-      properties:
-        identifier_type:
-          type: string
-          enum:
-          - market
-          title: Identifier Type
-          default: market
-          description: The asset type.
-        identifier:
-          type: string
-          title: Identifier
-          description: The market slug for this asset.
-        asset_id:
-          type: string
-        alias:
-          type: string
-          title: Alias
-          description: The alias of the asset.
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-          description: Tags assigned to this asset.
-        added_by:
-          type: string
-          title: Added By
-          description: The user who added the asset.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: The date and time the asset was created.
-        address_details:
-          $ref: '#/components/schemas/BaseAddressDetails'
-      type: object
-      required:
-      - identifier
-      - tags
-      - added_by
-      - created_at
-      - address_details
-      - identifier_type
-      - asset_id
-      title: MarketResponse
-    PerpResponse:
-      properties:
-        identifier_type:
-          type: string
-          enum:
-          - perp
-          title: Identifier Type
-          default: perp
-          description: The asset type.
-        identifier:
-          type: string
-          title: Identifier
-          description: The perp identifier (e.g. "btc-usdc").
-        asset_id:
-          type: string
-        alias:
-          type: string
-          title: Alias
-          description: The alias of the asset.
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-          description: Tags assigned to this asset.
-        added_by:
-          type: string
-          title: Added By
-          description: The user who added the asset.
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-          description: The date and time the asset was created.
-        address_details:
-          $ref: '#/components/schemas/BaseAddressDetails'
-      type: object
-      required:
-      - identifier
-      - tags
-      - added_by
-      - created_at
-      - address_details
-      - identifier_type
-      - asset_id
-      title: PerpResponse
-    MonitoringSupportedRuntimes:
-      type: string
-      enum:
-      - evm
-      - sui
-      - solana
-      - stellar
-      - hedera
-      - bitcoin
-      - hyperliquid
-      - polymarket
-      - aster
-      - lighter
-      - tron
-      title: MonitoringSupportedRuntimes
-      description: The runtime name
     MonitoringSupportedChains:
       type: string
       enum:
@@ -1985,153 +1706,7 @@ components:
       - xlayer
       title: MonitoringSupportedChains
       description: The chain name
-    ABIError:
-      properties:
-        type:
-          type: string
-          enum:
-          - error
-          title: Type
-        name:
-          type: string
-          title: Name
-        inputs:
-          items:
-            $ref: '#/components/schemas/ABIParameter'
-          type: array
-          title: Inputs
-          default: []
-      type: object
-      required:
-      - type
-      - name
-      title: ABIError
-    PerpRequest:
-      properties:
-        identifier_type:
-          type: string
-          enum:
-          - perp
-          title: Identifier Type
-          default: perp
-        identifier:
-          type: string
-          title: Identifier
-          description: The perp identifier.
-        chain_name:
-          type: string
-          enum:
-          - hyperliquid
-          - aster
-          - lighter
-          title: Chain Name
-          description: 'The perpetuals protocol. Supported values: "hyperliquid", "aster", "lighter".'
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-          description: Group your assets by tags to filter by them.
-          default: []
-        alias:
-          type: string
-          title: Alias
-          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address.
-      type: object
-      required:
-      - identifier
-      - chain_name
-      title: PerpRequest
-    ABIConstructor:
-      properties:
-        type:
-          type: string
-          enum:
-          - constructor
-          title: Type
-        inputs:
-          items:
-            $ref: '#/components/schemas/ABIParameter'
-          type: array
-          title: Inputs
-        stateMutability:
-          type: string
-          enum:
-          - nonpayable
-          - payable
-          title: Statemutability
-      type: object
-      required:
-      - type
-      title: ABIConstructor
-    ABIReceive:
-      properties:
-        type:
-          type: string
-          enum:
-          - receive
-          title: Type
-        stateMutability:
-          type: string
-          enum:
-          - payable
-          title: Statemutability
-      type: object
-      required:
-      - type
-      - stateMutability
-      title: ABIReceive
-    MarketRequest:
-      properties:
-        identifier_type:
-          type: string
-          enum:
-          - market
-          title: Identifier Type
-          default: market
-        identifier:
-          type: string
-          title: Identifier
-          description: The market slug for this asset.
-        chain_name:
-          type: string
-          enum:
-          - polymarket
-          title: Chain Name
-          default: polymarket
-          description: Must be "polymarket" for prediction market assets.
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-          description: Group your assets by tags to filter by them.
-          default: []
-        alias:
-          type: string
-          title: Alias
-          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address.
-      type: object
-      required:
-      - identifier
-      - chain_name
-      title: MarketRequest
-    AssetErrorResponse:
-      properties:
-        error_code:
-          $ref: '#/components/schemas/AssetsErrorCode'
-        description:
-          type: string
-          title: Description
-        identifier:
-          type: string
-          title: Identifier
-      type: object
-      required:
-      - error_code
-      - description
-      title: AssetErrorResponse
-    DomainRequest:
+    DomainResponse:
       properties:
         identifier_type:
           type: string
@@ -2139,38 +1714,11 @@ components:
           - domain
           title: Identifier Type
           default: domain
-        identifier:
-          type: string
-          title: Identifier
-          description: The domain name for this asset.
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-          description: Group your assets by tags to filter by them.
-          default: []
-        alias:
-          type: string
-          title: Alias
-          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address or domain.
-      type: object
-      required:
-      - identifier
-      title: DomainRequest
-    AddressResponse:
-      properties:
-        identifier_type:
-          type: string
-          enum:
-          - address
-          title: Identifier Type
-          default: address
           description: The asset type.
         identifier:
           type: string
           title: Identifier
-          description: The contract or wallet address for this asset.
+          description: The domain name for this asset.
         asset_id:
           type: string
         alias:
@@ -2182,7 +1730,7 @@ components:
             type: string
           type: array
           title: Tags
-          description: Tags assigned to this asset.
+          description: Tags assigned to the asset.
         added_by:
           type: string
           title: Added By
@@ -2192,56 +1740,15 @@ components:
           format: date-time
           title: Created At
           description: The date and time the asset was created.
-        address_details:
-          $ref: '#/components/schemas/BaseAddressDetails'
       type: object
       required:
       - identifier
       - tags
       - added_by
       - created_at
-      - address_details
       - identifier_type
       - asset_id
-      title: AddressResponse
-    ContractInterface:
-      properties:
-        address:
-          type: string
-          title: Address
-          description: The address of the contract.
-        abi_json:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/ABIFunction'
-            - $ref: '#/components/schemas/ABIConstructor'
-            - $ref: '#/components/schemas/ABIFallback'
-            - $ref: '#/components/schemas/ABIReceive'
-            - $ref: '#/components/schemas/ABIEvent'
-            - $ref: '#/components/schemas/ABIError'
-          type: array
-          title: Abi Json
-          description: The ABI of the contract.
-      type: object
-      required:
-      - address
-      - abi_json
-      title: ContractInterface
-    AssetUpdateRequest:
-      properties:
-        tags:
-          items:
-            type: string
-          type: array
-          title: Tags
-          description: Group your assets by tags to filter by them.
-          default: []
-        alias:
-          type: string
-          title: Alias
-          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address or domain.
-      type: object
-      title: AssetUpdateRequest
+      title: DomainResponse
     AddressRequest:
       properties:
         identifier_type:
@@ -2284,6 +1791,15 @@ components:
       - identifier
       - chain_name
       title: AddressRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     AssetsErrorCode:
       type: string
       enum:
@@ -2298,6 +1814,492 @@ components:
       - not_found
       title: AssetsErrorCode
       description: The error code returned by the Assets API in case of an error.
+    AssetErrorResponse:
+      properties:
+        error_code:
+          $ref: '#/components/schemas/AssetsErrorCode'
+        description:
+          type: string
+          title: Description
+        identifier:
+          type: string
+          title: Identifier
+      type: object
+      required:
+      - error_code
+      - description
+      title: AssetErrorResponse
+    PerpRequest:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - perp
+          title: Identifier Type
+          default: perp
+        identifier:
+          type: string
+          title: Identifier
+          description: The perp identifier.
+        chain_name:
+          type: string
+          enum:
+          - hyperliquid
+          - aster
+          - lighter
+          title: Chain Name
+          description: 'The perpetuals protocol. Supported values: "hyperliquid", "aster", "lighter".'
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address.
+      type: object
+      required:
+      - identifier
+      - chain_name
+      title: PerpRequest
+    MarketResponse:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - market
+          title: Identifier Type
+          default: market
+          description: The asset type.
+        identifier:
+          type: string
+          title: Identifier
+          description: The market slug for this asset.
+        asset_id:
+          type: string
+        alias:
+          type: string
+          title: Alias
+          description: The alias of the asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Tags assigned to this asset.
+        added_by:
+          type: string
+          title: Added By
+          description: The user who added the asset.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The date and time the asset was created.
+        address_details:
+          $ref: '#/components/schemas/BaseAddressDetails'
+      type: object
+      required:
+      - identifier
+      - tags
+      - added_by
+      - created_at
+      - address_details
+      - identifier_type
+      - asset_id
+      title: MarketResponse
+    ABIParameter:
+      properties:
+        name:
+          type: string
+          title: Name
+        type:
+          type: string
+          title: Type
+        internalType:
+          type: string
+          title: Internaltype
+        components:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Components
+      type: object
+      required:
+      - name
+      - type
+      title: ABIParameter
+    ABIError:
+      properties:
+        type:
+          type: string
+          enum:
+          - error
+          title: Type
+        name:
+          type: string
+          title: Name
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+          default: []
+      type: object
+      required:
+      - type
+      - name
+      title: ABIError
+    MonitoringSupportedRuntimes:
+      type: string
+      enum:
+      - evm
+      - sui
+      - solana
+      - stellar
+      - hedera
+      - bitcoin
+      - hyperliquid
+      - polymarket
+      - aster
+      - lighter
+      - tron
+      title: MonitoringSupportedRuntimes
+      description: The runtime name
+    ABIReceive:
+      properties:
+        type:
+          type: string
+          enum:
+          - receive
+          title: Type
+        stateMutability:
+          type: string
+          enum:
+          - payable
+          title: Statemutability
+      type: object
+      required:
+      - type
+      - stateMutability
+      title: ABIReceive
+    ABIConstructor:
+      properties:
+        type:
+          type: string
+          enum:
+          - constructor
+          title: Type
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+        stateMutability:
+          type: string
+          enum:
+          - nonpayable
+          - payable
+          title: Statemutability
+      type: object
+      required:
+      - type
+      title: ABIConstructor
+    ABIEvent:
+      properties:
+        type:
+          type: string
+          enum:
+          - event
+          title: Type
+        name:
+          type: string
+          title: Name
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+        anonymous:
+          type: boolean
+          title: Anonymous
+          default: false
+      type: object
+      required:
+      - type
+      - name
+      title: ABIEvent
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PerpResponse:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - perp
+          title: Identifier Type
+          default: perp
+          description: The asset type.
+        identifier:
+          type: string
+          title: Identifier
+          description: The perp identifier (e.g. "btc-usdc").
+        asset_id:
+          type: string
+        alias:
+          type: string
+          title: Alias
+          description: The alias of the asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Tags assigned to this asset.
+        added_by:
+          type: string
+          title: Added By
+          description: The user who added the asset.
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+          description: The date and time the asset was created.
+        address_details:
+          $ref: '#/components/schemas/BaseAddressDetails'
+      type: object
+      required:
+      - identifier
+      - tags
+      - added_by
+      - created_at
+      - address_details
+      - identifier_type
+      - asset_id
+      title: PerpResponse
+    DomainRequest:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - domain
+          title: Identifier Type
+          default: domain
+        identifier:
+          type: string
+          title: Identifier
+          description: The domain name for this asset.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address or domain.
+      type: object
+      required:
+      - identifier
+      title: DomainRequest
+    ContractInterface:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address of the contract.
+        abi_json:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/ABIFunction'
+            - $ref: '#/components/schemas/ABIConstructor'
+            - $ref: '#/components/schemas/ABIFallback'
+            - $ref: '#/components/schemas/ABIReceive'
+            - $ref: '#/components/schemas/ABIEvent'
+            - $ref: '#/components/schemas/ABIError'
+          type: array
+          title: Abi Json
+          description: The ABI of the contract.
+      type: object
+      required:
+      - address
+      - abi_json
+      title: ContractInterface
+    AssetUpdateRequest:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address or domain.
+      type: object
+      title: AssetUpdateRequest
+    ABIFallback:
+      properties:
+        type:
+          type: string
+          enum:
+          - fallback
+          title: Type
+        stateMutability:
+          type: string
+          enum:
+          - nonpayable
+          - payable
+          title: Statemutability
+      type: object
+      required:
+      - type
+      title: ABIFallback
+    APIFilters:
+      title: API Filters
+      anyOf:
+      - title: Equals Filter
+        description: Filter by exact value match.
+        type: object
+        properties:
+          eq:
+            type: string
+            description: Return only results where the field equals this value.
+        required:
+        - eq
+      - title: In List Filter
+        description: Filter by matching any value in a list.
+        type: object
+        properties:
+          in:
+            type: array
+            items:
+              type: string
+            description: Return only results where the field matches any value in this list.
+        required:
+        - in
+      - title: Contains All Filter
+        description: Filter by requiring all listed values to be present.
+        type: object
+        properties:
+          contains_all:
+            type: array
+            items:
+              type: string
+            description: Return only results where the field contains all values in this list.
+        required:
+        - contains_all
+      - title: Contains Filter
+        description: Filter by substring match.
+        type: object
+        properties:
+          contains:
+            type: string
+            description: Return results where the field contains the given value (substring match).
+        required:
+        - contains
+      description: A filter object that supports common query operators.
+    MarketRequest:
+      properties:
+        identifier_type:
+          type: string
+          enum:
+          - market
+          title: Identifier Type
+          default: market
+        identifier:
+          type: string
+          title: Identifier
+          description: The market slug for this asset.
+        chain_name:
+          type: string
+          enum:
+          - polymarket
+          title: Chain Name
+          default: polymarket
+          description: Must be "polymarket" for prediction market assets.
+        tags:
+          items:
+            type: string
+          type: array
+          title: Tags
+          description: Group your assets by tags to filter by them.
+          default: []
+        alias:
+          type: string
+          title: Alias
+          description: A friendly name for this asset so you can spot it quickly; the UI shows this instead of the raw address.
+      type: object
+      required:
+      - identifier
+      - chain_name
+      title: MarketRequest
+    ABIFunction:
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          title: Type
+        name:
+          type: string
+          title: Name
+        inputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Inputs
+        outputs:
+          items:
+            $ref: '#/components/schemas/ABIParameter'
+          type: array
+          title: Outputs
+        stateMutability:
+          type: string
+          enum:
+          - pure
+          - view
+          - nonpayable
+          - payable
+          title: Statemutability
+        constant:
+          type: boolean
+          title: Constant
+        payable:
+          type: boolean
+          title: Payable
+      type: object
+      required:
+      - type
+      - name
+      - stateMutability
+      title: ABIFunction
   securitySchemes:
     APIKey:
       type: apiKey

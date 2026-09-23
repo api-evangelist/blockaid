@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Blockaid Asset Management external API
+  title: Blockaid External API
   description: Blockaid Risk Score API
   termsOfService: https://www.blockaid.io/legal/terms-of-use
   license:
@@ -13,7 +13,7 @@ servers:
 - url: https://client.blockaid.io
   description: Clients server
 tags:
-- name: external
+- name: External
 paths:
   /v0/platform/cosigners/{id}/solana/evaluate:
     post:
@@ -57,9 +57,89 @@ paths:
       - JWT: []
       summary: Evaluate Solana Transaction
       tags:
-      - external
+      - External
 components:
   schemas:
+    MatchedPolicyInfoExternal:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Policy name.
+        action:
+          type: string
+          title: Action
+          description: Action defined by the policy.
+        type:
+          type: string
+          title: Type
+          description: Policy type.
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - action
+      - type
+      title: MatchedPolicyInfoExternal
+    EvaluateHistoricalDataResponse:
+      properties:
+        cosigner_id:
+          type: string
+          title: Cosigner Id
+          description: The cosigner that was evaluated.
+        chain:
+          type: string
+          title: Chain
+          description: Chain used for evaluation.
+        summary:
+          allOf:
+          - $ref: '#/components/schemas/EvaluationSummary'
+          description: Aggregated counts across all transactions.
+        policies:
+          items:
+            $ref: '#/components/schemas/PolicyEvaluationSummary'
+          type: array
+          title: Policies
+          description: Per-policy aggregates and optional transaction hash lists.
+        scan:
+          anyOf:
+          - type: object
+          - type: 'null'
+          description: Full scan payload of the first scanned transaction. Used for publishing to platform-api.
+          title: Scan
+        scan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Scan ID of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Id
+        scan_result:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Result type of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Result
+        scan_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ISO timestamp of the first scanned transaction. Present for single-tx evaluations.
+          title: Scan Timestamp
+        transaction_timestamp:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: ISO timestamp for the on-chain transaction when available from the scan (for example block or transaction time). Distinct from scan_timestamp when both are present.
+          title: Transaction Timestamp
+      additionalProperties: false
+      type: object
+      required:
+      - cosigner_id
+      - chain
+      - summary
+      - policies
+      title: EvaluateHistoricalDataResponse
+      description: Response containing the policy evaluation result for historical data.
     PoliciesExternal:
       properties:
         decision:
@@ -100,27 +180,42 @@ components:
       - decision
       - trace
       title: PoliciesExternal
-    ValidationError:
+    EvaluationSummary:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+        total_transactions:
+          type: integer
+          title: Total Transactions
+          description: Total number of transactions scanned for this evaluation.
+        approved:
+          type: integer
+          title: Approved
+          description: Transactions approved by all policies under this mode.
+        rejected:
+          type: integer
+          title: Rejected
+          description: Transactions rejected by at least one policy or blocked before policy evaluation (non-benign scans). Per-policy counts only reflect transactions that reached policy evaluation, so the sum of per-policy rejected counts may be less than this value.
+        manual_approved:
+          type: integer
+          title: Manual Approved
+          description: Transactions that required manual approval (pending decision).
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - total_transactions
+      - approved
+      - rejected
+      - manual_approved
+      title: EvaluationSummary
+      description: 'Aggregated counts across all transactions.
+
+
+        Note: ``rejected`` includes transactions blocked before policy evaluation
+
+        (non-benign scans). Per-policy counts only reflect transactions that
+
+        reached policy evaluation, so ``sum(p.rejected for p in policies)`` may be
+
+        less than ``summary.rejected``.'
     PolicyTraceEntryExternal:
       properties:
         name:
@@ -346,6 +441,51 @@ components:
         - time_period
         title: EvaluateSolanaTimePeriodRequest
         type: object
+    EvaluateTransactionResponse:
+      properties:
+        policies:
+          $ref: '#/components/schemas/PoliciesExternal'
+        scan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scan Id
+      additionalProperties: true
+      type: object
+      required:
+      - policies
+      title: EvaluateTransactionResponse
+      description: Response containing the policy evaluation result for the submitted EVM transaction.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     PolicyEvaluationSummary:
       properties:
         policy_id:
@@ -412,146 +552,6 @@ components:
       - rejected
       - manual_approved
       title: PolicyEvaluationSummary
-    EvaluateHistoricalDataResponse:
-      properties:
-        cosigner_id:
-          type: string
-          title: Cosigner Id
-          description: The cosigner that was evaluated.
-        chain:
-          type: string
-          title: Chain
-          description: Chain used for evaluation.
-        summary:
-          allOf:
-          - $ref: '#/components/schemas/EvaluationSummary'
-          description: Aggregated counts across all transactions.
-        policies:
-          items:
-            $ref: '#/components/schemas/PolicyEvaluationSummary'
-          type: array
-          title: Policies
-          description: Per-policy aggregates and optional transaction hash lists.
-        scan:
-          anyOf:
-          - type: object
-          - type: 'null'
-          description: Full scan payload of the first scanned transaction. Used for publishing to platform-api.
-          title: Scan
-        scan_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Scan ID of the first scanned transaction. Present for single-tx evaluations.
-          title: Scan Id
-        scan_result:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Result type of the first scanned transaction. Present for single-tx evaluations.
-          title: Scan Result
-        scan_timestamp:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: ISO timestamp of the first scanned transaction. Present for single-tx evaluations.
-          title: Scan Timestamp
-        transaction_timestamp:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: ISO timestamp for the on-chain transaction when available from the scan (for example block or transaction time). Distinct from scan_timestamp when both are present.
-          title: Transaction Timestamp
-      additionalProperties: false
-      type: object
-      required:
-      - cosigner_id
-      - chain
-      - summary
-      - policies
-      title: EvaluateHistoricalDataResponse
-      description: Response containing the policy evaluation result for historical data.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    EvaluateTransactionResponse:
-      properties:
-        policies:
-          $ref: '#/components/schemas/PoliciesExternal'
-        scan_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Scan Id
-      additionalProperties: true
-      type: object
-      required:
-      - policies
-      title: EvaluateTransactionResponse
-      description: Response containing the policy evaluation result for the submitted EVM transaction.
-    EvaluationSummary:
-      properties:
-        total_transactions:
-          type: integer
-          title: Total Transactions
-          description: Total number of transactions scanned for this evaluation.
-        approved:
-          type: integer
-          title: Approved
-          description: Transactions approved by all policies under this mode.
-        rejected:
-          type: integer
-          title: Rejected
-          description: Transactions rejected by at least one policy or blocked before policy evaluation (non-benign scans). Per-policy counts only reflect transactions that reached policy evaluation, so the sum of per-policy rejected counts may be less than this value.
-        manual_approved:
-          type: integer
-          title: Manual Approved
-          description: Transactions that required manual approval (pending decision).
-      additionalProperties: false
-      type: object
-      required:
-      - total_transactions
-      - approved
-      - rejected
-      - manual_approved
-      title: EvaluationSummary
-      description: 'Aggregated counts across all transactions.
-
-
-        Note: ``rejected`` includes transactions blocked before policy evaluation
-
-        (non-benign scans). Per-policy counts only reflect transactions that
-
-        reached policy evaluation, so ``sum(p.rejected for p in policies)`` may be
-
-        less than ``summary.rejected``.'
-    MatchedPolicyInfoExternal:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: Policy name.
-        action:
-          type: string
-          title: Action
-          description: Action defined by the policy.
-        type:
-          type: string
-          title: Type
-          description: Policy type.
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      - action
-      - type
-      title: MatchedPolicyInfoExternal
   securitySchemes:
     APIKey:
       type: apiKey

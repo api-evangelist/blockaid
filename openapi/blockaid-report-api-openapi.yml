@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Blockaid Asset Management Report API
+  title: Blockaid Report API
   description: Blockaid Risk Score API
   termsOfService: https://www.blockaid.io/legal/terms-of-use
   license:
@@ -177,70 +177,6 @@ components:
       - jsonRpcMethod
       - jsonRpcParams
       title: ReportTxRequest
-    routers__chain_agnostic__models__request__Account:
-      properties:
-        account_id:
-          type: string
-          title: Account Id
-          description: Unique identifier for the account.
-        account_creation_timestamp:
-          type: string
-          format: date-time
-          title: Account Creation Timestamp
-          description: Timestamp when the account was created.
-        user_age:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: User Age
-          description: Age of the user in years
-        user_country_code:
-          type: string
-          title: User Country Code
-          description: ISO country code of the user's location.
-        account_addresses:
-          items:
-            type: string
-          type: array
-          title: Account Addresses
-          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
-      type: object
-      required:
-      - account_id
-      title: Account
-    SiteClassification:
-      type: string
-      enum:
-      - Malicious
-      - Benign
-      title: SiteClassification
-      description: Classification result for a scanned URL.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    EventEnum:
-      type: string
-      enum:
-      - FALSE_POSITIVE
-      - FALSE_NEGATIVE
-      title: EventEnum
     TransactionScanSupportedChains:
       type: string
       enum:
@@ -297,18 +233,88 @@ components:
       - arc
       title: TransactionScanSupportedChains
       description: The chain name
-    ReportSiteRequest:
+    ValidationError:
       properties:
-        url:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Url
-        classification:
-          $ref: '#/components/schemas/SiteClassification'
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - url
-      - classification
-      title: ReportSiteRequest
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ScanRequestMetadata:
+      properties:
+        domain:
+          type: string
+          title: Domain
+          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
+        non_dapp:
+          type: boolean
+          title: Non Dapp
+          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: End-user account context (id, age, country, creation time, and account_addresses).
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent, IP information, and origin.
+      type: object
+      title: ScanRequestMetadata
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
     routers__chain_agnostic__models__request__Connection:
       properties:
         user_agent:
@@ -338,28 +344,13 @@ components:
       required:
       - ip_address
       title: Connection
-    ScanRequestMetadata:
-      properties:
-        domain:
-          type: string
-          title: Domain
-          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
-        non_dapp:
-          type: boolean
-          title: Non Dapp
-          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
-        account:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
-          title: Account
-          description: End-user account context (id, age, country, creation time, and account_addresses).
-        connection:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-          title: Connection
-          description: Connection metadata including user agent, IP information, and origin.
-      type: object
-      title: ScanRequestMetadata
+    SiteClassification:
+      type: string
+      enum:
+      - Malicious
+      - Benign
+      title: SiteClassification
+      description: Classification result for a scanned URL.
     GenericReportRequest:
       type: object
       required:
@@ -386,15 +377,24 @@ components:
           - $ref: '#/components/schemas/ScanRequestMetadata'
           title: Metadata
           description: 'Client-side context: the originating dApp domain, end-user account info, and connection details.'
-    HTTPValidationError:
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
+    ReportSiteRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        url:
+          type: string
+          title: Url
+        classification:
+          $ref: '#/components/schemas/SiteClassification'
       type: object
-      title: HTTPValidationError
+      required:
+      - url
+      - classification
+      title: ReportSiteRequest
   securitySchemes:
     APIKey:
       type: apiKey

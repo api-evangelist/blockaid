@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Blockaid Asset Management Sui API
+  title: Blockaid Sui API
   description: Blockaid Risk Score API
   termsOfService: https://www.blockaid.io/legal/terms-of-use
   license:
@@ -170,930 +170,6 @@ paths:
       - ClientID: []
 components:
   schemas:
-    SuiInternalValidationFeatureType:
-      type: string
-      enum:
-      - Benign
-      - Warning
-      - Malicious
-      - Info
-      title: InternalValidationFeatureType
-    SuiSimulationParams:
-      properties:
-        from:
-          type: string
-          title: From
-        value:
-          type: string
-          title: Value
-        block_tag:
-          type: string
-          title: Block Tag
-        chain:
-          type: string
-          title: Chain
-      additionalProperties: true
-      type: object
-      required:
-      - from
-      - value
-      - block_tag
-      - chain
-      title: SimulationParams
-    SuiSimulationErrorSchema:
-      properties:
-        status:
-          type: string
-          const: Error
-          title: Status
-        error:
-          type: string
-          title: Error
-          description: Error message
-      type: object
-      required:
-      - status
-      - error
-      title: Simulation Error
-    SuiAddressScanResponseSchema:
-      properties:
-        result_type:
-          anyOf:
-          - $ref: '#/components/schemas/SuiResultType'
-          - $ref: '#/components/schemas/SuiInternalVerdict'
-          title: Result Verdict
-          description: Verdict of the validation
-        features:
-          items:
-            $ref: '#/components/schemas/SuiAddressFeatureModel'
-          type: array
-          title: Features
-          description: A list of textual features about this transaction that can be presented to the user.
-      type: object
-      required:
-      - result_type
-      title: AddressScanResponseSchema
-    SuiAssetTransferDetailsSchema:
-      properties:
-        usd_price:
-          type: number
-          title: Usd Price
-          description: USD price of the asset
-          nullable: true
-        summary:
-          type: string
-          title: Summary
-          description: Summarized description of the transfer
-          nullable: true
-        value:
-          type: string
-          title: Value
-          description: Value of the transfer
-        raw_value:
-          type: integer
-          title: Raw Value
-          description: Raw value of the transfer
-      type: object
-      required:
-      - value
-      - raw_value
-      title: Asset Transfer Details
-    SuiValidationFeature:
-      properties:
-        type:
-          $ref: '#/components/schemas/SuiValidationFeatureType'
-          description: Feature Classification
-          title: type
-        feature_id:
-          type: string
-          title: feature_id
-          description: ''
-        description:
-          type: string
-          title: Description
-          description: Textual description
-        address:
-          type: string
-          title: Address
-          description: Address the feature refers to
-      type: object
-      required:
-      - type
-      - feature_id
-      - description
-      - address
-      title: ValidationFeatureSchemaType[Union[SuiAddress, StructTag]]
-    SuiPostTransactionSimulationResult:
-      properties:
-        status:
-          type: string
-          const: Success
-          title: Status
-        assets_diffs:
-          additionalProperties:
-            items:
-              anyOf:
-              - $ref: '#/components/schemas/SuiNativeAssetDiff'
-                docs_api_name: NativeAssetDiff
-                title: Native asset Diff
-              - $ref: '#/components/schemas/SuiNFTAssetDiff'
-                docs_api_name: NFTAssetDiff
-                title: NFT Asset Diff
-              - $ref: '#/components/schemas/SuiCoinsAssetDiff'
-                docs_api_name: CoinsAssetDiff
-                title: Coins Asset Diff
-            type: array
-            description: Assets diff of an account address
-          type: object
-          title: Assets Diffs
-          description: Mapping between the address of an account to the assets diff during the transaction
-        address_details:
-          items:
-            $ref: '#/components/schemas/SuiAddressDetailsBaseSchema_SuiAddress_'
-          type: array
-          title: Address Details
-          description: Details of addresses involved in the transaction
-        account_summary:
-          $ref: '#/components/schemas/SuiAccountSummary'
-          description: Summary of the actions and asset transfers that were made by the requested account address
-          docs_api_name: AccountSummary
-        params:
-          $ref: '#/components/schemas/SuiSimulationParams'
-      type: object
-      required:
-      - status
-      - account_summary
-      - params
-      title: Simulation Result
-    SuiNFTDetailsSchema:
-      properties:
-        type:
-          type: string
-          const: NFT
-          title: Type
-          description: Type of the asset (`NFT`)
-          default: NFT
-        id:
-          type: string
-          title: Id
-          description: The NFT ID
-        nft_type:
-          type: string
-          title: Nft Type
-          description: The NFT's collection ID
-        name:
-          type: string
-          title: Name
-          description: NFT's display name
-        description:
-          type: string
-          title: Description
-          description: The NFT's description
-        url:
-          type: string
-          title: Url
-          description: URL of the nft's image
-          nullable: true
-      type: object
-      required:
-      - id
-      - nft_type
-      - name
-      - description
-      title: NFT Asset Details
-    SuiSuiRequestSchema:
-      properties:
-        chain:
-          $ref: '#/components/schemas/SuiChain'
-        options:
-          items:
-            $ref: '#/components/schemas/SuiOptions'
-          type: array
-          minItems: 1
-          uniqueItems: true
-          title: Options
-          description: 'List of options to include in the response
-
-            - `Options.validation`: Include Options.validation output in the response
-
-
-            - `Options.simulation`: Include Options.simulation output in the response
-
-            '
-          default:
-          - simulation
-          - validation
-        account_address:
-          type: string
-          title: Account Address
-        transaction:
-          type: string
-          title: Transaction
-        metadata:
-          anyOf:
-          - $ref: '#/components/schemas/SuiWalletRequestMetadata'
-          - $ref: '#/components/schemas/SuiInAppRequestMetadata'
-          title: Metadata
-          description: Metadata
-        transaction_hints:
-          $ref: '#/components/schemas/TransactionHints'
-          title: Transaction Hints
-          description: Optional customer-supplied hints about transaction intent that cannot be inferred from on-chain simulation.
-      type: object
-      required:
-      - chain
-      - account_address
-      - transaction
-      - metadata
-      title: Request
-    SuiVerdict:
-      type: string
-      enum:
-      - Benign
-      - Warning
-      - Malicious
-      - Error
-      title: Verdict
-    SuiPostTransactionRequestMetadata:
-      properties:
-        non_dapp:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Non Dapp
-          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
-          default: false
-        domain:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Domain
-          description: cross reference transaction against the domain.
-      type: object
-      title: PostTransactionRequestMetadata
-    SuiPostTransactionRequestData:
-      properties:
-        tx_hash:
-          type: string
-          title: Tx Hash
-      type: object
-      required:
-      - tx_hash
-      title: PostTransactionRequestData
-    SuiNativeAssetDiff:
-      properties:
-        asset:
-          $ref: '#/components/schemas/SuiNativeAssetDetailsSchema'
-        in:
-          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
-          description: Details of the incoming transfer
-          nullable: true
-          title: In
-        out:
-          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
-          description: Details of the outgoing transfer
-          nullable: true
-          title: Out
-        asset_type:
-          type: string
-          title: Asset Type
-          description: The type of the assets in this diff
-          readOnly: true
-      type: object
-      required:
-      - asset
-      - asset_type
-      title: AccountSingleAssetDiffSchemaType[NativeAssetDetailsSchema, AssetTransferDetailsSchema]
-    SuiValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SuiAddressDetailsBaseSchema_SuiAddress_:
-      properties:
-        account_address:
-          type: string
-          title: Account Address
-          description: Encoded public key of the account
-        description:
-          type: string
-          title: Description
-          description: Description of the account
-          nullable: true
-      type: object
-      required:
-      - account_address
-      title: Address Details
-    SuiChain:
-      type: string
-      enum:
-      - mainnet
-      title: Chain
-    CrossChainBridgeFungibleAsset:
-      type: object
-      required:
-      - type
-      - address
-      properties:
-        type:
-          type: string
-          const: FUNGIBLE
-          title: Type
-          description: Type of the asset (`FUNGIBLE`)
-          default: FUNGIBLE
-        address:
-          type: string
-          description: Token contract address on the destination chain.
-        raw_value:
-          type: string
-          description: Amount to be received in the asset's smallest unit (before decimal division), e.g. base units for ERC-20 tokens.
-      title: CrossChainBridgeFungibleAsset
-    TransactionScanSupportedChains:
-      type: string
-      enum:
-      - arbitrum
-      - avalanche
-      - base
-      - base-sepolia
-      - lordchain
-      - lordchain-testnet
-      - metacade
-      - metacade-testnet
-      - bsc
-      - ethereum
-      - optimism
-      - polygon
-      - zksync
-      - zksync-sepolia
-      - zora
-      - linea
-      - blast
-      - scroll
-      - ethereum-sepolia
-      - degen
-      - avalanche-fuji
-      - gnosis
-      - worldchain
-      - soneium-minato
-      - ronin
-      - apechain
-      - berachain
-      - berachain-bartio
-      - ink
-      - ink-sepolia
-      - abstract
-      - abstract-testnet
-      - soneium
-      - unichain
-      - sei
-      - flow-evm
-      - hyperevm
-      - megaeth
-      - katana
-      - plume
-      - xlayer
-      - monad
-      - monad-testnet
-      - tempo
-      - tempo-testnet
-      - kite-ai
-      - kaia
-      - plasma
-      - mantle
-      - robinhood
-      - arc
-      title: TransactionScanSupportedChains
-      description: The chain name
-    SuiWalletRequestMetadata:
-      properties:
-        type:
-          type: string
-          const: wallet
-          title: Type
-          description: Metadata for wallet requests
-        url:
-          type: string
-          title: Url
-          description: URL of the dApp originating the transaction
-        account:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
-          title: Account
-          description: Account information associated with the request
-        connection:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-          title: Connection
-          description: Connection metadata including user agent and IP information
-      type: object
-      required:
-      - type
-      - url
-      title: Wallet Request Metadata
-    SuiInternalVerdict:
-      type: string
-      enum:
-      - Benign
-      - Warning
-      - Malicious
-      - Error
-      title: InternalVerdict
-    SuiValidationErrorSchema:
-      properties:
-        status:
-          type: string
-          const: Error
-          title: Status
-        error:
-          type: string
-          title: Error
-          description: Error message
-      type: object
-      required:
-      - status
-      - error
-      title: Validation Error
-    SuiCoinsAssetDiff:
-      properties:
-        asset:
-          $ref: '#/components/schemas/SuiSuiCoinDetailsSchema'
-        in:
-          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
-          description: Details of the incoming transfer
-          nullable: true
-          title: In
-        out:
-          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
-          description: Details of the outgoing transfer
-          nullable: true
-          title: Out
-        asset_type:
-          type: string
-          title: Asset Type
-          description: The type of the assets in this diff
-          readOnly: true
-      type: object
-      required:
-      - asset
-      - asset_type
-      title: AccountSingleAssetDiffSchemaType[CoinDetailsSchema, AssetTransferDetailsSchema]
-    SuiTransactionScanResponse:
-      properties:
-        simulation:
-          anyOf:
-          - $ref: '#/components/schemas/SuiSimulationResult'
-            docs_api_name: SimulationResult
-            title: Simulation Result Schema
-          - $ref: '#/components/schemas/SuiSimulationErrorSchema'
-          title: Simulation
-          description: Simulation result; Only present if simulation option is included in the request
-          nullable: true
-        validation:
-          $ref: '#/components/schemas/SuiValidationResponse'
-          description: Validation result; Only present if validation option is included in the request
-          docs_api_name: ValidationResponse
-          nullable: true
-          title: Validation
-      type: object
-      title: Response
-    SuiPostTransactionRequestSchema:
-      properties:
-        metadata:
-          $ref: '#/components/schemas/SuiPostTransactionRequestMetadata'
-        chain:
-          $ref: '#/components/schemas/SuiChain'
-        options:
-          items:
-            $ref: '#/components/schemas/SuiOptions'
-          type: array
-          minItems: 1
-          uniqueItems: true
-          title: Options
-          description: 'List of options to include in the response
-
-            - `Options.validation`: Include Options.validation output in the response
-
-
-            - `Options.simulation`: Include Options.simulation output in the response
-
-            '
-          default:
-          - simulation
-          - validation
-        data:
-          $ref: '#/components/schemas/SuiPostTransactionRequestData'
-      type: object
-      required:
-      - metadata
-      - chain
-      - data
-      title: PostTransactionRequestSchema
-    SuiValidationResult:
-      properties:
-        status:
-          type: string
-          const: Success
-          title: Status
-        result_type:
-          $ref: '#/components/schemas/SuiVerdict'
-          description: Verdict of the validation
-          title: Result Verdict
-        description:
-          type: string
-          title: Description
-          description: A textual description about the validation result
-        reason:
-          type: string
-          title: Reason
-          description: A textual description about the reasons the transaction was flagged with result_type
-        classification:
-          type: string
-          title: Classification
-          description: A textual classification that can be presented to the user explaining the reason.
-        features:
-          items:
-            $ref: '#/components/schemas/SuiValidationFeature'
-            docs_api_name: ValidationFeature
-            title: Feature
-          type: array
-          title: Features
-      type: object
-      required:
-      - status
-      - result_type
-      - description
-      - reason
-      - classification
-      - features
-      title: Validation Result
-    GenericTransactionHint:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          title: Type
-          description: Hint type identifier for unrecognized or future hint types.
-      title: GenericTransactionHint
-      description: Fallback for unrecognized or future hint types. Accepts any hint with a `type` field.
-    CrossChainBridgeHint:
-      type: object
-      required:
-      - type
-      properties:
-        type:
-          type: string
-          const: cross_chain_bridge
-          title: Type
-          description: Hint type discriminator (`cross_chain_bridge`).
-          default: cross_chain_bridge
-        destination_address:
-          type: string
-          description: The intended recipient address on the destination chain. Required when the bridge protocol does not emit this on-chain (e.g. Relay, some Across deposit routes).
-        destination_chain:
-          anyOf:
-          - $ref: '#/components/schemas/TransactionScanSupportedChains'
-          - type: string
-          description: The destination chain for the bridged assets.
-        destination_asset:
-          $ref: '#/components/schemas/CrossChainBridgeAsset'
-          description: Details of the asset the recipient will receive on the destination chain. May differ from the source asset (e.g. wrapped vs. native, canonical vs. bridged token).
-      title: CrossChainBridgeHint
-      description: Customer-supplied context for a cross-chain bridge deposit where the protocol does not emit the destination on-chain.
-    SuiNFTAssetDiff:
-      properties:
-        asset:
-          $ref: '#/components/schemas/SuiNFTDetailsSchema'
-        in:
-          $ref: '#/components/schemas/SuiNFTDiffSchema'
-          description: Details of the incoming transfer
-          nullable: true
-          title: In
-        out:
-          $ref: '#/components/schemas/SuiNFTDiffSchema'
-          description: Details of the outgoing transfer
-          nullable: true
-          title: Out
-        asset_type:
-          type: string
-          title: Asset Type
-          description: The type of the assets in this diff
-          readOnly: true
-      type: object
-      required:
-      - asset
-      - asset_type
-      title: AccountSingleAssetDiffSchemaType[NFTDetailsSchema, NFTDiffSchema]
-    SuiNativeAssetDetailsSchema:
-      properties:
-        type:
-          type: string
-          const: NATIVE
-          title: Type
-          description: Type of the asset (`NATIVE`)
-          default: NATIVE
-        symbol:
-          type: string
-          const: SUI
-          title: Symbol
-          description: Symbol of the asset
-          default: SUI
-        name:
-          type: string
-          const: Sui
-          title: Name
-          description: Name of the asset
-          default: Sui
-        decimals:
-          type: integer
-          const: 9
-          title: Decimals
-          description: Decimals of the asset
-          default: 9
-        logo_url:
-          type: string
-          title: Logo Url
-          description: URL of the asset's logo
-          default: https://dm8wquhbuh2eq.cloudfront.net/chain/sui-mainnet/token/0x2::sui::SUI
-      type: object
-      title: Native Asset Details
-    SuiOptions:
-      type: string
-      enum:
-      - validation
-      - simulation
-      title: Options
-    SuiAccountSummary:
-      properties:
-        account_assets_diffs:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/SuiNativeAssetDiff'
-              docs_api_name: NativeAssetDiff
-              title: Native asset Diff
-            - $ref: '#/components/schemas/SuiNFTAssetDiff'
-              docs_api_name: NFTAssetDiff
-              title: NFT Asset Diff
-            - $ref: '#/components/schemas/SuiCoinsAssetDiff'
-              docs_api_name: CoinsAssetDiff
-              title: Coins Asset Diff
-          type: array
-          title: Account Assets Diffs
-          description: Assets diffs of the requested account address
-        total_usd_diff:
-          $ref: '#/components/schemas/SuiTotalUsdDiffSchema'
-          description: Total USD diff for the requested account address
-      type: object
-      required:
-      - total_usd_diff
-      title: Account Summary
-    SuiValidationResponse:
-      anyOf:
-      - $ref: '#/components/schemas/SuiValidationResult'
-        docs_api_name: ValidationResult
-        title: Validation Successful Result
-      - $ref: '#/components/schemas/SuiValidationErrorSchema'
-      title: ValidationResponseSchemaType[Union[SuiAddress, StructTag]]
-    SuiHTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/SuiValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    SuiPostTransactionScanResponse:
-      properties:
-        simulation:
-          anyOf:
-          - $ref: '#/components/schemas/SuiPostTransactionSimulationResult'
-            docs_api_name: PostTransactionSimulationResult
-            title: Post Transaction Simulation Result Schema
-          - $ref: '#/components/schemas/SuiSimulationErrorSchema'
-          title: Simulation
-          description: Simulation result; Only present if simulation option is included in the request
-          nullable: true
-        validation:
-          $ref: '#/components/schemas/SuiValidationResponse'
-          description: Validation result; Only present if validation option is included in the request
-          docs_api_name: ValidationResponse
-          nullable: true
-          title: Validation
-        account_address:
-          type: string
-          title: Account Address
-      type: object
-      required:
-      - account_address
-      title: Response
-    CrossChainBridgeAsset:
-      oneOf:
-      - $ref: '#/components/schemas/CrossChainBridgeNativeAsset'
-      - $ref: '#/components/schemas/CrossChainBridgeFungibleAsset'
-      - $ref: '#/components/schemas/CrossChainBridgeNonFungibleAsset'
-      discriminator:
-        propertyName: type
-        mapping:
-          NATIVE: '#/components/schemas/CrossChainBridgeNativeAsset'
-          FUNGIBLE: '#/components/schemas/CrossChainBridgeFungibleAsset'
-          NON_FUNGIBLE: '#/components/schemas/CrossChainBridgeNonFungibleAsset'
-      title: CrossChainBridgeAsset
-      description: The asset the recipient will receive on the destination chain.
-    SuiValidationFeatureType:
-      type: string
-      enum:
-      - Benign
-      - Warning
-      - Malicious
-      - Info
-      title: ValidationFeatureType
-    SuiAddressScanRequestSchema:
-      properties:
-        address:
-          type: string
-          title: Address
-        chain:
-          $ref: '#/components/schemas/SuiChain'
-      type: object
-      required:
-      - address
-      - chain
-      title: AddressScanRequestSchema
-    SuiTotalUsdDiffSchema:
-      properties:
-        in:
-          type: number
-          title: In
-          description: Total incoming USD transfers
-        out:
-          type: number
-          title: Out
-          description: Total outgoing USD transfers
-        total:
-          type: number
-          title: Total
-          description: Total USD transfers
-      type: object
-      required:
-      - in
-      - out
-      title: Total USD Diff
-    SuiNFTDiffSchema:
-      properties:
-        usd_price:
-          type: number
-          title: Usd Price
-          description: USD price of the asset
-          nullable: true
-        summary:
-          type: string
-          title: Summary
-          description: Summarized description of the transfer
-          nullable: true
-        id:
-          type: string
-          title: Id
-          description: NFT ID of the transfer
-      type: object
-      required:
-      - id
-      title: NFT Transfer Details
-    routers__chain_agnostic__models__request__Account:
-      properties:
-        account_id:
-          type: string
-          title: Account Id
-          description: Unique identifier for the account.
-        account_creation_timestamp:
-          type: string
-          format: date-time
-          title: Account Creation Timestamp
-          description: Timestamp when the account was created.
-        user_age:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: User Age
-          description: Age of the user in years
-        user_country_code:
-          type: string
-          title: User Country Code
-          description: ISO country code of the user's location.
-        account_addresses:
-          items:
-            type: string
-          type: array
-          title: Account Addresses
-          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
-      type: object
-      required:
-      - account_id
-      title: Account
-    SuiInAppRequestMetadata:
-      properties:
-        type:
-          type: string
-          const: in_app
-          title: Type
-          description: Metadata for in-app requests
-          default: in_app
-        account:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
-          title: Account
-          description: Account information associated with the request
-        connection:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-          title: Connection
-          description: Connection metadata including user agent and IP information
-      type: object
-      title: In-App Request Metadata
-    SuiResultType:
-      type: string
-      enum:
-      - Benign
-      - Spam
-      - Warning
-      - Malicious
-      title: ResultType
-    SuiSimulationResult:
-      properties:
-        status:
-          type: string
-          const: Success
-          title: Status
-        assets_diffs:
-          additionalProperties:
-            items:
-              anyOf:
-              - $ref: '#/components/schemas/SuiNativeAssetDiff'
-                docs_api_name: NativeAssetDiff
-                title: Native asset Diff
-              - $ref: '#/components/schemas/SuiNFTAssetDiff'
-                docs_api_name: NFTAssetDiff
-                title: NFT Asset Diff
-              - $ref: '#/components/schemas/SuiCoinsAssetDiff'
-                docs_api_name: CoinsAssetDiff
-                title: Coins Asset Diff
-            type: array
-            description: Assets diff of an account address
-          type: object
-          title: Assets Diffs
-          description: Mapping between the address of an account to the assets diff during the transaction
-        address_details:
-          items:
-            $ref: '#/components/schemas/SuiAddressDetailsBaseSchema_SuiAddress_'
-          type: array
-          title: Address Details
-          description: Details of addresses involved in the transaction
-        account_summary:
-          $ref: '#/components/schemas/SuiAccountSummary'
-          description: Summary of the actions and asset transfers that were made by the requested account address
-          docs_api_name: AccountSummary
-          title: Account Summary
-      type: object
-      required:
-      - status
-      - account_summary
-      title: Simulation Result
-    CrossChainBridgeNonFungibleAsset:
-      type: object
-      required:
-      - type
-      - address
-      - token_id
-      properties:
-        type:
-          type: string
-          const: NON_FUNGIBLE
-          title: Type
-          description: Type of the asset (`NON_FUNGIBLE`)
-          default: NON_FUNGIBLE
-        address:
-          type: string
-          description: NFT collection contract address on the destination chain.
-        token_id:
-          type: string
-          description: Token ID of the specific NFT being bridged.
-      title: CrossChainBridgeNonFungibleAsset
     SuiSuiCoinDetailsSchema:
       properties:
         type:
@@ -1158,6 +234,303 @@ components:
       - address
       - decimals
       title: Coin Asset Details
+    SuiAssetTransferDetailsSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        value:
+          type: string
+          title: Value
+          description: Value of the transfer
+        raw_value:
+          type: integer
+          title: Raw Value
+          description: Raw value of the transfer
+      type: object
+      required:
+      - value
+      - raw_value
+      title: Asset Transfer Details
+    CrossChainBridgeFungibleAsset:
+      type: object
+      required:
+      - type
+      - address
+      properties:
+        type:
+          type: string
+          const: FUNGIBLE
+          title: Type
+          description: Type of the asset (`FUNGIBLE`)
+          default: FUNGIBLE
+        address:
+          type: string
+          description: Token contract address on the destination chain.
+        raw_value:
+          type: string
+          description: Amount to be received in the asset's smallest unit (before decimal division), e.g. base units for ERC-20 tokens.
+      title: CrossChainBridgeFungibleAsset
+    SuiSimulationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Simulation Error
+    SuiNativeAssetDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: NATIVE
+          title: Type
+          description: Type of the asset (`NATIVE`)
+          default: NATIVE
+        symbol:
+          type: string
+          const: SUI
+          title: Symbol
+          description: Symbol of the asset
+          default: SUI
+        name:
+          type: string
+          const: Sui
+          title: Name
+          description: Name of the asset
+          default: Sui
+        decimals:
+          type: integer
+          const: 9
+          title: Decimals
+          description: Decimals of the asset
+          default: 9
+        logo_url:
+          type: string
+          title: Logo Url
+          description: URL of the asset's logo
+          default: https://dm8wquhbuh2eq.cloudfront.net/chain/sui-mainnet/token/0x2::sui::SUI
+      type: object
+      title: Native Asset Details
+    SuiNFTDiffSchema:
+      properties:
+        usd_price:
+          type: number
+          title: Usd Price
+          description: USD price of the asset
+          nullable: true
+        summary:
+          type: string
+          title: Summary
+          description: Summarized description of the transfer
+          nullable: true
+        id:
+          type: string
+          title: Id
+          description: NFT ID of the transfer
+      type: object
+      required:
+      - id
+      title: NFT Transfer Details
+    SuiValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    SuiAddressScanRequestSchema:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          $ref: '#/components/schemas/SuiChain'
+      type: object
+      required:
+      - address
+      - chain
+      title: AddressScanRequestSchema
+    SuiAccountSummary:
+      properties:
+        account_assets_diffs:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/SuiNativeAssetDiff'
+              docs_api_name: NativeAssetDiff
+              title: Native asset Diff
+            - $ref: '#/components/schemas/SuiNFTAssetDiff'
+              docs_api_name: NFTAssetDiff
+              title: NFT Asset Diff
+            - $ref: '#/components/schemas/SuiCoinsAssetDiff'
+              docs_api_name: CoinsAssetDiff
+              title: Coins Asset Diff
+          type: array
+          title: Account Assets Diffs
+          description: Assets diffs of the requested account address
+        total_usd_diff:
+          $ref: '#/components/schemas/SuiTotalUsdDiffSchema'
+          description: Total USD diff for the requested account address
+      type: object
+      required:
+      - total_usd_diff
+      title: Account Summary
+    SuiSimulationParams:
+      properties:
+        from:
+          type: string
+          title: From
+        value:
+          type: string
+          title: Value
+        block_tag:
+          type: string
+          title: Block Tag
+        chain:
+          type: string
+          title: Chain
+      additionalProperties: true
+      type: object
+      required:
+      - from
+      - value
+      - block_tag
+      - chain
+      title: SimulationParams
+    SuiAddressDetailsBaseSchema_SuiAddress_:
+      properties:
+        account_address:
+          type: string
+          title: Account Address
+          description: Encoded public key of the account
+        description:
+          type: string
+          title: Description
+          description: Description of the account
+          nullable: true
+      type: object
+      required:
+      - account_address
+      title: Address Details
+    SuiPostTransactionRequestMetadata:
+      properties:
+        non_dapp:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Non Dapp
+          description: Indicates that the transaction was not initiated by a dapp. Use false when the transaction is from a dapp.
+          default: false
+        domain:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Domain
+          description: cross reference transaction against the domain.
+      type: object
+      title: PostTransactionRequestMetadata
+    SuiValidationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        result_type:
+          $ref: '#/components/schemas/SuiVerdict'
+          description: Verdict of the validation
+          title: Result Verdict
+        description:
+          type: string
+          title: Description
+          description: A textual description about the validation result
+        reason:
+          type: string
+          title: Reason
+          description: A textual description about the reasons the transaction was flagged with result_type
+        classification:
+          type: string
+          title: Classification
+          description: A textual classification that can be presented to the user explaining the reason.
+        features:
+          items:
+            $ref: '#/components/schemas/SuiValidationFeature'
+            docs_api_name: ValidationFeature
+            title: Feature
+          type: array
+          title: Features
+      type: object
+      required:
+      - status
+      - result_type
+      - description
+      - reason
+      - classification
+      - features
+      title: Validation Result
+    GenericTransactionHint:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          title: Type
+          description: Hint type identifier for unrecognized or future hint types.
+      title: GenericTransactionHint
+      description: Fallback for unrecognized or future hint types. Accepts any hint with a `type` field.
+    CrossChainBridgeNativeAsset:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          const: NATIVE
+          title: Type
+          description: Type of the asset (`NATIVE`)
+          default: NATIVE
+        raw_value:
+          type: string
+          description: Amount to be received in the asset's smallest unit (before decimal division), e.g. wei for ETH.
+      title: CrossChainBridgeNativeAsset
+    TransactionHint:
+      oneOf:
+      - $ref: '#/components/schemas/CrossChainBridgeHint'
+      - $ref: '#/components/schemas/GenericTransactionHint'
+      discriminator:
+        propertyName: type
+        mapping:
+          cross_chain_bridge: '#/components/schemas/CrossChainBridgeHint'
+      title: TransactionHint
+      description: A single customer-supplied hint about transaction intent. The `type` field identifies which hint variant this is.
     routers__chain_agnostic__models__request__Connection:
       properties:
         user_agent:
@@ -1187,6 +560,624 @@ components:
       required:
       - ip_address
       title: Connection
+    SuiInternalVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Error
+      title: InternalVerdict
+    SuiTransactionScanResponse:
+      properties:
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/SuiSimulationResult'
+            docs_api_name: SimulationResult
+            title: Simulation Result Schema
+          - $ref: '#/components/schemas/SuiSimulationErrorSchema'
+          title: Simulation
+          description: Simulation result; Only present if simulation option is included in the request
+          nullable: true
+        validation:
+          $ref: '#/components/schemas/SuiValidationResponse'
+          description: Validation result; Only present if validation option is included in the request
+          docs_api_name: ValidationResponse
+          nullable: true
+          title: Validation
+      type: object
+      title: Response
+    SuiNFTAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SuiNFTDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SuiNFTDiffSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SuiNFTDiffSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[NFTDetailsSchema, NFTDiffSchema]
+    SuiPostTransactionScanResponse:
+      properties:
+        simulation:
+          anyOf:
+          - $ref: '#/components/schemas/SuiPostTransactionSimulationResult'
+            docs_api_name: PostTransactionSimulationResult
+            title: Post Transaction Simulation Result Schema
+          - $ref: '#/components/schemas/SuiSimulationErrorSchema'
+          title: Simulation
+          description: Simulation result; Only present if simulation option is included in the request
+          nullable: true
+        validation:
+          $ref: '#/components/schemas/SuiValidationResponse'
+          description: Validation result; Only present if validation option is included in the request
+          docs_api_name: ValidationResponse
+          nullable: true
+          title: Validation
+        account_address:
+          type: string
+          title: Account Address
+      type: object
+      required:
+      - account_address
+      title: Response
+    SuiNFTDetailsSchema:
+      properties:
+        type:
+          type: string
+          const: NFT
+          title: Type
+          description: Type of the asset (`NFT`)
+          default: NFT
+        id:
+          type: string
+          title: Id
+          description: The NFT ID
+        nft_type:
+          type: string
+          title: Nft Type
+          description: The NFT's collection ID
+        name:
+          type: string
+          title: Name
+          description: NFT's display name
+        description:
+          type: string
+          title: Description
+          description: The NFT's description
+        url:
+          type: string
+          title: Url
+          description: URL of the nft's image
+          nullable: true
+      type: object
+      required:
+      - id
+      - nft_type
+      - name
+      - description
+      title: NFT Asset Details
+    SuiHTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/SuiValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    SuiCoinsAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SuiSuiCoinDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[CoinDetailsSchema, AssetTransferDetailsSchema]
+    SuiPostTransactionRequestData:
+      properties:
+        tx_hash:
+          type: string
+          title: Tx Hash
+      type: object
+      required:
+      - tx_hash
+      title: PostTransactionRequestData
+    SuiVerdict:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Error
+      title: Verdict
+    SuiPostTransactionRequestSchema:
+      properties:
+        metadata:
+          $ref: '#/components/schemas/SuiPostTransactionRequestMetadata'
+        chain:
+          $ref: '#/components/schemas/SuiChain'
+        options:
+          items:
+            $ref: '#/components/schemas/SuiOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: 'List of options to include in the response
+
+            - `Options.validation`: Include Options.validation output in the response
+
+
+            - `Options.simulation`: Include Options.simulation output in the response
+
+            '
+          default:
+          - simulation
+          - validation
+        data:
+          $ref: '#/components/schemas/SuiPostTransactionRequestData'
+      type: object
+      required:
+      - metadata
+      - chain
+      - data
+      title: PostTransactionRequestSchema
+    SuiValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: ValidationFeatureType
+    SuiWalletRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: wallet
+          title: Type
+          description: Metadata for wallet requests
+        url:
+          type: string
+          title: Url
+          description: URL of the dApp originating the transaction
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: Account information associated with the request
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent and IP information
+      type: object
+      required:
+      - type
+      - url
+      title: Wallet Request Metadata
+    SuiOptions:
+      type: string
+      enum:
+      - validation
+      - simulation
+      title: Options
+    CrossChainBridgeNonFungibleAsset:
+      type: object
+      required:
+      - type
+      - address
+      - token_id
+      properties:
+        type:
+          type: string
+          const: NON_FUNGIBLE
+          title: Type
+          description: Type of the asset (`NON_FUNGIBLE`)
+          default: NON_FUNGIBLE
+        address:
+          type: string
+          description: NFT collection contract address on the destination chain.
+        token_id:
+          type: string
+          description: Token ID of the specific NFT being bridged.
+      title: CrossChainBridgeNonFungibleAsset
+    SuiNativeAssetDiff:
+      properties:
+        asset:
+          $ref: '#/components/schemas/SuiNativeAssetDetailsSchema'
+        in:
+          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
+          description: Details of the incoming transfer
+          nullable: true
+          title: In
+        out:
+          $ref: '#/components/schemas/SuiAssetTransferDetailsSchema'
+          description: Details of the outgoing transfer
+          nullable: true
+          title: Out
+        asset_type:
+          type: string
+          title: Asset Type
+          description: The type of the assets in this diff
+          readOnly: true
+      type: object
+      required:
+      - asset
+      - asset_type
+      title: AccountSingleAssetDiffSchemaType[NativeAssetDetailsSchema, AssetTransferDetailsSchema]
+    SuiAddressScanResponseSchema:
+      properties:
+        result_type:
+          anyOf:
+          - $ref: '#/components/schemas/SuiResultType'
+          - $ref: '#/components/schemas/SuiInternalVerdict'
+          title: Result Verdict
+          description: Verdict of the validation
+        features:
+          items:
+            $ref: '#/components/schemas/SuiAddressFeatureModel'
+          type: array
+          title: Features
+          description: A list of textual features about this transaction that can be presented to the user.
+      type: object
+      required:
+      - result_type
+      title: AddressScanResponseSchema
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    SuiInternalValidationFeatureType:
+      type: string
+      enum:
+      - Benign
+      - Warning
+      - Malicious
+      - Info
+      title: InternalValidationFeatureType
+    SuiTotalUsdDiffSchema:
+      properties:
+        in:
+          type: number
+          title: In
+          description: Total incoming USD transfers
+        out:
+          type: number
+          title: Out
+          description: Total outgoing USD transfers
+        total:
+          type: number
+          title: Total
+          description: Total USD transfers
+      type: object
+      required:
+      - in
+      - out
+      title: Total USD Diff
+    SuiSuiRequestSchema:
+      properties:
+        chain:
+          $ref: '#/components/schemas/SuiChain'
+        options:
+          items:
+            $ref: '#/components/schemas/SuiOptions'
+          type: array
+          minItems: 1
+          uniqueItems: true
+          title: Options
+          description: 'List of options to include in the response
+
+            - `Options.validation`: Include Options.validation output in the response
+
+
+            - `Options.simulation`: Include Options.simulation output in the response
+
+            '
+          default:
+          - simulation
+          - validation
+        account_address:
+          type: string
+          title: Account Address
+        transaction:
+          type: string
+          title: Transaction
+        metadata:
+          anyOf:
+          - $ref: '#/components/schemas/SuiWalletRequestMetadata'
+          - $ref: '#/components/schemas/SuiInAppRequestMetadata'
+          title: Metadata
+          description: Metadata
+        transaction_hints:
+          $ref: '#/components/schemas/TransactionHints'
+          title: Transaction Hints
+          description: Optional customer-supplied hints about transaction intent that cannot be inferred from on-chain simulation.
+      type: object
+      required:
+      - chain
+      - account_address
+      - transaction
+      - metadata
+      title: Request
+    SuiInAppRequestMetadata:
+      properties:
+        type:
+          type: string
+          const: in_app
+          title: Type
+          description: Metadata for in-app requests
+          default: in_app
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: Account information associated with the request
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent and IP information
+      type: object
+      title: In-App Request Metadata
+    SuiResultType:
+      type: string
+      enum:
+      - Benign
+      - Spam
+      - Warning
+      - Malicious
+      title: ResultType
+    SuiValidationResponse:
+      anyOf:
+      - $ref: '#/components/schemas/SuiValidationResult'
+        docs_api_name: ValidationResult
+        title: Validation Successful Result
+      - $ref: '#/components/schemas/SuiValidationErrorSchema'
+      title: ValidationResponseSchemaType[Union[SuiAddress, StructTag]]
+    SuiChain:
+      type: string
+      enum:
+      - mainnet
+      title: Chain
+    SuiPostTransactionSimulationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        assets_diffs:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/SuiNativeAssetDiff'
+                docs_api_name: NativeAssetDiff
+                title: Native asset Diff
+              - $ref: '#/components/schemas/SuiNFTAssetDiff'
+                docs_api_name: NFTAssetDiff
+                title: NFT Asset Diff
+              - $ref: '#/components/schemas/SuiCoinsAssetDiff'
+                docs_api_name: CoinsAssetDiff
+                title: Coins Asset Diff
+            type: array
+            description: Assets diff of an account address
+          type: object
+          title: Assets Diffs
+          description: Mapping between the address of an account to the assets diff during the transaction
+        address_details:
+          items:
+            $ref: '#/components/schemas/SuiAddressDetailsBaseSchema_SuiAddress_'
+          type: array
+          title: Address Details
+          description: Details of addresses involved in the transaction
+        account_summary:
+          $ref: '#/components/schemas/SuiAccountSummary'
+          description: Summary of the actions and asset transfers that were made by the requested account address
+          docs_api_name: AccountSummary
+        params:
+          $ref: '#/components/schemas/SuiSimulationParams'
+      type: object
+      required:
+      - status
+      - account_summary
+      - params
+      title: Simulation Result
+    SuiValidationErrorSchema:
+      properties:
+        status:
+          type: string
+          const: Error
+          title: Status
+        error:
+          type: string
+          title: Error
+          description: Error message
+      type: object
+      required:
+      - status
+      - error
+      title: Validation Error
+    TransactionScanSupportedChains:
+      type: string
+      enum:
+      - arbitrum
+      - avalanche
+      - base
+      - base-sepolia
+      - lordchain
+      - lordchain-testnet
+      - metacade
+      - metacade-testnet
+      - bsc
+      - ethereum
+      - optimism
+      - polygon
+      - zksync
+      - zksync-sepolia
+      - zora
+      - linea
+      - blast
+      - scroll
+      - ethereum-sepolia
+      - degen
+      - avalanche-fuji
+      - gnosis
+      - worldchain
+      - soneium-minato
+      - ronin
+      - apechain
+      - berachain
+      - berachain-bartio
+      - ink
+      - ink-sepolia
+      - abstract
+      - abstract-testnet
+      - soneium
+      - unichain
+      - sei
+      - flow-evm
+      - hyperevm
+      - megaeth
+      - katana
+      - plume
+      - xlayer
+      - monad
+      - monad-testnet
+      - tempo
+      - tempo-testnet
+      - kite-ai
+      - kaia
+      - plasma
+      - mantle
+      - robinhood
+      - arc
+      title: TransactionScanSupportedChains
+      description: The chain name
+    CrossChainBridgeAsset:
+      oneOf:
+      - $ref: '#/components/schemas/CrossChainBridgeNativeAsset'
+      - $ref: '#/components/schemas/CrossChainBridgeFungibleAsset'
+      - $ref: '#/components/schemas/CrossChainBridgeNonFungibleAsset'
+      discriminator:
+        propertyName: type
+        mapping:
+          NATIVE: '#/components/schemas/CrossChainBridgeNativeAsset'
+          FUNGIBLE: '#/components/schemas/CrossChainBridgeFungibleAsset'
+          NON_FUNGIBLE: '#/components/schemas/CrossChainBridgeNonFungibleAsset'
+      title: CrossChainBridgeAsset
+      description: The asset the recipient will receive on the destination chain.
+    TransactionHints:
+      type: array
+      items:
+        $ref: '#/components/schemas/TransactionHint'
+      title: TransactionHints
+      description: Customer-supplied hints about transaction intent that cannot be derived from on-chain simulation alone. Each element is a typed hint identified by its `type` field.
+    SuiValidationFeature:
+      properties:
+        type:
+          $ref: '#/components/schemas/SuiValidationFeatureType'
+          description: Feature Classification
+          title: type
+        feature_id:
+          type: string
+          title: feature_id
+          description: ''
+        description:
+          type: string
+          title: Description
+          description: Textual description
+        address:
+          type: string
+          title: Address
+          description: Address the feature refers to
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      title: ValidationFeatureSchemaType[Union[SuiAddress, StructTag]]
+    CrossChainBridgeHint:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          const: cross_chain_bridge
+          title: Type
+          description: Hint type discriminator (`cross_chain_bridge`).
+          default: cross_chain_bridge
+        destination_address:
+          type: string
+          description: The intended recipient address on the destination chain. Required when the bridge protocol does not emit this on-chain (e.g. Relay, some Across deposit routes).
+        destination_chain:
+          anyOf:
+          - $ref: '#/components/schemas/TransactionScanSupportedChains'
+          - type: string
+          description: The destination chain for the bridged assets.
+        destination_asset:
+          $ref: '#/components/schemas/CrossChainBridgeAsset'
+          description: Details of the asset the recipient will receive on the destination chain. May differ from the source asset (e.g. wrapped vs. native, canonical vs. bridged token).
+      title: CrossChainBridgeHint
+      description: Customer-supplied context for a cross-chain bridge deposit where the protocol does not emit the destination on-chain.
     SuiAddressFeatureModel:
       properties:
         type:
@@ -1203,37 +1194,46 @@ components:
       - feature_id
       - description
       title: AddressFeatureModel
-    TransactionHint:
-      oneOf:
-      - $ref: '#/components/schemas/CrossChainBridgeHint'
-      - $ref: '#/components/schemas/GenericTransactionHint'
-      discriminator:
-        propertyName: type
-        mapping:
-          cross_chain_bridge: '#/components/schemas/CrossChainBridgeHint'
-      title: TransactionHint
-      description: A single customer-supplied hint about transaction intent. The `type` field identifies which hint variant this is.
-    CrossChainBridgeNativeAsset:
+    SuiSimulationResult:
+      properties:
+        status:
+          type: string
+          const: Success
+          title: Status
+        assets_diffs:
+          additionalProperties:
+            items:
+              anyOf:
+              - $ref: '#/components/schemas/SuiNativeAssetDiff'
+                docs_api_name: NativeAssetDiff
+                title: Native asset Diff
+              - $ref: '#/components/schemas/SuiNFTAssetDiff'
+                docs_api_name: NFTAssetDiff
+                title: NFT Asset Diff
+              - $ref: '#/components/schemas/SuiCoinsAssetDiff'
+                docs_api_name: CoinsAssetDiff
+                title: Coins Asset Diff
+            type: array
+            description: Assets diff of an account address
+          type: object
+          title: Assets Diffs
+          description: Mapping between the address of an account to the assets diff during the transaction
+        address_details:
+          items:
+            $ref: '#/components/schemas/SuiAddressDetailsBaseSchema_SuiAddress_'
+          type: array
+          title: Address Details
+          description: Details of addresses involved in the transaction
+        account_summary:
+          $ref: '#/components/schemas/SuiAccountSummary'
+          description: Summary of the actions and asset transfers that were made by the requested account address
+          docs_api_name: AccountSummary
+          title: Account Summary
       type: object
       required:
-      - type
-      properties:
-        type:
-          type: string
-          const: NATIVE
-          title: Type
-          description: Type of the asset (`NATIVE`)
-          default: NATIVE
-        raw_value:
-          type: string
-          description: Amount to be received in the asset's smallest unit (before decimal division), e.g. wei for ETH.
-      title: CrossChainBridgeNativeAsset
-    TransactionHints:
-      type: array
-      items:
-        $ref: '#/components/schemas/TransactionHint'
-      title: TransactionHints
-      description: Customer-supplied hints about transaction intent that cannot be derived from on-chain simulation alone. Each element is a typed hint identified by its `type` field.
+      - status
+      - account_summary
+      title: Simulation Result
   securitySchemes:
     APIKey:
       type: apiKey

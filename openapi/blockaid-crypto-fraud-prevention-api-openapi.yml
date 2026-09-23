@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Blockaid Asset Management Crypto Fraud Prevention API
+  title: Blockaid Crypto Fraud Prevention API
   description: Blockaid Risk Score API
   termsOfService: https://www.blockaid.io/legal/terms-of-use
   license:
@@ -202,232 +202,6 @@ paths:
       - ClientID: []
 components:
   schemas:
-    TransactionFeature:
-      properties:
-        entity:
-          type: string
-          enum:
-          - transaction
-          title: Entity
-          description: Type of entity associated with the feature
-          default: transaction
-        type:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__FeatureType'
-          description: Type of feature detected in the transaction scan
-        feature_id:
-          type: string
-          title: Feature Id
-          description: Unique identifier for the detected feature
-        description:
-          type: string
-          title: Description
-          description: Detailed description of the detected feature
-      type: object
-      required:
-      - type
-      - feature_id
-      - description
-      title: TransactionFeature
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    Data:
-      properties:
-        chain:
-          allOf:
-          - $ref: '#/components/schemas/Chains'
-          description: Blockchain network where the transaction will be executed
-        transaction_action:
-          type: string
-          enum:
-          - deposit
-          - withdrawal
-          title: Transaction Action
-          description: Action the transaction is making
-        from:
-          type: string
-          title: From
-          description: Source address or identifier for the transaction
-        to:
-          type: string
-          title: To
-          description: Destination address or identifier for the transaction
-        amount:
-          type: number
-          exclusiveMinimum: 0.0
-          title: Amount
-          description: Amount of the transaction in the specified asset
-        asset:
-          anyOf:
-          - $ref: '#/components/schemas/AssetAddress'
-          - $ref: '#/components/schemas/AssetSymbol'
-          title: Asset
-          description: Asset information
-      type: object
-      required:
-      - chain
-      - to
-      - amount
-      - asset
-      title: Data
-    AddressFeature:
-      properties:
-        entity:
-          type: string
-          enum:
-          - address
-          title: Entity
-          description: Type of entity associated with the feature
-          default: address
-        type:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__FeatureType'
-          description: Type of feature detected in the address scan
-        feature_id:
-          type: string
-          title: Feature Id
-          description: Unique identifier for the detected feature
-        description:
-          type: string
-          title: Description
-          description: Detailed description of the detected feature
-        address:
-          type: string
-          title: Address
-          description: The blockchain address where the feature was detected
-        associated_urls:
-          items:
-            type: string
-          type: array
-          title: Associated Urls
-          description: List of URLs associated with this address
-      type: object
-      required:
-      - type
-      - feature_id
-      - description
-      - address
-      - associated_urls
-      title: AddressFeature
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    routers__chain_agnostic__models__response__FeatureType:
-      type: string
-      enum:
-      - Malicious
-      - Warning
-      - Benign
-      - High-Risk
-      - Info
-      title: FeatureType
-      description: The type of feature detected in the scan.
-    UrlFeature:
-      properties:
-        entity:
-          type: string
-          enum:
-          - url
-          title: Entity
-          description: Type of entity associated with the feature
-          default: url
-        type:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__FeatureType'
-          description: Type of feature detected in the URL scan
-        feature_id:
-          type: string
-          title: Feature Id
-          description: Unique identifier for the detected feature
-        description:
-          type: string
-          title: Description
-          description: Detailed description of the detected feature
-        url:
-          type: string
-          title: Url
-          description: The URL where the feature was detected
-      type: object
-      required:
-      - type
-      - feature_id
-      - description
-      - url
-      title: UrlFeature
-    routers__chain_agnostic__models__response__ValidationResultType:
-      type: string
-      enum:
-      - Malicious
-      - Warning
-      - Benign
-      - High-Risk
-      title: ValidationResultType
-      description: The type of validation result.
-    AssetAddress:
-      properties:
-        address:
-          type: string
-          title: Address
-          description: The address of the asset
-      type: object
-      required:
-      - address
-      title: AssetAddress
-    Options:
-      type: string
-      enum:
-      - validation
-      title: Options
-      description: Requested output section to include in the response.
-    ScanResult:
-      properties:
-        validation:
-          allOf:
-          - $ref: '#/components/schemas/ValidationResult'
-          title: Validation
-          description: Complete validation result containing all scan details and findings
-        platform_url:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Platform Url
-          description: Deep-link URL to the Blockaid platform address overview page for the scanned `to` address. Null if no URL is available for the given chain.
-      type: object
-      required:
-      - validation
-      title: ScanResult
-    TransactionScanStatus:
-      type: string
-      enum:
-      - Success
-      - Error
-      title: TransactionScanStatus
-      description: The status of the transaction scan
     Chains:
       type: string
       enum:
@@ -483,6 +257,54 @@ components:
       - arc
       title: Chains
       description: The chain name
+    AddressFeature:
+      properties:
+        entity:
+          type: string
+          enum:
+          - address
+          title: Entity
+          description: Type of entity associated with the feature
+          default: address
+        type:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__FeatureType'
+          description: Type of feature detected in the address scan
+        feature_id:
+          type: string
+          title: Feature Id
+          description: Unique identifier for the detected feature
+        description:
+          type: string
+          title: Description
+          description: Detailed description of the detected feature
+        address:
+          type: string
+          title: Address
+          description: The blockchain address where the feature was detected
+        associated_urls:
+          items:
+            type: string
+          type: array
+          title: Associated Urls
+          description: List of URLs associated with this address
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - address
+      - associated_urls
+      title: AddressFeature
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     ScanRequestMetadata:
       properties:
         domain:
@@ -505,46 +327,27 @@ components:
           description: Connection metadata including user agent, IP information, and origin.
       type: object
       title: ScanRequestMetadata
-    AssetSymbol:
+    ValidationError:
       properties:
-        symbol:
-          type: string
-          title: Symbol
-          description: The symbol of the asset
-      type: object
-      required:
-      - symbol
-      title: AssetSymbol
-    routers__chain_agnostic__models__request__Account:
-      properties:
-        account_id:
-          type: string
-          title: Account Id
-          description: Unique identifier for the account.
-        account_creation_timestamp:
-          type: string
-          format: date-time
-          title: Account Creation Timestamp
-          description: Timestamp when the account was created.
-        user_age:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: User Age
-          description: Age of the user in years
-        user_country_code:
-          type: string
-          title: User Country Code
-          description: ISO country code of the user's location.
-        account_addresses:
+        loc:
           items:
-            type: string
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Account Addresses
-          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - account_id
-      title: Account
+      - loc
+      - msg
+      - type
+      title: ValidationError
     routers__chain_agnostic__models__request__Connection:
       properties:
         user_agent:
@@ -574,6 +377,55 @@ components:
       required:
       - ip_address
       title: Connection
+    Data:
+      properties:
+        chain:
+          allOf:
+          - $ref: '#/components/schemas/Chains'
+          description: Blockchain network where the transaction will be executed
+        transaction_action:
+          type: string
+          enum:
+          - deposit
+          - withdrawal
+          title: Transaction Action
+          description: Action the transaction is making
+        from:
+          type: string
+          title: From
+          description: Source address or identifier for the transaction
+        to:
+          type: string
+          title: To
+          description: Destination address or identifier for the transaction
+        amount:
+          type: number
+          exclusiveMinimum: 0.0
+          title: Amount
+          description: Amount of the transaction in the specified asset
+        asset:
+          anyOf:
+          - $ref: '#/components/schemas/AssetAddress'
+          - $ref: '#/components/schemas/AssetSymbol'
+          title: Asset
+          description: Asset information
+      type: object
+      required:
+      - chain
+      - to
+      - amount
+      - asset
+      title: Data
+    AssetSymbol:
+      properties:
+        symbol:
+          type: string
+          title: Symbol
+          description: The symbol of the asset
+      type: object
+      required:
+      - symbol
+      title: AssetSymbol
     ValidationResult:
       properties:
         status:
@@ -609,6 +461,85 @@ components:
       - classification
       - description
       title: ValidationResult
+    TransactionScanStatus:
+      type: string
+      enum:
+      - Success
+      - Error
+      title: TransactionScanStatus
+      description: The status of the transaction scan
+    routers__chain_agnostic__models__response__FeatureType:
+      type: string
+      enum:
+      - Malicious
+      - Warning
+      - Benign
+      - High-Risk
+      - Info
+      title: FeatureType
+      description: The type of feature detected in the scan.
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    UrlFeature:
+      properties:
+        entity:
+          type: string
+          enum:
+          - url
+          title: Entity
+          description: Type of entity associated with the feature
+          default: url
+        type:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__FeatureType'
+          description: Type of feature detected in the URL scan
+        feature_id:
+          type: string
+          title: Feature Id
+          description: Unique identifier for the detected feature
+        description:
+          type: string
+          title: Description
+          description: Detailed description of the detected feature
+        url:
+          type: string
+          title: Url
+          description: The URL where the feature was detected
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      - url
+      title: UrlFeature
     TransactionScanRequest:
       properties:
         options:
@@ -632,6 +563,75 @@ components:
       - data
       - metadata
       title: TransactionScanRequest
+    AssetAddress:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address of the asset
+      type: object
+      required:
+      - address
+      title: AssetAddress
+    Options:
+      type: string
+      enum:
+      - validation
+      title: Options
+      description: Requested output section to include in the response.
+    routers__chain_agnostic__models__response__ValidationResultType:
+      type: string
+      enum:
+      - Malicious
+      - Warning
+      - Benign
+      - High-Risk
+      title: ValidationResultType
+      description: The type of validation result.
+    TransactionFeature:
+      properties:
+        entity:
+          type: string
+          enum:
+          - transaction
+          title: Entity
+          description: Type of entity associated with the feature
+          default: transaction
+        type:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__FeatureType'
+          description: Type of feature detected in the transaction scan
+        feature_id:
+          type: string
+          title: Feature Id
+          description: Unique identifier for the detected feature
+        description:
+          type: string
+          title: Description
+          description: Detailed description of the detected feature
+      type: object
+      required:
+      - type
+      - feature_id
+      - description
+      title: TransactionFeature
+    ScanResult:
+      properties:
+        validation:
+          allOf:
+          - $ref: '#/components/schemas/ValidationResult'
+          title: Validation
+          description: Complete validation result containing all scan details and findings
+        platform_url:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Platform Url
+          description: Deep-link URL to the Blockaid platform address overview page for the scanned `to` address. Null if no URL is available for the given chain.
+      type: object
+      required:
+      - validation
+      title: ScanResult
   securitySchemes:
     APIKey:
       type: apiKey

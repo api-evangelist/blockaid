@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Blockaid Asset Management Enrichment API
+  title: Blockaid Enrichment API
   description: Blockaid Risk Score API
   termsOfService: https://www.blockaid.io/legal/terms-of-use
   license:
@@ -107,50 +107,6 @@ paths:
       - ClientID: []
 components:
   schemas:
-    ModifyPaymentMethodRequest:
-      properties:
-        access_request_type:
-          type: string
-          enum:
-          - ADD_PAYMENT_METHOD
-          title: Access Request Type
-        account:
-          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
-        payment_method:
-          $ref: '#/components/schemas/Payment'
-        event_time:
-          type: string
-          format: date-time
-          title: Event Time
-        connection:
-          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-      type: object
-      required:
-      - access_request_type
-      - account
-      - payment_method
-      - event_time
-      title: ModifyPaymentMethodRequest
-    EnrichmentRequest:
-      properties:
-        report:
-          $ref: '#/components/schemas/EnrichmentReportAddresses'
-        metadata:
-          $ref: '#/components/schemas/EnrichmentReportMetadata'
-      type: object
-      required:
-      - report
-      - metadata
-      title: EnrichmentRequest
-    PaymentMethod:
-      type: string
-      enum:
-      - credit_card
-      - wire
-      - swift
-      - iban
-      title: PaymentMethod
-      description: Payment method used for billing.
     routers__exchange_protection__account__models__Account:
       properties:
         account_id:
@@ -172,97 +128,15 @@ components:
       required:
       - account_id
       title: Account
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    EnrichmentReportAddress:
-      properties:
-        chain:
-          $ref: '#/components/schemas/SupportedChains'
-        address:
-          type: string
-          title: Address
-      type: object
-      required:
-      - chain
-      - address
-      title: EnrichmentReportAddress
-    Payment:
-      properties:
-        payment_method:
-          $ref: '#/components/schemas/PaymentMethod'
-        currency:
-          type: string
-          title: Currency
-      type: object
-      required:
-      - payment_method
-      - currency
-      title: Payment
-    routers__exchange_protection__account__models__AddressDetails:
-      properties:
-        address:
-          type: string
-          title: Address
-        chain:
-          type: string
-          title: Chain
-        asset:
-          type: string
-          title: Asset
-      type: object
-      required:
-      - address
-      - chain
-      - asset
-      title: AddressDetails
-    routers__chain_agnostic__models__request__Connection:
-      properties:
-        user_agent:
-          type: string
-          title: User Agent
-          description: User agent string from the client's browser or application.
-        ip_address:
-          type: string
-          format: ipvanyaddress
-          title: Ip Address
-          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
-        origin:
-          type: string
-          minLength: 1
-          format: uri
-          title: Origin
-          description: The full URL of the website that the request was directed to.
-        walletconnect_name:
-          type: string
-          title: Walletconnect Name
-          description: WalletConnect session name, when the request originates from a WalletConnect session.
-        walletconnect_description:
-          type: string
-          title: Walletconnect Description
-          description: WalletConnect session description, when the request originates from a WalletConnect session.
-      type: object
-      required:
-      - ip_address
-      title: Connection
+    PaymentMethod:
+      type: string
+      enum:
+      - credit_card
+      - wire
+      - swift
+      - iban
+      title: PaymentMethod
+      description: Payment method used for billing.
     SupportedChains:
       type: string
       enum:
@@ -321,6 +195,46 @@ components:
       - arc
       title: SupportedChains
       description: Supported chain identifiers.
+    routers__exchange_protection__account__models__AddressDetails:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          type: string
+          title: Chain
+        asset:
+          type: string
+          title: Asset
+      type: object
+      required:
+      - address
+      - chain
+      - asset
+      title: AddressDetails
+    EnrichmentRequest:
+      properties:
+        report:
+          $ref: '#/components/schemas/EnrichmentReportAddresses'
+        metadata:
+          $ref: '#/components/schemas/EnrichmentReportMetadata'
+      type: object
+      required:
+      - report
+      - metadata
+      title: EnrichmentRequest
+    Payment:
+      properties:
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        currency:
+          type: string
+          title: Currency
+      type: object
+      required:
+      - payment_method
+      - currency
+      title: Payment
     LogAccountLoginRequest:
       properties:
         account:
@@ -336,6 +250,88 @@ components:
       - account
       - event_time
       title: LogAccountLoginRequest
+    EnrichmentReportMetadata:
+      properties:
+        account:
+          $ref: '#/components/schemas/EnrichmentReportAccount'
+      type: object
+      required:
+      - account
+      title: EnrichmentReportMetadata
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ModifyPaymentMethodRequest:
+      properties:
+        access_request_type:
+          type: string
+          enum:
+          - ADD_PAYMENT_METHOD
+          title: Access Request Type
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        payment_method:
+          $ref: '#/components/schemas/Payment'
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+      type: object
+      required:
+      - access_request_type
+      - account
+      - payment_method
+      - event_time
+      title: ModifyPaymentMethodRequest
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
     HTTPValidationError:
       properties:
         detail:
@@ -345,22 +341,40 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    EnrichmentReportMetadata:
+    EnrichmentReportAddresses:
       properties:
-        account:
-          $ref: '#/components/schemas/EnrichmentReportAccount'
+        source:
+          allOf:
+          - $ref: '#/components/schemas/EnrichmentReportSource'
+          description: The source of the fraud report
+          default: user_report
+        addresses:
+          items:
+            $ref: '#/components/schemas/EnrichmentReportAddress'
+          type: array
+          title: Addresses
+        fraud_urls:
+          items:
+            type: string
+          type: array
+          title: Fraud Urls
+          description: URLs that are associated with the fraud report
       type: object
       required:
-      - account
-      title: EnrichmentReportMetadata
-    EnrichmentReportSource:
-      type: string
-      enum:
-      - user_report
-      - internal_system_report
-      - manual_report
-      title: EnrichmentReportSource
-      description: Source of an enrichment report.
+      - addresses
+      title: EnrichmentReportAddresses
+    EnrichmentReportAddress:
+      properties:
+        chain:
+          $ref: '#/components/schemas/SupportedChains'
+        address:
+          type: string
+          title: Address
+      type: object
+      required:
+      - chain
+      - address
+      title: EnrichmentReportAddress
     ModifyWithdrawalAddressRequest:
       properties:
         access_request_type:
@@ -405,28 +419,14 @@ components:
       - account_id
       - user_country_code
       title: EnrichmentReportAccount
-    EnrichmentReportAddresses:
-      properties:
-        source:
-          allOf:
-          - $ref: '#/components/schemas/EnrichmentReportSource'
-          description: The source of the fraud report
-          default: user_report
-        addresses:
-          items:
-            $ref: '#/components/schemas/EnrichmentReportAddress'
-          type: array
-          title: Addresses
-        fraud_urls:
-          items:
-            type: string
-          type: array
-          title: Fraud Urls
-          description: URLs that are associated with the fraud report
-      type: object
-      required:
-      - addresses
-      title: EnrichmentReportAddresses
+    EnrichmentReportSource:
+      type: string
+      enum:
+      - user_report
+      - internal_system_report
+      - manual_report
+      title: EnrichmentReportSource
+      description: Source of an enrichment report.
   securitySchemes:
     APIKey:
       type: apiKey

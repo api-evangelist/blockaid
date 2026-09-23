@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Blockaid Asset Management Site API
+  title: Blockaid Site API
   description: Blockaid Risk Score API
   termsOfService: https://www.blockaid.io/legal/terms-of-use
   license:
@@ -109,72 +109,6 @@ paths:
       - ClientID: []
 components:
   schemas:
-    ReportRequest_SiteReportParams_:
-      properties:
-        event:
-          allOf:
-          - $ref: '#/components/schemas/EventEnum'
-          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
-        report:
-          anyOf:
-          - $ref: '#/components/schemas/ParamReport_SiteReportParams_'
-          - $ref: '#/components/schemas/RequestIDReport'
-          title: Report
-          description: Parameters identifying the site to report, provided either as site details (url) or as a request ID from a previous scan.
-        details:
-          type: string
-          title: Details
-          description: Details about the report.
-      type: object
-      required:
-      - event
-      - report
-      - details
-      title: ReportRequest[SiteReportParams]
-    SiteScanRequest:
-      properties:
-        url:
-          type: string
-          title: Url
-        metadata:
-          allOf:
-          - $ref: '#/components/schemas/ScanRequestMetadata'
-          title: Metadata
-          description: 'Request metadata: site catalog/wallet context, end-user account, and connection details.'
-      type: object
-      required:
-      - url
-      title: SiteScanRequest
-    routers__chain_agnostic__models__request__Account:
-      properties:
-        account_id:
-          type: string
-          title: Account Id
-          description: Unique identifier for the account.
-        account_creation_timestamp:
-          type: string
-          format: date-time
-          title: Account Creation Timestamp
-          description: Timestamp when the account was created.
-        user_age:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: User Age
-          description: Age of the user in years
-        user_country_code:
-          type: string
-          title: User Country Code
-          description: ISO country code of the user's location.
-        account_addresses:
-          items:
-            type: string
-          type: array
-          title: Account Addresses
-          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
-      type: object
-      required:
-      - account_id
-      title: Account
     ContractOperations:
       properties:
         contract_addresses:
@@ -194,157 +128,6 @@ components:
       - contract_addresses
       - functions
       title: ContractOperations
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SiteScanMissResponse:
-      properties:
-        status:
-          type: string
-          enum:
-          - miss
-          title: Status
-      type: object
-      required:
-      - status
-      title: SiteScanMissResponse
-    RequestIDReport:
-      properties:
-        type:
-          type: string
-          const: request_id
-          title: Type
-          description: The type identifier indicating that a request ID from a previous scan is being used.
-        request_id:
-          type: string
-          title: Request Id
-          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
-      type: object
-      required:
-      - type
-      - request_id
-      title: RequestIDReport
-    EventEnum:
-      type: string
-      enum:
-      - FALSE_POSITIVE
-      - FALSE_NEGATIVE
-      title: EventEnum
-    AttackEntry:
-      properties:
-        score:
-          type: number
-          title: Score
-        threshold:
-          type: number
-          title: Threshold
-      type: object
-      required:
-      - score
-      - threshold
-      title: AttackEntry
-    routers__chain_agnostic__models__request__Connection:
-      properties:
-        user_agent:
-          type: string
-          title: User Agent
-          description: User agent string from the client's browser or application.
-        ip_address:
-          type: string
-          format: ipvanyaddress
-          title: Ip Address
-          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
-        origin:
-          type: string
-          minLength: 1
-          format: uri
-          title: Origin
-          description: The full URL of the website that the request was directed to.
-        walletconnect_name:
-          type: string
-          title: Walletconnect Name
-          description: WalletConnect session name, when the request originates from a WalletConnect session.
-        walletconnect_description:
-          type: string
-          title: Walletconnect Description
-          description: WalletConnect session description, when the request originates from a WalletConnect session.
-      type: object
-      required:
-      - ip_address
-      title: Connection
-    ParamReport_SiteReportParams_:
-      properties:
-        type:
-          type: string
-          enum:
-          - params
-          title: Type
-        params:
-          $ref: '#/components/schemas/SiteReportParams'
-      type: object
-      required:
-      - type
-      - params
-      title: ParamReport[SiteReportParams]
-    ScanRequestMetadata:
-      properties:
-        domain:
-          type: string
-          title: Domain
-          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
-        non_dapp:
-          type: boolean
-          title: Non Dapp
-          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
-        account:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
-          title: Account
-          description: End-user account context (id, age, country, creation time, and account_addresses).
-        connection:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-          title: Connection
-          description: Connection metadata including user agent, IP information, and origin.
-      type: object
-      title: ScanRequestMetadata
-    SiteReportParams:
-      properties:
-        url:
-          type: string
-          title: Url
-          description: The url of the site to report on.
-      type: object
-      required:
-      - url
-      title: SiteReportParams
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     SiteScanHitResponse:
       properties:
         status:
@@ -410,6 +193,223 @@ components:
       - contract_write
       - contract_read
       title: SiteScanHitResponse
+    SiteScanRequest:
+      properties:
+        url:
+          type: string
+          title: Url
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/ScanRequestMetadata'
+          title: Metadata
+          description: 'Request metadata: site catalog/wallet context, end-user account, and connection details.'
+      type: object
+      required:
+      - url
+      title: SiteScanRequest
+    AttackEntry:
+      properties:
+        score:
+          type: number
+          title: Score
+        threshold:
+          type: number
+          title: Threshold
+      type: object
+      required:
+      - score
+      - threshold
+      title: AttackEntry
+    ReportRequest_SiteReportParams_:
+      properties:
+        event:
+          allOf:
+          - $ref: '#/components/schemas/EventEnum'
+          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
+        report:
+          anyOf:
+          - $ref: '#/components/schemas/ParamReport_SiteReportParams_'
+          - $ref: '#/components/schemas/RequestIDReport'
+          title: Report
+          description: Parameters identifying the site to report, provided either as site details (url) or as a request ID from a previous scan.
+        details:
+          type: string
+          title: Details
+          description: Details about the report.
+      type: object
+      required:
+      - event
+      - report
+      - details
+      title: ReportRequest[SiteReportParams]
+    SiteReportParams:
+      properties:
+        url:
+          type: string
+          title: Url
+          description: The url of the site to report on.
+      type: object
+      required:
+      - url
+      title: SiteReportParams
+    ParamReport_SiteReportParams_:
+      properties:
+        type:
+          type: string
+          enum:
+          - params
+          title: Type
+        params:
+          $ref: '#/components/schemas/SiteReportParams'
+      type: object
+      required:
+      - type
+      - params
+      title: ParamReport[SiteReportParams]
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ScanRequestMetadata:
+      properties:
+        domain:
+          type: string
+          title: Domain
+          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
+        non_dapp:
+          type: boolean
+          title: Non Dapp
+          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: End-user account context (id, age, country, creation time, and account_addresses).
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent, IP information, and origin.
+      type: object
+      title: ScanRequestMetadata
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    RequestIDReport:
+      properties:
+        type:
+          type: string
+          const: request_id
+          title: Type
+          description: The type identifier indicating that a request ID from a previous scan is being used.
+        request_id:
+          type: string
+          title: Request Id
+          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
+      type: object
+      required:
+      - type
+      - request_id
+      title: RequestIDReport
+    SiteScanMissResponse:
+      properties:
+        status:
+          type: string
+          enum:
+          - miss
+          title: Status
+      type: object
+      required:
+      - status
+      title: SiteScanMissResponse
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
   securitySchemes:
     APIKey:
       type: apiKey

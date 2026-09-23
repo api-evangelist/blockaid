@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Blockaid Asset Management Organization Risk Config API
+  title: Blockaid Organization Risk Config API
   description: Blockaid Risk Score API
   termsOfService: https://www.blockaid.io/legal/terms-of-use
   license:
@@ -138,32 +138,6 @@ components:
       required:
       - categories
       - verdicts
-    VerdictThresholdView:
-      type: object
-      description: A verdict level with its platform default threshold and the organization's override (null when unset).
-      properties:
-        level:
-          type: string
-          enum:
-          - warning
-          - high_risk
-          - malicious
-          description: The verdict level this threshold applies to. benign is excluded as it is the implicit default below warning.
-          example: warning
-        default_threshold:
-          type: number
-          description: The minimum aggregate score at which this verdict is applied, as set by Blockaid.
-          example: 0.26
-        override_threshold:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: Your organization's custom minimum score for this verdict. Overrides the platform default when set, or null to use the default.
-          example: null
-      required:
-      - level
-      - default_threshold
-      - override_threshold
     PatchRiskConfigRequest:
       type: object
       description: A partial update to your organization's risk exposure settings. Only the fields you include are changed.
@@ -201,6 +175,32 @@ components:
               example: null
               description: Scores at or above this value are classified as malicious. Set to null to revert to the platform default.
           additionalProperties: false
+    VerdictThresholdView:
+      type: object
+      description: A verdict level with its platform default threshold and the organization's override (null when unset).
+      properties:
+        level:
+          type: string
+          enum:
+          - warning
+          - high_risk
+          - malicious
+          description: The verdict level this threshold applies to. benign is excluded as it is the implicit default below warning.
+          example: warning
+        default_threshold:
+          type: number
+          description: The minimum aggregate score at which this verdict is applied, as set by Blockaid.
+          example: 0.26
+        override_threshold:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: Your organization's custom minimum score for this verdict. Overrides the platform default when set, or null to use the default.
+          example: null
+      required:
+      - level
+      - default_threshold
+      - override_threshold
     OrganizationCategoryRiskView:
       type: object
       description: A risk-exposure category with its platform default score and the organization's override (null when unset).
