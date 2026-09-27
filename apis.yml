@@ -117,7 +117,7 @@ apis:
   - type: APIReference
     url: https://docs.blockaid.io/reference/openapi-schema
 - aid: blockaid:blockaid-cosigner-api
-  name: Blockaid cosigner API
+  name: Blockaid Cosigner API
   description: The cosigner API from Blockaid — 6 operation(s) for cosigner.
   humanURL: https://docs.blockaid.io/docs/introduction
   baseURL: https://api.blockaid.io
@@ -189,7 +189,7 @@ apis:
   - type: APIReference
     url: https://docs.blockaid.io/reference/openapi-schema
 - aid: blockaid:blockaid-external-api
-  name: Blockaid external API
+  name: Blockaid External API
   description: The external API from Blockaid — 1 operation(s) for external.
   humanURL: https://docs.blockaid.io/docs/introduction
   baseURL: https://api.blockaid.io

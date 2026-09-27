@@ -78,6 +78,51 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AuditLogSearchResponse:
+      title: Audit Log Search Response
+      type: object
+      description: Paginated list of audit log events matching the search criteria.
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLogItem'
+          description: Audit log events returned for this page.
+        total:
+          type: integer
+          description: Total number of matching audit log events.
+        page:
+          type: integer
+          description: Current page number.
+        pages:
+          type: integer
+          description: Total number of pages available.
+        size:
+          type: integer
+          description: Number of events returned in this page.
+      required:
+      - items
+      - total
+      - page
+      - pages
+      - size
+    AuditActionType:
+      type: string
+      enum:
+      - create
+      - edit
+      - delete
+      - info
+      title: AuditActionType
+      description: The type of action recorded in the audit log.
+    AuditActorType:
+      type: string
+      enum:
+      - user
+      - system
+      - API
+      title: AuditActorType
+      description: The type of actor that performed the audited action.
     AuditLogItem:
       title: Audit Log Item
       type: object
@@ -114,67 +159,6 @@ components:
       - actor_type
       - action
       - entity_type
-    AuditEntityType:
-      type: string
-      enum:
-      - cosigner
-      - cosigner_policy
-      - cosigner_transaction
-      - cosigner_manual_action
-      - label
-      - asset
-      - monitor
-      - api_key
-      - user_session
-      - audit_export
-      - metric
-      - response_wallet
-      - rpc_gateway_rule
-      - settings
-      - endpoint
-      - feature
-      - backoffice_api_key
-      - organization
-      - organization_extended
-      title: AuditEntityType
-      description: The type of entity affected by the audited action.
-    AuditActionType:
-      type: string
-      enum:
-      - create
-      - edit
-      - delete
-      - info
-      title: AuditActionType
-      description: The type of action recorded in the audit log.
-    AuditLogSearchResponse:
-      title: Audit Log Search Response
-      type: object
-      description: Paginated list of audit log events matching the search criteria.
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditLogItem'
-          description: Audit log events returned for this page.
-        total:
-          type: integer
-          description: Total number of matching audit log events.
-        page:
-          type: integer
-          description: Current page number.
-        pages:
-          type: integer
-          description: Total number of pages available.
-        size:
-          type: integer
-          description: Number of events returned in this page.
-      required:
-      - items
-      - total
-      - page
-      - pages
-      - size
     AuditLogSearchRequest:
       title: Audit Log Search Request
       type: object
@@ -242,14 +226,30 @@ components:
       required:
       - start_date
       - end_date
-    AuditActorType:
+    AuditEntityType:
       type: string
       enum:
-      - user
-      - system
-      - API
-      title: AuditActorType
-      description: The type of actor that performed the audited action.
+      - cosigner
+      - cosigner_policy
+      - cosigner_transaction
+      - cosigner_manual_action
+      - label
+      - asset
+      - monitor
+      - api_key
+      - user_session
+      - audit_export
+      - metric
+      - response_wallet
+      - rpc_gateway_rule
+      - settings
+      - endpoint
+      - feature
+      - backoffice_api_key
+      - organization
+      - organization_extended
+      title: AuditEntityType
+      description: The type of entity affected by the audited action.
   securitySchemes:
     APIKey:
       type: apiKey

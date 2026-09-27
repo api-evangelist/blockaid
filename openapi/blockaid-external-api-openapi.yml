@@ -60,6 +60,159 @@ paths:
       - External
 components:
   schemas:
+    PolicyTraceEntryExternal:
+      properties:
+        name:
+          type: string
+          title: Name
+          description: Policy name.
+        action:
+          type: string
+          title: Action
+          description: Action defined by the policy.
+        type:
+          type: string
+          title: Type
+          description: Policy type.
+        result:
+          type: string
+          enum:
+          - matched
+          - not_matched
+          - skipped
+          title: Result
+          description: 'Evaluation result for this policy entry: "matched", "not_matched", or "skipped".'
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - action
+      - type
+      - result
+      title: PolicyTraceEntryExternal
+    PolicyEvaluationSummary:
+      properties:
+        policy_id:
+          type: string
+          title: Policy Id
+          description: Policy identifier.
+        policy_name:
+          type: string
+          title: Policy Name
+          description: Human-readable policy name.
+        total_evaluated:
+          type: integer
+          title: Total Evaluated
+          description: Transactions evaluated against this policy (excludes non-benign scans where policy eval was skipped).
+        approved:
+          type: integer
+          title: Approved
+          description: Count approved for this policy.
+        rejected:
+          type: integer
+          title: Rejected
+          description: Count rejected for this policy.
+        manual_approved:
+          type: integer
+          title: Manual Approved
+          description: Count manually approved for this policy.
+        approved_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Approved Transactions
+          description: Tx hashes when "approved" was requested in show_transaction_detail_for.
+        rejected_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Rejected Transactions
+          description: Tx hashes when "rejected" was requested in show_transaction_detail_for.
+        manual_approved_transactions:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Manual Approved Transactions
+          description: Tx hashes when "manual_approved" was requested in show_transaction_detail_for.
+        policy_type:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Policy type identifier.
+          title: Policy Type
+      additionalProperties: false
+      type: object
+      required:
+      - policy_id
+      - policy_name
+      - total_evaluated
+      - approved
+      - rejected
+      - manual_approved
+      title: PolicyEvaluationSummary
+    EvaluationSummary:
+      properties:
+        total_transactions:
+          type: integer
+          title: Total Transactions
+          description: Total number of transactions scanned for this evaluation.
+        approved:
+          type: integer
+          title: Approved
+          description: Transactions approved by all policies under this mode.
+        rejected:
+          type: integer
+          title: Rejected
+          description: Transactions rejected by at least one policy or blocked before policy evaluation (non-benign scans). Per-policy counts only reflect transactions that reached policy evaluation, so the sum of per-policy rejected counts may be less than this value.
+        manual_approved:
+          type: integer
+          title: Manual Approved
+          description: Transactions that required manual approval (pending decision).
+      additionalProperties: false
+      type: object
+      required:
+      - total_transactions
+      - approved
+      - rejected
+      - manual_approved
+      title: EvaluationSummary
+      description: 'Aggregated counts across all transactions.
+
+
+        Note: ``rejected`` includes transactions blocked before policy evaluation
+
+        (non-benign scans). Per-policy counts only reflect transactions that
+
+        reached policy evaluation, so ``sum(p.rejected for p in policies)`` may be
+
+        less than ``summary.rejected``.'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     MatchedPolicyInfoExternal:
       properties:
         name:
@@ -81,6 +234,30 @@ components:
       - action
       - type
       title: MatchedPolicyInfoExternal
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    EvaluateTransactionResponse:
+      properties:
+        policies:
+          $ref: '#/components/schemas/PoliciesExternal'
+        scan_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Scan Id
+      additionalProperties: true
+      type: object
+      required:
+      - policies
+      title: EvaluateTransactionResponse
+      description: Response containing the policy evaluation result for the submitted EVM transaction.
     EvaluateHistoricalDataResponse:
       properties:
         cosigner_id:
@@ -140,112 +317,6 @@ components:
       - policies
       title: EvaluateHistoricalDataResponse
       description: Response containing the policy evaluation result for historical data.
-    PoliciesExternal:
-      properties:
-        decision:
-          type: string
-          enum:
-          - approve
-          - reject
-          - error
-          - pending
-          title: Decision
-          description: 'Policy decision outcome: "approve", "reject", "error", or "pending".'
-        reason:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Reason
-          description: Human-readable reason for the decision. Present when a policy matched.
-        matched_policy:
-          anyOf:
-          - $ref: '#/components/schemas/MatchedPolicyInfoExternal'
-          - type: 'null'
-          description: Policy that determined the final decision. Null if no policy matched.
-        trace:
-          items:
-            $ref: '#/components/schemas/PolicyTraceEntryExternal'
-          type: array
-          title: Trace
-          description: Per-policy evaluation log.
-        should_handle_pending_tx:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          title: Should Handle Pending Tx
-          description: True when this dry-run pending result means a real scan would create a manual pending transaction.
-      additionalProperties: false
-      type: object
-      required:
-      - decision
-      - trace
-      title: PoliciesExternal
-    EvaluationSummary:
-      properties:
-        total_transactions:
-          type: integer
-          title: Total Transactions
-          description: Total number of transactions scanned for this evaluation.
-        approved:
-          type: integer
-          title: Approved
-          description: Transactions approved by all policies under this mode.
-        rejected:
-          type: integer
-          title: Rejected
-          description: Transactions rejected by at least one policy or blocked before policy evaluation (non-benign scans). Per-policy counts only reflect transactions that reached policy evaluation, so the sum of per-policy rejected counts may be less than this value.
-        manual_approved:
-          type: integer
-          title: Manual Approved
-          description: Transactions that required manual approval (pending decision).
-      additionalProperties: false
-      type: object
-      required:
-      - total_transactions
-      - approved
-      - rejected
-      - manual_approved
-      title: EvaluationSummary
-      description: 'Aggregated counts across all transactions.
-
-
-        Note: ``rejected`` includes transactions blocked before policy evaluation
-
-        (non-benign scans). Per-policy counts only reflect transactions that
-
-        reached policy evaluation, so ``sum(p.rejected for p in policies)`` may be
-
-        less than ``summary.rejected``.'
-    PolicyTraceEntryExternal:
-      properties:
-        name:
-          type: string
-          title: Name
-          description: Policy name.
-        action:
-          type: string
-          title: Action
-          description: Action defined by the policy.
-        type:
-          type: string
-          title: Type
-          description: Policy type.
-        result:
-          type: string
-          enum:
-          - matched
-          - not_matched
-          - skipped
-          title: Result
-          description: 'Evaluation result for this policy entry: "matched", "not_matched", or "skipped".'
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      - action
-      - type
-      - result
-      title: PolicyTraceEntryExternal
     SolanaEvaluateTransactionRequest:
       discriminator:
         propertyName: evaluation_type
@@ -441,117 +512,46 @@ components:
         - time_period
         title: EvaluateSolanaTimePeriodRequest
         type: object
-    EvaluateTransactionResponse:
+    PoliciesExternal:
       properties:
-        policies:
-          $ref: '#/components/schemas/PoliciesExternal'
-        scan_id:
+        decision:
+          type: string
+          enum:
+          - approve
+          - reject
+          - error
+          - pending
+          title: Decision
+          description: 'Policy decision outcome: "approve", "reject", "error", or "pending".'
+        reason:
           anyOf:
           - type: string
           - type: 'null'
-          title: Scan Id
-      additionalProperties: true
-      type: object
-      required:
-      - policies
-      title: EvaluateTransactionResponse
-      description: Response containing the policy evaluation result for the submitted EVM transaction.
-    ValidationError:
-      properties:
-        loc:
+          title: Reason
+          description: Human-readable reason for the decision. Present when a policy matched.
+        matched_policy:
+          anyOf:
+          - $ref: '#/components/schemas/MatchedPolicyInfoExternal'
+          - type: 'null'
+          description: Policy that determined the final decision. Null if no policy matched.
+        trace:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/PolicyTraceEntryExternal'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    PolicyEvaluationSummary:
-      properties:
-        policy_id:
-          type: string
-          title: Policy Id
-          description: Policy identifier.
-        policy_name:
-          type: string
-          title: Policy Name
-          description: Human-readable policy name.
-        total_evaluated:
-          type: integer
-          title: Total Evaluated
-          description: Transactions evaluated against this policy (excludes non-benign scans where policy eval was skipped).
-        approved:
-          type: integer
-          title: Approved
-          description: Count approved for this policy.
-        rejected:
-          type: integer
-          title: Rejected
-          description: Count rejected for this policy.
-        manual_approved:
-          type: integer
-          title: Manual Approved
-          description: Count manually approved for this policy.
-        approved_transactions:
+          title: Trace
+          description: Per-policy evaluation log.
+        should_handle_pending_tx:
           anyOf:
-          - items:
-              type: string
-            type: array
+          - type: boolean
           - type: 'null'
-          title: Approved Transactions
-          description: Tx hashes when "approved" was requested in show_transaction_detail_for.
-        rejected_transactions:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Rejected Transactions
-          description: Tx hashes when "rejected" was requested in show_transaction_detail_for.
-        manual_approved_transactions:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Manual Approved Transactions
-          description: Tx hashes when "manual_approved" was requested in show_transaction_detail_for.
-        policy_type:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Policy type identifier.
-          title: Policy Type
+          title: Should Handle Pending Tx
+          description: True when this dry-run pending result means a real scan would create a manual pending transaction.
       additionalProperties: false
       type: object
       required:
-      - policy_id
-      - policy_name
-      - total_evaluated
-      - approved
-      - rejected
-      - manual_approved
-      title: PolicyEvaluationSummary
+      - decision
+      - trace
+      title: PoliciesExternal
   securitySchemes:
     APIKey:
       type: apiKey

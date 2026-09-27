@@ -141,42 +141,47 @@ paths:
       - ClientID: []
 components:
   schemas:
-    ReportTxRequest:
+    routers__chain_agnostic__models__request__Connection:
       properties:
-        domain:
+        user_agent:
           type: string
-          title: Domain
-        jsonRpcMethod:
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
           type: string
-          title: Jsonrpcmethod
-        jsonRpcParams:
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
           type: string
-          title: Jsonrpcparams
-        chain:
-          $ref: '#/components/schemas/TransactionScanSupportedChains'
-        blockNumber:
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
           type: string
-          title: Blocknumber
-        classification:
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
           type: string
-          title: Classification
-        resultType:
-          type: string
-          title: Resulttype
-        features:
-          type: string
-          title: Features
-        details:
-          type: string
-          title: Details
-        reporter:
-          type: string
-          title: Reporter
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
       type: object
       required:
-      - jsonRpcMethod
-      - jsonRpcParams
-      title: ReportTxRequest
+      - ip_address
+      title: Connection
+    ReportSiteRequest:
+      properties:
+        url:
+          type: string
+          title: Url
+        classification:
+          $ref: '#/components/schemas/SiteClassification'
+      type: object
+      required:
+      - url
+      - classification
+      title: ReportSiteRequest
     TransactionScanSupportedChains:
       type: string
       enum:
@@ -233,6 +238,32 @@ components:
       - arc
       title: TransactionScanSupportedChains
       description: The chain name
+    GenericReportRequest:
+      type: object
+      required:
+      - event
+      - request_id
+      - details
+      - metadata
+      title: GenericReportRequest
+      properties:
+        event:
+          allOf:
+          - $ref: '#/components/schemas/EventEnum'
+          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
+        request_id:
+          type: string
+          title: Request Id
+          description: 'The request ID of a previous scan. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
+        details:
+          type: string
+          title: Details
+          description: Details about the report.
+        metadata:
+          allOf:
+          - $ref: '#/components/schemas/ScanRequestMetadata'
+          title: Metadata
+          description: 'Client-side context: the originating dApp domain, end-user account info, and connection details.'
     ValidationError:
       properties:
         loc:
@@ -254,6 +285,13 @@ components:
       - msg
       - type
       title: ValidationError
+    SiteClassification:
+      type: string
+      enum:
+      - Malicious
+      - Benign
+      title: SiteClassification
+      description: Classification result for a scanned URL.
     HTTPValidationError:
       properties:
         detail:
@@ -285,6 +323,48 @@ components:
           description: Connection metadata including user agent, IP information, and origin.
       type: object
       title: ScanRequestMetadata
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
+    ReportTxRequest:
+      properties:
+        domain:
+          type: string
+          title: Domain
+        jsonRpcMethod:
+          type: string
+          title: Jsonrpcmethod
+        jsonRpcParams:
+          type: string
+          title: Jsonrpcparams
+        chain:
+          $ref: '#/components/schemas/TransactionScanSupportedChains'
+        blockNumber:
+          type: string
+          title: Blocknumber
+        classification:
+          type: string
+          title: Classification
+        resultType:
+          type: string
+          title: Resulttype
+        features:
+          type: string
+          title: Features
+        details:
+          type: string
+          title: Details
+        reporter:
+          type: string
+          title: Reporter
+      type: object
+      required:
+      - jsonRpcMethod
+      - jsonRpcParams
+      title: ReportTxRequest
     routers__chain_agnostic__models__request__Account:
       properties:
         account_id:
@@ -315,86 +395,6 @@ components:
       required:
       - account_id
       title: Account
-    routers__chain_agnostic__models__request__Connection:
-      properties:
-        user_agent:
-          type: string
-          title: User Agent
-          description: User agent string from the client's browser or application.
-        ip_address:
-          type: string
-          format: ipvanyaddress
-          title: Ip Address
-          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
-        origin:
-          type: string
-          minLength: 1
-          format: uri
-          title: Origin
-          description: The full URL of the website that the request was directed to.
-        walletconnect_name:
-          type: string
-          title: Walletconnect Name
-          description: WalletConnect session name, when the request originates from a WalletConnect session.
-        walletconnect_description:
-          type: string
-          title: Walletconnect Description
-          description: WalletConnect session description, when the request originates from a WalletConnect session.
-      type: object
-      required:
-      - ip_address
-      title: Connection
-    SiteClassification:
-      type: string
-      enum:
-      - Malicious
-      - Benign
-      title: SiteClassification
-      description: Classification result for a scanned URL.
-    GenericReportRequest:
-      type: object
-      required:
-      - event
-      - request_id
-      - details
-      - metadata
-      title: GenericReportRequest
-      properties:
-        event:
-          allOf:
-          - $ref: '#/components/schemas/EventEnum'
-          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
-        request_id:
-          type: string
-          title: Request Id
-          description: 'The request ID of a previous scan. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
-        details:
-          type: string
-          title: Details
-          description: Details about the report.
-        metadata:
-          allOf:
-          - $ref: '#/components/schemas/ScanRequestMetadata'
-          title: Metadata
-          description: 'Client-side context: the originating dApp domain, end-user account info, and connection details.'
-    EventEnum:
-      type: string
-      enum:
-      - FALSE_POSITIVE
-      - FALSE_NEGATIVE
-      title: EventEnum
-    ReportSiteRequest:
-      properties:
-        url:
-          type: string
-          title: Url
-        classification:
-          $ref: '#/components/schemas/SiteClassification'
-      type: object
-      required:
-      - url
-      - classification
-      title: ReportSiteRequest
   securitySchemes:
     APIKey:
       type: apiKey

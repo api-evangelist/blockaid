@@ -121,23 +121,6 @@ paths:
           description: Returned when an unknown category name is provided.
 components:
   schemas:
-    OrganizationRiskConfigView:
-      type: object
-      description: Your organization's risk exposure settings, including category risk scores and verdict thresholds.
-      properties:
-        categories:
-          type: array
-          description: The risk score configuration for each exposure category.
-          items:
-            $ref: '#/components/schemas/OrganizationCategoryRiskView'
-        verdicts:
-          type: array
-          description: The score thresholds that determine each verdict level.
-          items:
-            $ref: '#/components/schemas/VerdictThresholdView'
-      required:
-      - categories
-      - verdicts
     PatchRiskConfigRequest:
       type: object
       description: A partial update to your organization's risk exposure settings. Only the fields you include are changed.
@@ -175,6 +158,45 @@ components:
               example: null
               description: Scores at or above this value are classified as malicious. Set to null to revert to the platform default.
           additionalProperties: false
+    OrganizationCategoryRiskView:
+      type: object
+      description: A risk-exposure category with its platform default score and the organization's override (null when unset).
+      properties:
+        category:
+          type: string
+          description: The exposure category name, such as sanctioned_entity, stolen_funds, or mixer.
+          example: sanctioned_entity
+        default_risk_score:
+          type: number
+          description: Scores at or above this value contribute to this category's risk. Platform default, set by Blockaid.
+          example: 0.9
+        override_risk_score:
+          anyOf:
+          - type: number
+          - type: 'null'
+          description: Your organization's custom risk score for this category. Overrides the platform default when set, or null to use the default.
+          example: null
+      required:
+      - category
+      - default_risk_score
+      - override_risk_score
+    OrganizationRiskConfigView:
+      type: object
+      description: Your organization's risk exposure settings, including category risk scores and verdict thresholds.
+      properties:
+        categories:
+          type: array
+          description: The risk score configuration for each exposure category.
+          items:
+            $ref: '#/components/schemas/OrganizationCategoryRiskView'
+        verdicts:
+          type: array
+          description: The score thresholds that determine each verdict level.
+          items:
+            $ref: '#/components/schemas/VerdictThresholdView'
+      required:
+      - categories
+      - verdicts
     VerdictThresholdView:
       type: object
       description: A verdict level with its platform default threshold and the organization's override (null when unset).
@@ -201,28 +223,6 @@ components:
       - level
       - default_threshold
       - override_threshold
-    OrganizationCategoryRiskView:
-      type: object
-      description: A risk-exposure category with its platform default score and the organization's override (null when unset).
-      properties:
-        category:
-          type: string
-          description: The exposure category name, such as sanctioned_entity, stolen_funds, or mixer.
-          example: sanctioned_entity
-        default_risk_score:
-          type: number
-          description: Scores at or above this value contribute to this category's risk. Platform default, set by Blockaid.
-          example: 0.9
-        override_risk_score:
-          anyOf:
-          - type: number
-          - type: 'null'
-          description: Your organization's custom risk score for this category. Overrides the platform default when set, or null to use the default.
-          example: null
-      required:
-      - category
-      - default_risk_score
-      - override_risk_score
   securitySchemes:
     APIKey:
       type: apiKey
