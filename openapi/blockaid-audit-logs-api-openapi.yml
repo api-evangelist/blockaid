@@ -106,59 +106,6 @@ components:
       - page
       - pages
       - size
-    AuditActionType:
-      type: string
-      enum:
-      - create
-      - edit
-      - delete
-      - info
-      title: AuditActionType
-      description: The type of action recorded in the audit log.
-    AuditActorType:
-      type: string
-      enum:
-      - user
-      - system
-      - API
-      title: AuditActorType
-      description: The type of actor that performed the audited action.
-    AuditLogItem:
-      title: Audit Log Item
-      type: object
-      description: A single audit event. Excludes internal fields such as organization_id, metadata, destination, and actor_name.
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the audit log entry.
-        actor:
-          type: string
-          description: Identifier of the actor that performed the action (e.g. email address or API key ID).
-        entity_id:
-          type: string
-          description: Identifier of the entity affected by the action.
-        chain:
-          type: string
-          description: Blockchain network associated with the event, if applicable.
-        summary:
-          type: string
-          description: Human-readable description of the event.
-        timestamp:
-          type: string
-          format: date-time
-          description: UTC timestamp of when the event occurred.
-        actor_type:
-          $ref: '#/components/schemas/AuditActorType'
-        action:
-          $ref: '#/components/schemas/AuditActionType'
-        entity_type:
-          $ref: '#/components/schemas/AuditEntityType'
-      required:
-      - id
-      - timestamp
-      - actor_type
-      - action
-      - entity_type
     AuditLogSearchRequest:
       title: Audit Log Search Request
       type: object
@@ -226,6 +173,15 @@ components:
       required:
       - start_date
       - end_date
+    AuditActionType:
+      type: string
+      enum:
+      - create
+      - edit
+      - delete
+      - info
+      title: AuditActionType
+      description: The type of action recorded in the audit log.
     AuditEntityType:
       type: string
       enum:
@@ -250,6 +206,50 @@ components:
       - organization_extended
       title: AuditEntityType
       description: The type of entity affected by the audited action.
+    AuditLogItem:
+      title: Audit Log Item
+      type: object
+      description: A single audit event. Excludes internal fields such as organization_id, metadata, destination, and actor_name.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the audit log entry.
+        actor:
+          type: string
+          description: Identifier of the actor that performed the action (e.g. email address or API key ID).
+        entity_id:
+          type: string
+          description: Identifier of the entity affected by the action.
+        chain:
+          type: string
+          description: Blockchain network associated with the event, if applicable.
+        summary:
+          type: string
+          description: Human-readable description of the event.
+        timestamp:
+          type: string
+          format: date-time
+          description: UTC timestamp of when the event occurred.
+        actor_type:
+          $ref: '#/components/schemas/AuditActorType'
+        action:
+          $ref: '#/components/schemas/AuditActionType'
+        entity_type:
+          $ref: '#/components/schemas/AuditEntityType'
+      required:
+      - id
+      - timestamp
+      - actor_type
+      - action
+      - entity_type
+    AuditActorType:
+      type: string
+      enum:
+      - user
+      - system
+      - API
+      title: AuditActorType
+      description: The type of actor that performed the audited action.
   securitySchemes:
     APIKey:
       type: apiKey

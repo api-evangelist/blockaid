@@ -107,47 +107,41 @@ paths:
       - ClientID: []
 components:
   schemas:
-    routers__chain_agnostic__models__request__Connection:
+    Payment:
       properties:
-        user_agent:
+        payment_method:
+          $ref: '#/components/schemas/PaymentMethod'
+        currency:
           type: string
-          title: User Agent
-          description: User agent string from the client's browser or application.
-        ip_address:
-          type: string
-          format: ipvanyaddress
-          title: Ip Address
-          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
-        origin:
-          type: string
-          minLength: 1
-          format: uri
-          title: Origin
-          description: The full URL of the website that the request was directed to.
-        walletconnect_name:
-          type: string
-          title: Walletconnect Name
-          description: WalletConnect session name, when the request originates from a WalletConnect session.
-        walletconnect_description:
-          type: string
-          title: Walletconnect Description
-          description: WalletConnect session description, when the request originates from a WalletConnect session.
+          title: Currency
       type: object
       required:
-      - ip_address
-      title: Connection
-    EnrichmentReportMetadata:
+      - payment_method
+      - currency
+      title: Payment
+    EnrichmentReportAddress:
       properties:
-        account:
-          $ref: '#/components/schemas/EnrichmentReportAccount'
+        chain:
+          $ref: '#/components/schemas/SupportedChains'
+        address:
+          type: string
+          title: Address
       type: object
       required:
-      - account
-      title: EnrichmentReportMetadata
-    LogAccountLoginRequest:
+      - chain
+      - address
+      title: EnrichmentReportAddress
+    ModifyPaymentMethodRequest:
       properties:
+        access_request_type:
+          type: string
+          enum:
+          - ADD_PAYMENT_METHOD
+          title: Access Request Type
         account:
           $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        payment_method:
+          $ref: '#/components/schemas/Payment'
         event_time:
           type: string
           format: date-time
@@ -156,30 +150,43 @@ components:
           $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
       type: object
       required:
+      - access_request_type
       - account
+      - payment_method
       - event_time
-      title: LogAccountLoginRequest
-    routers__exchange_protection__account__models__Account:
+      title: ModifyPaymentMethodRequest
+    ValidationError:
       properties:
-        account_id:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Account Id
-        account_creation_timestamp:
+          title: Message
+        type:
           type: string
-          format: date-time
-          title: Account Creation Timestamp
-        user_age:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: User Age
-        user_country_code:
-          type: string
-          title: User Country Code
-          default: US
+          title: Error Type
       type: object
       required:
-      - account_id
-      title: Account
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    EnrichmentRequest:
+      properties:
+        report:
+          $ref: '#/components/schemas/EnrichmentReportAddresses'
+        metadata:
+          $ref: '#/components/schemas/EnrichmentReportMetadata'
+      type: object
+      required:
+      - report
+      - metadata
+      title: EnrichmentRequest
     SupportedChains:
       type: string
       enum:
@@ -238,62 +245,6 @@ components:
       - arc
       title: SupportedChains
       description: Supported chain identifiers.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    EnrichmentRequest:
-      properties:
-        report:
-          $ref: '#/components/schemas/EnrichmentReportAddresses'
-        metadata:
-          $ref: '#/components/schemas/EnrichmentReportMetadata'
-      type: object
-      required:
-      - report
-      - metadata
-      title: EnrichmentRequest
-    ModifyPaymentMethodRequest:
-      properties:
-        access_request_type:
-          type: string
-          enum:
-          - ADD_PAYMENT_METHOD
-          title: Access Request Type
-        account:
-          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
-        payment_method:
-          $ref: '#/components/schemas/Payment'
-        event_time:
-          type: string
-          format: date-time
-          title: Event Time
-        connection:
-          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-      type: object
-      required:
-      - access_request_type
-      - account
-      - payment_method
-      - event_time
-      title: ModifyPaymentMethodRequest
     HTTPValidationError:
       properties:
         detail:
@@ -303,6 +254,21 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    LogAccountLoginRequest:
+      properties:
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+      type: object
+      required:
+      - account
+      - event_time
+      title: LogAccountLoginRequest
     EnrichmentReportAccount:
       properties:
         account_id:
@@ -323,14 +289,90 @@ components:
       - account_id
       - user_country_code
       title: EnrichmentReportAccount
-    EnrichmentReportSource:
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    routers__exchange_protection__account__models__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+        user_country_code:
+          type: string
+          title: User Country Code
+          default: US
+      type: object
+      required:
+      - account_id
+      title: Account
+    EnrichmentReportMetadata:
+      properties:
+        account:
+          $ref: '#/components/schemas/EnrichmentReportAccount'
+      type: object
+      required:
+      - account
+      title: EnrichmentReportMetadata
+    PaymentMethod:
       type: string
       enum:
-      - user_report
-      - internal_system_report
-      - manual_report
-      title: EnrichmentReportSource
-      description: Source of an enrichment report.
+      - credit_card
+      - wire
+      - swift
+      - iban
+      title: PaymentMethod
+      description: Payment method used for billing.
+    routers__exchange_protection__account__models__AddressDetails:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          type: string
+          title: Chain
+        asset:
+          type: string
+          title: Asset
+      type: object
+      required:
+      - address
+      - chain
+      - asset
+      title: AddressDetails
     ModifyWithdrawalAddressRequest:
       properties:
         access_request_type:
@@ -355,35 +397,6 @@ components:
       - address_details
       - event_time
       title: ModifyWithdrawalAddressRequest
-    Payment:
-      properties:
-        payment_method:
-          $ref: '#/components/schemas/PaymentMethod'
-        currency:
-          type: string
-          title: Currency
-      type: object
-      required:
-      - payment_method
-      - currency
-      title: Payment
-    routers__exchange_protection__account__models__AddressDetails:
-      properties:
-        address:
-          type: string
-          title: Address
-        chain:
-          type: string
-          title: Chain
-        asset:
-          type: string
-          title: Asset
-      type: object
-      required:
-      - address
-      - chain
-      - asset
-      title: AddressDetails
     EnrichmentReportAddresses:
       properties:
         source:
@@ -406,27 +419,14 @@ components:
       required:
       - addresses
       title: EnrichmentReportAddresses
-    EnrichmentReportAddress:
-      properties:
-        chain:
-          $ref: '#/components/schemas/SupportedChains'
-        address:
-          type: string
-          title: Address
-      type: object
-      required:
-      - chain
-      - address
-      title: EnrichmentReportAddress
-    PaymentMethod:
+    EnrichmentReportSource:
       type: string
       enum:
-      - credit_card
-      - wire
-      - swift
-      - iban
-      title: PaymentMethod
-      description: Payment method used for billing.
+      - user_report
+      - internal_system_report
+      - manual_report
+      title: EnrichmentReportSource
+      description: Source of an enrichment report.
   securitySchemes:
     APIKey:
       type: apiKey

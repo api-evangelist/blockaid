@@ -177,275 +177,6 @@ paths:
       - ClientID: []
 components:
   schemas:
-    RequestIDReport:
-      properties:
-        type:
-          type: string
-          const: request_id
-          title: Type
-          description: The type identifier indicating that a request ID from a previous scan is being used.
-        request_id:
-          type: string
-          title: Request Id
-          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
-      type: object
-      required:
-      - type
-      - request_id
-      title: RequestIDReport
-    routers__chain_agnostic__models__request__Connection:
-      properties:
-        user_agent:
-          type: string
-          title: User Agent
-          description: User agent string from the client's browser or application.
-        ip_address:
-          type: string
-          format: ipvanyaddress
-          title: Ip Address
-          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
-        origin:
-          type: string
-          minLength: 1
-          format: uri
-          title: Origin
-          description: The full URL of the website that the request was directed to.
-        walletconnect_name:
-          type: string
-          title: Walletconnect Name
-          description: WalletConnect session name, when the request originates from a WalletConnect session.
-        walletconnect_description:
-          type: string
-          title: Walletconnect Description
-          description: WalletConnect session description, when the request originates from a WalletConnect session.
-      type: object
-      required:
-      - ip_address
-      title: Connection
-    AddressReportParams:
-      properties:
-        address:
-          type: string
-          title: Address
-          description: The address to report on.
-        domain:
-          type: string
-          title: Domain
-          description: The domain related to this address.
-        chain:
-          allOf:
-          - $ref: '#/components/schemas/AddressReportSupportedChains'
-          description: The chain name
-      type: object
-      required:
-      - address
-      - domain
-      - chain
-      title: AddressReportParams
-    RiskExposureAddressScanRequest:
-      properties:
-        address:
-          type: string
-          title: Address
-          description: The address to scan.
-        metadata:
-          $ref: '#/components/schemas/ScanRequestMetadata'
-        chain:
-          $ref: '#/components/schemas/RiskExposureSupportedChains'
-      type: object
-      required:
-      - address
-      - chain
-      title: RiskExposureAddressScanRequest
-    ReportRequest_AddressReportParams_:
-      properties:
-        event:
-          allOf:
-          - $ref: '#/components/schemas/EventEnum'
-          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
-        report:
-          anyOf:
-          - $ref: '#/components/schemas/ParamReport_AddressReportParams_'
-          - $ref: '#/components/schemas/RequestIDReport'
-          title: Report
-          description: Parameters identifying the address to report, provided either as address details (address, domain, and chain) or as a request ID from a previous scan.
-        details:
-          type: string
-          title: Details
-          description: Details about the report.
-      type: object
-      required:
-      - event
-      - report
-      - details
-      title: ReportRequest[AddressReportParams]
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    RiskProfilingResponse:
-      description: Compliance risk exposure for an address, including an overall risk summary and exposure breakdown.
-      properties:
-        address:
-          type: string
-          title: Address
-          description: The address being profiled.
-        blocklist:
-          type: boolean
-          title: Blocklist
-          description: Whether the address is explicitly blocklisted.
-          default: false
-        name:
-          type: string
-          title: Name
-          description: Resolved entity name associated with the address, if known.
-        risk_summary:
-          $ref: '#/components/schemas/RiskSummary'
-        exposures:
-          items:
-            $ref: '#/components/schemas/RiskExposure'
-          type: array
-          title: Exposures
-          description: Exposure breakdown by category.
-      type: object
-      required:
-      - address
-      - risk_summary
-      title: RiskProfilingResponse
-    RiskExposure:
-      description: An exposure category contributing to the address's compliance risk profile.
-      properties:
-        category:
-          type: string
-          title: Category
-          description: Exposure category name (e.g., sanctioned_entity, scam_investment_fraud, stolen_funds).
-        amount_usd:
-          type: number
-          title: Amount Usd
-          description: Estimated exposure amount in USD for this category.
-        percentage:
-          type: number
-          title: Percentage
-          description: Percentage of total exposure attributed to this category.
-        risk_level:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
-          description: Compliance risk level associated with this exposure category.
-      type: object
-      required:
-      - category
-      - amount_usd
-      - percentage
-      - risk_level
-      title: RiskExposure
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ScanRequestMetadata:
-      properties:
-        domain:
-          type: string
-          title: Domain
-          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
-        non_dapp:
-          type: boolean
-          title: Non Dapp
-          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
-        account:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
-          title: Account
-          description: End-user account context (id, age, country, creation time, and account_addresses).
-        connection:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-          title: Connection
-          description: Connection metadata including user agent, IP information, and origin.
-      type: object
-      title: ScanRequestMetadata
-    RiskExposureSupportedChains:
-      enum:
-      - ethereum
-      - base
-      - bsc
-      - arbitrum
-      - optimism
-      - aster
-      - polygon
-      - hyperevm
-      - hyperliquid
-      - lighter
-      - tron
-      - bitcoin
-      - solana
-      - polymarket
-      title: RiskExposureSupportedChains
-      type: string
-      description: Supported chains for risk exposure
-    RiskSummary:
-      description: Aggregated compliance risk summary for the profiled address.
-      properties:
-        risk_level:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
-          description: Overall compliance risk level for the address.
-        total_usd:
-          type: number
-          title: Total Usd
-          description: Total estimated USD exposure considered in the profile.
-        total_malicious_exposure:
-          type: number
-          title: Total Malicious Exposure
-          description: Total estimated USD exposure associated with malicious risk.
-      type: object
-      required:
-      - risk_level
-      - total_usd
-      - total_malicious_exposure
-      title: RiskSummary
-    EventEnum:
-      type: string
-      enum:
-      - FALSE_POSITIVE
-      - FALSE_NEGATIVE
-      title: EventEnum
-    ParamReport_AddressReportParams_:
-      properties:
-        type:
-          type: string
-          enum:
-          - params
-          title: Type
-        params:
-          $ref: '#/components/schemas/AddressReportParams'
-      type: object
-      required:
-      - type
-      - params
-      title: ParamReport[AddressReportParams]
     AddressReportSupportedChains:
       type: string
       enum:
@@ -509,15 +240,6 @@ components:
       - arc
       title: AddressReportSupportedChains
       description: The chain name
-    routers__chain_agnostic__models__response__ValidationResultType:
-      type: string
-      enum:
-      - Malicious
-      - Warning
-      - Benign
-      - High-Risk
-      title: ValidationResultType
-      description: The type of validation result.
     routers__chain_agnostic__models__request__Account:
       properties:
         account_id:
@@ -548,6 +270,284 @@ components:
       required:
       - account_id
       title: Account
+    ScanRequestMetadata:
+      properties:
+        domain:
+          type: string
+          title: Domain
+          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
+        non_dapp:
+          type: boolean
+          title: Non Dapp
+          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: End-user account context (id, age, country, creation time, and account_addresses).
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent, IP information, and origin.
+      type: object
+      title: ScanRequestMetadata
+    routers__chain_agnostic__models__response__ValidationResultType:
+      type: string
+      enum:
+      - Malicious
+      - Warning
+      - Benign
+      - High-Risk
+      title: ValidationResultType
+      description: The type of validation result.
+    RiskExposureSupportedChains:
+      enum:
+      - ethereum
+      - base
+      - bsc
+      - arbitrum
+      - optimism
+      - aster
+      - polygon
+      - hyperevm
+      - hyperliquid
+      - lighter
+      - tron
+      - bitcoin
+      - solana
+      - polymarket
+      title: RiskExposureSupportedChains
+      type: string
+      description: Supported chains for risk exposure
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AddressReportParams:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address to report on.
+        domain:
+          type: string
+          title: Domain
+          description: The domain related to this address.
+        chain:
+          allOf:
+          - $ref: '#/components/schemas/AddressReportSupportedChains'
+          description: The chain name
+      type: object
+      required:
+      - address
+      - domain
+      - chain
+      title: AddressReportParams
+    RiskExposureAddressScanRequest:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address to scan.
+        metadata:
+          $ref: '#/components/schemas/ScanRequestMetadata'
+        chain:
+          $ref: '#/components/schemas/RiskExposureSupportedChains'
+      type: object
+      required:
+      - address
+      - chain
+      title: RiskExposureAddressScanRequest
+    RiskSummary:
+      description: Aggregated compliance risk summary for the profiled address.
+      properties:
+        risk_level:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
+          description: Overall compliance risk level for the address.
+        total_usd:
+          type: number
+          title: Total Usd
+          description: Total estimated USD exposure considered in the profile.
+        total_malicious_exposure:
+          type: number
+          title: Total Malicious Exposure
+          description: Total estimated USD exposure associated with malicious risk.
+      type: object
+      required:
+      - risk_level
+      - total_usd
+      - total_malicious_exposure
+      title: RiskSummary
+    RequestIDReport:
+      properties:
+        type:
+          type: string
+          const: request_id
+          title: Type
+          description: The type identifier indicating that a request ID from a previous scan is being used.
+        request_id:
+          type: string
+          title: Request Id
+          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
+      type: object
+      required:
+      - type
+      - request_id
+      title: RequestIDReport
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    routers__chain_agnostic__models__request__Connection:
+      properties:
+        user_agent:
+          type: string
+          title: User Agent
+          description: User agent string from the client's browser or application.
+        ip_address:
+          type: string
+          format: ipvanyaddress
+          title: Ip Address
+          description: IP address of the customer making the request. Both IPv4 and IPv6 addresses are supported.
+        origin:
+          type: string
+          minLength: 1
+          format: uri
+          title: Origin
+          description: The full URL of the website that the request was directed to.
+        walletconnect_name:
+          type: string
+          title: Walletconnect Name
+          description: WalletConnect session name, when the request originates from a WalletConnect session.
+        walletconnect_description:
+          type: string
+          title: Walletconnect Description
+          description: WalletConnect session description, when the request originates from a WalletConnect session.
+      type: object
+      required:
+      - ip_address
+      title: Connection
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
+    ReportRequest_AddressReportParams_:
+      properties:
+        event:
+          allOf:
+          - $ref: '#/components/schemas/EventEnum'
+          description: The event type of the report. Could be `FALSE_POSITIVE` or `FALSE_NEGATIVE`.
+        report:
+          anyOf:
+          - $ref: '#/components/schemas/ParamReport_AddressReportParams_'
+          - $ref: '#/components/schemas/RequestIDReport'
+          title: Report
+          description: Parameters identifying the address to report, provided either as address details (address, domain, and chain) or as a request ID from a previous scan.
+        details:
+          type: string
+          title: Details
+          description: Details about the report.
+      type: object
+      required:
+      - event
+      - report
+      - details
+      title: ReportRequest[AddressReportParams]
+    ParamReport_AddressReportParams_:
+      properties:
+        type:
+          type: string
+          enum:
+          - params
+          title: Type
+        params:
+          $ref: '#/components/schemas/AddressReportParams'
+      type: object
+      required:
+      - type
+      - params
+      title: ParamReport[AddressReportParams]
+    RiskExposure:
+      description: An exposure category contributing to the address's compliance risk profile.
+      properties:
+        category:
+          type: string
+          title: Category
+          description: Exposure category name (e.g., sanctioned_entity, scam_investment_fraud, stolen_funds).
+        amount_usd:
+          type: number
+          title: Amount Usd
+          description: Estimated exposure amount in USD for this category.
+        percentage:
+          type: number
+          title: Percentage
+          description: Percentage of total exposure attributed to this category.
+        risk_level:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
+          description: Compliance risk level associated with this exposure category.
+      type: object
+      required:
+      - category
+      - amount_usd
+      - percentage
+      - risk_level
+      title: RiskExposure
+    RiskProfilingResponse:
+      description: Compliance risk exposure for an address, including an overall risk summary and exposure breakdown.
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address being profiled.
+        blocklist:
+          type: boolean
+          title: Blocklist
+          description: Whether the address is explicitly blocklisted.
+          default: false
+        name:
+          type: string
+          title: Name
+          description: Resolved entity name associated with the address, if known.
+        risk_summary:
+          $ref: '#/components/schemas/RiskSummary'
+        exposures:
+          items:
+            $ref: '#/components/schemas/RiskExposure'
+          type: array
+          title: Exposures
+          description: Exposure breakdown by category.
+      type: object
+      required:
+      - address
+      - risk_summary
+      title: RiskProfilingResponse
   securitySchemes:
     APIKey:
       type: apiKey

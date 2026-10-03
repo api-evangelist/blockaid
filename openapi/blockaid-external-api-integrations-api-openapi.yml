@@ -103,6 +103,167 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
 components:
   schemas:
+    TelegramIntegration:
+      description: Telegram integration instance.
+      properties:
+        type:
+          type: string
+          enum:
+          - telegram
+          const: telegram
+          title: Type
+          default: telegram
+        integrationInstanceId:
+          type: string
+          title: Integrationinstanceid
+      type: object
+      required:
+      - integrationInstanceId
+      title: TelegramIntegration
+    SlackIntegration:
+      description: Slack integration instance (workspace and channels).
+      properties:
+        type:
+          type: string
+          enum:
+          - slack
+          const: slack
+          title: Type
+          default: slack
+        integrationInstanceId:
+          type: string
+          title: Integrationinstanceid
+        workspace:
+          $ref: '#/components/schemas/SlackWorkspace'
+      type: object
+      required:
+      - integrationInstanceId
+      - workspace
+      title: SlackIntegration
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    FordefiIntegration:
+      description: Fordefi integration instance (MPC wallet provider).
+      properties:
+        type:
+          type: string
+          enum:
+          - fordefi
+          const: fordefi
+          title: Type
+          default: fordefi
+        integrationInstanceId:
+          type: string
+          title: Integrationinstanceid
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - integrationInstanceId
+      - name
+      title: FordefiIntegration
+    ResponseWalletChainStatus:
+      type: string
+      enum:
+      - active
+      - low_funds
+      title: ResponseWalletChainStatus
+    FireblocksIntegration:
+      description: Fireblocks integration instance (vaults provider).
+      properties:
+        type:
+          type: string
+          enum:
+          - fireblocks
+          const: fireblocks
+          title: Type
+          default: fireblocks
+        integrationInstanceId:
+          type: string
+          title: Integrationinstanceid
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - integrationInstanceId
+      - name
+      title: FireblocksIntegration
+    IntegrationNameFilter:
+      properties:
+        contains:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Contains
+      type: object
+      title: IntegrationNameFilter
+    VaultsResourceResponse:
+      description: Paginated response containing vault details or errors (e.g. for Fireblocks/Fordefi).
+      properties:
+        type:
+          type: string
+          enum:
+          - vaults_resource
+          const: vaults_resource
+          title: Type
+          default: vaults_resource
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        pages:
+          type: integer
+          title: Pages
+        size:
+          type: integer
+          title: Size
+        items:
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/VaultDetails'
+            - $ref: '#/components/schemas/VaultError'
+          type: array
+          title: Items
+      type: object
+      required:
+      - total
+      - page
+      - pages
+      - size
+      - items
+      title: VaultsResourceResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ResponseWalletChainResourceResponse:
       description: Paginated response containing wallet chain balances and status per chain.
       properties:
@@ -138,26 +299,124 @@ components:
       - size
       - items
       title: ResponseWalletChainResourceResponse
-    SlackIntegration:
-      description: Slack integration instance (workspace and channels).
+    TelegramResourceResponse:
+      description: Paginated response containing Telegram channels for an integration.
       properties:
         type:
           type: string
           enum:
-          - slack
-          const: slack
+          - telegram_resource
+          const: telegram_resource
           title: Type
-          default: slack
-        integrationInstanceId:
-          type: string
-          title: Integrationinstanceid
-        workspace:
-          $ref: '#/components/schemas/SlackWorkspace'
+          default: telegram_resource
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        pages:
+          type: integer
+          title: Pages
+        size:
+          type: integer
+          title: Size
+        items:
+          items:
+            $ref: '#/components/schemas/TelegramChannel'
+          type: array
+          title: Items
       type: object
       required:
-      - integrationInstanceId
-      - workspace
-      title: SlackIntegration
+      - total
+      - page
+      - pages
+      - size
+      - items
+      title: TelegramResourceResponse
+    IntegrationSortField:
+      type: string
+      enum:
+      - created_at
+      - name
+      - type
+      title: IntegrationSortField
+    IntegrationSortOperator:
+      type: string
+      enum:
+      - asc
+      - desc
+      title: IntegrationSortOperator
+    TelegramChannel:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: TelegramChannel
+    ExternalIntegrationType:
+      type: string
+      enum:
+      - fireblocks
+      - fordefi
+      - slack
+      - telegram
+      - response_wallet
+      title: ExternalIntegrationType
+      description: Type of external platform integration (Fireblocks, Fordefi, Slack, Telegram, or response wallet).
+    IntegrationSortRequest:
+      description: Sort specification (field and direction) for integration search.
+      properties:
+        field:
+          $ref: '#/components/schemas/IntegrationSortField'
+        operator:
+          $ref: '#/components/schemas/IntegrationSortOperator'
+      type: object
+      required:
+      - field
+      - operator
+      title: IntegrationSortRequest
+    SlackWorkspace:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+      type: object
+      required:
+      - id
+      - name
+      title: SlackWorkspace
+    IntegrationFilterRequest:
+      description: Optional filters for integration search (type and/or name).
+      properties:
+        type:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ExternalIntegrationType'
+            type: array
+          - type: 'null'
+          title: Type
+          default:
+          - fireblocks
+          - fordefi
+          - slack
+          - telegram
+          - response_wallet
+        name:
+          anyOf:
+          - $ref: '#/components/schemas/IntegrationNameFilter'
+          - type: 'null'
+      type: object
+      title: IntegrationFilterRequest
     AddressDetails:
       properties:
         address:
@@ -171,57 +430,100 @@ components:
       - address
       - chain
       title: AddressDetails
-    FireblocksIntegration:
-      description: Fireblocks integration instance (vaults provider).
+    VaultDetails:
+      properties:
+        vault_id:
+          type: string
+          title: Vault Id
+        name:
+          type: string
+          title: Name
+        addresses:
+          items:
+            $ref: '#/components/schemas/AddressDetails'
+          type: array
+          title: Addresses
+      type: object
+      required:
+      - vault_id
+      - name
+      - addresses
+      title: VaultDetails
+    ResponseWalletIntegration:
+      description: Response wallet integration (generic wallet type).
       properties:
         type:
           type: string
           enum:
-          - fireblocks
-          const: fireblocks
+          - response_wallet
+          const: response_wallet
           title: Type
-          default: fireblocks
+          default: response_wallet
         integrationInstanceId:
           type: string
           title: Integrationinstanceid
         name:
           type: string
           title: Name
+          description: Display name of the response wallet
+        address:
+          type: string
+          title: Address
+          description: The blockchain address of the response wallet
       type: object
       required:
       - integrationInstanceId
       - name
-      title: FireblocksIntegration
-    ValidationError:
+      - address
+      title: ResponseWalletIntegration
+    SlackResourceResponse:
+      description: Paginated response containing Slack channels for an integration.
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
         type:
           type: string
-          title: Error Type
+          enum:
+          - slack_resource
+          const: slack_resource
+          title: Type
+          default: slack_resource
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+        pages:
+          type: integer
+          title: Pages
+        size:
+          type: integer
+          title: Size
+        items:
+          items:
+            $ref: '#/components/schemas/SlackChannel'
+          type: array
+          title: Items
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    SlackChannel:
+      - total
+      - page
+      - pages
+      - size
+      - items
+      title: SlackResourceResponse
+    VaultError:
       properties:
-        name:
+        vault_id:
           type: string
-          title: Name
+          title: Vault Id
+        error:
+          type: string
+          title: Error
       type: object
       required:
-      - name
-      title: SlackChannel
+      - vault_id
+      - error
+      title: VaultError
     ? Page_Annotated_Union_FireblocksIntegration__SlackIntegration__FordefiIntegration__TelegramIntegration__ResponseWalletIntegration___FieldInfo_annotation_NoneType__required_True__discriminator__type____
     : description: Paginated response containing a list of integrations (Fireblocks, Fordefi, Slack, Telegram, or response wallet).
       properties:
@@ -274,92 +576,6 @@ components:
       - page
       - size
       title: Page[Annotated[Union[FireblocksIntegration, SlackIntegration, FordefiIntegration, TelegramIntegration, ResponseWalletIntegration], FieldInfo(annotation=NoneType, required=True, discriminator='type')]]
-    TelegramResourceResponse:
-      description: Paginated response containing Telegram channels for an integration.
-      properties:
-        type:
-          type: string
-          enum:
-          - telegram_resource
-          const: telegram_resource
-          title: Type
-          default: telegram_resource
-        total:
-          type: integer
-          title: Total
-        page:
-          type: integer
-          title: Page
-        pages:
-          type: integer
-          title: Pages
-        size:
-          type: integer
-          title: Size
-        items:
-          items:
-            $ref: '#/components/schemas/TelegramChannel'
-          type: array
-          title: Items
-      type: object
-      required:
-      - total
-      - page
-      - pages
-      - size
-      - items
-      title: TelegramResourceResponse
-    TelegramChannel:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - id
-      - name
-      title: TelegramChannel
-    ResponseWalletChainStatus:
-      type: string
-      enum:
-      - active
-      - low_funds
-      title: ResponseWalletChainStatus
-    SlackWorkspace:
-      properties:
-        id:
-          type: string
-          title: Id
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - id
-      - name
-      title: SlackWorkspace
-    VaultDetails:
-      properties:
-        vault_id:
-          type: string
-          title: Vault Id
-        name:
-          type: string
-          title: Name
-        addresses:
-          items:
-            $ref: '#/components/schemas/AddressDetails'
-          type: array
-          title: Addresses
-      type: object
-      required:
-      - vault_id
-      - name
-      - addresses
-      title: VaultDetails
     IntegrationSearchRequest:
       description: Request body for searching integrations (pagination, sort, and optional filter).
       properties:
@@ -387,47 +603,15 @@ components:
           - type: 'null'
       type: object
       title: IntegrationSearchRequest
-    IntegrationSortRequest:
-      description: Sort specification (field and direction) for integration search.
+    SlackChannel:
       properties:
-        field:
-          $ref: '#/components/schemas/IntegrationSortField'
-        operator:
-          $ref: '#/components/schemas/IntegrationSortOperator'
+        name:
+          type: string
+          title: Name
       type: object
       required:
-      - field
-      - operator
-      title: IntegrationSortRequest
-    IntegrationSortField:
-      type: string
-      enum:
-      - created_at
       - name
-      - type
-      title: IntegrationSortField
-    IntegrationNameFilter:
-      properties:
-        contains:
-          anyOf:
-          - type: string
-          - type: 'null'
-          title: Contains
-      type: object
-      title: IntegrationNameFilter
-    VaultError:
-      properties:
-        vault_id:
-          type: string
-          title: Vault Id
-        error:
-          type: string
-          title: Error
-      type: object
-      required:
-      - vault_id
-      - error
-      title: VaultError
+      title: SlackChannel
     ResponseWalletChain:
       properties:
         chain:
@@ -452,190 +636,6 @@ components:
       - chain
       - status
       title: ResponseWalletChain
-    IntegrationSortOperator:
-      type: string
-      enum:
-      - asc
-      - desc
-      title: IntegrationSortOperator
-    TelegramIntegration:
-      description: Telegram integration instance.
-      properties:
-        type:
-          type: string
-          enum:
-          - telegram
-          const: telegram
-          title: Type
-          default: telegram
-        integrationInstanceId:
-          type: string
-          title: Integrationinstanceid
-      type: object
-      required:
-      - integrationInstanceId
-      title: TelegramIntegration
-    ExternalIntegrationType:
-      type: string
-      enum:
-      - fireblocks
-      - fordefi
-      - slack
-      - telegram
-      - response_wallet
-      title: ExternalIntegrationType
-      description: Type of external platform integration (Fireblocks, Fordefi, Slack, Telegram, or response wallet).
-    SlackResourceResponse:
-      description: Paginated response containing Slack channels for an integration.
-      properties:
-        type:
-          type: string
-          enum:
-          - slack_resource
-          const: slack_resource
-          title: Type
-          default: slack_resource
-        total:
-          type: integer
-          title: Total
-        page:
-          type: integer
-          title: Page
-        pages:
-          type: integer
-          title: Pages
-        size:
-          type: integer
-          title: Size
-        items:
-          items:
-            $ref: '#/components/schemas/SlackChannel'
-          type: array
-          title: Items
-      type: object
-      required:
-      - total
-      - page
-      - pages
-      - size
-      - items
-      title: SlackResourceResponse
-    ResponseWalletIntegration:
-      description: Response wallet integration (generic wallet type).
-      properties:
-        type:
-          type: string
-          enum:
-          - response_wallet
-          const: response_wallet
-          title: Type
-          default: response_wallet
-        integrationInstanceId:
-          type: string
-          title: Integrationinstanceid
-        name:
-          type: string
-          title: Name
-          description: Display name of the response wallet
-        address:
-          type: string
-          title: Address
-          description: The blockchain address of the response wallet
-      type: object
-      required:
-      - integrationInstanceId
-      - name
-      - address
-      title: ResponseWalletIntegration
-    IntegrationFilterRequest:
-      description: Optional filters for integration search (type and/or name).
-      properties:
-        type:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ExternalIntegrationType'
-            type: array
-          - type: 'null'
-          title: Type
-          default:
-          - fireblocks
-          - fordefi
-          - slack
-          - telegram
-          - response_wallet
-        name:
-          anyOf:
-          - $ref: '#/components/schemas/IntegrationNameFilter'
-          - type: 'null'
-      type: object
-      title: IntegrationFilterRequest
-    VaultsResourceResponse:
-      description: Paginated response containing vault details or errors (e.g. for Fireblocks/Fordefi).
-      properties:
-        type:
-          type: string
-          enum:
-          - vaults_resource
-          const: vaults_resource
-          title: Type
-          default: vaults_resource
-        total:
-          type: integer
-          title: Total
-        page:
-          type: integer
-          title: Page
-        pages:
-          type: integer
-          title: Pages
-        size:
-          type: integer
-          title: Size
-        items:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/VaultDetails'
-            - $ref: '#/components/schemas/VaultError'
-          type: array
-          title: Items
-      type: object
-      required:
-      - total
-      - page
-      - pages
-      - size
-      - items
-      title: VaultsResourceResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    FordefiIntegration:
-      description: Fordefi integration instance (MPC wallet provider).
-      properties:
-        type:
-          type: string
-          enum:
-          - fordefi
-          const: fordefi
-          title: Type
-          default: fordefi
-        integrationInstanceId:
-          type: string
-          title: Integrationinstanceid
-        name:
-          type: string
-          title: Name
-      type: object
-      required:
-      - integrationInstanceId
-      - name
-      title: FordefiIntegration
   securitySchemes:
     APIKey:
       type: apiKey
