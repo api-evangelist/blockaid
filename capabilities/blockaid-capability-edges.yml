@@ -1,0 +1,106 @@
+slug: blockaid
+provider: Blockaid
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 9
+edges:
+- tag: Monitors
+  spec_file: blockaid-monitors-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.8
+  evidence: Create Monitor; schemas TokenStateChangedToMaliciousMonitor, ExploitContractDeployedWithReferenceToMonitoredAssetMonitor,
+    ActiveMaliciousAirdropCampaignMonitor, PauseContractAction
+  reason: Operations create and manage detection rules for malicious token state, exploit contract deployment
+    and malicious campaigns, with automated response actions (webhook, pause contract) — detection and
+    response, not generic alerting plumbing.
+- tag: Hedera
+  spec_file: blockaid-hedera-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: POST /v0/hedera/transaction/scan  Scan Transaction; POST /v0/hedera/address/scan  Scan Address;
+    schema HederaAddressScanFeature
+  reason: Chain-specific scanning of transactions and addresses returning validation/verdict features
+    is real-time malicious-activity detection, i.e. threat detection rather than any finance or crypto-business
+    capability in this frame.
+- tag: Site
+  spec_file: blockaid-site-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: POST /v0/site/scan  Scan Site; schemas SiteScanHitResponse, AttackEntry
+  reason: Scanning dApp sites and returning attack entries / hit verdicts is phishing and malicious-site
+    detection, i.e. threat detection and response.
+- tag: Solana
+  spec_file: blockaid-solana-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: POST /v0/solana/message/scan  Scan Transaction; POST /v0/solana/address/scan  Scan Address;
+    schema SolanaInternalVerdict
+  reason: Operations scan Solana transactions, messages and addresses and return an internal verdict/validation
+    features — real-time malicious activity detection on a chain, best framed as threat detection.
+- tag: Starknet
+  spec_file: blockaid-starknet-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: POST /v0/starknet/transaction/scan  Scan Transactions; schemas StarknetVerdict, StarknetValidationResult
+  reason: Transaction scanning returning a verdict and validation result is malicious-transaction detection;
+    the report endpoint feeds detection intelligence. Cybersecurity threat detection is the fitting capability.
+- tag: Stellar
+  spec_file: blockaid-stellar-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: POST /v0/stellar/transaction/scan  Scan Transaction; POST /v0/stellar/address/scan  Scan Address;
+    schema StellarVerdict
+  reason: Scanning Stellar transactions and addresses for a risk verdict is detection of malicious on-chain
+    activity, mapped to threat detection and response.
+- tag: Sui
+  spec_file: blockaid-sui-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.72
+  evidence: POST /v0/sui/transaction/scan  Scan Transaction; POST /v0/sui/address/scan  Scan Address;
+    schema SuiValidationFeature
+  reason: Pre- and post-transaction scanning plus address scanning with validation features constitutes
+    malicious-activity detection on the Sui chain, i.e. threat detection.
+- tag: Crypto Fraud Prevention
+  spec_file: blockaid-crypto-fraud-prevention-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: POST /v0/transaction/scan scan-transaction-chain-agnostic Scan Transaction; schemas ValidationResult,
+    TransactionScanStatus, UrlFeature
+  reason: Explicitly a fraud-prevention scan returning a validation/risk verdict on transactions before
+    signing — real-time detection of malicious activity, mapped to Threat Detection & Response Management.
+- tag: EVM
+  spec_file: blockaid-evm-api-openapi.yml
+  capability_id: BC-620.30
+  capability_id_l1: BC-620
+  capability_name: Threat Detection & Response Management
+  confidence: 0.7
+  evidence: POST /v0/evm/transaction/scan scan-transaction; POST /v0/evm/address/scan scan-address; POST
+    /v0/evm/address/report evm-address-report
+  reason: Scans EVM transactions, raw transactions, user operations and addresses for malicious behaviour
+    and accepts reports — detection and response to threats/exploits. Nearest candidate is BC-620.30;
+    confidence moderate as the surface is web3-specific security scanning.
