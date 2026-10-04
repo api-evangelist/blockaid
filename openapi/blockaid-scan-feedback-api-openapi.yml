@@ -57,15 +57,6 @@ paths:
       - ClientID: []
 components:
   schemas:
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ScanStatus:
       type: string
       enum:
@@ -73,19 +64,6 @@ components:
       - rejected
       title: ScanStatus
       description: Status of a scan-status lookup request.
-    ScanStatusRequest:
-      properties:
-        request_id:
-          type: string
-          title: Request Id
-          description: The x-request-id header returned from the previous Blockaid api request
-        status:
-          $ref: '#/components/schemas/ScanStatus'
-      type: object
-      required:
-      - request_id
-      - status
-      title: ScanStatusRequest
     ValidationError:
       properties:
         loc:
@@ -107,6 +85,28 @@ components:
       - msg
       - type
       title: ValidationError
+    ScanStatusRequest:
+      properties:
+        request_id:
+          type: string
+          title: Request Id
+          description: The x-request-id header returned from the previous Blockaid api request
+        status:
+          $ref: '#/components/schemas/ScanStatus'
+      type: object
+      required:
+      - request_id
+      - status
+      title: ScanStatusRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKey:
       type: apiKey
