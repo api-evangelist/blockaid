@@ -1,22 +1,30 @@
-generated: '2026-07-18'
+generated: '2026-09-23'
 method: generated
-source: openapi/blockaid-openapi-original.yml
+source: openapi/blockaid-asset-management-api-openapi.yml, openapi/blockaid-audit-logs-api-openapi.yml,
+  openapi/blockaid-bitcoin-api-openapi.yml, openapi/blockaid-chain-agnostic-api-openapi.yml,
+  openapi/blockaid-cosigner-api-openapi.yml, openapi/blockaid-crypto-fraud-prevention-api-openapi.yml,
+  openapi/blockaid-enrichment-api-openapi.yml, openapi/blockaid-evm-api-openapi.yml, openapi/blockaid-external-api-integrations-api-openapi.yml,
+  openapi/blockaid-external-api-openapi.yml, openapi/blockaid-hedera-api-openapi.yml, openapi/blockaid-metrics-api-openapi.yml,
+  openapi/blockaid-monitors-api-openapi.yml, openapi/blockaid-organization-risk-config-api-openapi.yml,
+  openapi/blockaid-report-api-openapi.yml, openapi/blockaid-scan-feedback-api-openapi.yml, openapi/blockaid-site-api-openapi.yml,
+  openapi/blockaid-solana-api-openapi.yml, openapi/blockaid-starknet-api-openapi.yml, openapi/blockaid-stellar-api-openapi.yml,
+  openapi/blockaid-sui-api-openapi.yml, openapi/blockaid-token-api-openapi.yml, openapi/blockaid-tron-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 93
   by_action_class:
-    acting: 76
-    connected: 17
+    acting: 69
+    connected: 24
   by_consequence:
-    write: 76
-    read: 17
+    write: 69
+    read: 24
   human_in_the_loop_required: 0
 operations:
-- path: /v0/platform/integrations/search
+- path: /v0/platform/assets/
   method: post
-  operationId: search_integrations_v0_platform_integrations_search_post
+  operationId: create-asset
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -30,9 +38,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/platform/integrations/{integration_instance_id}/resources
+- path: /v0/platform/assets/{identifier}
   method: get
-  operationId: get_integration_resources_v0_platform_integrations__integration_instance_id__resources_get
+  operationId: get-asset
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -40,6 +48,232 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /v0/platform/assets/{identifier}
+  method: delete
+  operationId: delete-asset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/assets/{identifier}
+  method: patch
+  operationId: patch-asset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/assets/search
+  method: post
+  operationId: postV0PlatformAssetsSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/assets/addresses/{chain_name}/{address}
+  method: get
+  operationId: get-asset
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/assets/addresses/{chain_name}/{address}
+  method: delete
+  operationId: delete-asset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/assets/addresses/{chain_name}/{address}
+  method: patch
+  operationId: patch-asset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/assets/domains/{domain}
+  method: get
+  operationId: get-asset
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/assets/domains/{domain}
+  method: delete
+  operationId: delete-asset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/assets/domains/{domain}
+  method: patch
+  operationId: patch-asset
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/assets/{asset_id}
+  method: get
+  operationId: get-asset-by-id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/audit-logs/search
+  method: post
+  operationId: postV0PlatformAuditLogsSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/bitcoin/transaction-raw/scan
+  method: post
+  operationId: bitcoin_scan_transaction_v0_transaction_raw_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/bitcoin/transaction/report
+  method: post
+  operationId: bitcoin_report_transaction_v0_transaction_report_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/bitcoin/address/scan
+  method: post
+  operationId: bitcoin_scan_address_address_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/address/risk-exposure
+  method: post
+  operationId: address-risk-exposure
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/address/report
+  method: post
+  operationId: address-report
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /v0/platform/cosigners/{id}/policies/
   method: get
   operationId: get_cosigner_policies_route_external_v0_cosigners__id__policies__get
@@ -86,18 +320,12 @@ operations:
   method: post
   operationId: get_cosigners_paginated_route_external_v0_cosigners_search_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v0/platform/cosigners/by-name/{name}
   method: get
   operationId: get_cosigner_by_name_route_external_v0_cosigners_by_name__name__get
@@ -153,6 +381,70 @@ operations:
 - path: /v0/platform/cosigners/{id}/evm/evaluate
   method: post
   operationId: evaluate_transaction_route_external_v0_cosigners__id__evm_evaluate_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/transaction/scan
+  method: post
+  operationId: scan-transaction-chain-agnostic
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/enrichment/account/login
+  method: post
+  operationId: log-account-login
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/enrichment/account/modify
+  method: post
+  operationId: modify-account
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/enrichment/report/
+  method: post
+  operationId: report-fraud
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -310,54 +602,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/transaction/scan
-  method: post
-  operationId: scan-transaction-chain-agnostic
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/tron/transaction/scan
-  method: post
-  operationId: scan-tron-transaction
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/tron/address/scan
-  method: post
-  operationId: scan-tron-address
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /v0/evm/address/scan
   method: post
   operationId: scan-address
@@ -394,18 +638,12 @@ operations:
   method: post
   operationId: evm-address-approvals
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v0/evm/address-bulk/scan
   method: post
   operationId: scan-address-bulk
@@ -438,9 +676,29 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/address/risk-exposure
+- path: /v0/platform/integrations/search
   method: post
-  operationId: address-risk-exposure
+  operationId: search_integrations_v0_platform_integrations_search_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/integrations/{integration_instance_id}/resources
+  method: get
+  operationId: get_integration_resources_v0_platform_integrations__integration_instance_id__resources_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/cosigners/{id}/solana/evaluate
+  method: post
+  operationId: evaluate_solana_transaction_route_external_v0_cosigners__id__solana_evaluate_post
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -454,9 +712,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/address/report
+- path: /v0/hedera/transaction/scan
   method: post
-  operationId: address-report
+  operationId: hedera_scan_transaction_v0_transaction_scan_post
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -470,9 +728,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/site/scan
+- path: /v0/hedera/address/scan
   method: post
-  operationId: scan-site
+  operationId: hedera_scan_address_v0_address_scan_post
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -486,9 +744,155 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/site/report
+- path: /v0/platform/metrics
   method: post
-  operationId: site-report
+  operationId: postV0PlatformMetrics
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/metrics/{id}
+  method: patch
+  operationId: patchV0PlatformMetricsById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/metrics/{id}
+  method: get
+  operationId: getV0PlatformMetricsById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/metrics/{id}
+  method: delete
+  operationId: deleteV0PlatformMetricsById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/metrics/search
+  method: post
+  operationId: postV0PlatformMetricsSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/monitors/
+  method: post
+  operationId: postV0PlatformMonitors
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/monitors/{id}
+  method: get
+  operationId: getV0PlatformMonitorsById
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/monitors/{id}
+  method: patch
+  operationId: patchV0PlatformMonitorsById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/monitors/{id}
+  method: delete
+  operationId: deleteV0PlatformMonitorsById
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/platform/monitors/search
+  method: post
+  operationId: postV0PlatformMonitorsSearch
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/organization/configuration/risk-exposure
+  method: get
+  operationId: get-organization-risk-config
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v0/platform/organization/configuration/risk-exposure
+  method: patch
+  operationId: patch-organization-risk-config
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -566,9 +970,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/enrichment/account/login
+- path: /v0/site/scan
   method: post
-  operationId: log-account-login
+  operationId: scan-site
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -582,474 +986,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/enrichment/account/modify
+- path: /v0/site/report
   method: post
-  operationId: modify-account
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/enrichment/report/
-  method: post
-  operationId: report-fraud
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/
-  method: post
-  operationId: create-asset
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/{identifier}
-  method: get
-  operationId: get-asset
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v0/platform/assets/{identifier}
-  method: delete
-  operationId: delete-asset
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/{identifier}
-  method: patch
-  operationId: patch-asset
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/search
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/addresses/{chain_name}/{address}
-  method: get
-  operationId: get-asset
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v0/platform/assets/addresses/{chain_name}/{address}
-  method: delete
-  operationId: delete-asset
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/addresses/{chain_name}/{address}
-  method: patch
-  operationId: patch-asset
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/domains/{domain}
-  method: get
-  operationId: get-asset
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v0/platform/assets/domains/{domain}
-  method: delete
-  operationId: delete-asset
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/domains/{domain}
-  method: patch
-  operationId: patch-asset
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/assets/{asset_id}
-  method: get
-  operationId: get-asset-by-id
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v0/platform/monitors/
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/monitors/{id}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v0/platform/monitors/{id}
-  method: patch
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/monitors/{id}
-  method: delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/monitors/search
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/metrics
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/metrics/{id}
-  method: patch
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/metrics/{id}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v0/platform/metrics/{id}
-  method: delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/metrics/search
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/stellar/transaction/scan
-  method: post
-  operationId: stellar_single_transaction_scan_transaction_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/stellar/transaction/report
-  method: post
-  operationId: stellar_report_transaction_transaction_report_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/bitcoin/transaction-raw/scan
-  method: post
-  operationId: bitcoin_scan_transaction_v0_transaction_raw_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/bitcoin/transaction/report
-  method: post
-  operationId: bitcoin_report_transaction_v0_transaction_report_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/bitcoin/address/scan
-  method: post
-  operationId: bitcoin_scan_address_address_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/starknet/transaction/scan
-  method: post
-  operationId: starknet_scan_transaction_v0_transaction_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/starknet/transaction/report
-  method: post
-  operationId: starknet_report_transaction_v0_transaction_report_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/sui/transaction/scan
-  method: post
-  operationId: sui_scan_transaction_v0_transaction_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/sui/post-transaction/scan
-  method: post
-  operationId: sui_post_transaction_scan_v0_post_transaction_scan_post
+  operationId: site-report
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1095,9 +1034,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/token/scan
+- path: /v0/solana/address/scan
   method: post
-  operationId: scan-token
+  operationId: solana_scan_address_address_scan_post
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1111,9 +1050,137 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/hedera/transaction/scan
+- path: /v0/starknet/transaction/scan
   method: post
-  operationId: hedera_scan_transaction_v0_transaction_scan_post
+  operationId: starknet_scan_transaction_v0_transaction_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/starknet/transaction/report
+  method: post
+  operationId: starknet_report_transaction_v0_transaction_report_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/stellar/transaction/scan
+  method: post
+  operationId: stellar_single_transaction_scan_transaction_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/stellar/transaction/report
+  method: post
+  operationId: stellar_report_transaction_transaction_report_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/stellar/address/scan
+  method: post
+  operationId: stellar_scan_address_address_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/sui/transaction/scan
+  method: post
+  operationId: sui_scan_transaction_v0_transaction_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/sui/post-transaction/scan
+  method: post
+  operationId: sui_post_transaction_scan_v0_post_transaction_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/sui/address/scan
+  method: post
+  operationId: sui_scan_address_v0_address_scan_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v0/token/scan
+  method: post
+  operationId: scan-token
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1267,9 +1334,9 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v0/solana/address/scan
+- path: /v0/tron/transaction/scan
   method: post
-  operationId: solana_scan_address_address_scan_post
+  operationId: scan-tron-transaction
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -1283,98 +1350,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v0/hedera/address/scan
+- path: /v0/tron/address/scan
   method: post
-  operationId: hedera_scan_address_v0_address_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/sui/address/scan
-  method: post
-  operationId: sui_scan_address_v0_address_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/stellar/address/scan
-  method: post
-  operationId: stellar_scan_address_address_scan_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/audit-logs/search
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/cosigners/{id}/solana/evaluate
-  method: post
-  operationId: evaluate_solana_transaction_route_external_v0_cosigners__id__solana_evaluate_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v0/platform/organization/configuration/risk-exposure
-  method: get
-  operationId: get-organization-risk-config
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v0/platform/organization/configuration/risk-exposure
-  method: patch
-  operationId: patch-organization-risk-config
+  operationId: scan-tron-address
   x-agentic-access:
     action-class: acting
     consequence: write
