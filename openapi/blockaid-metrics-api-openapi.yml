@@ -388,9 +388,324 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AuthorizationHeaderAuthentication:
+      type: object
+      properties:
+        type:
+          type: string
+          const: authorization_header
+          description: Type discriminator for this object.
+        value:
+          type: string
+          description: Comparison value.
+      required:
+      - type
+      - value
+    SolanaInstructionMetric:
+      title: Instruction Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: solana_instruction
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        instruction_name:
+          type: string
+          description: Instruction name to aggregate.
+        output_field:
+          type: string
+          description: Instruction parameter or path whose value the metric reads.
+        instruction_filters:
+          type: array
+          items:
+            type: object
+            properties:
+              parameter_name:
+                type: string
+                description: Instruction parameter name to filter on.
+              parameter_value:
+                type: string
+                description: Instruction parameter value to match.
+            required:
+            - parameter_name
+            - parameter_value
+          description: Filters applied to instruction parameters — only matching instructions update the metric.
+      required:
+      - type
+      - target
+      - instruction_name
+      - output_field
+    MetricObject:
+      title: Metric Object
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the metric.
+        name:
+          type: string
+          description: Display name of the metric.
+        data:
+          $ref: '#/components/schemas/MetricsResponse'
+          description: Metric definition details.
+        created_at:
+          type: string
+          description: Timestamp for created at.
+        added_by:
+          type: string
+          description: Actor that added by this record.
+      required:
+      - id
+      - name
+      - data
+      - created_at
+      - added_by
+    APIKeyAuthorization:
+      type: object
+      properties:
+        type:
+          type: string
+          const: api_key
+          description: Type discriminator for this object.
+        header_name:
+          type: string
+          description: Header name used for API key authentication.
+        api_key:
+          type: string
+          description: Secret value for api key authentication.
+      required:
+      - type
+      - header_name
+      - api_key
+    HMACAuthentication:
+      type: object
+      properties:
+        type:
+          type: string
+          const: hmac
+          description: Type discriminator for this object.
+        hmac_secret:
+          type: string
+          description: Secret value for hmac secret authentication.
+      required:
+      - type
+      - hmac_secret
+    ReadObjectMetric:
+      title: Read Object Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: read_object
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        field_path:
+          type: string
+          description: Path to the field that should be extracted.
+      required:
+      - type
+      - target
+      - field_path
+    Authentication:
+      anyOf:
+      - $ref: '#/components/schemas/HMACAuthentication'
+      - $ref: '#/components/schemas/AuthorizationHeaderAuthentication'
+      - $ref: '#/components/schemas/APIKeyAuthorization'
+      - $ref: '#/components/schemas/BasicAuth'
+    TransferMetric:
+      title: Transfer Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: transfer
+          description: Type discriminator for this object.
+        from:
+          type: object
+          properties:
+            operator:
+              type: string
+              enum:
+              - in
+              - not_in
+              description: Comparison operator for from.
+            target:
+              type: array
+              items:
+                anyOf:
+                - $ref: '#/components/schemas/AssetTagTarget'
+                - $ref: '#/components/schemas/AssetIDTarget'
+              description: Target asset or entity selection for this rule or action.
+          required:
+          - operator
+          - target
+          description: From-side transfer filter configuration.
+        to:
+          type: object
+          properties:
+            operator:
+              type: string
+              enum:
+              - in
+              - not_in
+              description: Comparison operator for to.
+            target:
+              type: array
+              items:
+                anyOf:
+                - $ref: '#/components/schemas/AssetTagTarget'
+                - $ref: '#/components/schemas/AssetIDTarget'
+              description: Target asset or entity selection for this rule or action.
+          required:
+          - operator
+          - target
+          description: To-side transfer filter configuration.
+      required:
+      - type
+      - from
+      - to
+    ComputedMetric:
+      title: Computed Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: computed_metric
+          description: Type discriminator for this object.
+        metrics:
+          type: array
+          items:
+            type: object
+            properties:
+              symbol:
+                type: string
+                description: Short symbol used to reference this metric in formulas.
+              metric_id:
+                type: string
+                description: Identifier for the metric.
+            required:
+            - symbol
+            - metric_id
+          description: Metric definitions used by this configuration.
+        formula:
+          type: string
+          description: Formula expression used to compute this metric.
+      required:
+      - type
+      - metrics
+      - formula
+    BasicAuth:
+      type: object
+      properties:
+        type:
+          type: string
+          const: basic_auth
+        username:
+          type: string
+        password:
+          type: string
+      required:
+      - type
+      - username
+      - password
+    AssetTagTarget:
+      title: Asset Tag Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_tag
+          description: Type discriminator for this object.
+          enum:
+          - asset_tag
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    EventMetric:
+      title: Event Metric
+      type: object
+      properties:
+        type:
+          type: string
+          const: event_metric
+          description: Type discriminator for this object.
+        target:
+          anyOf:
+          - $ref: '#/components/schemas/AssetIDTarget'
+          description: Target asset or entity selection for this rule or action.
+        event_name:
+          type: string
+          description: Event name to monitor.
+        output_field:
+          type: string
+          description: Field path to read from the response payload.
+        event_filters:
+          type: array
+          items:
+            type: object
+            properties:
+              parameter_name:
+                type: string
+                description: Event parameter name to filter on.
+              parameter_value:
+                anyOf:
+                - type: string
+                - type: integer
+                description: Event parameter value to match.
+            required:
+            - parameter_name
+            - parameter_value
+          description: Filters applied to event parameters.
+      required:
+      - type
+      - target
+      - event_name
+      - output_field
     MetricsResponse:
       title: Metrics Response
       description: Union of supported metric definitions returned by the API.
+      anyOf:
+      - $ref: '#/components/schemas/ContractCallMetric'
+      - $ref: '#/components/schemas/ReadObjectMetric'
+      - $ref: '#/components/schemas/APICallMetric'
+      - $ref: '#/components/schemas/TransferMetric'
+      - $ref: '#/components/schemas/ComputedMetric'
+      - $ref: '#/components/schemas/EventMetric'
+      - $ref: '#/components/schemas/SolanaAccountInfoReadMetric'
+      - $ref: '#/components/schemas/SolanaInstructionMetric'
+    AssetIDTarget:
+      title: Asset ID Target
+      type: object
+      properties:
+        type:
+          type: string
+          const: asset_id
+          description: Type discriminator for this object.
+          enum:
+          - asset_id
+          title: Type
+        identifier:
+          type: string
+          description: Target identifier value.
+          title: Identifier
+      required:
+      - type
+      - identifier
+    MetricsRequest:
+      title: Metrics Request
+      description: Union of supported metric definition payloads.
       anyOf:
       - $ref: '#/components/schemas/ContractCallMetric'
       - $ref: '#/components/schemas/ReadObjectMetric'
@@ -517,321 +832,6 @@ components:
       - type
       - target
       - function_name
-    AssetTagTarget:
-      title: Asset Tag Target
-      type: object
-      properties:
-        type:
-          type: string
-          const: asset_tag
-          description: Type discriminator for this object.
-          enum:
-          - asset_tag
-          title: Type
-        identifier:
-          type: string
-          description: Target identifier value.
-          title: Identifier
-      required:
-      - type
-      - identifier
-    AssetIDTarget:
-      title: Asset ID Target
-      type: object
-      properties:
-        type:
-          type: string
-          const: asset_id
-          description: Type discriminator for this object.
-          enum:
-          - asset_id
-          title: Type
-        identifier:
-          type: string
-          description: Target identifier value.
-          title: Identifier
-      required:
-      - type
-      - identifier
-    APIKeyAuthorization:
-      type: object
-      properties:
-        type:
-          type: string
-          const: api_key
-          description: Type discriminator for this object.
-        header_name:
-          type: string
-          description: Header name used for API key authentication.
-        api_key:
-          type: string
-          description: Secret value for api key authentication.
-      required:
-      - type
-      - header_name
-      - api_key
-    MetricObject:
-      title: Metric Object
-      type: object
-      properties:
-        id:
-          type: string
-          description: Unique identifier of the metric.
-        name:
-          type: string
-          description: Display name of the metric.
-        data:
-          $ref: '#/components/schemas/MetricsResponse'
-          description: Metric definition details.
-        created_at:
-          type: string
-          description: Timestamp for created at.
-        added_by:
-          type: string
-          description: Actor that added by this record.
-      required:
-      - id
-      - name
-      - data
-      - created_at
-      - added_by
-    EventMetric:
-      title: Event Metric
-      type: object
-      properties:
-        type:
-          type: string
-          const: event_metric
-          description: Type discriminator for this object.
-        target:
-          anyOf:
-          - $ref: '#/components/schemas/AssetIDTarget'
-          description: Target asset or entity selection for this rule or action.
-        event_name:
-          type: string
-          description: Event name to monitor.
-        output_field:
-          type: string
-          description: Field path to read from the response payload.
-        event_filters:
-          type: array
-          items:
-            type: object
-            properties:
-              parameter_name:
-                type: string
-                description: Event parameter name to filter on.
-              parameter_value:
-                anyOf:
-                - type: string
-                - type: integer
-                description: Event parameter value to match.
-            required:
-            - parameter_name
-            - parameter_value
-          description: Filters applied to event parameters.
-      required:
-      - type
-      - target
-      - event_name
-      - output_field
-    BasicAuth:
-      type: object
-      properties:
-        type:
-          type: string
-          const: basic_auth
-        username:
-          type: string
-        password:
-          type: string
-      required:
-      - type
-      - username
-      - password
-    AuthorizationHeaderAuthentication:
-      type: object
-      properties:
-        type:
-          type: string
-          const: authorization_header
-          description: Type discriminator for this object.
-        value:
-          type: string
-          description: Comparison value.
-      required:
-      - type
-      - value
-    Authentication:
-      anyOf:
-      - $ref: '#/components/schemas/HMACAuthentication'
-      - $ref: '#/components/schemas/AuthorizationHeaderAuthentication'
-      - $ref: '#/components/schemas/APIKeyAuthorization'
-      - $ref: '#/components/schemas/BasicAuth'
-    ComputedMetric:
-      title: Computed Metric
-      type: object
-      properties:
-        type:
-          type: string
-          const: computed_metric
-          description: Type discriminator for this object.
-        metrics:
-          type: array
-          items:
-            type: object
-            properties:
-              symbol:
-                type: string
-                description: Short symbol used to reference this metric in formulas.
-              metric_id:
-                type: string
-                description: Identifier for the metric.
-            required:
-            - symbol
-            - metric_id
-          description: Metric definitions used by this configuration.
-        formula:
-          type: string
-          description: Formula expression used to compute this metric.
-      required:
-      - type
-      - metrics
-      - formula
-    TransferMetric:
-      title: Transfer Metric
-      type: object
-      properties:
-        type:
-          type: string
-          const: transfer
-          description: Type discriminator for this object.
-        from:
-          type: object
-          properties:
-            operator:
-              type: string
-              enum:
-              - in
-              - not_in
-              description: Comparison operator for from.
-            target:
-              type: array
-              items:
-                anyOf:
-                - $ref: '#/components/schemas/AssetTagTarget'
-                - $ref: '#/components/schemas/AssetIDTarget'
-              description: Target asset or entity selection for this rule or action.
-          required:
-          - operator
-          - target
-          description: From-side transfer filter configuration.
-        to:
-          type: object
-          properties:
-            operator:
-              type: string
-              enum:
-              - in
-              - not_in
-              description: Comparison operator for to.
-            target:
-              type: array
-              items:
-                anyOf:
-                - $ref: '#/components/schemas/AssetTagTarget'
-                - $ref: '#/components/schemas/AssetIDTarget'
-              description: Target asset or entity selection for this rule or action.
-          required:
-          - operator
-          - target
-          description: To-side transfer filter configuration.
-      required:
-      - type
-      - from
-      - to
-    HMACAuthentication:
-      type: object
-      properties:
-        type:
-          type: string
-          const: hmac
-          description: Type discriminator for this object.
-        hmac_secret:
-          type: string
-          description: Secret value for hmac secret authentication.
-      required:
-      - type
-      - hmac_secret
-    MetricsRequest:
-      title: Metrics Request
-      description: Union of supported metric definition payloads.
-      anyOf:
-      - $ref: '#/components/schemas/ContractCallMetric'
-      - $ref: '#/components/schemas/ReadObjectMetric'
-      - $ref: '#/components/schemas/APICallMetric'
-      - $ref: '#/components/schemas/TransferMetric'
-      - $ref: '#/components/schemas/ComputedMetric'
-      - $ref: '#/components/schemas/EventMetric'
-      - $ref: '#/components/schemas/SolanaAccountInfoReadMetric'
-      - $ref: '#/components/schemas/SolanaInstructionMetric'
-    SolanaInstructionMetric:
-      title: Instruction Metric
-      type: object
-      properties:
-        type:
-          type: string
-          const: solana_instruction
-          description: Type discriminator for this object.
-        target:
-          anyOf:
-          - $ref: '#/components/schemas/AssetIDTarget'
-          description: Target asset or entity selection for this rule or action.
-        instruction_name:
-          type: string
-          description: Instruction name to aggregate.
-        output_field:
-          type: string
-          description: Instruction parameter or path whose value the metric reads.
-        instruction_filters:
-          type: array
-          items:
-            type: object
-            properties:
-              parameter_name:
-                type: string
-                description: Instruction parameter name to filter on.
-              parameter_value:
-                type: string
-                description: Instruction parameter value to match.
-            required:
-            - parameter_name
-            - parameter_value
-          description: Filters applied to instruction parameters — only matching instructions update the metric.
-      required:
-      - type
-      - target
-      - instruction_name
-      - output_field
-    ReadObjectMetric:
-      title: Read Object Metric
-      type: object
-      properties:
-        type:
-          type: string
-          const: read_object
-          description: Type discriminator for this object.
-        target:
-          anyOf:
-          - $ref: '#/components/schemas/AssetIDTarget'
-          description: Target asset or entity selection for this rule or action.
-        field_path:
-          type: string
-          description: Path to the field that should be extracted.
-      required:
-      - type
-      - target
-      - field_path
   securitySchemes:
     APIKey:
       type: apiKey

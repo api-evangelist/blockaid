@@ -107,6 +107,23 @@ paths:
       - ClientID: []
 components:
   schemas:
+    routers__exchange_protection__account__models__AddressDetails:
+      properties:
+        address:
+          type: string
+          title: Address
+        chain:
+          type: string
+          title: Chain
+        asset:
+          type: string
+          title: Asset
+      type: object
+      required:
+      - address
+      - chain
+      - asset
+      title: AddressDetails
     routers__exchange_protection__account__models__Account:
       properties:
         account_id:
@@ -128,95 +145,55 @@ components:
       required:
       - account_id
       title: Account
-    LogAccountLoginRequest:
+    EnrichmentReportAccount:
       properties:
-        account:
-          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
-        event_time:
+        account_id:
           type: string
-          format: date-time
-          title: Event Time
-        connection:
-          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Account Id
+        account_creation_timestamp:
+          type: string
+          title: Account Creation Timestamp
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+        user_country_code:
+          type: string
+          title: User Country Code
       type: object
       required:
-      - account
-      - event_time
-      title: LogAccountLoginRequest
-    ModifyWithdrawalAddressRequest:
+      - account_id
+      - user_country_code
+      title: EnrichmentReportAccount
+    EnrichmentReportSource:
+      type: string
+      enum:
+      - user_report
+      - internal_system_report
+      - manual_report
+      title: EnrichmentReportSource
+      description: Source of an enrichment report.
+    ValidationError:
       properties:
-        access_request_type:
-          type: string
-          enum:
-          - ADD_WITHDRAWAL_ADDRESS
-          title: Access Request Type
-        account:
-          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
-        address_details:
-          $ref: '#/components/schemas/routers__exchange_protection__account__models__AddressDetails'
-        event_time:
-          type: string
-          format: date-time
-          title: Event Time
-        connection:
-          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-      type: object
-      required:
-      - access_request_type
-      - account
-      - address_details
-      - event_time
-      title: ModifyWithdrawalAddressRequest
-    ModifyPaymentMethodRequest:
-      properties:
-        access_request_type:
-          type: string
-          enum:
-          - ADD_PAYMENT_METHOD
-          title: Access Request Type
-        account:
-          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
-        payment_method:
-          $ref: '#/components/schemas/Payment'
-        event_time:
-          type: string
-          format: date-time
-          title: Event Time
-        connection:
-          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-      type: object
-      required:
-      - access_request_type
-      - account
-      - payment_method
-      - event_time
-      title: ModifyPaymentMethodRequest
-    HTTPValidationError:
-      properties:
-        detail:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    routers__exchange_protection__account__models__AddressDetails:
-      properties:
-        address:
+          title: Location
+        msg:
           type: string
-          title: Address
-        chain:
+          title: Message
+        type:
           type: string
-          title: Chain
-        asset:
-          type: string
-          title: Asset
+          title: Error Type
       type: object
       required:
-      - address
-      - chain
-      - asset
-      title: AddressDetails
+      - loc
+      - msg
+      - type
+      title: ValidationError
     PaymentMethod:
       type: string
       enum:
@@ -226,6 +203,28 @@ components:
       - iban
       title: PaymentMethod
       description: Payment method used for billing.
+    EnrichmentReportAddresses:
+      properties:
+        source:
+          allOf:
+          - $ref: '#/components/schemas/EnrichmentReportSource'
+          description: The source of the fraud report
+          default: user_report
+        addresses:
+          items:
+            $ref: '#/components/schemas/EnrichmentReportAddress'
+          type: array
+          title: Addresses
+        fraud_urls:
+          items:
+            type: string
+          type: array
+          title: Fraud Urls
+          description: URLs that are associated with the fraud report
+      type: object
+      required:
+      - addresses
+      title: EnrichmentReportAddresses
     Payment:
       properties:
         payment_method:
@@ -238,17 +237,6 @@ components:
       - payment_method
       - currency
       title: Payment
-    EnrichmentRequest:
-      properties:
-        report:
-          $ref: '#/components/schemas/EnrichmentReportAddresses'
-        metadata:
-          $ref: '#/components/schemas/EnrichmentReportMetadata'
-      type: object
-      required:
-      - report
-      - metadata
-      title: EnrichmentRequest
     SupportedChains:
       type: string
       enum:
@@ -307,77 +295,69 @@ components:
       - arc
       title: SupportedChains
       description: Supported chain identifiers.
-    EnrichmentReportSource:
-      type: string
-      enum:
-      - user_report
-      - internal_system_report
-      - manual_report
-      title: EnrichmentReportSource
-      description: Source of an enrichment report.
-    EnrichmentReportAddresses:
+    ModifyWithdrawalAddressRequest:
       properties:
-        source:
-          allOf:
-          - $ref: '#/components/schemas/EnrichmentReportSource'
-          description: The source of the fraud report
-          default: user_report
-        addresses:
-          items:
-            $ref: '#/components/schemas/EnrichmentReportAddress'
-          type: array
-          title: Addresses
-        fraud_urls:
-          items:
-            type: string
-          type: array
-          title: Fraud Urls
-          description: URLs that are associated with the fraud report
+        access_request_type:
+          type: string
+          enum:
+          - ADD_WITHDRAWAL_ADDRESS
+          title: Access Request Type
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        address_details:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__AddressDetails'
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
       type: object
       required:
-      - addresses
-      title: EnrichmentReportAddresses
-    EnrichmentReportAccount:
+      - access_request_type
+      - account
+      - address_details
+      - event_time
+      title: ModifyWithdrawalAddressRequest
+    LogAccountLoginRequest:
       properties:
-        account_id:
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        event_time:
           type: string
-          title: Account Id
-        account_creation_timestamp:
-          type: string
-          title: Account Creation Timestamp
-        user_age:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: User Age
-        user_country_code:
-          type: string
-          title: User Country Code
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
       type: object
       required:
-      - account_id
-      - user_country_code
-      title: EnrichmentReportAccount
-    ValidationError:
+      - account
+      - event_time
+      title: LogAccountLoginRequest
+    ModifyPaymentMethodRequest:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        access_request_type:
           type: string
-          title: Message
-        type:
+          enum:
+          - ADD_PAYMENT_METHOD
+          title: Access Request Type
+        account:
+          $ref: '#/components/schemas/routers__exchange_protection__account__models__Account'
+        payment_method:
+          $ref: '#/components/schemas/Payment'
+        event_time:
           type: string
-          title: Error Type
+          format: date-time
+          title: Event Time
+        connection:
+          $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - access_request_type
+      - account
+      - payment_method
+      - event_time
+      title: ModifyPaymentMethodRequest
     EnrichmentReportAddress:
       properties:
         chain:
@@ -398,6 +378,17 @@ components:
       required:
       - account
       title: EnrichmentReportMetadata
+    EnrichmentRequest:
+      properties:
+        report:
+          $ref: '#/components/schemas/EnrichmentReportAddresses'
+        metadata:
+          $ref: '#/components/schemas/EnrichmentReportMetadata'
+      type: object
+      required:
+      - report
+      - metadata
+      title: EnrichmentRequest
     routers__chain_agnostic__models__request__Connection:
       properties:
         user_agent:
@@ -427,6 +418,15 @@ components:
       required:
       - ip_address
       title: Connection
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKey:
       type: apiKey

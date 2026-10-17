@@ -177,41 +177,22 @@ paths:
       - ClientID: []
 components:
   schemas:
-    RiskSummary:
-      description: Aggregated compliance risk summary for the profiled address.
-      properties:
-        risk_level:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
-          description: Overall compliance risk level for the address.
-        total_usd:
-          type: number
-          title: Total Usd
-          description: Total estimated USD exposure considered in the profile.
-        total_malicious_exposure:
-          type: number
-          title: Total Malicious Exposure
-          description: Total estimated USD exposure associated with malicious risk.
-      type: object
-      required:
-      - risk_level
-      - total_usd
-      - total_malicious_exposure
-      title: RiskSummary
-    ParamReport_AddressReportParams_:
+    RequestIDReport:
       properties:
         type:
           type: string
-          enum:
-          - params
+          const: request_id
           title: Type
-        params:
-          $ref: '#/components/schemas/AddressReportParams'
+          description: The type identifier indicating that a request ID from a previous scan is being used.
+        request_id:
+          type: string
+          title: Request Id
+          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
       type: object
       required:
       - type
-      - params
-      title: ParamReport[AddressReportParams]
+      - request_id
+      title: RequestIDReport
     ReportRequest_AddressReportParams_:
       properties:
         event:
@@ -234,15 +215,6 @@ components:
       - report
       - details
       title: ReportRequest[AddressReportParams]
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     RiskExposureAddressScanRequest:
       properties:
         address:
@@ -258,103 +230,15 @@ components:
       - address
       - chain
       title: RiskExposureAddressScanRequest
-    EventEnum:
+    routers__chain_agnostic__models__response__ValidationResultType:
       type: string
       enum:
-      - FALSE_POSITIVE
-      - FALSE_NEGATIVE
-      title: EventEnum
-    AddressReportParams:
-      properties:
-        address:
-          type: string
-          title: Address
-          description: The address to report on.
-        domain:
-          type: string
-          title: Domain
-          description: The domain related to this address.
-        chain:
-          allOf:
-          - $ref: '#/components/schemas/AddressReportSupportedChains'
-          description: The chain name
-      type: object
-      required:
-      - address
-      - domain
-      - chain
-      title: AddressReportParams
-    ScanRequestMetadata:
-      properties:
-        domain:
-          type: string
-          title: Domain
-          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
-        non_dapp:
-          type: boolean
-          title: Non Dapp
-          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
-        account:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
-          title: Account
-          description: End-user account context (id, age, country, creation time, and account_addresses).
-        connection:
-          allOf:
-          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
-          title: Connection
-          description: Connection metadata including user agent, IP information, and origin.
-      type: object
-      title: ScanRequestMetadata
-    routers__chain_agnostic__models__request__Account:
-      properties:
-        account_id:
-          type: string
-          title: Account Id
-          description: Unique identifier for the account.
-        account_creation_timestamp:
-          type: string
-          format: date-time
-          title: Account Creation Timestamp
-          description: Timestamp when the account was created.
-        user_age:
-          type: integer
-          exclusiveMinimum: 0.0
-          title: User Age
-          description: Age of the user in years
-        user_country_code:
-          type: string
-          title: User Country Code
-          description: ISO country code of the user's location.
-        account_addresses:
-          items:
-            type: string
-          type: array
-          title: Account Addresses
-          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
-      type: object
-      required:
-      - account_id
-      title: Account
-    RiskExposureSupportedChains:
-      enum:
-      - ethereum
-      - base
-      - bsc
-      - arbitrum
-      - optimism
-      - aster
-      - polygon
-      - hyperevm
-      - hyperliquid
-      - lighter
-      - tron
-      - bitcoin
-      - solana
-      - polymarket
-      title: RiskExposureSupportedChains
-      type: string
-      description: Supported chains for risk exposure
+      - Malicious
+      - Warning
+      - Benign
+      - High-Risk
+      title: ValidationResultType
+      description: The type of validation result.
     ValidationError:
       properties:
         loc:
@@ -439,6 +323,12 @@ components:
       - arc
       title: AddressReportSupportedChains
       description: The chain name
+    EventEnum:
+      type: string
+      enum:
+      - FALSE_POSITIVE
+      - FALSE_NEGATIVE
+      title: EventEnum
     RiskExposure:
       description: An exposure category contributing to the address's compliance risk profile.
       properties:
@@ -465,6 +355,45 @@ components:
       - percentage
       - risk_level
       title: RiskExposure
+    AddressReportParams:
+      properties:
+        address:
+          type: string
+          title: Address
+          description: The address to report on.
+        domain:
+          type: string
+          title: Domain
+          description: The domain related to this address.
+        chain:
+          allOf:
+          - $ref: '#/components/schemas/AddressReportSupportedChains'
+          description: The chain name
+      type: object
+      required:
+      - address
+      - domain
+      - chain
+      title: AddressReportParams
+    RiskExposureSupportedChains:
+      enum:
+      - ethereum
+      - base
+      - bsc
+      - arbitrum
+      - optimism
+      - aster
+      - polygon
+      - hyperevm
+      - hyperliquid
+      - lighter
+      - tron
+      - bitcoin
+      - solana
+      - polymarket
+      title: RiskExposureSupportedChains
+      type: string
+      description: Supported chains for risk exposure
     RiskProfilingResponse:
       description: Compliance risk exposure for an address, including an overall risk summary and exposure breakdown.
       properties:
@@ -494,6 +423,79 @@ components:
       - address
       - risk_summary
       title: RiskProfilingResponse
+    ScanRequestMetadata:
+      properties:
+        domain:
+          type: string
+          title: Domain
+          description: The full URL of the DApp or website that initiated the request, for cross-reference. Must use the https or http scheme and contain a valid hostname. Cannot contain JSON, braces, or other embedded data structures.
+        non_dapp:
+          type: boolean
+          title: Non Dapp
+          description: Set to true when the request was not initiated by a dapp. Dapp requests should provide the `domain` field.
+        account:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Account'
+          title: Account
+          description: End-user account context (id, age, country, creation time, and account_addresses).
+        connection:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__request__Connection'
+          title: Connection
+          description: Connection metadata including user agent, IP information, and origin.
+      type: object
+      title: ScanRequestMetadata
+    routers__chain_agnostic__models__request__Account:
+      properties:
+        account_id:
+          type: string
+          title: Account Id
+          description: Unique identifier for the account.
+        account_creation_timestamp:
+          type: string
+          format: date-time
+          title: Account Creation Timestamp
+          description: Timestamp when the account was created.
+        user_age:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: User Age
+          description: Age of the user in years
+        user_country_code:
+          type: string
+          title: User Country Code
+          description: ISO country code of the user's location.
+        account_addresses:
+          items:
+            type: string
+          type: array
+          title: Account Addresses
+          description: 'List of all account addresses in different chains based on the CAIPs standard (https://github.com/ChainAgnostic/CAIPs). Ethereum mainnet example: eip155:1:0xab16a96d359ec26a11e2c2b3d8f8b8942d5bfcdb'
+      type: object
+      required:
+      - account_id
+      title: Account
+    RiskSummary:
+      description: Aggregated compliance risk summary for the profiled address.
+      properties:
+        risk_level:
+          allOf:
+          - $ref: '#/components/schemas/routers__chain_agnostic__models__response__ValidationResultType'
+          description: Overall compliance risk level for the address.
+        total_usd:
+          type: number
+          title: Total Usd
+          description: Total estimated USD exposure considered in the profile.
+        total_malicious_exposure:
+          type: number
+          title: Total Malicious Exposure
+          description: Total estimated USD exposure associated with malicious risk.
+      type: object
+      required:
+      - risk_level
+      - total_usd
+      - total_malicious_exposure
+      title: RiskSummary
     routers__chain_agnostic__models__request__Connection:
       properties:
         user_agent:
@@ -523,31 +525,29 @@ components:
       required:
       - ip_address
       title: Connection
-    routers__chain_agnostic__models__response__ValidationResultType:
-      type: string
-      enum:
-      - Malicious
-      - Warning
-      - Benign
-      - High-Risk
-      title: ValidationResultType
-      description: The type of validation result.
-    RequestIDReport:
+    ParamReport_AddressReportParams_:
       properties:
         type:
           type: string
-          const: request_id
+          enum:
+          - params
           title: Type
-          description: The type identifier indicating that a request ID from a previous scan is being used.
-        request_id:
-          type: string
-          title: Request Id
-          description: 'The request ID of a previous request. This can be found in the value of the `x-request-id` field in the headers of the response of the previous request. For instance: `6c3cf6c1-a80d-4927-91b9-03d841ea61fe`.'
+        params:
+          $ref: '#/components/schemas/AddressReportParams'
       type: object
       required:
       - type
-      - request_id
-      title: RequestIDReport
+      - params
+      title: ParamReport[AddressReportParams]
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKey:
       type: apiKey

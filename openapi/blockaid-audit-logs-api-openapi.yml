@@ -122,15 +122,6 @@ components:
       - API
       title: AuditActorType
       description: The type of actor that performed the audited action.
-    AuditActionType:
-      type: string
-      enum:
-      - create
-      - edit
-      - delete
-      - info
-      title: AuditActionType
-      description: The type of action recorded in the audit log.
     AuditLogSearchRequest:
       title: Audit Log Search Request
       type: object
@@ -198,6 +189,39 @@ components:
       required:
       - start_date
       - end_date
+    AuditEntityType:
+      type: string
+      enum:
+      - cosigner
+      - cosigner_policy
+      - cosigner_transaction
+      - cosigner_manual_action
+      - label
+      - asset
+      - monitor
+      - api_key
+      - user_session
+      - audit_export
+      - metric
+      - response_wallet
+      - rpc_gateway_rule
+      - settings
+      - endpoint
+      - feature
+      - backoffice_api_key
+      - organization
+      - organization_extended
+      title: AuditEntityType
+      description: The type of entity affected by the audited action.
+    AuditActionType:
+      type: string
+      enum:
+      - create
+      - edit
+      - delete
+      - info
+      title: AuditActionType
+      description: The type of action recorded in the audit log.
     AuditLogSearchResponse:
       title: Audit Log Search Response
       type: object
@@ -226,30 +250,6 @@ components:
       - page
       - pages
       - size
-    AuditEntityType:
-      type: string
-      enum:
-      - cosigner
-      - cosigner_policy
-      - cosigner_transaction
-      - cosigner_manual_action
-      - label
-      - asset
-      - monitor
-      - api_key
-      - user_session
-      - audit_export
-      - metric
-      - response_wallet
-      - rpc_gateway_rule
-      - settings
-      - endpoint
-      - feature
-      - backoffice_api_key
-      - organization
-      - organization_extended
-      title: AuditEntityType
-      description: The type of entity affected by the audited action.
   securitySchemes:
     APIKey:
       type: apiKey
