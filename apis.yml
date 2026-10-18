@@ -53,6 +53,17 @@ tags:
 - Fintech
 - Web3 Security
 - Blockchain
+- Cryptocurrency
+- Fraud Prevention
+- Transaction Scanning
+- Wallet Security
+- Compliance
+- Threat Detection
+tags_raw:
+- Company
+- Fintech
+- Web3 Security
+- Blockchain
 - Crypto
 - Fraud Prevention
 - Transaction Scanning
@@ -151,6 +162,8 @@ apis:
   humanURL: https://docs.blockaid.io/docs/introduction
   baseURL: https://api.blockaid.io
   tags:
+  - Data Enrichment
+  tags_raw:
   - Enrichment
   properties:
   - type: OpenAPI
